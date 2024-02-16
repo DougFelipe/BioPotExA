@@ -1,0 +1,78 @@
+/* style.css */
+/* Reset básico */
+* {
+    box-sizing: border-box;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background: #f4f4f4;
+}
+
+/* Conteúdo principal */
+.main-content {
+    max-width: 210mm;
+    margin: 0 auto;
+}
+
+/* Cabeçalho da página */
+.main-header {
+    background-color: #333;  /* Cor de fundo do cabeçalho */
+    color: white;  /* Cor do texto */
+    padding: 10px 0;
+    text-align: center;
+    position: relative;
+}
+
+/* Título principal */
+.main-title {
+    /* Se houver estilos específicos para o título, eles devem ser adicionados aqui */
+}
+
+/* Link para o GitHub */
+.github-link {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+/* Estilo das abas */
+.main-tabs {
+    height: 44px;
+    /* Se houver estilos adicionais para as abas, eles devem ser adicionados aqui */
+}
+
+/* Abas selecionadas do Dash com Bootstrap */
+.dash-bootstrap .tab--selected {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Conteúdo das abas */
+.tabs-content {
+    border: 1px solid #ddd;
+    width: 210mm;  /* Largura A4 */
+    min-height: 297mm; /* Altura A4 */
+    margin: 20px auto; /* Centraliza a "página" */
+    background: #fff; /* Fundo branco para o conteúdo da aba */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Sombra suave para simular uma folha de papel */
+    position: relative;
+    padding: 20mm; /* Padding interno para o conteúdo */
+}
+
+/* Estilo para imprimir (opcional) */
+@media print {
+    body {
+        -webkit-print-color-adjust: exact;
+    }
+    .tabs-content {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        box-shadow: none;
+        border: none;
+        page-break-after: always;
+    }
+}
