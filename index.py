@@ -4,7 +4,7 @@ from dash import dcc
 from dash import html
 from components.header import Header
 from layouts.about import get_about_layout
-from layouts.data_analysis import get_dataAnalysis_layout
+from layouts.data_analysis import get_dataAnalysis_layout,get_dataAnalysis_page
 
 from callbacks.callbacks import render_tab_content
 
