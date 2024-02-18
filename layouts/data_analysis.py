@@ -8,7 +8,8 @@ import plotly.express as px
 
 
 import lorem
-from layouts.iris_layout import get_iris_layout
+from layouts.P1_KO_COUNT import get_ko_count_layout
+from utils.data_processing import process_ko_data
 
 
 def get_dataAnalysis_page():
@@ -23,6 +24,7 @@ def get_dataAnalysis_page():
         html.Button('Processar Arquivo', id='process-data', n_clicks=0, disabled=True),
         html.Div(id='alert-container'),
         html.Div(id='output-data-upload'),
+        html.Div(id='database-data-table'),
     ], className='tabs-content')
 
 
@@ -31,5 +33,5 @@ def get_dataAnalysis_layout():
     # Esta função compila três blocos de conteúdo de página A4
     return html.Div([
         get_dataAnalysis_page(),
-        get_iris_layout()
+        get_ko_count_layout()
     ])
