@@ -1,15 +1,12 @@
 # my_dash_app/layouts/P1_KO_COUNT.py
-from dash import html
-import lorem
+from dash import html, dcc
 
 def get_ko_count_layout():
-    # Esta função cria um layout de conteúdo estilizado como uma página A4
     return html.Div([
         html.H3('KO Count Analysis'),
-        html.P(lorem.paragraph()),
-        # O container onde a tabela de contagem de KO será exibida
-       
-        html.Div(id='ko-count-output')
+        html.P('Esta seção fornece uma análise detalhada da contagem de KOs.'),
+        # Container para a tabela de dados unidos
+        html.Div(id='ko-count-table-p1', className='ko-table'),
+        # Container para o gráfico de barras da contagem de KO
+        dcc.Graph(id='ko-count-bar-chart')
     ], className='tabs-content')
-
-
