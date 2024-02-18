@@ -10,6 +10,7 @@ import plotly.express as px
 import lorem
 from layouts.iris_layout import get_iris_layout
 
+
 def get_dataAnalysis_page():
     # Esta função cria um único bloco de conteúdo estilizado como uma página A4
     return html.Div([

@@ -1,5 +1,5 @@
 # my_dash_app/callbacks/callbacks.py
-from dash import html, dcc, dash_table, callback
+from dash import html, dcc, dash_table, callback, callback_context
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 from app import app
@@ -12,103 +12,72 @@ import io
 from layouts.about import get_about_layout
 from layouts.data_analysis import get_dataAnalysis_layout
 
-@app.callback(Output('tabs-content', 'children'),
-              [Input('tabs', 'value')])
+from utils.data_validator import validate_and_process_input
+
+@app.callback(
+    Output('tabs-content', 'children'),
+    [Input('tabs', 'value')]
+)
 def render_tab_content(tab):
     if tab == 'tab-about':
         return get_about_layout()
     elif tab == 'tab-data-analysis':
         return get_dataAnalysis_layout()
-    # Você pode adicionar mais condições elif para outras abas aqui.
+    # Adicione mais condições elif para outras abas conforme necessário.
 
 
+
+# Callback para o upload e processamento do arquivo
 @app.callback(
-    Output('process-data', 'disabled'),
-    Output('alert-container', 'children'),
-    Input('upload-data', 'contents'),
-    prevent_initial_call=True
+    [Output('stored-data', 'data'), Output('process-data', 'disabled'), Output('alert-container', 'children')],
+    [Input('upload-data', 'contents')],
+    [State('upload-data', 'filename')]
 )
-def update_upload_status(contents):
-    if contents is not None:
-        # Habilita o botão de processamento e exibe o alerta de sucesso
-        return False, html.Div('Arquivo carregado com sucesso!', style={'color': 'green'})
-    return True, None
+def handle_upload(contents, filename):
+    if contents is None:
+        raise PreventUpdate
 
+    df, error = validate_and_process_input(contents, filename)
+    if error:
+        return None, True, html.Div(error, style={'color': 'red'})
+
+    # O DataFrame é convertido para um dicionário para armazenamento em dcc.Store
+    return df.to_dict('records'), False, html.Div('Arquivo carregado e validado com sucesso.', style={'color': 'green'})
+
+# Callback para atualizar a tabela na interface do usuário após o processamento
 @app.callback(
     Output('output-data-upload', 'children'),
-    Input('process-data', 'n_clicks'),
-    State('upload-data', 'contents'),
-    prevent_initial_call=True
+    [Input('process-data', 'n_clicks')],
+    [State('stored-data', 'data')]
 )
-def process_file(n_clicks, contents):
-    if n_clicks > 0 and contents:
-        content_type, content_string = contents.split(',')
-        decoded = base64.b64decode(content_string)
-        content = decoded.decode('utf-8')
-        lines = content.split('\n')
-
-        # Supondo que cada linha do seu arquivo txt é uma string que você quer contar
-        strings_df = pd.DataFrame({'String': lines})
-        string_counts = strings_df['String'].value_counts().reset_index()
-        string_counts.columns = ['String', 'Frequência']
-
-        # Criando um gráfico de barras com a frequência das strings
-        fig = px.bar(string_counts.head(10), x='String', y='Frequência', title='Top 10 Strings Frequentes')
-
-        # Criando uma tabela com as 5 primeiras linhas do arquivo
-        table = dash_table.DataTable(
-            data=strings_df.head(5).to_dict('records'),
-            columns=[{'name': 'String', 'id': 'String'}],
-            style_table={'height': '150px', 'overflowY': 'auto'}
-        )
-
-        return html.Div([
-            dcc.Graph(figure=fig),
-            html.H5('5 Primeiras Linhas do Arquivo:'),
-            table
-        ])
-    return None
-
-
-# Este callback processa o arquivo carregado e armazena os dados
-@callback(
-    Output('stored-data', 'data'),
-    Input('upload-data', 'contents'),
-    prevent_initial_call=True
-)
-def process_and_store_data(contents):
-    if not contents:
+def update_table(n_clicks, stored_data):
+    if n_clicks is None or n_clicks < 1:
         raise PreventUpdate
 
-    content_type, content_string = contents.split(',')
-    decoded = base64.b64decode(content_string)
-    df = pd.read_csv(io.StringIO(decoded.decode('utf-8')))
-    
-    # Armazene os dados em um formato que possa ser usado para criar gráficos
-    return df.to_dict('records')
+    if stored_data is None:
+        return html.Div('Nenhum dado para exibir.')
 
-# Este callback atualiza os gráficos com base nos dados armazenados
-@callback(
-    Output('output-graphs', 'children'),
-    Input('stored-data', 'data'),
-    prevent_initial_call=True
-)
-def update_graphs(stored_data):
-    if not stored_data:
-        raise PreventUpdate
-
+    # Converter os dados armazenados de volta para um DataFrame
     df = pd.DataFrame(stored_data)
-    graphs = []
-
-    # Suponha que temos várias colunas para as quais queremos gráficos
-    for column in df.columns:
-        if df[column].dtype in ['float64', 'int64']:  # Apenas para colunas numéricas
-            fig = px.bar(df, x='Nome_da_Coluna_Categoria', y=column)
-            graphs.append(dcc.Graph(figure=fig))
-
-    return graphs
+    return dash_table.DataTable(
+        data=df.to_dict('records'),
+        columns=[{'name': i, 'id': i} for i in df.columns],
+        page_size=10,  # Número de linhas a serem exibidas por página
+        style_table={'overflowX': 'auto'}
+    )
 
 
+
+
+
+
+
+
+
+
+
+
+####PROVAVELMENTE DISABLE
 # Callback para alternar a visibilidade dos gráficos
 @app.callback(
     Output('output-graphs', 'style'),
@@ -118,3 +87,5 @@ def toggle_graph_visibility(tab):
     if tab == 'tab-data-analysis':
         return {'display': 'block'}  # Mostra os gráficos quando a aba Data Analysis é selecionada
  
+
+
