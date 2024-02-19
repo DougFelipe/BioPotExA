@@ -44,7 +44,8 @@ body, html {
 
 /* Conteúdo das abas */
 .tabs-content {
-    border: 1px solid #ddd;
+    border: 3px solid #c4cbc5; /* Borda verde  #4ddb59;*/
+    border-radius: 8px;
     width: 100%; /* Isso garante que o conteúdo das abas preencha o .main-content */
     background: #fff;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
@@ -139,7 +140,7 @@ body, html {
     border-radius: 8px;
     padding: 16px;
     margin-bottom: 20px;
-    background-color: #ffea002c;
+    background-color: #0deb322f;
 }
 
 .analysis-title {

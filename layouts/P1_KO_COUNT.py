@@ -10,5 +10,6 @@ def get_ko_count_layout():
         # Container para o gráfico de barras da contagem de KO
         dcc.Graph(id='ko-count-bar-chart'),
         # Novo container para o gráfico de violino e boxplot
+        create_card('Gene Count and Distribution', 'Esta seção fornece uma análise detalhada da contagem de KOs.'),
         dcc.Graph(id='ko-violin-boxplot-chart')
     ], className='tabs-content')
