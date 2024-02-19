@@ -15,11 +15,14 @@ from app import app
 app.layout = html.Div(className='main-content', children=[
     Header(),
     dcc.Tabs(id="tabs", value='tab-about', children=[
-        dcc.Tab(label='About', value='tab-about'),
-        dcc.Tab(label='Data Analysis', value='tab-data-analysis')
+        dcc.Tab(label='About', value='tab-about', className='tab'),
+        dcc.Tab(label='Data Analysis', value='tab-data-analysis', className='tab')
     ], className='main-tabs'),
-    html.Div(id='tabs-content', className='tabs-content')
+    html.Div(id='tabs-content', className='tabs-content'),
+    dcc.Store(id='stored-data'),  # Integrando dcc.Store sem afetar o layout principal
+    html.Div(id='output-graphs', style={'display': 'none'})  # Inicialmente oculto; pode ser estilizado conforme necessário
 ])
+
 
 if __name__ == '__main__':
     app.run_server(debug=True)
