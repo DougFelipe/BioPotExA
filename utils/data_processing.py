@@ -48,3 +48,16 @@ def create_violin_boxplot(df):
                       template='plotly_white')
 
     return fig
+
+
+
+###### PROCESSAMENTO E PLOT DO GRÁFICO P2_KO_20PATHWAY #####
+
+def merge_with_kegg(input_df, kegg_path='data/kegg_20degradation_pathways.xlsx'):
+    # Carregando os dados do KEGG
+    kegg_df = pd.read_excel(kegg_path)
+    
+    # Mesclando os dados de entrada com os dados do KEGG pela coluna 'ko'
+    merged_df = pd.merge(input_df, kegg_df, on='ko', how='inner')
+    
+    return merged_df

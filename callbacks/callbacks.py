@@ -2,7 +2,7 @@
 from dash import html, dcc, dash_table, callback, callback_context,dash_table
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
-
+from dash.dash_table import DataTable
 
 from app import app
 import base64
@@ -16,7 +16,7 @@ from layouts.data_analysis import get_dataAnalysis_layout
 
 from utils.data_validator import validate_and_process_input
 from utils.data_loader import load_database
-from utils.data_processing import merge_input_with_database, process_ko_data, create_violin_boxplot
+from utils.data_processing import merge_input_with_database, process_ko_data, create_violin_boxplot,merge_with_kegg
 
 
 @app.callback(
@@ -195,7 +195,31 @@ def update_ko_violin_boxplot_chart(n_clicks, stored_data):
 
 ## CALLBACKS PARA O P1
 
+## CALLBACKS PARA O P2
+# Callback para processar os dados de entrada e exibir a tabela resultante
+@app.callback(
+    Output('output-merge-table', 'children'),
+    [Input('process-data', 'n_clicks')],
+    [State('stored-data', 'data')]
+)
+def update_merged_table(n_clicks, stored_data):
+    if n_clicks is None or n_clicks < 1 or not stored_data:
+        return None
 
+    input_df = pd.DataFrame(stored_data)
+    merged_df = merge_with_kegg(input_df)
+
+    if merged_df.empty:
+        return 'Não foram encontradas correspondências com os dados do KEGG.'
+
+    return dash_table.DataTable(
+        data=merged_df.to_dict('records'),
+        columns=[{'name': i, 'id': i} for i in merged_df.columns],
+        style_table={'overflowX': 'auto'},
+        page_size=10
+    )
+
+## CALLBACKS PARA O P2
 
 
 
