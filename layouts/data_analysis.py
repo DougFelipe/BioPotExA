@@ -35,3 +35,11 @@ def get_dataAnalysis_layout():
         get_dataAnalysis_page(),
         get_ko_count_layout()
     ])
+
+
+##MODULAZIRA A CRIAÇÃO DE TITULOS E DESCRIÇÃO DOS RESULTADOS
+def create_card(title, content):
+    return html.Div([
+        html.H3(title, className='card-title'),
+        html.P(content, className='card-content')
+    ], className='card')

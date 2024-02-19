@@ -1,13 +1,13 @@
 # my_dash_app/callbacks/callbacks.py
-from dash import html, dcc, dash_table, callback, callback_context
+from dash import html, dcc, dash_table, callback, callback_context,dash_table
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
-from dash_table import DataTable
+
 
 from app import app
 import base64
 import pandas as pd
-import plotly.express as px
+
 import io
 
 
@@ -16,7 +16,7 @@ from layouts.data_analysis import get_dataAnalysis_layout
 
 from utils.data_validator import validate_and_process_input
 from utils.data_loader import load_database
-from utils.data_processing import merge_input_with_database, process_ko_data
+from utils.data_processing import merge_input_with_database, process_ko_data, create_violin_boxplot
 
 
 @app.callback(
@@ -92,7 +92,7 @@ def update_database_table(n_clicks):
     table = dash_table.DataTable(
         data=df_database.to_dict('records'),
         columns=[{'name': col, 'id': col} for col in df_database.columns],
-        page_size=10,
+        page_size=7,
         style_table={'overflowX': 'auto'}
     )
 
@@ -129,48 +129,71 @@ def update_ko_count_table(n_clicks, stored_data):
 
     return html.Div(table, id='ko-count-table-container')
 
-
-###CALLBACK DO GRÁFICO P1
-# Supondo que este seja o callback onde você quer mostrar a tabela e o gráfico
+##CALLLBACK PARA DEIXAR VISIVEL AS PÁGINAS DE RESULTADOS APENAS APÓS PROCESSAR
 @app.callback(
-    Output('ko-count-output', 'children'),  # ID do container no layout
+    Output('additional-analysis-container', 'style'),
+    [Input('process-data', 'n_clicks')]
+)
+def toggle_additional_analysis_visibility(n_clicks):
+    if n_clicks and n_clicks > 0:
+        return {'display': 'block'}  # Torna visível
+    else:
+        raise PreventUpdate  # Mantém o estado atual (oculto se n_clicks é 0 ou None)
+
+
+## CALLBACKS PARA O P1
+@app.callback(
+    Output('ko-count-table-p1', 'children'),
     [Input('process-data', 'n_clicks')],
     [State('stored-data', 'data')]
 )
-def update_ko_count_output(n_clicks, stored_data):
+def update_ko_count_table(n_clicks, stored_data):
     if n_clicks < 1 or not stored_data:
         raise PreventUpdate
 
-    # Converter os dados armazenados de volta para um DataFrame
     input_df = pd.DataFrame(stored_data)
-    
-    # Supondo que você tenha carregado o DataFrame do database em algum lugar
-    database_df = 'data/database.xlsx'
+    merged_df = merge_input_with_database(input_df, 'data/database.xlsx')
 
-    # Merge dos dados de input com o banco de dados
-    merged_df = merge_input_with_database(input_df, database_df)
-
-    # Calcula a contagem de 'ko' únicos para cada 'sample'
-    ko_counts = process_ko_data(merged_df)
-
-    # Gerar a tabela de dados unidos
-    merged_table = DataTable(
+    return DataTable(
         data=merged_df.to_dict('records'),
         columns=[{'name': i, 'id': i} for i in merged_df.columns],
-        page_size=10,
+        page_size=5,
         style_table={'overflowX': 'auto'}
     )
 
-    # Gerar o gráfico de barras com a contagem de 'ko'
-    fig = px.bar(ko_counts, x='sample', y='ko_count', title="Contagem de KO por Sample")
+@app.callback(
+    Output('ko-count-bar-chart', 'figure'),
+    [Input('process-data', 'n_clicks')],
+    [State('stored-data', 'data')]
+)
+def update_ko_count_chart(n_clicks, stored_data):
+    if n_clicks < 1 or not stored_data:
+        raise PreventUpdate
 
-    # Retornar a tabela e o gráfico para a interface do usuário
-    return html.Div([
-       dcc.Graph(figure=fig),
-       html.Div(merged_table, style={'padding': '20px'})
-    ])
+    input_df = pd.DataFrame(stored_data)
+    merged_df = merge_input_with_database(input_df, 'data/database.xlsx')
+    fig = process_ko_data(merged_df)
+   # fig = px.bar(ko_counts, x='sample', y='ko_count', title="Contagem de KO por Sample")
+    return fig
 
+#CALLBACK DO VILION E BOX PLOT
+@app.callback(
+    Output('ko-violin-boxplot-chart', 'figure'),
+    [Input('process-data', 'n_clicks')],
+    [State('stored-data', 'data')]
+)
+def update_ko_violin_boxplot_chart(n_clicks, stored_data):
+    if n_clicks < 1 or not stored_data:
+        raise PreventUpdate
 
+    input_df = pd.DataFrame(stored_data)
+    merged_df = merge_input_with_database(input_df, 'data/database.xlsx')
+
+    # Use a função create_violin_boxplot para gerar o gráfico
+    fig = create_violin_boxplot(merged_df)
+    return fig
+
+## CALLBACKS PARA O P1
 
 
 

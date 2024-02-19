@@ -14,12 +14,21 @@ body, html {
 
 /* Cabeçalho da página */
 .main-header {
-    background-color: #333;
+    background-color: #0deb322f;
     color: white;
-    padding: 10px 0;
+    padding: 0px;
     text-align: center;
     width: 100%; /* Isso garante que o header se estenda por toda a largura da tela */
     box-sizing: border-box; /* Isso inclui o padding no cálculo da largura */
+}
+
+.main-title {
+    color: #2a2a2a; /* Cor da fonte */
+    font-size:30px; /* Tamanho da fonte */
+}
+
+.italic-text {
+    font-style: italic; /* Aplica o estilo itálico */
 }
 
 
@@ -56,6 +65,95 @@ body, html {
     }
 }
 
+
+/* Estilização da página About*/
+.about-container {
+    padding: 20px;
+    margin: 10px;
+}
+
+.about-title {
+    /* Estilos específicos para o título, se necessário */
+    text-align: center;
+}
+
+.about-biopexa-title {
+    text-align: center;
+    margin-top: 50px;
+}
+
+
+.about-content {
+    text-align: justify;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    overflow-wrap: break-word; /* Isso evitará que o texto ultrapasse a largura do container */
+}
+
+
+/* estilização das listas de features*/
+/* assets/styles.css */
+
+.list-container {
+    display: flex;
+    justify-content: space-around; /* Espaçamento igual entre os cartões */
+    margin-top: 20px;
+}
+
+.list-card {
+    background-color: #fff; /* Fundo branco para o cartão */
+    border: 1px solid #ddd; /* Borda sutil para o cartão */
+    border-radius: 5px; /* Bordas arredondadas */
+    padding: 20px;
+    width: %; /* Ajuste a largura conforme necessário */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+.list-title {
+    text-align: center; /* Centraliza o título do cartão */
+    margin-bottom: 10px;
+}
+
+.list-group {
+    list-style-type: none; /* Remove os marcadores de lista */
+    padding: 0;
+}
+
+.list-group li {
+    padding: 8px 0; /* Espaçamento vertical para cada item da lista */
+    border-bottom: 1px solid #eee; /* Linha entre os itens */
+}
+
+.list-group li:last-child {
+    border-bottom: none; /* Remove a borda do último item */
+}
+
+
+
+/* Estilização da página About*/ /*-------------------*/
+
+/* ESTILIZAÇÃO DO TITULO E DESCRIÇÃO DOS GRÁFICOS */
+.analysis-card {
+    border: 1px solid #d2c0c0;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 20px;
+    background-color: #ffea002c;
+}
+
+.analysis-title {
+    text-align: center;
+    font-size: 1.5em;
+    margin-bottom: 8px;
+}
+
+.analysis-description {
+    font-size: 1em;
+    color: #000000;
+}
+
+/* ESTILIZAÇÃO DO TITULO E DESCRIÇÃO DOS GRÁFICOS */ /*-------------------*/
 
 /* Estilização do botão de upload */
 #upload-data {
