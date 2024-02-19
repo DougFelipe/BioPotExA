@@ -19,10 +19,9 @@ app.layout = html.Div(className='main-content', children=[
         dcc.Tab(label='Data Analysis', value='tab-data-analysis', className='tab')
     ], className='main-tabs'),
     html.Div(id='tabs-content', className='tabs-content'),
-    dcc.Store(id='stored-data'),
-    html.Div(id='output-graphs', style={'display': 'none'})  # Gráficos inicialmente ocultos
+    dcc.Store(id='stored-data'),  # Integrando dcc.Store sem afetar o layout principal
+    html.Div(id='output-graphs', style={'display': 'none'})  # Inicialmente oculto; pode ser estilizado conforme necessário
 ])
-
 
 
 if __name__ == '__main__':
