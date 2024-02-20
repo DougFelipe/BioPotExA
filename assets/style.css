@@ -1,140 +1,144 @@
-/* style.css */
-/* Reset básico */
+/* style.css - Documentação atualizada */
+
+/* ------------------------------- */
+/* Reset e Configurações Básicas */
+/* ------------------------------- */
+
+/* Reset básico para remover as margens, paddings e definir box-sizing para todos os elementos */
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box; /* Garante que padding e border estão dentro da largura e altura definidas */
+    box-sizing: border-box;
 }
 
+/* Estilos globais para body e html, incluindo fonte padrão e cor de fundo */
 body, html {
     font-family: 'Arial', sans-serif;
     background: #f4f4f4;
-    overflow-x: hidden; /* Isso evitará a rolagem horizontal se houver overflow */
+    overflow-x: hidden; /* Previne rolagem horizontal */
 }
 
-/* Cabeçalho da página */
+/* ------------------------------- */
+/* Cabeçalho */
+/* ------------------------------- */
+
+/* Estilos para o cabeçalho principal da página */
 .main-header {
     background-color: #0deb322f;
     color: white;
     padding: 0px;
     text-align: center;
-    width: 100%; /* Isso garante que o header se estenda por toda a largura da tela */
-    box-sizing: border-box; /* Isso inclui o padding no cálculo da largura */
+    width: 100%;
 }
 
+/* Estilos para o título principal dentro do cabeçalho */
 .main-title {
-    color: #2a2a2a; /* Cor da fonte */
-    font-size:30px; /* Tamanho da fonte */
+    color: #2a2a2a;
+    font-size: 30px;
 }
 
+/* Estilo para texto em itálico, útil em várias partes da UI */
 .italic-text {
-    font-style: italic; /* Aplica o estilo itálico */
+    font-style: italic;
 }
 
+/* ------------------------------- */
+/* Conteúdo Principal e Abas */
+/* ------------------------------- */
 
-/* Conteúdo principal */
+/* Estilos para o container principal que engloba o conteúdo da página */
 .main-content {
-    max-width: 210mm; /* Ajusta para a largura do conteúdo das abas */
-    margin: 0 auto; /* Centraliza horizontalmente */
-    width: calc(100% - 40px); /* Subtrai o padding esquerdo e direito do container */
-    padding: 0 20px; /* Isso adiciona padding para alinhar o conteúdo com o cabeçalho */
-    margin: 0 auto; /* Centraliza horizontalmente */
-    
+    max-width: 210mm;
+    margin: 0 auto; /* Centraliza o container */
+    width: calc(100% - 40px); /* Largura com padding */
+    padding: 0 20px;
 }
 
-/* Conteúdo das abas */
+/* Estilos para o conteúdo dentro das abas, incluindo bordas, sombra e fundo */
 .tabs-content {
-    border: 3px solid #c4cbc5; /* Borda verde  #4ddb59;*/
+    border: 3px solid #c4cbc5;
     border-radius: 8px;
-    width: 100%; /* Isso garante que o conteúdo das abas preencha o .main-content */
     background: #fff;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box; /* Isso inclui o padding no cálculo da largura */
-    max-width: 210mm; /* Isso limita a largura máxima */
-    min-height: 297mm; /* ... */
-    margin: 20px auto; /* ... */
-    padding: 2mm; /* ... */
-    
+    max-width: 210mm;
+    min-height: 297mm;
+    margin: 20px auto;
+    padding: 2mm;
 }
 
-/* Estilos para impressão */
+/* Estilos específicos para a impressão do conteúdo das abas */
 @media print {
     .tabs-content {
         box-shadow: none;
         page-break-after: always;
-        
     }
 }
 
+/* ------------------------------- */
+/* Sobre e Conteúdo Relacionado */
+/* ------------------------------- */
 
-/* Estilização da página About*/
-.about-container {
+/* Estilos para o container da página Sobre */
+.about-container,
+.about-biopexa-title {
     padding: 20px;
     margin: 10px;
+    text-align: center; /* Centraliza o título e conteúdo */
 }
 
-.about-title {
-    /* Estilos específicos para o título, se necessário */
-    text-align: center;
-}
-
-.about-biopexa-title {
-    text-align: center;
-    margin-top: 50px;
-}
-
-
+/* Estilos para o conteúdo da página Sobre, garantindo a quebra de texto */
 .about-content {
     text-align: justify;
-    margin-top: 10px;
-    margin-right: 10px;
-    margin-left: 10px;
-    overflow-wrap: break-word; /* Isso evitará que o texto ultrapasse a largura do container */
+    margin: 10px;
+    overflow-wrap: break-word;
 }
 
+/* ------------------------------- */
+/* Listas e Cards */
+/* ------------------------------- */
 
-/* estilização das listas de features*/
-/* assets/styles.css */
-
+/* Container para listas, com display flex para alinhar os itens horizontalmente */
 .list-container {
     display: flex;
-    justify-content: space-around; /* Espaçamento igual entre os cartões */
+    justify-content: space-around;
     margin-top: 20px;
 }
 
+/* Estilos para os cards de listas, incluindo fundo, bordas e sombra */
 .list-card {
-    background-color: #fff; /* Fundo branco para o cartão */
-    border: 1px solid #ddd; /* Borda sutil para o cartão */
-    border-radius: 5px; /* Bordas arredondadas */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
     padding: 20px;
-    width: %; /* Ajuste a largura conforme necessário */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Título para os cards de listas, centralizado */
 .list-title {
-    text-align: center; /* Centraliza o título do cartão */
+    text-align: center;
     margin-bottom: 10px;
 }
 
+/* Estilos para os itens de lista dentro dos cards, incluindo a remoção de marcadores e bordas entre itens */
 .list-group {
-    list-style-type: none; /* Remove os marcadores de lista */
+    list-style-type: none;
     padding: 0;
 }
 
 .list-group li {
-    padding: 8px 0; /* Espaçamento vertical para cada item da lista */
-    border-bottom: 1px solid #eee; /* Linha entre os itens */
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
 }
 
 .list-group li:last-child {
     border-bottom: none; /* Remove a borda do último item */
 }
 
+/* ------------------------------- */
+/* Análise e Gráficos */
+/* ------------------------------- */
 
-
-/* Estilização da página About*/ /*-------------------*/
-
-/* ESTILIZAÇÃO DO TITULO E DESCRIÇÃO DOS GRÁFICOS */
+/* Container para os cards de análise, com bordas, raio de borda e fundo */
 .analysis-card {
     border: 1px solid #d2c0c0;
     border-radius: 8px;
@@ -143,20 +147,24 @@ body, html {
     background-color: #0deb322f;
 }
 
-.analysis-title {
+/* Título e descrição para os cards de análise, com estilos específicos para alinhamento e tamanho de fonte */
+.analysis-title,
+.analysis-description {
     text-align: center;
-    font-size: 1.5em;
+    font-size: 1.5em; /* Título */
     margin-bottom: 8px;
 }
 
 .analysis-description {
-    font-size: 1em;
+    font-size: 1em; /* Descrição */
     color: #000000;
 }
 
-/* ESTILIZAÇÃO DO TITULO E DESCRIÇÃO DOS GRÁFICOS */ /*-------------------*/
+/* ------------------------------- */
+/* Botão de Upload */
+/* ------------------------------- */
 
-/* Estilização do botão de upload */
+/* Estilos para o container do botão de upload, incluindo alinhamento e espaçamento */
 #upload-data {
     display: flex;
     align-items: center;
@@ -165,6 +173,7 @@ body, html {
     margin-top: 20px;
 }
 
+/* Estilos para o botão dentro do container, com cores, bordas arredondadas e transição para hover */
 #upload-data .button {
     padding: 10px 20px;
     background-color: #007bff;
