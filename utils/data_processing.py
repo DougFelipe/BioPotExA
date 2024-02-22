@@ -51,9 +51,15 @@ def process_ko_data(merged_df):
     """
     # Contagem de 'ko' únicos por 'sample'
     ko_count = merged_df.groupby('sample')['ko'].nunique().reset_index(name='ko_count')
+    
+    # Ordenar os dados pela contagem de KOs em ordem decrescente
+    ko_count = ko_count.sort_values('ko_count', ascending=False)
 
     # Criação do gráfico de barras
     fig = px.bar(ko_count, x='sample', y='ko_count', title="Contagem de KO por Sample")
+    
+    # Atualizar os rótulos do eixo x para ficarem em um ângulo de 45 graus
+    fig.update_layout(xaxis_tickangle=-45)
     
     return fig
 
@@ -71,17 +77,24 @@ def create_violin_boxplot(df):
     # Calcula a contagem de KOs únicos por sample
     ko_count_per_sample = df.groupby('sample')['ko'].nunique().reset_index(name='ko_count')
 
+
     fig = go.Figure()
 
-    # Adiciona o gráfico de violino
-    fig.add_trace(go.Violin(y=ko_count_per_sample['ko_count'],
-                            box_visible=True, line_color='black',
-                            meanline_visible=True, fillcolor='lightseagreen', opacity=0.6,
-                            points='all', jitter=0, pointpos=0))
+    # Adiciona o boxplot
+    # Adiciona o boxplot com pontos individuais
+    fig.add_trace(go.Box(
+        y=ko_count_per_sample['ko_count'],
+        name='',
+        boxpoints='all',  # Exibe todos os pontos de dados
+        jitter=0.3,  # Espaçamento entre os pontos
+        pointpos= 0  # Posição dos pontos em relação ao boxplot
+    ))
 
     # Atualiza o layout do gráfico
     fig.update_layout(title_text="Distribuição da Contagem de KOs Únicos por Sample",
                       yaxis_title='Contagem de KOs Únicos',
-                      showlegend=False, template='plotly_white')
+                      showlegend=False, template='plotly_white',
+                      yaxis=dict(range=[0, ko_count_per_sample['ko_count'].max() + 1]),
+                      xaxis_title='')  # Definindo o título do eixo x como vazio
 
     return fig
