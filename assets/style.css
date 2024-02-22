@@ -164,27 +164,49 @@ body, html {
 /* Botão de Upload */
 /* ------------------------------- */
 
-/* Estilos para o container do botão de upload, incluindo alinhamento e espaçamento */
-#upload-data {
+/* Estilo para o card de upload e processamento */
+.upload-process-card-style {
+    background-color: rgb(209, 223, 199);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px auto;
+    width: fit-content;
     display: flex;
+    flex-direction: column;
+    gap: 10px;
     align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    margin-top: 20px;
 }
 
-/* Estilos para o botão dentro do container, com cores, bordas arredondadas e transição para hover */
-#upload-data .button {
-    padding: 10px 20px;
-    background-color: #007bff;
+/* Estilo para o botão de upload */
+.upload-button-style {
+    border: 2px dashed #007bff;
+    border-radius: 5px;
+    color: #007bff;
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.upload-button-style:hover {
+    border-color: #6b98c8;
+}
+
+/* Estilo para o botão de processamento */
+.process-button-style {
+    background-color: #28a745;
     color: white;
     border-radius: 5px;
     border: none;
+    padding: 10px 20px;
+    cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-#upload-data .button:hover {
-    background-color: #0056b3;
+.process-button-style:hover {
+    background-color: #218838;
 }
 
 
@@ -224,3 +246,11 @@ body, html {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     z-index: 100;
 }
+
+
+/* ------------------------------- */
+/* estilização do container de upload */
+/* style.css - Adicione ao seu arquivo CSS existente, garantindo nomes de classe únicos. */
+
+
+

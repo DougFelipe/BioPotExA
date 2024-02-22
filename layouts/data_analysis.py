@@ -24,18 +24,29 @@ def get_dataAnalysis_page():
     de alertas e tabelas de dados.
     """
     return html.Div([
-        html.H3('Data Analysis'),
-        dcc.Upload(
-            id='upload-data',
-            children=html.Button('Carregar Arquivo'),
-            style={'marginBottom': '10px'}
+        html.Div(
+            id='upload-process-card',
+            className='upload-process-card-style',
+            children=[
+                dcc.Upload(
+                    id='upload-data',
+                    children=html.Div(['Arraste e Solte ou ', html.A('Selecione um Arquivo')]),
+                    className='upload-button-style'
+                ),
+                html.Div(id='alert-container'),
+                html.Button(
+                    'Processar Arquivo',
+                    id='process-data',
+                    n_clicks=0,
+                    className='process-button-style'
+                )
+            ]
         ),
-        html.Button('Processar Arquivo', id='process-data', n_clicks=0, disabled=True),
-        html.Div(id='alert-container'),
         html.Div(id='output-data-upload'),
         html.Div(id='database-data-table'),
         html.Div(id='output-merge-table'),
     ], className='tabs-content')
+
 
 # Função para compilar múltiplas páginas de Análise de Dados
 def get_dataAnalysis_layout():
