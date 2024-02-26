@@ -12,6 +12,7 @@ from layouts.data_analysis import get_dataAnalysis_layout
 from utils.data_validator import validate_and_process_input
 from utils.data_loader import load_database
 from utils.data_processing import merge_input_with_database, process_ko_data, create_violin_boxplot, merge_with_kegg
+from utils.table_utils import create_table_from_dataframe
 
 # Callback para controle de conteúdo das abas
 @app.callback(
@@ -55,12 +56,8 @@ def update_table(n_clicks, stored_data):
         return html.Div('Nenhum dado para exibir.')
 
     df = pd.DataFrame(stored_data)
-    return dash_table.DataTable(
-        data=df.to_dict('records'),
-        columns=[{'name': i, 'id': i} for i in df.columns],
-        page_size=10,
-        style_table={'overflowX': 'auto'}
-    )
+    table = create_table_from_dataframe(df, 'data-upload-table')
+    return html.Div(table)
 
 # Callback para mostrar tabelas de dados
 @app.callback(
@@ -75,12 +72,7 @@ def update_database_table(n_clicks):
     df_database = load_database('data/database.xlsx')
  
     
-    table = dash_table.DataTable(
-        data=df_database.to_dict('records'),
-        columns=[{'name': col, 'id': col} for col in df_database.columns],
-        page_size=7,
-        style_table={'overflowX': 'auto'}
-    )
+    table = create_table_from_dataframe(df_database, 'database-data-table')
 
     return html.Div(table)
 
@@ -165,12 +157,10 @@ def update_merged_table(n_clicks, stored_data):
     if merged_df.empty:
         return 'Não foram encontradas correspondências com os dados do KEGG.'
 
-    return dash_table.DataTable(
-        data=merged_df.to_dict('records'),
-        columns=[{'name': i, 'id': i} for i in merged_df.columns],
-        style_table={'overflowX': 'auto'},
-        page_size=10
-    )
+    table = create_table_from_dataframe(merged_df, 'output-merge-table')
+
+    return html.Div(table)
+
 
 # Callback para alternar visibilidade dos gráficos
 @app.callback(

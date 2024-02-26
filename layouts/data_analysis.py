@@ -13,6 +13,7 @@ import lorem
 from layouts.P1_KO_COUNT import get_ko_count_layout
 from layouts.P2_KO_20PATHWAY import get_ko_20pathway_layout
 from utils.data_processing import process_ko_data
+from utils.table_utils import create_table_from_dataframe
 
 
 
@@ -26,17 +27,7 @@ def get_dataAnalysis_page():
     parágrafos explicativos sobre a ferramenta, um botão de upload, um botão para processar dados 
     e espaços reservados para exibição de alertas e tabelas de dados.
     """
-    df_database = pd.read_excel('data/database.xlsx')
-    columnDefs =[{'field': i} for i in df_database.columns]
-
-    import dash_ag_grid as dag
-    table = dag.AgGrid(
-        id='ag-grid',
-        rowData=df_database.to_dict("records"),
-        columnDefs=columnDefs,
-        defaultColDef={"resizable": True, "sortable": True, "filter": True},
-    )
-
+    
     return html.Div([
         html.H2('Análise de Dados para Biorremediação', className='about-title'),
         html.P(
@@ -78,7 +69,6 @@ def get_dataAnalysis_page():
             ]
         ),
         html.Div(id='output-data-upload'),
-        html.Div(id='div-teste', children=[table]),
         html.Div(id='database-data-table'),
         html.Div(id='output-merge-table'),
     ], className='tabs-content')
