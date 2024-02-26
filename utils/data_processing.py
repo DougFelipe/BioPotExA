@@ -90,6 +90,13 @@ def create_violin_boxplot(df):
         pointpos= 0  # Posição dos pontos em relação ao boxplot
     ))
 
+    fig = px.box(ko_count_per_sample, y='ko_count', points='all',
+                 hover_name = 'sample')
+    
+    fig.update_traces(marker=dict(size=5, opacity=1),
+                      line=dict(width=1),
+                      jitter=0.3, pointpos=0)
+
     # Atualiza o layout do gráfico
     fig.update_layout(title_text="Distribuição da Contagem de KOs Únicos por Sample",
                       yaxis_title='Contagem de KOs Únicos',

@@ -73,6 +73,8 @@ def update_database_table(n_clicks):
         raise PreventUpdate
 
     df_database = load_database('data/database.xlsx')
+ 
+    
     table = dash_table.DataTable(
         data=df_database.to_dict('records'),
         columns=[{'name': col, 'id': col} for col in df_database.columns],

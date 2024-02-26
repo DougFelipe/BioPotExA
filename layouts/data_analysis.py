@@ -14,16 +14,51 @@ from layouts.P1_KO_COUNT import get_ko_count_layout
 from layouts.P2_KO_20PATHWAY import get_ko_20pathway_layout
 from utils.data_processing import process_ko_data
 
+
+
+
 # Função para criar a página de Análise de Dados
 def get_dataAnalysis_page():
     """
     Cria e retorna um layout para a página de Análise de Dados.
     
     Esta função cria um bloco de conteúdo estilizado como uma página A4, incluindo
-    um botão de upload, um botão para processar dados e espaços reservados para exibição
-    de alertas e tabelas de dados.
+    parágrafos explicativos sobre a ferramenta, um botão de upload, um botão para processar dados 
+    e espaços reservados para exibição de alertas e tabelas de dados.
     """
+    df_database = pd.read_excel('data/database.xlsx')
+    columnDefs =[{'field': i} for i in df_database.columns]
+
+    import dash_ag_grid as dag
+    table = dag.AgGrid(
+        id='ag-grid',
+        rowData=df_database.to_dict("records"),
+        columnDefs=columnDefs,
+        defaultColDef={"resizable": True, "sortable": True, "filter": True},
+    )
+
     return html.Div([
+        html.H2('Análise de Dados para Biorremediação', className='about-title'),
+        html.P(
+            'Nossa plataforma de análise de dados é projetada para pesquisadores e profissionais que '
+            'precisam avaliar o potencial de biorremediação de genomas e metagenomas. Com uma interface '
+            'intuitiva e recursos avançados, a ferramenta facilita a anotação funcional e a identificação de '
+            'genes-chave envolvidos na degradação de poluentes e outras funções ecológicas relevantes.',
+            className='about-content'
+        ),
+        html.P(
+            'Os resultados das análises são apresentados de forma clara e integrada, permitindo uma interpretação '
+            'detalhada dos dados. Isso inclui associações com vias metabólicas conhecidas, comparações com bancos de '
+            'dados de referência e visualizações interativas que destacam os aspectos mais importantes da sua pesquisa.',
+            className='about-content'
+        ),
+        html.P(
+            'Para começar, faça o upload dos seus dados no formato especificado, utilizando a função de arrastar e soltar '
+            'ou selecionando o arquivo manualmente. Uma vez carregados, nossos algoritmos de processamento de dados entram em ação, '
+            'analisando as sequências e retornando insights valiosos em questão de minutos. Após a análise, você pode facilmente '
+            'exportar os dados para uso em publicações, apresentações ou para análises subsequentes em outras plataformas.',
+            className='about-content'
+        ),
         html.Div(
             id='upload-process-card',
             className='upload-process-card-style',
@@ -43,6 +78,7 @@ def get_dataAnalysis_page():
             ]
         ),
         html.Div(id='output-data-upload'),
+        html.Div(id='div-teste', children=[table]),
         html.Div(id='database-data-table'),
         html.Div(id='output-merge-table'),
     ], className='tabs-content')
