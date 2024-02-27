@@ -42,26 +42,30 @@ def merge_with_kegg(input_df, kegg_path='data/kegg_20degradation_pathways.xlsx')
 # Funções de Processamento de Dados
 # ----------------------------------------
 
+import pandas as pd
+
 def process_ko_data(merged_df):
     """
-    Processa os dados de KO e cria um gráfico de barras da contagem de KOs por amostra.
-    
-    :param merged_df: DataFrame com os dados mesclados.
-    :return: Objeto Figure com o gráfico de barras.
+    Processa os dados de KO, contando os KOs únicos por amostra.
+
+    :param merged_df: DataFrame com os dados mesclados ou uma lista de dicionários que possa ser convertida para DataFrame.
+    :return: DataFrame com a contagem de KOs únicos por amostra.
     """
+    # Verifica se merged_df é uma lista e converte para DataFrame
+    if isinstance(merged_df, list):
+        merged_df = pd.DataFrame(merged_df)
+    elif not isinstance(merged_df, pd.DataFrame):
+        raise ValueError("O argumento merged_df deve ser um pandas DataFrame ou uma lista de dicionários.")
+
     # Contagem de 'ko' únicos por 'sample'
     ko_count = merged_df.groupby('sample')['ko'].nunique().reset_index(name='ko_count')
     
     # Ordenar os dados pela contagem de KOs em ordem decrescente
-    ko_count = ko_count.sort_values('ko_count', ascending=False)
+    ko_count_sorted = ko_count.sort_values('ko_count', ascending=False)
 
-    # Criação do gráfico de barras
-    fig = px.bar(ko_count, x='sample', y='ko_count', title="Contagem de KO por Sample")
-    
-    # Atualizar os rótulos do eixo x para ficarem em um ângulo de 45 graus
-    fig.update_layout(xaxis_tickangle=-45)
-    
-    return fig
+    return ko_count_sorted
+
+
 
 # ----------------------------------------
 # Funções de Criação de Gráficos

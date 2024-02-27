@@ -15,6 +15,6 @@ def create_table_from_dataframe(df: pd.DataFrame, table_id: str) -> dag.AgGrid:
         id=table_id,
         rowData=df.to_dict("records"),
         columnDefs=column_defs,
-        defaultColDef={"resizable": True, "sortable": True, "filter": True},
+        defaultColDef={"resizable": True, "sortable": True, "filter": True, "floatingFilter": True},
     )
     return table
