@@ -33,7 +33,7 @@ def get_ko_count_layout():
         html.Div([
             # Menu de navegação incluindo o RangeSlider para filtragem de dados
             html.Div([
-                html.Div('Teste de menu de navegação', className='menu-text'),  # Texto do menu de navegação
+                html.Div('Filters Options', className='menu-text'),  # Texto do menu de navegação
                 koSlider  # Inclusão do RangeSlider no menu de navegação
             ], className='navigation-menu'),  # Estilização do menu de navegação
             

@@ -86,16 +86,11 @@ def create_violin_boxplot(df):
 
     # Adiciona o boxplot
     # Adiciona o boxplot com pontos individuais
-    fig.add_trace(go.Box(
-        y=ko_count_per_sample['ko_count'],
-        name='',
-        boxpoints='all',  # Exibe todos os pontos de dados
-        jitter=0.3,  # Espaçamento entre os pontos
-        pointpos= 0  # Posição dos pontos em relação ao boxplot
-    ))
+     # Cria o gráfico de violino
+    fig = px.violin(ko_count_per_sample, y='ko_count', box=True, points='all',
+                    hover_name='sample', hover_data={'sample': False, 'ko_count': True})
+    
 
-    fig = px.box(ko_count_per_sample, y='ko_count', points='all',
-                 hover_name = 'sample')
     
     fig.update_traces(marker=dict(size=5, opacity=1),
                       line=dict(width=1),
@@ -105,7 +100,7 @@ def create_violin_boxplot(df):
     fig.update_layout(title_text="Distribuição da Contagem de KOs Únicos por Sample",
                       yaxis_title='Contagem de KOs Únicos',
                       showlegend=False, template='plotly_white',
-                      yaxis=dict(range=[0, ko_count_per_sample['ko_count'].max() + 1]),
+                      #yaxis=dict(range=[0, ko_count_per_sample['ko_count'].max() + 100]),
                       xaxis_title='')  # Definindo o título do eixo x como vazio
 
     return fig
