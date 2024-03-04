@@ -67,40 +67,19 @@ def process_ko_data(merged_df):
 
 
 
+
 # ----------------------------------------
-# Funções de Criação de Gráficos
+# Processamento de Dados p/ o Violin
 # ----------------------------------------
 
-def create_violin_boxplot(df):
+
+def process_ko_data_violin(df):
     """
-    Cria um gráfico de violino com caixa para a contagem de KOs únicos por amostra.
-    
-    :param df: DataFrame com os dados a serem plotados.
-    :return: Objeto Figure com o gráfico de violino.
+    Processa os dados para obter a contagem de KOs únicos por amostra.
+
+    :param df: DataFrame com os dados de entrada.
+    :return: DataFrame com a contagem de KOs por amostra.
     """
-    # Calcula a contagem de KOs únicos por sample
     ko_count_per_sample = df.groupby('sample')['ko'].nunique().reset_index(name='ko_count')
+    return ko_count_per_sample
 
-
-    fig = go.Figure()
-
-    # Adiciona o boxplot
-    # Adiciona o boxplot com pontos individuais
-     # Cria o gráfico de violino
-    fig = px.violin(ko_count_per_sample, y='ko_count', box=True, points='all',
-                    hover_name='sample', hover_data={'sample': False, 'ko_count': True})
-    
-
-    
-    fig.update_traces(marker=dict(size=5, opacity=1),
-                      line=dict(width=1),
-                      jitter=0.3, pointpos=0)
-
-    # Atualiza o layout do gráfico
-    fig.update_layout(title_text="Distribuição da Contagem de KOs Únicos por Sample",
-                      yaxis_title='Contagem de KOs Únicos',
-                      showlegend=False, template='plotly_white',
-                      #yaxis=dict(range=[0, ko_count_per_sample['ko_count'].max() + 100]),
-                      xaxis_title='')  # Definindo o título do eixo x como vazio
-
-    return fig

@@ -11,9 +11,9 @@ from layouts.about import get_about_layout
 from layouts.data_analysis import get_dataAnalysis_layout
 from utils.data_validator import validate_and_process_input
 from utils.data_loader import load_database
-from utils.data_processing import merge_input_with_database, process_ko_data, create_violin_boxplot, merge_with_kegg
+from utils.data_processing import merge_input_with_database, process_ko_data, merge_with_kegg, process_ko_data_violin
 from utils.table_utils import create_table_from_dataframe
-from utils.plot_processing import plot_ko_count
+from utils.plot_processing import plot_ko_count,create_violin_plot
 
 # Callback para controle de conteúdo das abas
 @app.callback(
@@ -156,20 +156,46 @@ def update_range_slider_values(n_clicks, stored_data):
 
     return max_ko_count, [0, max_ko_count], marks
 
-# Callback para gráfico de violino e boxplot
+
+## Callback para gráfico de violino e boxplot
+
+# Callback para atualizar o gráfico de violino e boxplot com base na seleção do dropdown
 @app.callback(
     Output('ko-violin-boxplot-chart', 'figure'),
-    [Input('process-data', 'n_clicks')],
+    [Input('process-data', 'n_clicks'), Input('sample-dropdown', 'value')],
     [State('stored-data', 'data')]
 )
-def update_ko_violin_boxplot_chart(n_clicks, stored_data):
+def update_ko_violin_boxplot_chart(n_clicks, selected_samples, stored_data):
     if n_clicks < 1 or not stored_data:
         raise PreventUpdate
 
     input_df = pd.DataFrame(stored_data)
     merged_df = merge_input_with_database(input_df)
-    fig = create_violin_boxplot(merged_df)
+
+    # Se nenhuma amostra for selecionada, use todas as amostras
+    if not selected_samples:
+        selected_samples = input_df['sample'].unique()
+
+    filtered_df = merged_df[merged_df['sample'].isin(selected_samples)]
+    ko_count_per_sample = process_ko_data_violin(filtered_df)
+    fig = create_violin_plot(ko_count_per_sample)
     return fig
+
+# Callback para atualizar as opções do dropdown baseado nos dados carregados
+@app.callback(
+    Output('sample-dropdown', 'options'),
+    [Input('process-data', 'n_clicks')],
+    [State('stored-data', 'data')]
+)
+def update_dropdown_options(n_clicks, stored_data):
+    if n_clicks < 1 or not stored_data:
+        raise PreventUpdate
+
+    input_df = pd.DataFrame(stored_data)
+    # Supondo que 'sample' é a coluna que contém os nomes das amostras
+    sample_options = [{'label': sample, 'value': sample} for sample in input_df['sample'].unique()]
+    return sample_options
+
 
 # Callback para atualizar tabela com dados mesclados
 @app.callback(

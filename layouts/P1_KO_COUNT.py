@@ -21,6 +21,13 @@ def get_ko_count_layout():
     # Criação do RangeSlider usando a função auxiliar modularizada
     koSlider = create_range_slider(slider_id='ko-count-range-slider')
 
+    # Adicionando o Dropdown para filtragem no gráfico de violino e boxplot
+    koViolinFilter = dcc.Dropdown(
+    id='sample-dropdown',
+    multi=True,  # Permite seleções múltiplas
+    placeholder='Selecione as amostras'
+)
+
     # Construção do layout
     return html.Div([
         # Introdução à análise de contagem de KO
@@ -49,8 +56,11 @@ def get_ko_count_layout():
 
         # Container para o gráfico de violino e boxplot
         html.Div([
-            html.Div('Teste de menu de navegação', className='navigation-menu'),  # Texto do menu de navegação (pode ser ajustado)
-            dcc.Graph(id='ko-violin-boxplot-chart')  # Gráfico de violino e boxplot
+            html.Div([
+                'Filtros:',  # Texto explicativo para o dropdown
+                koViolinFilter  # Inserindo o dropdown
+            ], className='navigation-menu'),
+            dcc.Graph(id='ko-violin-boxplot-chart')
         ], className='graph-card'),  # Estilização do card do gráfico de violino e boxplot
 
     ], className='tabs-content')  # Estilização do conteúdo da aba
