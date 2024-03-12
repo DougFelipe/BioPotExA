@@ -70,7 +70,6 @@ def get_dataAnalysis_page():
         ),
         html.Div(id='output-data-upload'),
         html.Div(id='database-data-table'),
-        html.Div(id='output-merge-table'),
     ], className='tabs-content')
 
 

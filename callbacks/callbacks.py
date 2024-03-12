@@ -1,6 +1,6 @@
 # my_dash_app/callbacks/callbacks.py
 # Importações necessárias
-from dash import html, dcc, callback, callback_context, dash_table
+from dash import html, dcc, callback, callback_context, dash_table,Dash
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 import pandas as pd
@@ -11,9 +11,9 @@ from layouts.about import get_about_layout
 from layouts.data_analysis import get_dataAnalysis_layout
 from utils.data_validator import validate_and_process_input
 from utils.data_loader import load_database
-from utils.data_processing import merge_input_with_database, process_ko_data, merge_with_kegg, process_ko_data_violin
+from utils.data_processing import merge_input_with_database, process_ko_data, merge_with_kegg, process_ko_data_violin,count_ko_per_pathway
 from utils.table_utils import create_table_from_dataframe
-from utils.plot_processing import plot_ko_count,create_violin_plot
+from utils.plot_processing import plot_ko_count,create_violin_plot,plot_pathway_ko_counts
 
 # Callback para controle de conteúdo das abas
 @app.callback(
@@ -228,4 +228,46 @@ def toggle_graph_visibility(tab):
         return {'display': 'block'}
  
 
+# ----------------------------------------
+# Callbacks para análise das vias
+# ----------------------------------------
 
+# Callback para inicializar o dropdown e o gráfico de barras após o processamento dos dados
+@app.callback(
+    [Output('pathway-sample-dropdown', 'options'),
+     Output('pathway-sample-dropdown', 'value')],
+    [Input('process-data', 'n_clicks')],
+    [State('stored-data', 'data')]
+)
+def initialize_dropdown_and_chart(n_clicks, stored_data):
+    if n_clicks < 1 or not stored_data:
+        raise PreventUpdate
+
+    input_df = pd.DataFrame(stored_data)
+    merged_df = merge_with_kegg(input_df)
+    pathway_count_df = count_ko_per_pathway(merged_df)
+
+    samples = sorted(pathway_count_df['sample'].unique())
+    default_sample = samples[0]
+
+    dropdown_options = [{'label': sample, 'value': sample} for sample in samples]
+
+    return dropdown_options, default_sample
+
+# Callback exclusivo para atualizar o gráfico de barras com base na seleção do dropdown
+@app.callback(
+    Output('pathway-ko-bar-chart', 'figure'),
+    [Input('pathway-sample-dropdown', 'value')],
+    [State('stored-data', 'data')]
+)
+def update_bar_chart(selected_sample, stored_data):
+    if not stored_data or not selected_sample:
+        raise PreventUpdate
+
+    input_df = pd.DataFrame(stored_data)
+    merged_df = merge_with_kegg(input_df)
+    pathway_count_df = count_ko_per_pathway(merged_df)
+    
+    fig = plot_pathway_ko_counts(pathway_count_df, selected_sample)
+
+    return fig

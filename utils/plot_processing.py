@@ -45,3 +45,38 @@ def create_violin_plot(ko_count_per_sample):
                       xaxis_title='')  # Definindo o título do eixo x como vazio
 
     return fig
+
+
+
+
+def plot_pathway_ko_counts(pathway_count_df, selected_sample):
+    """
+    Plota um gráfico de barras dos KOs únicos para cada pathway na amostra selecionada.
+
+    :param pathway_count_df: DataFrame com a contagem de KOs únicos por pathway por amostra.
+    :param selected_sample: Amostra selecionada para o plot.
+    :return: Objeto Figure com o gráfico de barras.
+    """
+    # Filtrar o DataFrame pela amostra selecionada
+    filtered_df = pathway_count_df[pathway_count_df['sample'] == selected_sample]
+
+    # Ordenar os valores de forma decrescente pela contagem de KOs únicos
+    filtered_df = filtered_df.sort_values('unique_ko_count', ascending=False)
+
+    # Plotar o gráfico de barras
+    fig = px.bar(
+        filtered_df,
+        x='pathname',  # Certifique-se de que 'pathway' é o nome correto da coluna no seu DataFrame
+        y='unique_ko_count',
+        title=f'Contagem Única de KOs para {selected_sample}',
+        text='unique_ko_count'  # Adiciona o valor da contagem sobre as barras
+    )
+
+    # Ajustar o layout do gráfico, se necessário
+    fig.update_layout(
+        xaxis_title='Pathway',
+        yaxis_title='Contagem de KOs Únicos',
+        xaxis={'categoryorder':'total descending'}  # Garante que a ordenação será mantida no gráfico
+    )
+
+    return fig

@@ -25,19 +25,19 @@ def get_ko_count_layout():
     koViolinFilter = dcc.Dropdown(
     id='sample-dropdown',
     multi=True,  # Permite seleções múltiplas
-    placeholder='Selecione as amostras'
-)
+    placeholder='Selecione as amostras')
 
     # Construção do layout
     return html.Div([
-        # Introdução à análise de contagem de KO
+        
+
+        # Container para o gráfico de barras da contagem de KO e o menu de navegação
+        html.Div([
+            # Introdução à análise de contagem de KO
         create_card(
             title='Gene Count and Distribution',
             content='Esta seção fornece uma análise detalhada da contagem de KOs.'
         ),
-
-        # Container para o gráfico de barras da contagem de KO e o menu de navegação
-        html.Div([
             # Menu de navegação incluindo o RangeSlider para filtragem de dados
             html.Div([
                 html.Div('Filters Options', className='menu-text'),  # Texto do menu de navegação
@@ -48,14 +48,15 @@ def get_ko_count_layout():
             dcc.Graph(id='ko-count-bar-chart')
         ], className='graph-card'),  # Estilização do card do gráfico de barras
 
-        # Repetição do cartão de introdução (pode ser removido ou substituído conforme necessário)
+        
+
+        # Container para o gráfico de violino e boxplot
+        html.Div([
+            # Repetição do cartão de introdução (pode ser removido ou substituído conforme necessário)
         create_card(
             title='Gene Count and Distribution',
             content='Esta seção fornece uma análise detalhada da contagem de KOs.'
         ),
-
-        # Container para o gráfico de violino e boxplot
-        html.Div([
             html.Div([
                 'Filtros:',  # Texto explicativo para o dropdown
                 koViolinFilter  # Inserindo o dropdown

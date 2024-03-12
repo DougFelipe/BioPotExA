@@ -83,3 +83,21 @@ def process_ko_data_violin(df):
     ko_count_per_sample = df.groupby('sample')['ko'].nunique().reset_index(name='ko_count')
     return ko_count_per_sample
 
+# ----------------------------------------
+# Processamento de Dados p/ analise das 20 vias
+# ----------------------------------------
+
+def count_ko_per_pathway(merged_df):
+    """
+    Conta os KOs únicos para cada pathway em cada amostra.
+
+    :param merged_df: DataFrame resultante da mesclagem com os dados do KEGG.
+    :return: DataFrame com a contagem de KOs únicos por pathway por amostra.
+    """
+    # Verificar se a coluna 'pathname' existe
+    if 'pathname' not in merged_df.columns:
+        print("As colunas disponíveis no DataFrame são:", merged_df.columns)
+        raise KeyError("'pathname' não encontrada no DataFrame.")
+
+    pathway_count = merged_df.groupby(['sample', 'pathname'])['ko'].nunique().reset_index(name='unique_ko_count')
+    return pathway_count
