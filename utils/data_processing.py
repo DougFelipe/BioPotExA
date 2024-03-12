@@ -42,46 +42,62 @@ def merge_with_kegg(input_df, kegg_path='data/kegg_20degradation_pathways.xlsx')
 # Funções de Processamento de Dados
 # ----------------------------------------
 
+import pandas as pd
+
 def process_ko_data(merged_df):
     """
-    Processa os dados de KO e cria um gráfico de barras da contagem de KOs por amostra.
-    
-    :param merged_df: DataFrame com os dados mesclados.
-    :return: Objeto Figure com o gráfico de barras.
+    Processa os dados de KO, contando os KOs únicos por amostra.
+
+    :param merged_df: DataFrame com os dados mesclados ou uma lista de dicionários que possa ser convertida para DataFrame.
+    :return: DataFrame com a contagem de KOs únicos por amostra.
     """
+    # Verifica se merged_df é uma lista e converte para DataFrame
+    if isinstance(merged_df, list):
+        merged_df = pd.DataFrame(merged_df)
+    elif not isinstance(merged_df, pd.DataFrame):
+        raise ValueError("O argumento merged_df deve ser um pandas DataFrame ou uma lista de dicionários.")
+
     # Contagem de 'ko' únicos por 'sample'
     ko_count = merged_df.groupby('sample')['ko'].nunique().reset_index(name='ko_count')
-
-    # Criação do gráfico de barras
-    fig = px.bar(ko_count, x='sample', y='ko_count', title="Contagem de KO por Sample")
     
-    return fig
+    # Ordenar os dados pela contagem de KOs em ordem decrescente
+    ko_count_sorted = ko_count.sort_values('ko_count', ascending=False)
+
+    return ko_count_sorted
+
+
+
 
 # ----------------------------------------
-# Funções de Criação de Gráficos
+# Processamento de Dados p/ o Violin
 # ----------------------------------------
 
-def create_violin_boxplot(df):
+
+def process_ko_data_violin(df):
     """
-    Cria um gráfico de violino com caixa para a contagem de KOs únicos por amostra.
-    
-    :param df: DataFrame com os dados a serem plotados.
-    :return: Objeto Figure com o gráfico de violino.
+    Processa os dados para obter a contagem de KOs únicos por amostra.
+
+    :param df: DataFrame com os dados de entrada.
+    :return: DataFrame com a contagem de KOs por amostra.
     """
-    # Calcula a contagem de KOs únicos por sample
     ko_count_per_sample = df.groupby('sample')['ko'].nunique().reset_index(name='ko_count')
+    return ko_count_per_sample
 
-    fig = go.Figure()
+# ----------------------------------------
+# Processamento de Dados p/ analise das 20 vias
+# ----------------------------------------
 
-    # Adiciona o gráfico de violino
-    fig.add_trace(go.Violin(y=ko_count_per_sample['ko_count'],
-                            box_visible=True, line_color='black',
-                            meanline_visible=True, fillcolor='lightseagreen', opacity=0.6,
-                            points='all', jitter=0, pointpos=0))
+def count_ko_per_pathway(merged_df):
+    """
+    Conta os KOs únicos para cada pathway em cada amostra.
 
-    # Atualiza o layout do gráfico
-    fig.update_layout(title_text="Distribuição da Contagem de KOs Únicos por Sample",
-                      yaxis_title='Contagem de KOs Únicos',
-                      showlegend=False, template='plotly_white')
+    :param merged_df: DataFrame resultante da mesclagem com os dados do KEGG.
+    :return: DataFrame com a contagem de KOs únicos por pathway por amostra.
+    """
+    # Verificar se a coluna 'pathname' existe
+    if 'pathname' not in merged_df.columns:
+        print("As colunas disponíveis no DataFrame são:", merged_df.columns)
+        raise KeyError("'pathname' não encontrada no DataFrame.")
 
-    return fig
+    pathway_count = merged_df.groupby(['sample', 'pathname'])['ko'].nunique().reset_index(name='unique_ko_count')
+    return pathway_count
