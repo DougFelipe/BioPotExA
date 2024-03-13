@@ -101,3 +101,16 @@ def count_ko_per_pathway(merged_df):
 
     pathway_count = merged_df.groupby(['sample', 'pathname'])['ko'].nunique().reset_index(name='unique_ko_count')
     return pathway_count
+
+
+def count_ko_per_sample_for_pathway(merged_df, selected_pathway):
+    """
+    Conta os KOs únicos para uma via metabólica em cada sample.
+
+    :param merged_df: DataFrame resultante da mesclagem com os dados do KEGG.
+    :param selected_pathway: A via metabólica selecionada.
+    :return: DataFrame com a contagem de KOs únicos por sample para a via selecionada.
+    """
+    filtered_df = merged_df[merged_df['pathname'] == selected_pathway]
+    sample_count = filtered_df.groupby('sample')['ko'].nunique().reset_index(name='unique_ko_count')
+    return sample_count.sort_values('unique_ko_count', ascending=False)

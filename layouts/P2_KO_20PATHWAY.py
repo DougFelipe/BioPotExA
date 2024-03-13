@@ -11,12 +11,25 @@ def get_ko_20pathway_layout():
             # Dropdown para seleção da amostra
             dcc.Dropdown(
                 id='pathway-sample-dropdown',  # O ID aqui deve combinar com o ID usado no callback
-                className='dropdown-style'
+                className='navigation-menu'
             ),
 
             # Gráfico de barras
             dcc.Graph(
                 id='pathway-ko-bar-chart',  # O ID aqui deve combinar com o ID usado no callback
+                className='bar-chart-style'
+            ),
+        ], className='graph-card'),
+        html.Div([
+            create_card('Sample KO Pathway Analysis', 'Esta seção fornece uma análise detalhada dos KOs em samples para a via selecionada.'),
+
+            dcc.Dropdown(
+                id='via-dropdown',  # Novo ID para o dropdown das vias
+                className='navigation-menu'
+            ),
+
+            dcc.Graph(
+                id='via-ko-bar-chart',  # Novo ID para o gráfico de barras das samples
                 className='bar-chart-style'
             ),
         ], className='graph-card'),

@@ -47,7 +47,9 @@ def create_violin_plot(ko_count_per_sample):
     return fig
 
 
-
+# ----------------------------------------
+# Plots p/ analise das 20 vias
+# ----------------------------------------
 
 def plot_pathway_ko_counts(pathway_count_df, selected_sample):
     """
@@ -79,4 +81,26 @@ def plot_pathway_ko_counts(pathway_count_df, selected_sample):
         xaxis={'categoryorder':'total descending'}  # Garante que a ordenação será mantida no gráfico
     )
 
+    return fig
+
+def plot_sample_ko_counts(sample_count_df, selected_pathway):
+    """
+    Plota um gráfico de barras dos KOs únicos para uma via metabólica selecionada em cada sample.
+
+    :param sample_count_df: DataFrame com a contagem de KOs únicos por sample para a via selecionada.
+    :param selected_pathway: A via metabólica selecionada.
+    :return: Objeto Figure com o gráfico de barras.
+    """
+    fig = px.bar(
+        sample_count_df,
+        x='sample',
+        y='unique_ko_count',
+        title=f'Contagem Única de KOs por Sample para a via {selected_pathway}',
+        text='unique_ko_count'
+    )
+    fig.update_layout(
+        xaxis_title='Sample',
+        yaxis_title='Contagem de KOs Únicos',
+        xaxis={'categoryorder':'total descending'}
+    )
     return fig
