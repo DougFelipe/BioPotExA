@@ -26,7 +26,7 @@ body, html {
 .main-header {
     background-color: #0deb322f;
     color: white;
-    padding: 0px;
+    padding: 15px;
     text-align: center;
     width: 100%;
 }
@@ -48,7 +48,7 @@ body, html {
 
 /* Estilos para o container principal que engloba o conteúdo da página */
 .main-content {
-    max-width: 210mm;
+    max-width: 300mm;
     margin: 0 auto; /* Centraliza o container */
     width: calc(100% - 40px); /* Largura com padding */
     padding: 0 20px;
@@ -60,7 +60,7 @@ body, html {
     border-radius: 8px;
     background: #fff;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    max-width: 210mm;
+    max-width: 300mm;
     min-height: 297mm;
     margin: 20px auto;
     padding: 2mm;
