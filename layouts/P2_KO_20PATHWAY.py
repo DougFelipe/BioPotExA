@@ -6,28 +6,28 @@ def get_ko_20pathway_layout():
     return html.Div([
         # Container para o gráfico de análise das vias
         html.Div([
-            create_card('KO 20 Pathway Analysis', 'Esta seção fornece uma análise detalhada da interação entre KOs e vias de degradação específicas.'),
-
-            # Dropdown para seleção da amostra
-            dcc.Dropdown(
-                id='pathway-sample-dropdown',  # O ID aqui deve combinar com o ID usado no callback
-                className='navigation-menu'
-            ),
-
+            create_card('KO 202 Pathway Analysis', 'Esta seção fornece uma análise detalhada da interação entre KOs e vias de degradação específicas.'),
+            html.Div([
+                html.Div('Select Sample', className='menu-text'),  # Título do menu de navegação
+                dcc.Dropdown(
+                    id='pathway-sample-dropdown',  # O ID deve combinar com o ID usado no callback
+                ),
+            ], className='navigation-menu'),  # Estilização do menu de navegação
             # Gráfico de barras
             dcc.Graph(
                 id='pathway-ko-bar-chart',  # O ID aqui deve combinar com o ID usado no callback
                 className='bar-chart-style'
             ),
         ], className='graph-card'),
+        
         html.Div([
             create_card('Sample KO Pathway Analysis', 'Esta seção fornece uma análise detalhada dos KOs em samples para a via selecionada.'),
-
-            dcc.Dropdown(
-                id='via-dropdown',  # Novo ID para o dropdown das vias
-                className='navigation-menu'
-            ),
-
+            html.Div([
+                html.Div('Select Sample', className='menu-text'),  # Título do menu de navegação
+                dcc.Dropdown(
+                    id='via-dropdown',  # O ID deve combinar com o ID usado no callback
+                ),
+            ], className='navigation-menu'),  # Estilização do menu de navegação
             dcc.Graph(
                 id='via-ko-bar-chart',  # Novo ID para o gráfico de barras das samples
                 className='bar-chart-style'
