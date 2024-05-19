@@ -7,7 +7,13 @@ from dash import Dash, dcc, html
 from components.header import Header
 from layouts.about import get_about_layout
 from layouts.data_analysis import get_dataAnalysis_layout
-from callbacks.callbacks import render_tab_content
+
+# Certifique-se de importar os callbacks antes de importar a aplicação
+import callbacks.P1_COUNT_KO_callbacks  # Importa os callbacks do novo arquivo
+import callbacks.P2_KO_20PATHWAY_callbacks  # Importa os callbacks do novo arquivo
+import callbacks.callbacks  # Importa os callbacks existentes
+
+# Importação da aplicação deve vir depois dos callbacks
 from app import app
 
 # -------------------------------
@@ -51,4 +57,3 @@ app.layout = html.Div(
 # Ponto de entrada para iniciar a aplicação Dash.
 if __name__ == '__main__':
     app.run_server(debug=True)
-

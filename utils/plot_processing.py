@@ -91,6 +91,13 @@ def plot_sample_ko_counts(sample_count_df, selected_pathway):
     :param selected_pathway: A via metabólica selecionada.
     :return: Objeto Figure com o gráfico de barras.
     """
+    # Verificação dos dados de entrada
+    if sample_count_df.empty:
+        raise ValueError("O DataFrame de contagem de amostras está vazio.")
+    
+    if 'sample' not in sample_count_df.columns or 'unique_ko_count' not in sample_count_df.columns:
+        raise ValueError("O DataFrame de contagem de amostras não contém as colunas necessárias: 'sample' e 'unique_ko_count'.")
+
     fig = px.bar(
         sample_count_df,
         x='sample',
