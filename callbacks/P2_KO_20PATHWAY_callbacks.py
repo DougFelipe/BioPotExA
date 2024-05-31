@@ -78,13 +78,22 @@ def update_bar_chart_for_via(selected_via, stored_data):
     if not stored_data or not selected_via:
         raise PreventUpdate
 
+    # Preparar os dados para o gráfico de barras
     input_df = pd.DataFrame(stored_data)
-    merged_df = merge_with_kegg(input_df)
-    sample_count_df = count_ko_per_sample_for_pathway(merged_df, selected_via)
+    
+    if input_df.empty:
+        raise PreventUpdate
 
-    # Verificação dos dados de entrada antes de chamar a função
-    if sample_count_df.empty or 'sample' not in sample_count_df.columns or 'unique_ko_count' not in sample_count_df.columns:
-        raise ValueError("O DataFrame de contagem de amostras está vazio ou não contém as colunas necessárias.")
+    merged_df = merge_with_kegg(input_df)
+    
+    if merged_df.empty or 'pathname' not in merged_df.columns:
+        raise PreventUpdate
+
+    sample_count_df = count_ko_per_sample_for_pathway(merged_df, selected_via)
+    
+    if sample_count_df.empty:
+        raise PreventUpdate
 
     fig = plot_sample_ko_counts(sample_count_df, selected_via)
+
     return fig
