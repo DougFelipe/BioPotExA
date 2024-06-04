@@ -85,8 +85,8 @@ body, html {
     border-radius: 8px;
     background: #fff;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    margin: 20px 0;
-    padding: 20px;
+    margin: 2px;
+    padding: 10px;
     overflow-y: auto; /* Adiciona rolagem vertical se o conteúdo for maior que a altura disponível */
 }
 
@@ -165,7 +165,7 @@ body, html {
 }
 
 /* ------------------------------- */
-/* Conteúdo da lista */
+/* Conteúdo da lista about*/
 /* ------------------------------- */
 .scrollable-list-container {
     flex: 1;
@@ -206,7 +206,7 @@ body, html {
 
 .gradient-list > li::before {
     align-items: flex-end;
-    box-shadow: 0.25rem 0.25rem 0.6rem rgba(0,0,0,0.05), 0 0.5rem 1.125rem rgba(173, 78, 78, 0.05);
+    box-shadow: 0.25rem 0.25rem 0.6rem rgba(195, 223, 194, 0.342), 0 0.5rem 1.125rem rgba(7, 245, 67, 0.158);
     content: counter(gradient-counter);
     color: #1d1f20;
     display: flex;
@@ -232,6 +232,100 @@ body, html {
     margin-top: 2rem;
 }
 
+/* ------------------------------- */
+/* Passo a Passo dos Cards */
+/* ------------------------------- */
+
+/* Container que mantém todos os cards alinhados centralmente */
+.step-cards-container {
+    display: flex; /* Define o layout dos elementos internos como flexível */
+    justify-content: center; /* Centraliza os cards horizontalmente */
+    align-items: center; /* Alinha os cards verticalmente no centro */
+    flex-wrap: wrap; /* Permite que os cards ocupem várias linhas se necessário */
+    max-width: 1200px; /* Define a largura máxima do container */
+    margin: 40px auto; /* Adiciona margens verticais e centraliza horizontalmente */
+}
+
+/* Estilo para cada card individual */
+.step-card {
+    position: relative; /* Define o posicionamento relativo para uso interno */
+    min-width: 20%; /* Define a largura mínima do card em porcentagem */
+    height: 20rem; /* Define a altura do card em rem (unidade relativa) */
+    box-shadow: inset 0.3125rem 0.3125rem 0.3125rem rgba(0, 0, 0, 0.2),
+                inset -0.3125rem -0.3125rem 0.9375rem rgba(255, 255, 255, 0.1),
+                0.3125rem 0.3125rem 0.9375rem rgba(0, 0, 0, 0.3), -0.3125rem -0.3125rem 0.9375rem rgba(255, 255, 255, 0.1); /* Define sombras */
+    border-radius: 0.9375rem; /* Define cantos arredondados */
+    margin: 1.875rem; /* Adiciona margem ao redor dos cards */
+    background: #2a2b2f; /* Define a cor de fundo do card */
+}
+
+/* Estilos para o conteúdo do card, cor de fundo por posição do card */
+.step-card:nth-child(1) .box .content {
+    background: #66bb6a; /* Verde claro para o primeiro card */
+}
+
+.step-card:nth-child(2) .box .content {
+    background: #43a047; /* Verde médio para o segundo card */
+}
+
+.step-card:nth-child(3) .box .content {
+    background: #2e7d32; /* Verde escuro para o terceiro card */
+}
+
+/* Estilo para a caixa interna do card */
+.step-card .box {
+    position: absolute; /* Posicionamento absoluto dentro do card */
+    top: 1.25rem; /* Espaçamento do topo */
+    left: 1.25rem; /* Espaçamento da esquerda */
+    right: 1.25rem; /* Espaçamento da direita */
+    bottom: 1.25rem; /* Espaçamento da base */
+    background: #2a2b2f; /* Cor de fundo da caixa */
+    border-radius: 0.9375rem; /* Cantos arredondados */
+    display: flex; /* Define o layout dos elementos internos como flexível */
+    justify-content: center; /* Centraliza o conteúdo horizontalmente */
+    align-items: center; /* Centraliza o conteúdo verticalmente */
+    overflow: hidden; /* Esconde conteúdo que ultrapassar a caixa */
+}
+
+/* Estilo para o pseudo-elemento antes da caixa */
+.step-card .box:before {
+    content: ""; /* Adiciona um conteúdo vazio */
+    position: absolute; /* Posicionamento absoluto dentro da caixa */
+    top: 0; /* Posiciona no topo */
+    left: 0; /* Posiciona na esquerda */
+    width: 50%; /* Define largura */
+    height: 100%; /* Define altura */
+    background: rgba(255, 255, 255, 0.03); /* Define cor de fundo com transparência */
+}
+
+/* Estilo para o conteúdo do card */
+.step-card .box .content {
+    padding: 1.25rem; /* Adiciona padding ao redor do conteúdo */
+    text-align: center; /* Centraliza o texto */
+}
+
+/* Estilo para o número do passo (h2) */
+.step-card .box .content h2 {
+    position: absolute; /* Posicionamento absoluto dentro da caixa */
+    top: -0.625rem; /* Posiciona no topo com um pequeno deslocamento */
+    right: 0rem; /* Posiciona na direita com um deslocamento */
+    font-size: 4rem; /* Define o tamanho da fonte */
+    color: rgba(255, 255, 255, 0.1); /* Define cor com transparência */
+}
+
+/* Estilo para o título do card (h3) */
+.step-card .box .content h3 {
+    font-size: 1.8rem; /* Define o tamanho da fonte */
+    color: #fff; /* Define a cor do texto */
+    margin-bottom: 0.9375rem; /* Adiciona margem inferior */
+}
+
+/* Estilo para o parágrafo do card (p) */
+.step-card .box .content p {
+    font-size: 1rem; /* Define o tamanho da fonte */
+    font-weight: 300; /* Define a espessura da fonte */
+    color: rgba(255, 255, 255, 0.9); /* Define a cor do texto com transparência */
+}
 
 /* ------------------------------- */
 /* Listas e Cards */
@@ -247,7 +341,7 @@ body, html {
 /* Estilos para os cards de listas, incluindo fundo, bordas e sombra */
 .list-card {
     background-color: #fff;
-    border: 1px solid #ddd;
+    border: 1px solid #dddddd;
     border-radius: 5px;
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);

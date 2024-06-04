@@ -14,32 +14,8 @@ from layouts.P1_KO_COUNT import get_ko_count_layout
 from layouts.P2_KO_20PATHWAY import get_ko_20pathway_layout
 from utils.data_processing import process_ko_data
 from utils.table_utils import create_table_from_dataframe
-
-# Lista de características para análise de dados
-features_list_1 = [
-    "Análise da contabilização do total de genes associados a compostos prioritários",
-    "Análise da distribuição do total de genes associados a compostos prioritários",
-    "Análise de genes em vias de metabolismo e degradação de xenobióticos no KEGG",
-    "Análise do perfil de degradação das amostras por classe de compostos",
-    "Análise da relação entre genes e compostos"
-]
-
-# Função para criar cards de lista
-def create_list_card(title, features):
-    """
-    Cria e retorna um card HTML com um título e uma lista de características.
-
-    :param title: Título do card.
-    :param features: Lista de características a serem incluídas no card.
-    :return: Um componente HTML Div representando o card.
-    """
-    return html.Div(
-        [
-            html.H4(title, className='list-title'),
-            html.Ul([html.Li(feature) for feature in features], className='list-group')
-        ],
-        className='list-card'
-    )
+from components.step_guide import create_step_guide  # Importa a função do componente de passo a passo
+from components.features_list import create_list_card, features_list_1  # Importa a função e lista de características
 
 # Função para criar a página de Análise de Dados
 def get_dataAnalysis_page():
@@ -75,7 +51,8 @@ def get_dataAnalysis_page():
                             'analisando as sequências e retornando insights valiosos em questão de minutos. Após a análise, você pode facilmente '
                             'exportar os dados para uso em publicações, apresentações ou para análises subsequentes em outras plataformas.',
                             className='about-content'
-                        )
+                        ),
+                        create_step_guide()  # Adiciona o componente de guia de passos após o terceiro parágrafo
                     ],
                     className='text-container'
                 ),
@@ -109,7 +86,6 @@ def get_dataAnalysis_page():
         html.Div(id='output-data-upload'),
         html.Div(id='database-data-table'),
     ], className='pages-content')
-
 
 # Função para compilar múltiplas páginas de Análise de Dados
 def get_dataAnalysis_layout():
