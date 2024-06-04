@@ -16,4 +16,4 @@ def get_ko_20pathway_layout():
             # inserir o gráfico aqui
         ], className='graph-card'),
 
-    ], className='tabs-content')
+    ], className='pages-content')

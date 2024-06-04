@@ -15,8 +15,31 @@ from layouts.P2_KO_20PATHWAY import get_ko_20pathway_layout
 from utils.data_processing import process_ko_data
 from utils.table_utils import create_table_from_dataframe
 
+# Lista de características para análise de dados
+features_list_1 = [
+    "Análise da contabilização do total de genes associados a compostos prioritários",
+    "Análise da distribuição do total de genes associados a compostos prioritários",
+    "Análise de genes em vias de metabolismo e degradação de xenobióticos no KEGG",
+    "Análise do perfil de degradação das amostras por classe de compostos",
+    "Análise da relação entre genes e compostos"
+]
 
+# Função para criar cards de lista
+def create_list_card(title, features):
+    """
+    Cria e retorna um card HTML com um título e uma lista de características.
 
+    :param title: Título do card.
+    :param features: Lista de características a serem incluídas no card.
+    :return: Um componente HTML Div representando o card.
+    """
+    return html.Div(
+        [
+            html.H4(title, className='list-title'),
+            html.Ul([html.Li(feature) for feature in features], className='list-group')
+        ],
+        className='list-card'
+    )
 
 # Função para criar a página de Análise de Dados
 def get_dataAnalysis_page():
@@ -27,28 +50,43 @@ def get_dataAnalysis_page():
     parágrafos explicativos sobre a ferramenta, um botão de upload, um botão para processar dados 
     e espaços reservados para exibição de alertas e tabelas de dados.
     """
-    
     return html.Div([
         html.H2('Análise de Dados para Biorremediação', className='about-title'),
-        html.P(
-            'Nossa plataforma de análise de dados é projetada para pesquisadores e profissionais que '
-            'precisam avaliar o potencial de biorremediação de genomas e metagenomas. Com uma interface '
-            'intuitiva e recursos avançados, a ferramenta facilita a anotação funcional e a identificação de '
-            'genes-chave envolvidos na degradação de poluentes e outras funções ecológicas relevantes.',
-            className='about-content'
-        ),
-        html.P(
-            'Os resultados das análises são apresentados de forma clara e integrada, permitindo uma interpretação '
-            'detalhada dos dados. Isso inclui associações com vias metabólicas conhecidas, comparações com bancos de '
-            'dados de referência e visualizações interativas que destacam os aspectos mais importantes da sua pesquisa.',
-            className='about-content'
-        ),
-        html.P(
-            'Para começar, faça o upload dos seus dados no formato especificado, utilizando a função de arrastar e soltar '
-            'ou selecionando o arquivo manualmente. Uma vez carregados, nossos algoritmos de processamento de dados entram em ação, '
-            'analisando as sequências e retornando insights valiosos em questão de minutos. Após a análise, você pode facilmente '
-            'exportar os dados para uso em publicações, apresentações ou para análises subsequentes em outras plataformas.',
-            className='about-content'
+        html.Div(
+            [
+                html.Div(
+                    [
+                        html.P(
+                            'Nossa plataforma de análise de dados é projetada para pesquisadores e profissionais que '
+                            'precisam avaliar o potencial de biorremediação de genomas e metagenomas. Com uma interface '
+                            'intuitiva e recursos avançados, a ferramenta facilita a anotação funcional e a identificação de '
+                            'genes-chave envolvidos na degradação de poluentes e outras funções ecológicas relevantes.',
+                            className='about-content'
+                        ),
+                        html.P(
+                            'Os resultados das análises são apresentados de forma clara e integrada, permitindo uma interpretação '
+                            'detalhada dos dados. Isso inclui associações com vias metabólicas conhecidas, comparações com bancos de '
+                            'dados de referência e visualizações interativas que destacam os aspectos mais importantes da sua pesquisa.',
+                            className='about-content'
+                        ),
+                        html.P(
+                            'Para começar, faça o upload dos seus dados no formato especificado, utilizando a função de arrastar e soltar '
+                            'ou selecionando o arquivo manualmente. Uma vez carregados, nossos algoritmos de processamento de dados entram em ação, '
+                            'analisando as sequências e retornando insights valiosos em questão de minutos. Após a análise, você pode facilmente '
+                            'exportar os dados para uso em publicações, apresentações ou para análises subsequentes em outras plataformas.',
+                            className='about-content'
+                        )
+                    ],
+                    className='text-container'
+                ),
+                html.Div(
+                    [
+                        create_list_card("Data Analysis Features", features_list_1)
+                    ],
+                    className='list-container'
+                )
+            ],
+            className='content-container'
         ),
         html.Div(
             id='upload-process-card',
@@ -70,7 +108,7 @@ def get_dataAnalysis_page():
         ),
         html.Div(id='output-data-upload'),
         html.Div(id='database-data-table'),
-    ], className='tabs-content')
+    ], className='pages-content')
 
 
 # Função para compilar múltiplas páginas de Análise de Dados

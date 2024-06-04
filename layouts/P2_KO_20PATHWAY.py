@@ -33,4 +33,4 @@ def get_ko_20pathway_layout():
                 className='bar-chart-style'
             ),
         ], className='graph-card'),
-    ], className='tabs-content')
+    ], className='pages-content')

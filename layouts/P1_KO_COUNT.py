@@ -64,4 +64,4 @@ def get_ko_count_layout():
             dcc.Graph(id='ko-violin-boxplot-chart')
         ], className='graph-card'),  # Estilização do card do gráfico de violino e boxplot
 
-    ], className='tabs-content')  # Estilização do conteúdo da aba
+    ], className='pages-content')  # Estilização do conteúdo da aba
