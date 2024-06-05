@@ -3,5 +3,14 @@ from dash import dcc, html
 
 def Header():
     return html.Header(className='main-header', children=[
-        html.H1(children=[html.Span('BioPExA', className='italic-text')], className='main-title')
+        html.Div(className='header-left', children=[
+            html.A('BioPExA', href='/about', className='main-title')
+        ]),
+        html.Div(className='header-right', children=[
+            html.A('BioPExa Features', href='/features', className='header-link'),
+            html.A('Bioremediation', href='/bioremediation', className='header-link'),
+            html.A('Regulatory Agencies', href='/regulatory', className='header-link'),
+            html.A('Updates', href='/versions', className='header-link'),
+            html.A('Contact', href='/contact', className='header-link')
+        ])
     ])

@@ -4,16 +4,14 @@ from dash import html
 
 # Lista de características da página About
 about_features_list = [
-    html.Li([html.Strong("Identificação"), html.Br(), " do potencial biotecnológico para biorremediação"]),
-    html.Li("Análise de dados de anotação funcional de genomas de bactérias, fungos e plantas"),
-    html.Li("Caracterização de organismos com potencial para degradação de poluentes"),
-    html.Li("Integração de dados sobre poluentes prioritários de agências reguladoras, PubChem e KEGG"),
-    html.Li("Análise de dados de anotação funcional de genomas de bactérias, fungos e plantas"),
-    html.Li("Caracterização de organismos com potencial para degradação de poluentes"),
-    html.Li("Integração de dados sobre poluentes prioritários de agências reguladoras, PubChem e KEGG"),
-    html.Li("Análise de dados de anotação funcional de genomas de bactérias, fungos e plantas"),
-    html.Li("Caracterização de organismos com potencial para degradação de poluentes"),
-    html.Li("Integração de dados sobre poluentes prioritários de agências reguladoras, PubChem e KEGG"),
+    html.Li([html.Strong("List of Compounds Compiled"), html.Br(), "by 11 environmental regulatory agencies"]),
+    html.Li([html.Strong("253 Priority Compounds"), html.Br(), "reported by regulatory agencies"]),
+    html.Li([html.Strong("12 Classes of Compounds"), html.Br(), "reported as environmental contaminants"]),
+    html.Li([html.Strong("20 KEGG Pathways"), html.Br(), "for xenobiotic biodegradation "]),
+    html.Li([html.Strong("75 Pathways"), html.Br(), "related to biodegradation "]),
+    html.Li([html.Strong("367 Enzymes"), html.Br(), "involved in biodegradation "]),
+
+   
 ]
 
 

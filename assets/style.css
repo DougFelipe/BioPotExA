@@ -34,23 +34,50 @@ body, html {
 
 /* Estilos para o cabeçalho principal da página */
 .main-header {
-    background-color: #0deb322f;
-    color: white;
-    padding: 15px;
-    text-align: center;
+    display: flex;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #b6e9be;
+    padding: 15px 20px;
     width: 100%;
-    box-sizing: border-box;
+}
+
+/* Estilos para a área esquerda do cabeçalho */
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+/* Estilos para a área direita do cabeçalho */
+.header-right {
+    display: flex;
+    align-items: center;
 }
 
 /* Estilos para o título principal dentro do cabeçalho */
 .main-title {
-    color: #2a2a2a;
-    font-size: 30px;
+    color: #0f5f16;
+    font-size: 40px;
+    text-decoration: none; /* Remove underline */
+    font-weight:bold;
 }
 
-/* Estilo para texto em itálico, útil em várias partes da UI */
-.italic-text {
+/* Estilos para os links no cabeçalho */
+.header-link {
+    color: #0f941a;
+    font-size: 18px;
+    margin-left: 20px;
+    text-decoration: none; /* Remove underline */
+    transition: color 0.3s ease; /* Transição suave para a cor */
+    font-weight:bold;
     font-style: italic;
+}
+
+/* Hover effect para os links no cabeçalho */
+.header-link:hover {
+    color: #007bff; /* Cor ao passar o mouse */
 }
 
 /* ------------------------------- */
@@ -97,6 +124,18 @@ body, html {
         page-break-after: always;
     }
 }
+
+/* ------------------------------- */
+/* Estilo para o Título "How to Use" */
+/* ------------------------------- */
+.how-to-use {
+    font-size: 30px; /* Define o tamanho da fonte para 25px */
+    text-align: center; /* Centraliza o texto horizontalmente */
+    font-weight: bold; /* Adiciona negrito ao texto */
+    margin: 20px 0; /* Adiciona margens superior e inferior */
+    color: #0f941a; /* Define a cor do texto */
+}
+
 
 /* ------------------------------- */
 /* Estilo dos containers de conteudo das páginas */
@@ -165,6 +204,54 @@ body, html {
 }
 
 /* ------------------------------- */
+/* Estilização das Abas */
+/* ------------------------------- */
+
+/* Estilos para o container das abas */
+.main-tabs {
+    display: flex;
+    justify-content: flex-start; /* Alinha as abas à esquerda */
+    background: #b6e9be; /* Cor de fundo padrão */
+    padding: 10px 20px; /* Espaçamento interno */
+    border: 0px; /* Remove borda */
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+/* Estilos para cada aba individual */
+.tab {
+    background: #86f196 !important; /* Cor de fundo padrão */
+    color: #0f5f16 !important; /* Cor do texto padrão */
+    font-size: 30px; /* Tamanho da fonte */
+    font-weight: bold; /* Negrito */
+    padding: 10px 20px; /* Espaçamento interno */
+    border: 1px solid #0f941a; /* Borda */
+    border-radius: 8px; /* Bordas arredondadas */
+    margin-right: 10px; /* Margem à direita */
+    cursor: pointer; /* Cursor de ponteiro */
+    transition: background 0.3s ease, color 0.3s ease; /* Transição suave para cor e fundo */
+}
+
+/* Estilos para a aba selecionada */
+.tab--selected {
+    background: #0f941a !important; /* Cor de fundo para a aba selecionada */
+    color: #fff !important; /* Cor do texto para a aba selecionada */
+    border-bottom: none; /* Remove a borda inferior da aba selecionada */
+}
+
+/* Hover effect para as abas não selecionadas */
+.tab:hover:not(.tab--selected) {
+    background: #0f941a !important; /* Cor ao passar o mouse */
+    color: #fff !important; /* Cor do texto ao passar o mouse */
+}
+
+/* Estilos para as abas não selecionadas */
+.tab--not-selected {
+    background: #b6e9be !important; /* Cor de fundo padrão */
+    color: #0f941a !important; /* Cor do texto padrão */
+}
+
+/* ------------------------------- */
 /* Conteúdo da lista about*/
 /* ------------------------------- */
 .scrollable-list-container {
@@ -193,7 +280,7 @@ body, html {
 
 .gradient-list > li::before,
 .gradient-list > li::after {
-    background: linear-gradient(135deg, #83e4e2 50%, #a2ed56 100%);
+    background: linear-gradient(135deg, #83e4e2 10%, #1cf100 100%);
     border-radius: 1rem 1rem 0 1rem;
     content: '';
     height: 3rem;
@@ -207,7 +294,7 @@ body, html {
 .gradient-list > li::before {
     align-items: flex-end;
     box-shadow: 0.25rem 0.25rem 0.6rem rgba(195, 223, 194, 0.342), 0 0.5rem 1.125rem rgba(7, 245, 67, 0.158);
-    content: counter(gradient-counter);
+    content:'';
     color: #1d1f20;
     display: flex;
     font: 900 1.5em/1 'Montserrat';
@@ -249,38 +336,25 @@ body, html {
 /* Estilo para cada card individual */
 .step-card {
     position: relative; /* Define o posicionamento relativo para uso interno */
-    min-width: 20%; /* Define a largura mínima do card em porcentagem */
-    height: 20rem; /* Define a altura do card em rem (unidade relativa) */
-    box-shadow: inset 0.3125rem 0.3125rem 0.3125rem rgba(0, 0, 0, 0.2),
-                inset -0.3125rem -0.3125rem 0.9375rem rgba(255, 255, 255, 0.1),
-                0.3125rem 0.3125rem 0.9375rem rgba(0, 0, 0, 0.3), -0.3125rem -0.3125rem 0.9375rem rgba(255, 255, 255, 0.1); /* Define sombras */
-    border-radius: 0.9375rem; /* Define cantos arredondados */
-    margin: 1.875rem; /* Adiciona margem ao redor dos cards */
-    background: #2a2b2f; /* Define a cor de fundo do card */
-}
-
-/* Estilos para o conteúdo do card, cor de fundo por posição do card */
-.step-card:nth-child(1) .box .content {
-    background: #66bb6a; /* Verde claro para o primeiro card */
-}
-
-.step-card:nth-child(2) .box .content {
-    background: #43a047; /* Verde médio para o segundo card */
-}
-
-.step-card:nth-child(3) .box .content {
-    background: #2e7d32; /* Verde escuro para o terceiro card */
+    min-width: 300px; /* Define a largura mínima do card */
+    height: 300px; /* Define a altura do card */
+    box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.2),
+                inset -5px -5px 15px rgba(255, 255, 255, 0.1),
+                5px 5px 15px rgba(128, 224, 136, 0.3), -5px -5px 15px rgba(8, 197, 33, 0.37); /* Define sombras */
+    border-radius: 15px; /* Define cantos arredondados */
+    margin: 10px; /* Adiciona margem ao redor dos cards */
+    background: #a1f082; /* Define a cor de fundo do card */
 }
 
 /* Estilo para a caixa interna do card */
 .step-card .box {
     position: absolute; /* Posicionamento absoluto dentro do card */
-    top: 1.25rem; /* Espaçamento do topo */
-    left: 1.25rem; /* Espaçamento da esquerda */
-    right: 1.25rem; /* Espaçamento da direita */
-    bottom: 1.25rem; /* Espaçamento da base */
-    background: #2a2b2f; /* Cor de fundo da caixa */
-    border-radius: 0.9375rem; /* Cantos arredondados */
+    top: 20px; /* Espaçamento do topo */
+    left: 20px; /* Espaçamento da esquerda */
+    right: 20px; /* Espaçamento da direita */
+    bottom: 20px; /* Espaçamento da base */
+    background: #62a562; /* Cor de fundo da caixa */
+    border-radius: 15px; /* Cantos arredondados */
     display: flex; /* Define o layout dos elementos internos como flexível */
     justify-content: center; /* Centraliza o conteúdo horizontalmente */
     align-items: center; /* Centraliza o conteúdo verticalmente */
@@ -300,29 +374,44 @@ body, html {
 
 /* Estilo para o conteúdo do card */
 .step-card .box .content {
-    padding: 1.25rem; /* Adiciona padding ao redor do conteúdo */
+    padding: 20px; /* Adiciona padding ao redor do conteúdo */
     text-align: center; /* Centraliza o texto */
+    display: flex; /* Define o layout dos elementos internos como flexível */
+    flex-direction: column; /* Define a direção do layout flexível como coluna */
+    justify-content: flex-end; /* Alinha o conteúdo na parte inferior */
+    width: 100%; /* Largura total do container */
+    height: 100%; /* Altura total do container */
 }
 
-/* Estilo para o número do passo (h2) */
-.step-card .box .content h2 {
-    position: absolute; /* Posicionamento absoluto dentro da caixa */
-    top: -0.625rem; /* Posiciona no topo com um pequeno deslocamento */
-    right: 0rem; /* Posiciona na direita com um deslocamento */
-    font-size: 4rem; /* Define o tamanho da fonte */
-    color: rgba(255, 255, 255, 0.1); /* Define cor com transparência */
+/* Estilo para a caixa verde */
+.step-card .box .content .step-info {
+    background: #66bb6a; /* Cor de fundo da caixa verde */
+    padding: 20px; /* Adiciona padding ao redor do conteúdo */
+    border-radius: 15px; /* Cantos arredondados */
+    text-align: center; /* Centraliza o texto */
+    width: 100%; /* Largura total do container */
+    margin-top: auto; /* Empurra o conteúdo para a parte inferior */
+}
+
+/* Estilo para o número do step */
+.step-card .box .content .step-number {
+    font-size: 60px; /* Define o tamanho da fonte */
+    text-align: center;
+    color: rgba(41, 107, 15, 0.623); /* Define cor com transparência */
+    margin: 0; /* Remove margens */
+    padding-left: 10px; /* Adiciona padding à esquerda */
 }
 
 /* Estilo para o título do card (h3) */
-.step-card .box .content h3 {
-    font-size: 1.8rem; /* Define o tamanho da fonte */
+.step-card .box .content .step-info h3 {
+    font-size: 28px; /* Define o tamanho da fonte */
     color: #fff; /* Define a cor do texto */
-    margin-bottom: 0.9375rem; /* Adiciona margem inferior */
+    margin-bottom: 15px; /* Adiciona margem inferior */
 }
 
 /* Estilo para o parágrafo do card (p) */
-.step-card .box .content p {
-    font-size: 1rem; /* Define o tamanho da fonte */
+.step-card .box .content .step-info p {
+    font-size: 16px; /* Define o tamanho da fonte */
     font-weight: 300; /* Define a espessura da fonte */
     color: rgba(255, 255, 255, 0.9); /* Define a cor do texto com transparência */
 }
@@ -341,7 +430,7 @@ body, html {
 /* Estilos para os cards de listas, incluindo fundo, bordas e sombra */
 .list-card {
     background-color: #fff;
-    border: 1px solid #dddddd;
+    border: 1px solid #26e20db7;
     border-radius: 5px;
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -416,8 +505,9 @@ body, html {
 
 /* Estilo para o card de upload e processamento */
 .upload-process-card-style {
+    border: 1px solid #86ec01;
     background-color: rgb(209, 223, 199);
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 4px 6px rgba(148, 219, 130, 0.726);
     border-radius: 8px;
     padding: 20px;
     margin: 20px auto;

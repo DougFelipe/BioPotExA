@@ -16,3 +16,19 @@ html.H3('About Biorremediation', className='about-title'),
         html.P([
                             "Aimed at identifying the biotechnological potential for bioremediation, the Bioremediation Potential Explorer & Analyzer (BioPExA) was developed to enable the analysis of functional genome annotation data of bacteria, fungi, and plants, allowing the characterization of organisms with potential for pollutant degradation and providing a user interface and interactive data analysis. The BioPExA database integrates data on priority pollutants for bioremediation reported by regulatory agencies, PubChem and KEGG databases. Seeking to contribute to sustainable development goals, BioPExA emerges as an innovation in this field by automating the genomic analysis process used in identifying genes, enzymes, metabolic pathways, and biological processes with biotechnological potential to mitigate the environmental impacts associated with these pollutants."
                         ], className='about-content'),
+
+
+
+                            html.P(
+                            'Nossa plataforma de análise de dados é projetada para pesquisadores e profissionais que '
+                            'precisam avaliar o potencial de biorremediação de genomas e metagenomas. Com uma interface '
+                            'intuitiva e recursos avançados, a ferramenta facilita a anotação funcional e a identificação de '
+                            'genes-chave envolvidos na degradação de poluentes e outras funções ecológicas relevantes.',
+                            className='about-content'
+                        ),
+                        html.P(
+                            'Para começar, faça o upload dos seus dados no formato especificado, utilizando a função de arrastar e soltar '
+                            'ou selecionando o arquivo manualmente. Após a análise, você pode facilmente '
+                            'exportar os dados para uso em publicações, apresentações ou para análises subsequentes em outras plataformas.',
+                            className='about-content'
+                        ),

@@ -27,32 +27,31 @@ def get_dataAnalysis_page():
     e espaços reservados para exibição de alertas e tabelas de dados.
     """
     return html.Div([
-        html.H2('Análise de Dados para Biorremediação', className='about-title'),
+        
         html.Div(
             [
                 html.Div(
                     [
-                        html.P(
-                            'Nossa plataforma de análise de dados é projetada para pesquisadores e profissionais que '
-                            'precisam avaliar o potencial de biorremediação de genomas e metagenomas. Com uma interface '
-                            'intuitiva e recursos avançados, a ferramenta facilita a anotação funcional e a identificação de '
-                            'genes-chave envolvidos na degradação de poluentes e outras funções ecológicas relevantes.',
-                            className='about-content'
-                        ),
-                        html.P(
-                            'Os resultados das análises são apresentados de forma clara e integrada, permitindo uma interpretação '
-                            'detalhada dos dados. Isso inclui associações com vias metabólicas conhecidas, comparações com bancos de '
-                            'dados de referência e visualizações interativas que destacam os aspectos mais importantes da sua pesquisa.',
-                            className='about-content'
-                        ),
-                        html.P(
-                            'Para começar, faça o upload dos seus dados no formato especificado, utilizando a função de arrastar e soltar '
-                            'ou selecionando o arquivo manualmente. Uma vez carregados, nossos algoritmos de processamento de dados entram em ação, '
-                            'analisando as sequências e retornando insights valiosos em questão de minutos. Após a análise, você pode facilmente '
-                            'exportar os dados para uso em publicações, apresentações ou para análises subsequentes em outras plataformas.',
-                            className='about-content'
-                        ),
-                        create_step_guide()  # Adiciona o componente de guia de passos após o terceiro parágrafo
+                        html.H2('How to Use', className='how-to-use'),
+                        create_step_guide(),
+                          html.Div(
+            id='upload-process-card',
+            className='upload-process-card-style',
+            children=[
+                dcc.Upload(
+                    id='upload-data',
+                    children=html.Div(['Drag and Drop or ', html.A('Select a File')]),
+                    className='upload-button-style'
+                ),
+                html.Div(id='alert-container'),
+                html.Button(
+                    'Process Data',
+                    id='process-data',
+                    n_clicks=0,
+                    className='process-button-style'
+                )
+            ]
+        ),  # Adiciona o componente de guia de passos após o terceiro parágrafo
                     ],
                     className='text-container'
                 ),
@@ -65,26 +64,9 @@ def get_dataAnalysis_page():
             ],
             className='content-container'
         ),
-        html.Div(
-            id='upload-process-card',
-            className='upload-process-card-style',
-            children=[
-                dcc.Upload(
-                    id='upload-data',
-                    children=html.Div(['Arraste e Solte ou ', html.A('Selecione um Arquivo')]),
-                    className='upload-button-style'
-                ),
-                html.Div(id='alert-container'),
-                html.Button(
-                    'Processar Arquivo',
-                    id='process-data',
-                    n_clicks=0,
-                    className='process-button-style'
-                )
-            ]
-        ),
-        html.Div(id='output-data-upload'),
-        html.Div(id='database-data-table'),
+        
+        #html.Div(id='output-data-upload'),
+        #html.Div(id='database-data-table'),
     ], className='pages-content')
 
 # Função para compilar múltiplas páginas de Análise de Dados

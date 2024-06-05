@@ -30,11 +30,11 @@ app.layout = html.Div(
         dcc.Tabs(
             id="tabs", 
             value='tab-about', 
+            className='main-tabs',  # Adiciona a classe CSS personalizada
             children=[
-                dcc.Tab(label='About', value='tab-about', className='tab'),
-                dcc.Tab(label='Data Analysis', value='tab-data-analysis', className='tab')
-            ], 
-            className='main-tabs'
+                dcc.Tab(label='About', value='tab-about', className='tab', selected_className='tab--selected'),
+                dcc.Tab(label='Data Analysis', value='tab-data-analysis', className='tab', selected_className='tab--selected')
+            ]
         ),
 
         # Conteúdo das Abas
