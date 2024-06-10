@@ -256,7 +256,7 @@ body, html {
 /* ------------------------------- */
 .scrollable-list-container {
     flex: 1;
-    max-height: 27rem; /* Ajusta a altura máxima do container */
+    max-height: 32rem; /* Ajusta a altura máxima do container */
     overflow-y: auto; /* Adiciona rolagem vertical */
 }
 
@@ -505,13 +505,14 @@ body, html {
 
 /* Estilo para o card de upload e processamento */
 .upload-process-card-style {
-    border: 1px solid #86ec01;
     background-color: rgb(209, 223, 199);
     box-shadow: 2px 4px 6px rgba(148, 219, 130, 0.726);
     border-radius: 8px;
     padding: 20px;
     margin: 20px auto;
     width: fit-content;
+    width: 500px;
+    height: 160px;
     display: flex;
     flex-direction: column;
     gap: 10px;

@@ -7,9 +7,9 @@ import base64
 import io
 import pandas as pd
 import plotly.express as px
+import dash_bootstrap_components as dbc
 
 # Importações de utilitários e layouts específicos da aplicação
-import lorem
 from layouts.P1_KO_COUNT import get_ko_count_layout
 from layouts.P2_KO_20PATHWAY import get_ko_20pathway_layout
 from utils.data_processing import process_ko_data
@@ -27,31 +27,31 @@ def get_dataAnalysis_page():
     e espaços reservados para exibição de alertas e tabelas de dados.
     """
     return html.Div([
-        
         html.Div(
             [
                 html.Div(
                     [
                         html.H2('How to Use', className='how-to-use'),
+                        html.Hr(className="my-2"),
                         create_step_guide(),
-                          html.Div(
-            id='upload-process-card',
-            className='upload-process-card-style',
-            children=[
-                dcc.Upload(
-                    id='upload-data',
-                    children=html.Div(['Drag and Drop or ', html.A('Select a File')]),
-                    className='upload-button-style'
-                ),
-                html.Div(id='alert-container'),
-                html.Button(
-                    'Process Data',
-                    id='process-data',
-                    n_clicks=0,
-                    className='process-button-style'
-                )
-            ]
-        ),  # Adiciona o componente de guia de passos após o terceiro parágrafo
+                        html.Div(
+                            id='upload-process-card',
+                            className='upload-process-card-style',
+                            children=[
+                                dcc.Upload(
+                                    id='upload-data',
+                                    children=html.Div(['Drag and Drop or ', html.A('Select a File')]),
+                                    className='upload-button-style'
+                                ),
+                                html.Div(id='alert-container'),
+                                html.Button(
+                                    'Click to Submit and Process Data',
+                                    id='process-data',
+                                    n_clicks=0,
+                                    className='process-button-style'
+                                )
+                            ]
+                        ),  # Adiciona o componente de guia de passos após o terceiro parágrafo
                     ],
                     className='text-container'
                 ),
@@ -64,9 +64,6 @@ def get_dataAnalysis_page():
             ],
             className='content-container'
         ),
-        
-        #html.Div(id='output-data-upload'),
-        #html.Div(id='database-data-table'),
     ], className='pages-content')
 
 # Função para compilar múltiplas páginas de Análise de Dados
@@ -80,8 +77,19 @@ def get_dataAnalysis_layout():
     """
     return html.Div([
         get_dataAnalysis_page(),
-        get_ko_count_layout(),
-        get_ko_20pathway_layout()
+        dbc.Accordion(
+            [
+                dbc.AccordionItem(
+                    get_ko_count_layout(),
+                    title="KO Count Analysis"
+                ),
+                dbc.AccordionItem(
+                    get_ko_20pathway_layout(),
+                    title="KO Pathway Analysis"
+                ),
+            ],
+            start_collapsed=True,
+        ),
     ])
 
 # Função para criar um card de título e conteúdo

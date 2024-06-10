@@ -83,6 +83,7 @@ def plot_pathway_ko_counts(pathway_count_df, selected_sample):
 
     return fig
 
+# Função para plotar o gráfico de barras
 def plot_sample_ko_counts(sample_count_df, selected_pathway):
     """
     Plota um gráfico de barras dos KOs únicos para uma via metabólica selecionada em cada sample.
@@ -97,6 +98,10 @@ def plot_sample_ko_counts(sample_count_df, selected_pathway):
     
     if 'sample' not in sample_count_df.columns or 'unique_ko_count' not in sample_count_df.columns:
         raise ValueError("O DataFrame de contagem de amostras não contém as colunas necessárias: 'sample' e 'unique_ko_count'.")
+
+    # Verificando se há valores inválidos nas colunas 'sample' e 'unique_ko_count'
+    if sample_count_df['sample'].isnull().any() or sample_count_df['unique_ko_count'].isnull().any():
+        raise ValueError("Há valores nulos nas colunas 'sample' ou 'unique_ko_count'.")
 
     fig = px.bar(
         sample_count_df,

@@ -15,12 +15,14 @@ about_features_list = [
 ]
 
 
-# Função para criar a lista estilizada
-def create_about_features_list(features):
+# Função para criar a lista de características
+def create_about_features_list():
     return html.Div(
-        html.Ol(
-            [html.Li(feature) for feature in features],
-            className='gradient-list'
-        ),
-        className='scrollable-list-container'
+        className='scrollable-list-container',
+        children=[
+            html.Ol(
+                className='gradient-list',
+                children=[html.Li(feature) for feature in about_features_list]
+            )
+        ]
     )
