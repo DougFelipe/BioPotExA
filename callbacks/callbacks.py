@@ -140,3 +140,24 @@ def toggle_graph_visibility(tab):
         return {'display': 'block'}
 
 
+# Callback para upload e processamento de arquivo
+@app.callback(
+    [Output('view-results', 'style'), Output('process-data', 'style'), Output('page-state', 'data')],
+    [Input('process-data', 'n_clicks')],
+    [State('upload-data', 'contents'), State('page-state', 'data')]
+)
+def process_and_show_view_button(n_clicks, contents, current_state):
+    if n_clicks > 0 and contents and current_state == 'initial':
+        # Processar os dados aqui
+        # data = process_ko_data(contents)
+        return {'display': 'inline-block'}, {'display': 'none'}, 'processed'
+    return {'display': 'none'}, {'display': 'inline-block'}, current_state
+
+@app.callback(
+    [Output('initial-content', 'style'), Output('results-content', 'style')],
+    [Input('view-results', 'n_clicks'), State('page-state', 'data')]
+)
+def display_results(n_clicks, current_state):
+    if n_clicks > 0 and current_state == 'processed':
+        return {'display': 'none'}, {'display': 'block'}
+    return {'display': 'block'}, {'display': 'none'}

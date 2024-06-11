@@ -512,7 +512,7 @@ body, html {
     margin: 20px auto;
     width: fit-content;
     width: 500px;
-    height: 160px;
+    height: fit-content;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -549,6 +549,44 @@ body, html {
 .process-button-style:hover {
     background-color: #218838;
 }
+/* ------------------------------- */
+/* Estilo para o botão "View Results" */
+.view-results-style {
+    background-color: #28a745;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.view-results-style:hover {
+    background-color: #218838;
+}
+
+/* Estilo para o spinner de carregamento */
+#loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+/* Estilo para o título e subtítulo dos resultados */
+.results-title {
+    text-align: center;
+    font-size: 30px;
+    margin-top: 20px;
+}
+
+.results-subtitle {
+    text-align: center;
+    font-size: 20px;
+    margin-top: 10px;
+}
+
 
 /* ------------------------------- */
 /* Estilização do container do gráfico e menu de navegação */
