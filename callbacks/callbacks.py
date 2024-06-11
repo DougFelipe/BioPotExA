@@ -42,7 +42,7 @@ def handle_upload(contents, filename):
     if error:
         return None, True, html.Div(error, style={'color': 'red'})
 
-    return df.to_dict('records'), False, html.Div('Arquivo carregado e validado com sucesso.', style={'color': 'green'})
+    return df.to_dict('records'), False, html.Div('File uploaded and validated successfully', style={'color': 'green'})
 
 # Callback para atualizar tabela na UI após processamento
 @app.callback(
@@ -140,7 +140,6 @@ def toggle_graph_visibility(tab):
         return {'display': 'block'}
 
 
-# Callback para upload e processamento de arquivo
 @app.callback(
     [Output('view-results', 'style'), Output('process-data', 'style'), Output('page-state', 'data')],
     [Input('process-data', 'n_clicks')],

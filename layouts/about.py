@@ -22,7 +22,7 @@ def get_about_layout():
                 html.Div(
                     [
                         html.H3('BioPExA', className='about-biopexa-title'),
-                        html.H3('Biorremediation Potential Explorer & Analyzer BioPExA', className='about-biopexa-subtitle'),
+                        html.H3('Biorremediation Potential Explorer & Analyzer', className='about-biopexa-subtitle'),
                         html.Hr(className="my-2"),
                         html.P([
                             "Aimed at identifying the biotechnological potential for bioremediation, the Bioremediation Potential Explorer & Analyzer (BioPExA) was developed to enable the analysis of functional genome annotation data of bacteria, fungi, and plants, allowing the characterization of organisms with potential for pollutant degradation and providing a user interface and interactive data analysis.",

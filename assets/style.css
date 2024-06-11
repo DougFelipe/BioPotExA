@@ -40,7 +40,7 @@ body, html {
     justify-content: space-between;
     align-items: center;
     background-color: #b6e9be;
-    padding: 15px 20px;
+    padding: 2px 10px;
     width: 100%;
 }
 
@@ -100,7 +100,7 @@ body, html {
     border-radius: 8px;
     background: #fff;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    margin: 20px 0;
+    margin: 5px 0;
     padding: 20px;
     overflow-y: auto; /* Adiciona rolagem vertical se o conteúdo for maior que a altura disponível */
 }
@@ -256,7 +256,7 @@ body, html {
 /* ------------------------------- */
 .scrollable-list-container {
     flex: 1;
-    max-height: 32rem; /* Ajusta a altura máxima do container */
+    max-height: 35rem; /* Ajusta a altura máxima do container */
     overflow-y: auto; /* Adiciona rolagem vertical */
 }
 
@@ -395,7 +395,7 @@ body, html {
 
 /* Estilo para o número do step */
 .step-card .box .content .step-number {
-    font-size: 60px; /* Define o tamanho da fonte */
+    font-size: 50px; /* Define o tamanho da fonte */
     text-align: center;
     color: rgba(41, 107, 15, 0.623); /* Define cor com transparência */
     margin: 0; /* Remove margens */
@@ -566,14 +566,6 @@ body, html {
     background-color: #218838;
 }
 
-/* Estilo para o spinner de carregamento */
-#loading-spinner {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 10px;
-}
-
 /* Estilo para o título e subtítulo dos resultados */
 .results-title {
     text-align: center;
@@ -586,7 +578,6 @@ body, html {
     font-size: 20px;
     margin-top: 10px;
 }
-
 
 /* ------------------------------- */
 /* Estilização do container do gráfico e menu de navegação */

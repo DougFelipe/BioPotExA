@@ -4,15 +4,17 @@ from dash import html
 
 # Lista de características para análise de dados
 features_list_1 = [
-"Analysis of the total gene count associated with prioritized compounds",
-"Analysis of the distribution of total genes associated with prioritized compounds",
+"Total gene count associated with prioritized compounds",
+"Distribution of total genes associated with prioritized compounds",
 "Analysis of genes in xenobiotic metabolism and degradation pathways in KEGG",
-"Analysis of sample degradation profile by compound class",
-"Analysis of the relationship between genes and compounds",
-"Analysis of the relationship between genes and degradation pathways",
-"Analysis of the relationship between compounds and degradation pathways",
-"Analysis of the relationship between compounds and compound classes",
-"Analysis of the relationship between compounds and genes" 
+"Sample degradation profile by compound class",
+"Biosurfactant production genes and pathways",
+"Plastic degradation genes and pathways",
+"Relationship between genes and compounds",
+"Relationship between genes and degradation pathways",
+"Relationship between compounds and degradation pathways",
+"Relationship between compounds and compound classes",
+"Relationship between compounds and genes" 
 ]
 
 # Função para criar cards de lista
