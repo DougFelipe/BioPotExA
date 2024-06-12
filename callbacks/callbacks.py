@@ -1,20 +1,20 @@
 # my_dash_app/callbacks/callbacks.py
 
-# Importações necessárias
 from dash import html, dcc, callback, callback_context, dash_table
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 import pandas as pd
 
-# Importações locais
 from app import app
 from layouts.about import get_about_layout
 from layouts.data_analysis import get_dataAnalysis_layout
+from layouts.results import get_results_layout  # Certifique-se de importar o layout de resultados
 from utils.data_validator import validate_and_process_input
 from utils.data_loader import load_database
 from utils.data_processing import merge_input_with_database, merge_with_kegg, count_ko_per_pathway, count_ko_per_sample_for_pathway
 from utils.table_utils import create_table_from_dataframe
 from utils.plot_processing import plot_pathway_ko_counts, plot_sample_ko_counts
+
 
 # Callback para controle de conteúdo das abas
 @app.callback(
@@ -110,10 +110,9 @@ def toggle_additional_analysis_visibility(n_clicks):
     else:
         raise PreventUpdate
 
-# Callback para atualizar tabela com dados mesclados
 @app.callback(
     Output('output-merge-table', 'children'),
-    [Input('process-data', 'n_clicks')],
+    [Input('view-results', 'n_clicks')],
     [State('stored-data', 'data')]
 )
 def update_merged_table(n_clicks, stored_data):
@@ -121,10 +120,10 @@ def update_merged_table(n_clicks, stored_data):
         return None
 
     input_df = pd.DataFrame(stored_data)
-    merged_df = merge_with_kegg(input_df)
+    merged_df = merge_input_with_database(input_df)
 
     if merged_df.empty:
-        return 'Não foram encontradas correspondências com os dados do KEGG.'
+        return 'No matches found with KEGG data.'
 
     table = create_table_from_dataframe(merged_df, 'output-merge-table')
 

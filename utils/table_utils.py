@@ -1,3 +1,5 @@
+# my_dash_app/utils/table_utils.py
+
 import pandas as pd
 import dash_ag_grid as dag
 

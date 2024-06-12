@@ -121,6 +121,7 @@ def plot_sample_ko_counts(sample_count_df, selected_pathway):
     fig.update_layout(
         xaxis_title='Sample',
         yaxis_title='Unique Gene Count',
-        xaxis={'categoryorder':'total descending'}
+        xaxis={'categoryorder':'total descending'},
+        xaxis_tickangle=45
     )
     return fig

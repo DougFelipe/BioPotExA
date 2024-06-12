@@ -13,6 +13,10 @@ def get_results_layout():
         dbc.Accordion(
             [
                 dbc.AccordionItem(
+                    html.Div(id='output-merge-table'),  # Contêiner para a tabela mesclada
+                    title="Results Table"
+                ),
+                dbc.AccordionItem(
                     get_ko_count_bar_chart_layout(),
                     title="Gene count associated with priority compounds",
                 ),
@@ -26,7 +30,7 @@ def get_results_layout():
                 ),
                 dbc.AccordionItem(
                     get_sample_ko_pathway_bar_chart_layout(),
-                    title="KEGG Xenobiotics Biodegradation and Metabolism (Grouped by Pathway)"                ),
+                    title="KEGG Xenobiotics Biodegradation and Metabolism (Grouped by Pathway)"),
             ],
             start_collapsed=True,
             always_open=True,
