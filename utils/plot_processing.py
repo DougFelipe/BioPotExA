@@ -125,3 +125,20 @@ def plot_sample_ko_counts(sample_count_df, selected_pathway):
         xaxis_tickangle=45
     )
     return fig
+
+
+
+def plot_compound_scatter(filtered_df):
+    """
+    Cria um gráfico de pontos para a relação de amostras com compostos.
+
+    :param filtered_df: DataFrame com os dados filtrados.
+    :return: Objeto Figure com o gráfico de pontos.
+    """
+    fig = px.scatter(filtered_df, x='sample', y='compoundname', color='compoundclass', template="simple_white")
+    fig.update_layout(
+        xaxis_title='Sample',
+        yaxis_title='Compound',
+        title='Scatter Plot of Samples vs Compounds'
+    )
+    return fig

@@ -32,3 +32,65 @@ html.H3('About Biorremediation', className='about-title'),
                             'exportar os dados para uso em publicações, apresentações ou para análises subsequentes em outras plataformas.',
                             className='about-content'
                         ),
+
+
+
+                        # my_dash_app/layouts/results.py
+
+from dash import html
+import dash_bootstrap_components as dbc
+from layouts.P1_KO_COUNT import get_ko_count_bar_chart_layout, get_ko_violin_boxplot_layout
+from layouts.P2_KO_20PATHWAY import get_pathway_ko_bar_chart_layout, get_sample_ko_pathway_bar_chart_layout
+
+def get_results_layout():
+    return html.Div([
+        html.H2('Data Analysis Results', className='results-title'),
+        html.Hr(className="my-2"),
+        html.H4('Results from your submitted data', className='results-subtitle'),
+        dbc.Accordion(
+            [
+                dbc.AccordionItem(
+                    html.Div(id='output-merge-table'),  # Contêiner para a tabela mesclada
+                    title="Results Table"
+                ),
+                dbc.AccordionItem(
+                    get_ko_count_bar_chart_layout(),
+                    title="Gene count associated with priority compounds",
+                ),
+                dbc.AccordionItem(
+                    get_ko_violin_boxplot_layout(),
+                    title="Distribution of genes associated with priority compounds"
+                ),
+                dbc.AccordionItem(
+                    get_pathway_ko_bar_chart_layout(),
+                    title="KEGG Xenobiotics Biodegradation and Metabolism (Grouped by Sample)"
+                ),
+                dbc.AccordionItem(
+                    get_sample_ko_pathway_bar_chart_layout(),
+                    title="KEGG Xenobiotics Biodegradation and Metabolism (Grouped by Pathway)"
+                ),
+                dbc.AccordionItem(
+                    html.Div("Rank of associated genes with priority compounds "),  # Rank of associated genes with priority compounds
+                    title="Rank of associated genes with priority compounds"
+                ),
+                dbc.AccordionItem(
+                    html.Div("Rank of organisms with priority compounds degradation potential"),  # Rank of organisms with priority compounds degradation potential
+                    title="Rank of organisms with priority compounds degradation potential"
+                ),
+                dbc.AccordionItem(
+                    html.Div("Rank of priority compounds degradation potential"),  # Rank of priority compounds degradation potential
+                    title="Rank of priority compounds degradation potential"
+                ),
+                dbc.AccordionItem(
+                    html.Div("Genes present in samples"),  # 
+                    title="Genes present in samples"
+                ),
+                dbc.AccordionItem(
+                    html.Div("Relashinship between compounds and samples"),  # Relashinship between compounds and samples
+                    title="Relashinship between compounds and samples   "
+                ),
+            ],
+            start_collapsed=True,
+            always_open=True,
+        )
+    ])

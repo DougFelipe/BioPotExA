@@ -12,6 +12,8 @@ from layouts.data_analysis import get_dataAnalysis_layout
 import callbacks.P1_COUNT_KO_callbacks  # Importa os callbacks do novo arquivo
 import callbacks.P2_KO_20PATHWAY_callbacks  # Importa os callbacks do novo arquivo
 import callbacks.callbacks  # Importa os callbacks existentes
+import callbacks.P3_compounds_callbacks
+
 
 # Importação da aplicação deve vir depois dos callbacks
 from app import app

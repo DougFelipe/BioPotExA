@@ -114,3 +114,14 @@ def count_ko_per_sample_for_pathway(merged_df, selected_pathway):
     filtered_df = merged_df[merged_df['pathname'] == selected_pathway]
     sample_count = filtered_df.groupby('sample')['ko'].nunique().reset_index(name='unique_ko_count')
     return sample_count.sort_values('unique_ko_count', ascending=False)
+
+
+def process_compound_data(merged_df):
+    """
+    Processa os dados para o gráfico de pontos de compostos.
+
+    :param merged_df: DataFrame com os dados mesclados.
+    :return: DataFrame processado.
+    """
+    # Lógica de processamento aqui, se necessário
+    return merged_df
