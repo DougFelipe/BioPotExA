@@ -127,18 +127,30 @@ def plot_sample_ko_counts(sample_count_df, selected_pathway):
     return fig
 
 
-
-def plot_compound_scatter(filtered_df):
+def plot_compound_scatter(df):
     """
-    Cria um gráfico de pontos para a relação de amostras com compostos.
+    Cria um gráfico de dispersão para visualizar a relação entre amostras e compostos, filtrados por classe de composto.
 
-    :param filtered_df: DataFrame com os dados filtrados.
-    :return: Objeto Figure com o gráfico de pontos.
+    :param df: DataFrame filtrado contendo as colunas 'sample', 'compoundname', e 'compoundclass'.
+    :return: Objeto Figure com o gráfico de dispersão.
     """
-    fig = px.scatter(filtered_df, x='sample', y='compoundname', color='compoundclass', template="simple_white")
-    fig.update_layout(
-        xaxis_title='Sample',
-        yaxis_title='Compound',
-        title='Scatter Plot of Samples vs Compounds'
-    )
+    # Define a altura base do gráfico e a altura adicional por rótulo excedente
+    base_height = 400  # Altura base do gráfico
+    extra_height_per_label = 20  # Altura adicional por cada rótulo excedente
+
+    # Calcula o número de rótulos no eixo y
+    num_labels = df['compoundname'].nunique()
+
+    # Define um limite para quando adicionar altura extra
+    label_limit = 20  # Número de rótulos que podem caber na altura base
+
+    # Calcula a altura total do gráfico
+    height = base_height + max(0, (num_labels - label_limit)) * extra_height_per_label
+
+    # Cria o gráfico de dispersão
+    fig = px.scatter(df, x='sample', y='compoundname', color='compoundclass', title='Scatter Plot of Samples vs Compounds', template="simple_white")
+
+    # Ajusta o layout do gráfico com a altura calculada
+    fig.update_layout(height=height)
+
     return fig
