@@ -127,6 +127,8 @@ def plot_sample_ko_counts(sample_count_df, selected_pathway):
     return fig
 
 
+
+
 def plot_compound_scatter(df):
     """
     Cria um gráfico de dispersão para visualizar a relação entre amostras e compostos, filtrados por classe de composto.
@@ -145,12 +147,54 @@ def plot_compound_scatter(df):
     label_limit = 20  # Número de rótulos que podem caber na altura base
 
     # Calcula a altura total do gráfico
-    height = base_height + max(0, (num_labels - label_limit)) * extra_height_per_label
+    if num_labels > label_limit:
+        height = base_height + (num_labels - label_limit) * extra_height_per_label
+    else:
+        height = base_height
 
     # Cria o gráfico de dispersão
     fig = px.scatter(df, x='sample', y='compoundname', color='compoundclass', title='Scatter Plot of Samples vs Compounds', template="simple_white")
 
     # Ajusta o layout do gráfico com a altura calculada
-    fig.update_layout(height=height)
+    fig.update_layout(
+        height=height,
+        yaxis=dict(
+            tickmode='array',
+            tickvals=df['compoundname'].unique(),
+            ticktext=df['compoundname'].unique(),
+        ),
+        xaxis_tickangle=45
+    )
 
+    return fig
+
+def plot_sample_ranking(sample_ranking_df):
+    """
+    Cria um gráfico de dispersão para visualizar o ranking das amostras com base no número de compostos únicos.
+
+    :param sample_ranking_df: DataFrame com as amostras e o número de compostos únicos associados.
+    :return: Objeto Figure com o gráfico de dispersão.
+    """
+    # Define a altura base do gráfico e a altura adicional por rótulo excedente
+    base_height = 400  # Altura base do gráfico
+    extra_height_per_label = 20  # Altura adicional por cada rótulo excedente
+
+    # Calcula o número de rótulos no eixo y
+    num_labels = sample_ranking_df['sample'].nunique()
+
+    # Define um limite para quando adicionar altura extra
+    label_limit = 20  # Número de rótulos que podem caber na altura base
+
+    # Calcula a altura total do gráfico
+    if num_labels > label_limit:
+        height = base_height + (num_labels - label_limit) * extra_height_per_label
+    else:
+        height = base_height
+
+    fig = px.scatter(sample_ranking_df, x='num_compounds', y='sample', title='Ranking of Samples by Compound Interaction', template='simple_white')
+    fig.update_layout(
+        xaxis_title='Number of Compounds',
+        yaxis_title='Sample',
+        height=height
+    )
     return fig

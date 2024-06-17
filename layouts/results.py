@@ -1,10 +1,11 @@
-# my_dash_app/layouts/results.py
+# layouts/results.py
 
 from dash import html
 import dash_bootstrap_components as dbc
 from layouts.P1_KO_COUNT import get_ko_count_bar_chart_layout, get_ko_violin_boxplot_layout
 from layouts.P2_KO_20PATHWAY import get_pathway_ko_bar_chart_layout, get_sample_ko_pathway_bar_chart_layout
 from layouts.P3_compounds_layout import get_compound_scatter_layout
+from layouts.P4_rank_compounds_layout import get_rank_compounds_layout
 
 def get_results_layout():
     return html.Div([
@@ -35,8 +36,13 @@ def get_results_layout():
                 ),
                 dbc.AccordionItem(
                     get_compound_scatter_layout(),
-                    title="Sample vs Compounds Scatter Plot"
+                    title="Scatter Plot of Samples vs Compounds"
                 ),
+                dbc.AccordionItem(
+                    get_rank_compounds_layout(),
+                    title="Ranking of Samples by Compound Interaction"
+                ),
+                # Adicionar mais análises conforme necessário
             ],
             start_collapsed=True,
             always_open=True,

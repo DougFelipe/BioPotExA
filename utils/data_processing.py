@@ -125,3 +125,16 @@ def process_compound_data(merged_df):
     """
     # Lógica de processamento aqui, se necessário
     return merged_df
+
+
+def process_sample_ranking(merged_df):
+    """
+    Processa os dados para calcular o ranking das amostras com base no número de compostos únicos.
+
+    :param merged_df: DataFrame mesclado.
+    :return: DataFrame com as amostras e o número de compostos únicos associados, ordenado por número de compostos.
+    """
+    sample_ranking = merged_df.groupby('sample')['compoundname'].nunique().reset_index()
+    sample_ranking.columns = ['sample', 'num_compounds']
+    sample_ranking = sample_ranking.sort_values(by='num_compounds', ascending=False)
+    return sample_ranking
