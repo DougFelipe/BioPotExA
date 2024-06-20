@@ -1,30 +1,55 @@
-# index.py - Documentação
+# index.py
 
-Este arquivo serve como o ponto de entrada para a aplicação Dash, organizando a estrutura da interface do usuário e interligando componentes visuais à lógica interativa da aplicação.
+## Descrição
+Este arquivo inicializa a aplicação Dash, define o layout principal e configura a navegação entre as abas.
 
-## Estrutura e Componentes Principais:
+## Funções e Componentes
+- Importações de componentes essenciais do Dash e layouts personalizados.
+- Configuração do layout principal da aplicação.
+- Inicialização do servidor.
 
-### Header
-- **Descrição**: Componente personalizado responsável por exibir o cabeçalho da aplicação. Ele estabelece a identidade visual e fornece contexto inicial ao usuário.
-- **Implementação**: `Header()`
+## Importações
+- `dash`: 
+  - `Dash`, `dcc`, `html`
+- `components.header`: 
+  - `Header`
+- `layouts`: 
+  - `get_about_layout`, `get_dataAnalysis_layout`
+- `callbacks`: 
+  - `P1_COUNT_KO_callbacks`, `P2_KO_20PATHWAY_callbacks`, `callbacks`, `P3_compounds_callbacks`, `P4_rank_compounds_callbacks`
+- `app`: 
+  - Instância principal da aplicação Dash
 
-### Navegação por Abas
-- **Descrição**: Utiliza `dcc.Tabs` e `dcc.Tab` para criar um sistema de navegação por abas, permitindo ao usuário alternar entre diferentes seções da aplicação, como "About" e "Data Analysis".
-- **Implementação**: `dcc.Tabs(id="tabs", value='tab-about', children=[dcc.Tab(...)])`
+## Layout
+### Cabeçalho
+- **Header**: Inclui o componente de cabeçalho personalizado.
 
-### Conteúdo Dinâmico das Abas
-- **Descrição**: Área de conteúdo que é atualizada dinamicamente com base na aba selecionada pelo usuário, mantendo a interface reativa e adaptável às interações do usuário.
-- **Implementação**: `html.Div(id='tabs-content', className='tabs-content')`
+### Abas de Navegação
+- **dcc.Tabs**: Navegação entre as páginas 'About' e 'Data Analysis'.
+  - **Propriedades**:
+    - `id="tabs"`
+    - `value='tab-about'`
+    - `className='main-tabs'`
+    - `children`: 
+      - `dcc.Tab(label='About', value='tab-about', className='tab', selected_className='tab--selected')`
+      - `dcc.Tab(label='Data Analysis', value='tab-data-analysis', className='tab', selected_className='tab--selected')`
+
+### Conteúdo das Abas
+- **html.Div (tabs-content)**: Atualizado dinamicamente com base na aba selecionada.
+  - **Propriedades**:
+    - `id='tabs-content'`
+    - `className='tabs-content'`
 
 ### Armazenamento de Dados no Lado do Cliente
-- **Descrição**: `dcc.Store` é utilizado para armazenar dados de forma eficiente no lado do cliente, permitindo a comunicação entre callbacks sem necessidade de recarregar a página ou modificar o layout.
-- **Implementação**: `dcc.Store(id='stored-data')`
+- **dcc.Store**: Utilizado para compartilhar dados entre callbacks sem afetar o layout.
+  - **Propriedades**:
+    - `id='stored-data'`
 
-### Container para Gráficos e Resultados de Análises (Oculto Inicialmente)
-- **Descrição**: Este container, inicialmente oculto, pode ser utilizado para exibir gráficos, tabelas ou resultados de análises conforme necessário, baseando-se nos dados processados.
-- **Implementação**: `html.Div(id='output-graphs', style={'display': 'none'})`
+### Container para Gráficos (Inicialmente Oculto)
+- **html.Div (output-graphs)**: Pode ser utilizado para exibir gráficos com base em dados processados.
+  - **Propriedades**:
+    - `id='output-graphs'`
+    - `style={'display': 'none'}`
 
-## Inicialização do Servidor
-
-O arquivo `index.py` também é responsável por iniciar o servidor da aplicação Dash, sendo o script principal que deve ser executado para colocar a aplicação em funcionamento. Durante o desenvolvimento, a opção `debug=True` é utilizada para fornecer feedback imediato sobre as alterações no código.
-
+## Inicialização
+- **`app.run_server(debug=True)`**: Inicia o servidor em modo de depuração.

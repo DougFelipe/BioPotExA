@@ -50,14 +50,3 @@ Processa cada linha do conteúdo, extraindo informações com expressões regula
 - **Identificadores**: Expressão regular para identificar linhas que começam com `>` seguidas de caracteres (identificadores de amostra).
 - **Dados (KOs)**: Expressão regular para extrair valores que começam com `K` seguidos de dígitos (ex: K01234).
 
-## Exemplo de Uso
-
-```python
-# Supondo que 'uploaded_file_contents' e 'uploaded_file_name' sejam suas variáveis de conteúdo e nome de arquivo:
-
-df, error = validate_and_process_input(uploaded_file_contents, uploaded_file_name)
-
-if error:
-    print(f"Erro: {error}")
-else:
-    print(df)

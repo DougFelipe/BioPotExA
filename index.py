@@ -1,10 +1,20 @@
-# my_dash_app/index.py
+"""
+index.py
+---------
+Este arquivo inicializa a aplicação Dash, define o layout principal e configura a navegação entre as abas.
+"""
 
 # -------------------------------
 # Importações
 # -------------------------------
+
+# Importa os componentes principais do Dash para construção da interface.
 from dash import Dash, dcc, html
+
+# Importa o componente de cabeçalho personalizado.
 from components.header import Header
+
+# Importa funções para obter layouts das páginas.
 from layouts.about import get_about_layout
 from layouts.data_analysis import get_dataAnalysis_layout
 
@@ -14,7 +24,6 @@ import callbacks.P2_KO_20PATHWAY_callbacks  # Importa os callbacks do novo arqui
 import callbacks.callbacks  # Importa os callbacks existentes
 import callbacks.P3_compounds_callbacks
 import callbacks.P4_rank_compounds_callbacks
-
 
 # Importação da aplicação deve vir depois dos callbacks
 from app import app
