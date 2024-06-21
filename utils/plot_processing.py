@@ -168,33 +168,79 @@ def plot_compound_scatter(df):
 
     return fig
 
+
+
+
+
 def plot_sample_ranking(sample_ranking_df):
     """
-    Cria um gráfico de dispersão para visualizar o ranking das amostras com base no número de compostos únicos.
+    Cria um gráfico de barras para visualizar o ranking das amostras com base no número de compostos únicos.
 
     :param sample_ranking_df: DataFrame com as amostras e o número de compostos únicos associados.
-    :return: Objeto Figure com o gráfico de dispersão.
+    :return: Objeto Figure com o gráfico de barras.
     """
-    # Define a altura base do gráfico e a altura adicional por rótulo excedente
-    base_height = 400  # Altura base do gráfico
-    extra_height_per_label = 20  # Altura adicional por cada rótulo excedente
+    # Ordena os dados pelo número de compostos em ordem decrescente
+    sample_ranking_df = sample_ranking_df.sort_values(by='num_compounds', ascending=False)
 
-    # Calcula o número de rótulos no eixo y
-    num_labels = sample_ranking_df['sample'].nunique()
+    # Cria o gráfico de barras
+    fig = px.bar(sample_ranking_df, x='sample', y='num_compounds',
+                 title='Ranking of Samples by Compound Interaction', template='simple_white')
 
-    # Define um limite para quando adicionar altura extra
-    label_limit = 20  # Número de rótulos que podem caber na altura base
-
-    # Calcula a altura total do gráfico
-    if num_labels > label_limit:
-        height = base_height + (num_labels - label_limit) * extra_height_per_label
-    else:
-        height = base_height
-
-    fig = px.scatter(sample_ranking_df, x='num_compounds', y='sample', title='Ranking of Samples by Compound Interaction', template='simple_white')
+    # Atualiza o layout do gráfico
     fig.update_layout(
-        xaxis_title='Number of Compounds',
-        yaxis_title='Sample',
-        height=height
+        xaxis_title='Sample',
+        yaxis_title='Number of Compounds',
+        xaxis={'categoryorder': 'total descending'}  # Ordena o eixo x de forma decrescente
     )
+
+    return fig
+
+
+# ----------------------------------------
+# P5_rank_compounds
+# ----------------------------------------
+
+def plot_compound_ranking(compound_ranking_df):
+    """
+    Cria um gráfico de barras para visualizar o ranking dos compostos com base no número de amostras únicas.
+
+    :param compound_ranking_df: DataFrame com os compostos e o número de amostras únicas associadas.
+    :return: Objeto Figure com o gráfico de barras.
+    """
+    # Cria o gráfico de barras
+    fig = px.bar(compound_ranking_df, x='compoundname', y='num_samples',
+                 title='Ranking of Compounds by Sample Interaction', template='simple_white')
+
+    # Atualiza o layout do gráfico
+    fig.update_layout(
+        xaxis_title='Compound',
+        yaxis_title='Number of Samples',
+        xaxis={'categoryorder': 'total descending'},  # Ordena o eixo x de forma decrescente
+        xaxis_tickangle=45
+    )
+
+    return fig
+
+# ----------------------------------------
+# P6_rank_genes
+# ----------------------------------------
+def plot_compound_gene_ranking(compound_gene_ranking_df):
+    """
+    Cria um gráfico de barras para visualizar o ranking dos compostos com base no número de genes únicos atuantes.
+
+    :param compound_gene_ranking_df: DataFrame com os compostos e o número de genes únicos atuantes.
+    :return: Objeto Figure com o gráfico de barras.
+    """
+    # Cria o gráfico de barras
+    fig = px.bar(compound_gene_ranking_df, x='compoundname', y='num_genes',
+                 title='Ranking of Compounds by Gene Interaction', template='simple_white')
+
+    # Atualiza o layout do gráfico
+    fig.update_layout(
+        xaxis_title='Compound',
+        yaxis_title='Number of Genes',
+        xaxis={'categoryorder': 'total descending'},  # Ordena o eixo x de forma decrescente
+        xaxis_tickangle=45
+    )
+
     return fig

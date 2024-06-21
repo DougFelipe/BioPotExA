@@ -1,11 +1,11 @@
-# layouts/results.py
-
 from dash import html
 import dash_bootstrap_components as dbc
 from layouts.P1_KO_COUNT import get_ko_count_bar_chart_layout, get_ko_violin_boxplot_layout
 from layouts.P2_KO_20PATHWAY import get_pathway_ko_bar_chart_layout, get_sample_ko_pathway_bar_chart_layout
 from layouts.P3_compounds_layout import get_compound_scatter_layout
-from layouts.P4_rank_compounds_layout import get_rank_compounds_layout
+from layouts.P4_rank_compounds_layout import get_rank_compounds_layout as get_sample_rank_compounds_layout
+from layouts.P5_rank_compounds_layout import get_rank_compounds_layout as get_compound_rank_layout
+from layouts.P6_rank_compounds_layout import get_rank_compounds_gene_layout
 
 def get_results_layout():
     return html.Div([
@@ -39,10 +39,17 @@ def get_results_layout():
                     title="Scatter Plot of Samples vs Compounds"
                 ),
                 dbc.AccordionItem(
-                    get_rank_compounds_layout(),
+                    get_sample_rank_compounds_layout(),
                     title="Ranking of Samples by Compound Interaction"
                 ),
-                # Adicionar mais análises conforme necessário
+                dbc.AccordionItem(
+                    get_compound_rank_layout(),
+                    title="Ranking of Compounds by Sample Interaction"
+                ),
+                dbc.AccordionItem(
+                    get_rank_compounds_gene_layout(),
+                    title="Ranking of Compounds by Gene Interaction"
+                ),
             ],
             start_collapsed=True,
             always_open=True,

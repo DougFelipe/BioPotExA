@@ -1,7 +1,6 @@
 # layouts/P4_rank_compounds_layout.py
 
 from dash import html, dcc
-import dash_bootstrap_components as dbc
 
 def get_rank_compounds_layout():
     """
@@ -11,10 +10,9 @@ def get_rank_compounds_layout():
         Uma `html.Div` contendo o gráfico de ranking.
     """
     return html.Div([
-        dbc.Card(
-            dbc.CardBody([
-               # html.H4('Ranking of Samples by Compound Interaction', className='card-title'),
-                dcc.Graph(id='rank-compounds-scatter-plot')
-            ])
+        html.Div(
+            dcc.Graph(id='rank-compounds-scatter-plot'),
+            className='graph-container',  # Adiciona classe para estilização
+            style={'height': 'auto', 'overflowY': 'auto'}  # Define a altura como auto para permitir ajuste dinâmico
         )
-    ])
+    ], className='graph-card')

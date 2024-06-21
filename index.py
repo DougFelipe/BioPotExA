@@ -24,6 +24,8 @@ import callbacks.P2_KO_20PATHWAY_callbacks  # Importa os callbacks do novo arqui
 import callbacks.callbacks  # Importa os callbacks existentes
 import callbacks.P3_compounds_callbacks
 import callbacks.P4_rank_compounds_callbacks
+import callbacks.P5_rank_compounds_callbacks
+import callbacks.P6_rank_compounds_callbacks
 
 # Importação da aplicação deve vir depois dos callbacks
 from app import app

@@ -39,6 +39,10 @@ def merge_with_kegg(input_df, kegg_path='data/kegg_20degradation_pathways.xlsx')
 # Funções de Processamento de Dados
 # ----------------------------------------
 
+# ----------------------------------------
+# P1_COUNT_KO
+# ----------------------------------------
+
 # Função para processar dados de KO
 def process_ko_data(merged_df):
     """
@@ -96,7 +100,7 @@ def count_ko_per_sample_for_pathway(merged_df, selected_pathway):
     sample_count = filtered_df.groupby('sample')['ko'].nunique().reset_index(name='unique_ko_count')  # Contagem de KOs únicos por sample
     return sample_count.sort_values('unique_ko_count', ascending=False)  # Retorna o DataFrame ordenado pela contagem de KOs
 
-# Função para processar dados de compostos
+# Função para processar dados de compostos P4
 def process_compound_data(merged_df):
     """
     Processa os dados para o gráfico de pontos de compostos.
@@ -107,14 +111,49 @@ def process_compound_data(merged_df):
     return merged_df  # Lógica de processamento aqui, se necessário
 
 # Função para processar ranking de amostras
+# utils/data_processing.py
+
+# ----------------------------------------
+# P4_rank_samples
+# ----------------------------------------
 def process_sample_ranking(merged_df):
     """
-    Processa os dados para calcular o ranking das amostras com base no número de compostos únicos.
+    Processa os dados para calcular o número de compostos únicos associados a cada amostra.
 
-    :param merged_df: DataFrame mesclado.
-    :return: DataFrame com as amostras e o número de compostos únicos associados, ordenado por número de compostos.
+    :param merged_df: DataFrame resultante da mesclagem com o banco de dados.
+    :return: DataFrame com as amostras e o número de compostos únicos associados.
     """
-    sample_ranking = merged_df.groupby('sample')['compoundname'].nunique().reset_index()  # Agrupa por sample e conta compostos únicos
-    sample_ranking.columns = ['sample', 'num_compounds']  # Renomeia as colunas
-    sample_ranking = sample_ranking.sort_values(by='num_compounds', ascending=False)  # Ordena por número de compostos
-    return sample_ranking  # Retorna o DataFrame com o ranking das amostras
+    sample_ranking = merged_df.groupby('sample')['compoundname'].nunique().reset_index(name='num_compounds')
+    sample_ranking = sample_ranking.sort_values(by='num_compounds', ascending=False)
+    return sample_ranking
+
+
+# ----------------------------------------
+# P5_rank_compounds
+# ----------------------------------------
+
+def process_compound_ranking(merged_df):
+    """
+    Processa os dados para calcular o número de amostras únicas associadas a cada composto.
+
+    :param merged_df: DataFrame resultante da mesclagem com o banco de dados.
+    :return: DataFrame com os compostos e o número de amostras únicas associadas.
+    """
+    compound_ranking = merged_df.groupby('compoundname')['sample'].nunique().reset_index(name='num_samples')
+    compound_ranking = compound_ranking.sort_values(by='num_samples', ascending=False)
+    return compound_ranking
+
+
+# ----------------------------------------
+# P6_rank_genes
+# ----------------------------------------
+def process_compound_gene_ranking(merged_df):
+    """
+    Processa os dados para calcular o número de genes únicos atuantes em cada composto.
+
+    :param merged_df: DataFrame resultante da mesclagem com o banco de dados.
+    :return: DataFrame com os compostos e o número de genes únicos atuantes.
+    """
+    compound_gene_ranking = merged_df.groupby('compoundname')['genesymbol'].nunique().reset_index(name='num_genes')
+    compound_gene_ranking = compound_gene_ranking.sort_values(by='num_genes', ascending=False)
+    return compound_gene_ranking
