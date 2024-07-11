@@ -244,3 +244,39 @@ def plot_compound_gene_ranking(compound_gene_ranking_df):
     )
 
     return fig
+
+
+# ----------------------------------------
+# P7_gene_compound_association
+# ----------------------------------------
+
+def plot_gene_compound_scatter(df):
+    """
+    Cria um scatter plot para visualizar a relação entre genes e compostos, filtrados pela quantidade de compostos únicos associados.
+
+    :param df: DataFrame filtrado contendo as colunas 'genesymbol' e 'compoundname'.
+    :return: Objeto Figure com o scatter plot.
+    """
+    fig = px.scatter(df, x='genesymbol', y='compoundname', title='Scatter Plot of Genes vs Compounds', template='simple_white')
+    fig.update_layout(
+        xaxis_title='Gene Symbol',
+        yaxis_title='Compound Name'
+    )
+    return fig
+
+# ----------------------------------------
+# P8_gene_sample_association
+# ----------------------------------------
+def plot_sample_gene_scatter(df):
+    """
+    Cria um scatter plot para visualizar a relação entre samples e genes, filtrados pela quantidade de compostos únicos associados.
+
+    :param df: DataFrame filtrado contendo as colunas 'sample' e 'genesymbol'.
+    :return: Objeto Figure com o scatter plot.
+    """
+    fig = px.scatter(df, x='sample', y='genesymbol', title='Scatter Plot of Samples vs Genes', template='simple_white')
+    fig.update_layout(
+        xaxis_title='Sample',
+        yaxis_title='Gene Symbol'
+    )
+    return fig

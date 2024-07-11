@@ -157,3 +157,34 @@ def process_compound_gene_ranking(merged_df):
     compound_gene_ranking = merged_df.groupby('compoundname')['genesymbol'].nunique().reset_index(name='num_genes')
     compound_gene_ranking = compound_gene_ranking.sort_values(by='num_genes', ascending=False)
     return compound_gene_ranking
+
+
+# ----------------------------------------
+# P7_gene_compound_association
+# ----------------------------------------
+def process_gene_compound_association(merged_df):
+    """
+    Processa os dados para calcular a quantidade de compostos únicos associados a cada gene.
+
+    :param merged_df: DataFrame resultante da mesclagem com o banco de dados.
+    :return: DataFrame com os genes e a quantidade de compostos únicos associados.
+    """
+    gene_compound_association = merged_df.groupby('genesymbol')['compoundname'].nunique().reset_index(name='num_compounds')
+    gene_compound_association = gene_compound_association.sort_values(by='num_compounds', ascending=False)
+    return gene_compound_association
+
+
+# ----------------------------------------
+# P8_gene_sample_association
+# ----------------------------------------
+
+def process_gene_sample_association(merged_df):
+    """
+    Processa os dados para calcular a quantidade de compostos únicos associados a cada gene.
+
+    :param merged_df: DataFrame resultante da mesclagem com o banco de dados.
+    :return: DataFrame com os genes e a quantidade de compostos únicos associados.
+    """
+    gene_sample_association = merged_df.groupby('genesymbol')['compoundname'].nunique().reset_index(name='num_compounds')
+    gene_sample_association = gene_sample_association.sort_values(by='num_compounds', ascending=False)
+    return gene_sample_association

@@ -26,6 +26,9 @@ import callbacks.P3_compounds_callbacks
 import callbacks.P4_rank_compounds_callbacks
 import callbacks.P5_rank_compounds_callbacks
 import callbacks.P6_rank_compounds_callbacks
+import callbacks.P7_compound_x_genesymbol_callbacks
+import callbacks.P8_sample_x_genesymbol_callbacks
+
 
 # Importação da aplicação deve vir depois dos callbacks
 from app import app
