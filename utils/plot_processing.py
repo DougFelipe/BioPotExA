@@ -280,3 +280,24 @@ def plot_sample_gene_scatter(df):
         yaxis_title='Gene Symbol'
     )
     return fig
+
+
+# ----------------------------------------
+# P9_sample_reference_heatmap
+# ----------------------------------------
+
+def plot_sample_reference_heatmap(df):
+    """
+    Cria um heatmap para visualizar a contagem de compoundname para cada combinação de samples e referenceAG.
+
+    :param df: DataFrame pivotado contendo as contagens.
+    :return: Objeto Figure com o heatmap.
+    """
+    fig = px.imshow(df, 
+                    labels=dict(x="Sample", y="Reference AG", color="Compound Count"), 
+                    x=df.columns, 
+                    y=df.index, 
+                    color_continuous_scale='Viridis', 
+                    title='Heatmap of Samples vs Reference AG')
+    fig.update_layout(template='simple_white')
+    return fig

@@ -6,8 +6,9 @@ from layouts.P3_compounds_layout import get_compound_scatter_layout
 from layouts.P4_rank_compounds_layout import get_rank_compounds_layout as get_sample_rank_compounds_layout
 from layouts.P5_rank_compounds_layout import get_rank_compounds_layout as get_compound_rank_layout
 from layouts.P6_rank_compounds_layout import get_rank_compounds_gene_layout
-from layouts.P7_layout import get_gene_compound_scatter_layout
-from layouts.P8_layout import get_sample_gene_scatter_layout
+from layouts.P7_compound_x_genesymbol_layoyt import get_gene_compound_scatter_layout
+from layouts.P8_sample_x_genesymbol_layout import get_sample_gene_scatter_layout
+from layouts.P9_layout import get_sample_reference_heatmap_layout
 
 def get_results_layout():
     return html.Div([
@@ -59,6 +60,10 @@ def get_results_layout():
                 dbc.AccordionItem(
                     get_sample_gene_scatter_layout(),
                     title="Scatter Plot of Samples vs Genes"
+                ),
+                dbc.AccordionItem(
+                    get_sample_reference_heatmap_layout(),
+                    title="Heatmap of Samples vs Reference AG"
                 ),
             ],
             start_collapsed=True,

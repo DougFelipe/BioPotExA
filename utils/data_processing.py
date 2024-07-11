@@ -188,3 +188,19 @@ def process_gene_sample_association(merged_df):
     gene_sample_association = merged_df.groupby('genesymbol')['compoundname'].nunique().reset_index(name='num_compounds')
     gene_sample_association = gene_sample_association.sort_values(by='num_compounds', ascending=False)
     return gene_sample_association
+
+
+# ----------------------------------------
+# P9_sample_reference_heatmap
+# ----------------------------------------
+
+def process_sample_reference_heatmap(merged_df):
+    """
+    Processa os dados para calcular a contagem de compoundname para cada combinação de samples e referenceAG.
+
+    :param merged_df: DataFrame resultante da mesclagem com o banco de dados.
+    :return: DataFrame pivotado para o heatmap.
+    """
+    heatmap_df = merged_df.groupby(['sample', 'referenceAG'])['compoundname'].nunique().reset_index()
+    heatmap_pivot = heatmap_df.pivot(index='referenceAG', columns='sample', values='compoundname').fillna(0)
+    return heatmap_pivot
