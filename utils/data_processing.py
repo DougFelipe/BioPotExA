@@ -204,3 +204,59 @@ def process_sample_reference_heatmap(merged_df):
     heatmap_df = merged_df.groupby(['sample', 'referenceAG'])['compoundname'].nunique().reset_index()
     heatmap_pivot = heatmap_df.pivot(index='referenceAG', columns='sample', values='compoundname').fillna(0)
     return heatmap_pivot
+
+# ----------------------------------------
+# P10_group_by_class Agrupa amostras por perfil de genes para cada classe de compostos
+# ----------------------------------------
+
+def group_by_class(compoundclass_choice, tabela):
+    dados_selecionados = tabela[tabela['compoundclass'] == compoundclass_choice]
+    
+    grupos = []
+    for sample in dados_selecionados['sample'].unique():
+        compostos = dados_selecionados.loc[dados_selecionados['sample'] == sample, 'compoundname'].unique().tolist()
+        if len(compostos) > 0:
+            grupo_existente = False
+            for grupo in grupos:
+                if set(compostos) == set(grupo['compostos']):
+                    grupo_existente = True
+                    grupo['samples'].append(sample)
+                    break
+            if not grupo_existente:
+                novo_grupo = {'compostos': compostos, 'samples': [sample]}
+                grupos.append(novo_grupo)
+    
+    tabela_grupos = tabela.copy()
+    tabela_grupos['grupo'] = None
+    for i, grupo in enumerate(grupos):
+        grupo_samples = grupo['samples']
+        grupo_compostos = grupo['compostos']
+        tabela_grupos.loc[(tabela_grupos['sample'].isin(grupo_samples)) & 
+                          (tabela_grupos['compoundname'].isin(grupo_compostos)), 'grupo'] = f"{compoundclass_choice} - Group {i+1}"
+    
+    tabela_grupos = tabela_grupos[tabela_grupos['compoundclass'] == compoundclass_choice]
+    
+    return tabela_grupos
+
+def minimize_groups(df):
+    group_compounds = df.groupby('grupo')['compoundname'].apply(lambda x: list(set(x))).reset_index()
+    
+    all_compounds = df['compoundname'].unique().tolist()
+    selected_groups = []
+    
+    while len(all_compounds) > 0:
+        max_cover = 0
+        best_group = None
+        for i in range(len(group_compounds)):
+            group = group_compounds.iloc[i]['grupo']
+            compounds = group_compounds.iloc[i]['compoundname']
+            cover = len(set(all_compounds) & set(compounds))
+            if cover > max_cover:
+                max_cover = cover
+                best_group = group
+        
+        all_compounds = list(set(all_compounds) - set(group_compounds.loc[group_compounds['grupo'] == best_group, 'compoundname'].values[0]))
+        selected_groups.append(best_group)
+        group_compounds = group_compounds[group_compounds['grupo'] != best_group]
+    
+    return selected_groups

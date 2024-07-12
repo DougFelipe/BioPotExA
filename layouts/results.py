@@ -8,7 +8,8 @@ from layouts.P5_rank_compounds_layout import get_rank_compounds_layout as get_co
 from layouts.P6_rank_compounds_layout import get_rank_compounds_gene_layout
 from layouts.P7_compound_x_genesymbol_layoyt import get_gene_compound_scatter_layout
 from layouts.P8_sample_x_genesymbol_layout import get_sample_gene_scatter_layout
-from layouts.P9_layout import get_sample_reference_heatmap_layout
+from layouts.P9_sample_x_referenceAG_layout import get_sample_reference_heatmap_layout
+from layouts.P10_layout import get_sample_groups_layout
 
 def get_results_layout():
     return html.Div([
@@ -64,6 +65,10 @@ def get_results_layout():
                 dbc.AccordionItem(
                     get_sample_reference_heatmap_layout(),
                     title="Heatmap of Samples vs Reference AG"
+                ),
+                dbc.AccordionItem(
+                    get_sample_groups_layout(),
+                    title="Sample Groups by Compound Class"
                 ),
             ],
             start_collapsed=True,

@@ -301,3 +301,21 @@ def plot_sample_reference_heatmap(df):
                     title='Heatmap of Samples vs Reference AG')
     fig.update_layout(template='simple_white')
     return fig
+
+
+
+# ----------------------------------------
+# P10_group_by_class Agrupa amostras por perfil de genes para cada classe de compostos
+# ----------------------------------------
+
+
+def plot_sample_groups(df):
+    """
+    Cria um scatter plot para visualizar os grupos de samples baseados na relação com compoundname.
+
+    :param df: DataFrame contendo os grupos de samples.
+    :return: Objeto Figure com o scatter plot.
+    """
+    fig = px.scatter(df, x='compoundname', y='sample', color='grupo', title='Sample Groups by Compound Interaction', facet_col='grupo', template='simple_white')
+    fig.update_layout(xaxis_title='Compound Name', yaxis_title='Sample')
+    return fig
