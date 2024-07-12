@@ -1,5 +1,6 @@
 import plotly.express as px
 import plotly.graph_objects as go
+import pandas as pd
 
 
 def plot_ko_count(ko_count_df):
@@ -309,13 +310,38 @@ def plot_sample_reference_heatmap(df):
 # ----------------------------------------
 
 
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+
 def plot_sample_groups(df):
     """
-    Cria um scatter plot para visualizar os grupos de samples baseados na relação com compoundname.
-
+    Cria um scatter plot para visualizar os grupos de samples baseados na relação com compoundname utilizando subplots.
+    
     :param df: DataFrame contendo os grupos de samples.
-    :return: Objeto Figure com o scatter plot.
+    :return: Objeto Figure com os subplots.
     """
-    fig = px.scatter(df, x='compoundname', y='sample', color='grupo', title='Sample Groups by Compound Interaction', facet_col='grupo', template='simple_white')
-    fig.update_layout(xaxis_title='Compound Name', yaxis_title='Sample')
+    unique_groups = df['grupo'].unique()
+    fig = make_subplots(rows=1, cols=len(unique_groups), shared_yaxes=True, subplot_titles=unique_groups)
+
+    # Iterar sobre cada grupo e criar subplots
+    for i, group in enumerate(unique_groups):
+        group_df = df[df['grupo'] == group]
+        fig.add_trace(go.Scatter(x=group_df['sample'], y=group_df['compoundname'], mode='markers', name=group, showlegend=False), row=1, col=i+1)
+    
+    fig.update_layout(
+        title_text='Sample Groups by Compound Interaction', 
+        template='simple_white',
+        showlegend=False
+    )
+
+    # Atualizar eixos para cada subplot
+    for i in range(1, len(unique_groups) + 1):
+        fig.update_xaxes(row=1, col=i, tickangle= -45, title_text=None)
+        fig.update_yaxes(row=1, col=i, tickangle=-45, title_text=None)
+    
     return fig
+
+
+
+
+
