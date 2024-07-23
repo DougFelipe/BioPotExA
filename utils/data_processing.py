@@ -4,6 +4,7 @@
 import pandas as pd
 import plotly.graph_objects as go
 import plotly.express as px
+from plotly.subplots import make_subplots
 
 # ----------------------------------------
 # Funções de Mesclagem de Dados
@@ -34,6 +35,25 @@ def merge_with_kegg(input_df, kegg_path='data/kegg_20degradation_pathways.xlsx')
     kegg_df = pd.read_excel(kegg_path)  # Carregando os dados do KEGG
     merged_df = pd.merge(input_df, kegg_df, on='ko', how='inner')  # Mesclando os dados de entrada com os dados do KEGG
     return merged_df  # Retorna o DataFrame mesclado
+
+# ----------------------------------------
+# MERGE COM HADEG DATABASE
+# ----------------------------------------
+
+import pandas as pd
+
+def merge_input_with_database_hadegDB(input_data, database_filepath='data/database_hadegDB.xlsx'):
+    """
+    Mescla os dados de entrada com os dados do banco de dados hadegDB.
+    
+    :param input_data: DataFrame com os dados de entrada.
+    :param database_filepath: Caminho para o arquivo do banco de dados.
+    :return: DataFrame resultante da mesclagem.
+    """
+    database_df = pd.read_excel(database_filepath)  # Carrega os dados do banco de dados
+    merged_df = pd.merge(input_data, database_df, on='ko', how='inner')  # Mescla os DataFrames
+    return merged_df  # Retorna o DataFrame mesclado
+
 
 # ----------------------------------------
 # Funções de Processamento de Dados
@@ -260,3 +280,16 @@ def minimize_groups(df):
         group_compounds = group_compounds[group_compounds['grupo'] != best_group]
     
     return selected_groups
+
+# ----------------------------------------
+# P11 HADEG HEATMAP ORTHOLOGS BY SAMPLE
+# ----------------------------------------
+def process_gene_sample_data(merged_df):
+    """
+    Processa os dados para gerar um DataFrame agrupado por sample e gene, contando os KOs únicos.
+
+    :param merged_df: DataFrame mesclado com os dados de entrada e do banco de dados.
+    :return: DataFrame agrupado por sample e gene com a contagem de KOs únicos.
+    """
+    grouped_df = merged_df.groupby(['sample', 'Gene', 'compound_pathway', 'Pathway'])['ko'].nunique().reset_index(name='ko_count')
+    return grouped_df

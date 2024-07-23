@@ -30,6 +30,7 @@ import callbacks.P7_compound_x_genesymbol_callbacks
 import callbacks.P8_sample_x_genesymbol_callbacks
 import callbacks.P9_sample_x_referenceAG_callbacks
 import callbacks.P10_callbacks
+import callbacks.P11_callbacks
 
 
 # Importação da aplicação deve vir depois dos callbacks

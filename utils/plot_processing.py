@@ -1,6 +1,9 @@
 import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
+from plotly.subplots import make_subplots
+import math
+
 
 
 def plot_ko_count(ko_count_df):
@@ -343,5 +346,21 @@ def plot_sample_groups(df):
 
 
 
+# ----------------------------------------
+# P11 HADEG HEATMAP ORTHOLOGS BY SAMPLE
+# ----------------------------------------
+def plot_sample_gene_heatmap(grouped_df):
+    """
+    Cria um heatmap para visualizar a relação entre genes e samples com a contagem de KOs únicos.
 
-
+    :param grouped_df: DataFrame agrupado por gene e sample com a contagem de KOs únicos.
+    :return: Objeto Figure com o heatmap.
+    """
+    fig = px.density_heatmap(grouped_df, x='sample', y='Gene', z='ko_count', color_continuous_scale='Oranges', template='simple_white')
+    fig.update_layout(
+        xaxis_title='',  # Remove o título do eixo x
+        yaxis_title='',  # Remove o título do eixo y
+        xaxis_tickangle=-45,
+        yaxis_tickangle=-45,
+    )
+    return fig

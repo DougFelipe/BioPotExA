@@ -10,6 +10,7 @@ from layouts.P7_compound_x_genesymbol_layoyt import get_gene_compound_scatter_la
 from layouts.P8_sample_x_genesymbol_layout import get_sample_gene_scatter_layout
 from layouts.P9_sample_x_referenceAG_layout import get_sample_reference_heatmap_layout
 from layouts.P10_layout import get_sample_groups_layout
+from layouts.P11_layout import get_gene_sample_heatmap_layout
 
 def get_results_layout():
     return html.Div([
@@ -69,6 +70,10 @@ def get_results_layout():
                 dbc.AccordionItem(
                     get_sample_groups_layout(),
                     title="Sample Groups by Compound Class"
+                ),
+                dbc.AccordionItem(
+                    get_gene_sample_heatmap_layout(),
+                    title="Heatmap of Genes vs Samples"
                 ),
             ],
             start_collapsed=True,
