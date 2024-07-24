@@ -29,7 +29,7 @@ import callbacks.P6_rank_compounds_callbacks
 import callbacks.P7_compound_x_genesymbol_callbacks
 import callbacks.P8_sample_x_genesymbol_callbacks
 import callbacks.P9_sample_x_referenceAG_callbacks
-import callbacks.P10_callbacks
+import callbacks.P10_sample_grouping_profile_callbacks
 import callbacks.P11_callbacks
 
 

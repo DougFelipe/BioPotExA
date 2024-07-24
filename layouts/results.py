@@ -9,7 +9,7 @@ from layouts.P6_rank_compounds_layout import get_rank_compounds_gene_layout
 from layouts.P7_compound_x_genesymbol_layoyt import get_gene_compound_scatter_layout
 from layouts.P8_sample_x_genesymbol_layout import get_sample_gene_scatter_layout
 from layouts.P9_sample_x_referenceAG_layout import get_sample_reference_heatmap_layout
-from layouts.P10_layout import get_sample_groups_layout
+from layouts.P10_sample_grouping_profile_layout import get_sample_groups_layout
 from layouts.P11_layout import get_gene_sample_heatmap_layout
 
 def get_results_layout():
@@ -20,8 +20,12 @@ def get_results_layout():
         dbc.Accordion(
             [
                 dbc.AccordionItem(
-                    html.Div(id='output-merge-table'),  # Contêiner para a tabela mesclada
+                    html.Div(id='output-merge-table'),
                     title="Results Table"
+                ),
+                dbc.AccordionItem(
+                    html.Div(id='output-merge-hadeg-table'),  # Contêiner para a nova tabela mesclada com hadegDB
+                    title="Results Table (hadegDB)"
                 ),
                 dbc.AccordionItem(
                     get_ko_count_bar_chart_layout(),
