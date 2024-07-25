@@ -56,6 +56,28 @@ def merge_input_with_database_hadegDB(input_data, database_filepath='data/databa
 
 
 # ----------------------------------------
+# MERGE COM ToxCSM DATABASE
+# ----------------------------------------
+def merge_with_toxcsm(merged_df, toxcsm_filepath='data/database_toxcsm.xlsx'):
+    """
+    Mescla a tabela resultante do merge inicial com o banco de dados ToxCSM,
+    mantendo apenas a coluna 'compoundclass' da tabela inicial.
+
+    :param merged_df: DataFrame resultante do merge inicial.
+    :param toxcsm_filepath: Caminho para o arquivo do banco de dados ToxCSM.
+    :return: DataFrame resultante da mesclagem.
+    """
+    # Carrega os dados do banco de dados ToxCSM
+    toxcsm_df = pd.read_excel(toxcsm_filepath)
+    
+    # Mantém apenas a coluna 'compoundclass' da tabela inicial
+    merged_df_reduced = merged_df[['compoundclass', 'cpd']].drop_duplicates()
+    
+    # Mescla os DataFrames pela coluna 'cpd'
+    final_merged_df = pd.merge(merged_df_reduced, toxcsm_df, on='cpd', how='inner')
+    
+    return final_merged_df
+# ----------------------------------------
 # Funções de Processamento de Dados
 # ----------------------------------------
 

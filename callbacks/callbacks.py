@@ -14,7 +14,7 @@ from utils.data_loader import load_database
 from utils.data_processing import merge_input_with_database, merge_with_kegg, count_ko_per_pathway, count_ko_per_sample_for_pathway
 from utils.table_utils import create_table_from_dataframe
 from utils.plot_processing import plot_pathway_ko_counts, plot_sample_ko_counts
-from utils.data_processing import merge_input_with_database_hadegDB
+from utils.data_processing import merge_input_with_database_hadegDB, merge_with_toxcsm
 
 
 # Callback para controle de conteúdo das abas
@@ -179,5 +179,31 @@ def update_merged_hadeg_table(n_clicks, stored_data):
         return 'No matches found with the hadegDB database.'
 
     table = create_table_from_dataframe(merged_df, 'output-merge-hadeg-table')
+
+    return html.Div(table)
+
+
+# Callback para atualizar a tabela mesclada com o banco de dados ToxCSM
+@app.callback(
+    Output('output-merge-toxcsm-table', 'children'),
+    [Input('view-results', 'n_clicks')],
+    [State('stored-data', 'data')]
+)
+def update_merged_toxcsm_table(n_clicks, stored_data):
+    if n_clicks is None or n_clicks < 1 or not stored_data:
+        return None
+
+    input_df = pd.DataFrame(stored_data)
+    merged_df = merge_input_with_database(input_df)
+
+    if merged_df.empty:
+        return 'No matches found with the database.'
+
+    final_merged_df = merge_with_toxcsm(merged_df)
+
+    if final_merged_df.empty:
+        return 'No matches found with the ToxCSM database.'
+
+    table = create_table_from_dataframe(final_merged_df, 'output-merge-toxcsm-table')
 
     return html.Div(table)
