@@ -364,3 +364,48 @@ def plot_sample_gene_heatmap(grouped_df):
         yaxis_tickangle=-45,
     )
     return fig
+
+
+# ----------------------------------------
+# P12 HADEG HEATMAP ORTHOLOGS BY sample
+# ----------------------------------------
+def plot_pathway_heatmap(df, selected_sample):
+    """
+    Plota um heatmap mostrando a contagem de KOs por Pathway e Compound Pathway para uma amostra selecionada.
+
+    :param df: DataFrame mesclado contendo os dados de entrada e do banco de dados.
+    :param selected_sample: Amostra selecionada para visualização no heatmap.
+    :return: Objeto Figure com o heatmap.
+    """
+    df = df[df['sample'] == selected_sample]  # Filtra os dados para a amostra selecionada
+
+    compound_pathways = df['compound_pathway'].unique()
+    n_rows = len(compound_pathways)
+
+    fig = make_subplots(
+        rows=n_rows, cols=1,
+        shared_xaxes=True,
+        vertical_spacing=0.02,
+        subplot_titles=[f'Compound Pathway: {cp}' for cp in compound_pathways]
+    )
+
+    for i, compound_pathway in enumerate(compound_pathways, start=1):
+        df_filtered = df[df['compound_pathway'] == compound_pathway]
+        heatmap_data = df_filtered.pivot_table(index='Pathway', columns='compound_pathway', values='ko', aggfunc='count', fill_value=0)
+
+        heatmap = go.Heatmap(
+            z=heatmap_data.values,
+            x=heatmap_data.columns,
+            y=heatmap_data.index,
+            colorscale='Oranges'
+        )
+
+        fig.add_trace(heatmap, row=i, col=1)
+
+    fig.update_layout(
+        height=300 * n_rows,
+        title=f'Heatmap of Pathway vs Compound Pathway for Sample {selected_sample}',
+        coloraxis=dict(colorbar=dict(title='KO Count'))
+    )
+
+    return fig

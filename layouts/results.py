@@ -11,6 +11,7 @@ from layouts.P8_sample_x_genesymbol_layout import get_sample_gene_scatter_layout
 from layouts.P9_sample_x_referenceAG_layout import get_sample_reference_heatmap_layout
 from layouts.P10_sample_grouping_profile_layout import get_sample_groups_layout
 from layouts.P11_layout import get_gene_sample_heatmap_layout
+from layouts.P12_layout import get_pathway_heatmap_layout
 
 def get_results_layout():
     return html.Div([
@@ -24,11 +25,11 @@ def get_results_layout():
                     title="Results Table"
                 ),
                 dbc.AccordionItem(
-                    html.Div(id='output-merge-hadeg-table'),
+                    html.Div(id='output-merge-hadeg-table'),  # Contêiner para a tabela mesclada com hadegDB
                     title="Results Table (hadegDB)"
                 ),
                 dbc.AccordionItem(
-                    html.Div(id='output-merge-toxcsm-table'),  # Contêiner para a nova tabela mesclada com ToxCSM
+                    html.Div(id='output-merge-toxcsm-table'),  # Contêiner para a tabela mesclada com ToxCSM
                     title="Results Table (ToxCSM)"
                 ),
                 dbc.AccordionItem(
@@ -83,6 +84,10 @@ def get_results_layout():
                     get_gene_sample_heatmap_layout(),
                     title="Heatmap of Genes vs Samples"
                 ),
+                dbc.AccordionItem(
+                    get_pathway_heatmap_layout(),
+                    title="Heatmap of Pathways vs Compound Pathways"
+                ),               
             ],
             start_collapsed=True,
             always_open=True,

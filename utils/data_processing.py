@@ -71,7 +71,7 @@ def merge_with_toxcsm(merged_df, toxcsm_filepath='data/database_toxcsm.xlsx'):
     toxcsm_df = pd.read_excel(toxcsm_filepath)
     
     # Mantém apenas a coluna 'compoundclass' da tabela inicial
-    merged_df_reduced = merged_df[['compoundclass', 'cpd']].drop_duplicates()
+    merged_df_reduced = merged_df[['compoundclass', 'cpd','ko']].drop_duplicates()
     
     # Mescla os DataFrames pela coluna 'cpd'
     final_merged_df = pd.merge(merged_df_reduced, toxcsm_df, on='cpd', how='inner')
@@ -314,4 +314,17 @@ def process_gene_sample_data(merged_df):
     :return: DataFrame agrupado por sample e gene com a contagem de KOs únicos.
     """
     grouped_df = merged_df.groupby(['sample', 'Gene', 'compound_pathway', 'Pathway'])['ko'].nunique().reset_index(name='ko_count')
+    return grouped_df
+
+# ----------------------------------------
+# P12 HADEG HEATMAP ORTHOLOGS BY sample
+# ----------------------------------------
+def process_pathway_data(merged_df):
+    """
+    Processa os dados para gerar um DataFrame agrupado por Pathway, compound_pathway e sample, contando os KOs únicos.
+
+    :param merged_df: DataFrame mesclado com os dados de entrada e do banco de dados.
+    :return: DataFrame agrupado por Pathway, compound_pathway e sample com a contagem de KOs únicos.
+    """
+    grouped_df = merged_df.groupby(['Pathway', 'compound_pathway', 'sample'])['ko'].nunique().reset_index(name='ko_count')
     return grouped_df

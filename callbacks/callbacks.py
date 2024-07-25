@@ -204,6 +204,9 @@ def update_merged_toxcsm_table(n_clicks, stored_data):
     if final_merged_df.empty:
         return 'No matches found with the ToxCSM database.'
 
-    table = create_table_from_dataframe(final_merged_df, 'output-merge-toxcsm-table')
+    # Especificar as colunas a serem ocultadas
+    hidden_columns = ['ko', 'compoundclass']
+
+    table = create_table_from_dataframe(final_merged_df, 'output-merge-toxcsm-table', hidden_columns=hidden_columns)
 
     return html.Div(table)
