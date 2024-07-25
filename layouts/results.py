@@ -24,11 +24,11 @@ def get_results_layout():
                     title="Results Table"
                 ),
                 dbc.AccordionItem(
-                    html.Div(id='output-merge-hadeg-table'),  # Contêiner para a tabela mesclada com hadegDB
+                    html.Div(id='output-merge-hadeg-table'),
                     title="Results Table (hadegDB)"
                 ),
                 dbc.AccordionItem(
-                    html.Div(id='output-merge-toxcsm-table'),  # Contêiner para a tabela mesclada com ToxCSM
+                    html.Div(id='output-merge-toxcsm-table'),  # Contêiner para a nova tabela mesclada com ToxCSM
                     title="Results Table (ToxCSM)"
                 ),
                 dbc.AccordionItem(

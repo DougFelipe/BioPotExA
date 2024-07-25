@@ -57,7 +57,7 @@ def merge_input_with_database_hadegDB(input_data, database_filepath='data/databa
 
 # ----------------------------------------
 # MERGE COM ToxCSM DATABASE
-# ----------------------------------------
+
 def merge_with_toxcsm(merged_df, toxcsm_filepath='data/database_toxcsm.xlsx'):
     """
     Mescla a tabela resultante do merge inicial com o banco de dados ToxCSM,
@@ -304,7 +304,7 @@ def minimize_groups(df):
     return selected_groups
 
 # ----------------------------------------
-# P11 HADEG HEATMAP ORTHOLOGS BY SAMPLE
+# P11 HADEG HEATMAP ORTHOLOGS BY pathway
 # ----------------------------------------
 def process_gene_sample_data(merged_df):
     """
