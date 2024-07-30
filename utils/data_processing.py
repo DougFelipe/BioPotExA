@@ -44,7 +44,7 @@ import pandas as pd
 
 def merge_input_with_database_hadegDB(input_data, database_filepath='data/database_hadegDB.xlsx'):
     """
-    Mescla os dados de entrada com os dados do banco de dados hadegDB.
+    Mescla os dados de entrada com os dados do banco de dados.
     
     :param input_data: DataFrame com os dados de entrada.
     :param database_filepath: Caminho para o arquivo do banco de dados.
@@ -52,8 +52,11 @@ def merge_input_with_database_hadegDB(input_data, database_filepath='data/databa
     """
     database_df = pd.read_excel(database_filepath)  # Carrega os dados do banco de dados
     merged_df = pd.merge(input_data, database_df, on='ko', how='inner')  # Mescla os DataFrames
+    
+    if 'ko' not in merged_df.columns:
+        raise KeyError("A coluna 'ko' não está presente no DataFrame após a mesclagem.")
+    
     return merged_df  # Retorna o DataFrame mesclado
-
 
 # ----------------------------------------
 # MERGE COM ToxCSM DATABASE

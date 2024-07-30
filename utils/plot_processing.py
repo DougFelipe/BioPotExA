@@ -401,7 +401,16 @@ def plot_pathway_heatmap(df, selected_sample):
                 x=heatmap_data.columns,
                 y=heatmap_data.index,
                 colorscale='Oranges',
-                colorbar=dict(title='KO Count', orientation='v')
+                colorbar=dict(
+                    title='KO Count',
+                    titleside='right',
+                    x=1.02,  # Posiciona a barra de cores fora do heatmap
+                    xanchor='left',
+                    y=1 - (i-1)*(1/n_rows + 0.02),  # Ajusta a posição y para não sobrepor
+                    yanchor='top',
+                    lenmode='fraction',
+                    len=1/n_rows - 0.02  # Divide o comprimento da barra de cores pelo número de linhas
+                )
             )
 
             fig.add_trace(heatmap, row=i, col=1)
