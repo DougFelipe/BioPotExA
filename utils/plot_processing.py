@@ -371,41 +371,46 @@ def plot_sample_gene_heatmap(grouped_df):
 # ----------------------------------------
 def plot_pathway_heatmap(df, selected_sample):
     """
-    Plota um heatmap mostrando a contagem de KOs por Pathway e Compound Pathway para uma amostra selecionada.
+    Cria um heatmap para visualizar a relação entre Pathways e compound_pathways com a contagem de KOs únicos.
 
-    :param df: DataFrame mesclado contendo os dados de entrada e do banco de dados.
-    :param selected_sample: Amostra selecionada para visualização no heatmap.
+    :param df: DataFrame agrupado por Pathway, compound_pathway e sample com a contagem de KOs únicos.
+    :param selected_sample: Amostra selecionada para o filtro.
     :return: Objeto Figure com o heatmap.
     """
-    df = df[df['sample'] == selected_sample]  # Filtra os dados para a amostra selecionada
+    df = df[df['sample'] == selected_sample]
 
     compound_pathways = df['compound_pathway'].unique()
     n_rows = len(compound_pathways)
 
     fig = make_subplots(
         rows=n_rows, cols=1,
-        shared_xaxes=True,
+        shared_xaxes=False,
         vertical_spacing=0.02,
         subplot_titles=[f'Compound Pathway: {cp}' for cp in compound_pathways]
     )
 
     for i, compound_pathway in enumerate(compound_pathways, start=1):
         df_filtered = df[df['compound_pathway'] == compound_pathway]
-        heatmap_data = df_filtered.pivot_table(index='Pathway', columns='compound_pathway', values='ko', aggfunc='count', fill_value=0)
+        heatmap_data = df_filtered.pivot_table(index='Pathway', columns='compound_pathway', values='ko_count', aggfunc='sum', fill_value=0)
 
-        heatmap = go.Heatmap(
-            z=heatmap_data.values,
-            x=heatmap_data.columns,
-            y=heatmap_data.index,
-            colorscale='Oranges'
-        )
+        heatmap_data = heatmap_data.loc[(heatmap_data != 0).any(axis=1), (heatmap_data != 0).any(axis=0)]
 
-        fig.add_trace(heatmap, row=i, col=1)
+        if not heatmap_data.empty:
+            heatmap = go.Heatmap(
+                z=heatmap_data.values,
+                x=heatmap_data.columns,
+                y=heatmap_data.index,
+                colorscale='Oranges',
+                colorbar=dict(title='KO Count', orientation='v')
+            )
+
+            fig.add_trace(heatmap, row=i, col=1)
+
+        fig.update_xaxes(ticktext=[''], row=i, col=1)
 
     fig.update_layout(
         height=300 * n_rows,
         title=f'Heatmap of Pathway vs Compound Pathway for Sample {selected_sample}',
-        coloraxis=dict(colorbar=dict(title='KO Count'))
     )
 
     return fig

@@ -26,11 +26,9 @@ def initialize_sample_dropdown(n_clicks, stored_data):
 
     return dropdown_options, default_sample
 
-
-
-@callback(
+@app.callback(
     Output('pathway-heatmap', 'figure'),
-    [Input('sample-dropdown', 'value')],
+    [Input('sample-dropdown-p12', 'value')],
     [State('stored-data', 'data')]
 )
 def update_pathway_heatmap(selected_sample, stored_data):
@@ -39,7 +37,7 @@ def update_pathway_heatmap(selected_sample, stored_data):
 
     input_df = pd.DataFrame(stored_data)
     merged_df = merge_input_with_database_hadegDB(input_df)
+    grouped_df = process_pathway_data(merged_df)
 
-    fig = plot_pathway_heatmap(merged_df, selected_sample)
-
+    fig = plot_pathway_heatmap(grouped_df, selected_sample)
     return fig
