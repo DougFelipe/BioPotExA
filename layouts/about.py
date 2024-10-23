@@ -31,22 +31,28 @@ def get_about_layout():
                             "The BioPExA database integrates data on priority pollutants for bioremediation reported by regulatory agencies, PubChem and KEGG databases.",
                             html.Br(),html.Br(),
                             "Seeking to contribute to sustainable development goals, BioPExA emerges as an innovation in this field by automating the genomic analysis process used in identifying genes, enzymes, metabolic pathways, and biological processes with biotechnological potential to mitigate the environmental impacts associated with these pollutants."
-                        ], className='about-content'),  # Classe CSS para estilização do parágrafo
+                        ], className='about-content'),
+                        
+                        # Texto de "Integration of Databases"
+                        html.H4("Integration of Databases", className='integration-title'),
+                        
                         # Container de Imagens
                         html.Div(
                             [
-                                html.Img(src='/assets/images/SDG06.png', className='about-image'),  # Imagem SDG06
-                                html.Img(src='/assets/images/SDG13.png', className='about-image'),  # Imagem SDG13
-                                html.Img(src='/assets/images/SDG14.png', className='about-image'),  # Imagem SDG14
-                                html.Img(src='/assets/images/SDG15.png', className='about-image')   # Imagem SDG15
+                                html.Img(src='/assets/images/KEGG_LOGO.gif', className='about-image'),  
+                                html.Img(src='/assets/images/PUBCHEM_LOGO.png', className='about-image'),  
+                                html.Img(src='/assets/images/NCBI_LOGO.png', className='about-image'),  
+                                html.Img(src='/assets/images/HADEG_LOGO.png', className='about-image'), 
+                                html.Img(src='/assets/images/TOXCSM_LOGO.png', className='about-image'),  
+                                html.Img(src='/assets/images/CAZYMES_LOGO.png', className='about-image'),  
                             ],
-                            className='about-image-container'  # Classe CSS para estilização do container de imagens
+                            className='about-image-container'
                         )
                     ],
-                    className='about-text-container'  # Classe CSS para estilização do container de texto
+                    className='about-text-container'
                 ),
                 create_about_features_list()  # Função para criar a lista de características do BioPExA
             ],
-            className='about-content-container'  # Classe CSS para estilização do container de conteúdo
+            className='about-content-container'
         )
-    ], className='about-container')  # Classe CSS para estilização do container principal
+    ], className='about-container')

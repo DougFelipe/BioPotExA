@@ -463,15 +463,25 @@ body, html {
 
 .about-image-container {
     display: flex;
-    justify-content: center; /* Centraliza o container de imagens */
+    justify-content: center; /* Centraliza o container de imagens horizontalmente */
+    flex-wrap: wrap; /* Permite que as imagens quebrem para a próxima linha, caso necessário */
+    gap: 30px; /* Espaçamento horizontal entre as imagens */
     margin-top: 20px;
+    width: 100%; /* Garante que o container ocupe toda a largura disponível */
 }
 
 .about-image {
-    width: 20%; /* Define a largura das imagens como 20% */
-    margin: 0 10px; /* Adiciona espaçamento horizontal entre as imagens */
-    object-fit: contain; /* Garante que as imagens se ajustem ao container sem distorção */
+    flex: 1 1 calc(33.33% - 40px); /* As imagens ocupam um terço do espaço, mantendo espaçamento */
+    max-width: 150px; /* Define um tamanho máximo para as imagens */
+    height: auto; /* Mantém a proporção das imagens */
+    margin: 5px; /* Adiciona espaçamento ao redor de cada imagem */
 }
+
+.integration-title {
+    text-align: center; /* Centraliza o texto "Integration of Databases" */
+    margin-top: 30px;
+}
+
 
 /* ------------------------------- */
 /* Análise e Gráficos */
