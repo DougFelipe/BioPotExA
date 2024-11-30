@@ -13,6 +13,7 @@ from dash import Dash, dcc, html,Input, Output
 
 # Importa o componente de cabeçalho personalizado.
 from components.header import Header
+from components.see_exemple import get_see_example_layout
 
 # Importa funções para obter layouts das páginas.
 from layouts.about import get_about_layout
@@ -71,10 +72,18 @@ app.layout = html.Div(
     Input('url', 'pathname')
 )
 def display_page(pathname):
-    if pathname == '/data-analysis':
+    """
+    Callback para renderizar o layout correspondente com base na URL do aplicativo.
+
+    :param pathname: Caminho atual da URL.
+    :return: Layout correspondente para o caminho especificado.
+    """
+    if pathname == '/data-analysis':  # Rota para análise de dados
         return get_dataAnalysis_page()
-    elif pathname == '/results':  # Adiciona página de resultados como rota separada
+    elif pathname == '/results':  # Rota para página de resultados
         return get_results_layout()
+    elif pathname == '/see-example':  # Rota para página "See Example"
+        return get_see_example_layout()
     else:  # Página padrão é "About"
         return get_about_layout()
 

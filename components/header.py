@@ -1,5 +1,5 @@
 # components/header.py
-from dash import dcc, html
+from dash import html
 
 def Header():
     return html.Header(className='main-header', children=[
@@ -11,6 +11,7 @@ def Header():
             html.A('Bioremediation', href='/bioremediation', className='header-link'),
             html.A('Regulatory Agencies', href='/regulatory', className='header-link'),
             html.A('Changelog', href='/changelog', className='header-link'),
-            html.A('Contact', href='/contact', className='header-link')
+            html.A('Contact', href='/contact', className='header-link'),
+            html.A('See Example', href='/see-example', className='header-link')  # Novo link para "See Example"
         ])
     ])
