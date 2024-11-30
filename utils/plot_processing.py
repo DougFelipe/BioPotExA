@@ -311,11 +311,6 @@ def plot_sample_reference_heatmap(df):
 # ----------------------------------------
 # P10_group_by_class Agrupa amostras por perfil de genes para cada classe de compostos
 # ----------------------------------------
-
-
-import plotly.graph_objects as go
-from plotly.subplots import make_subplots
-
 def plot_sample_groups(df):
     """
     Cria um scatter plot para visualizar os grupos de samples baseados na relação com compoundname utilizando subplots.
@@ -324,27 +319,56 @@ def plot_sample_groups(df):
     :return: Objeto Figure com os subplots.
     """
     unique_groups = df['grupo'].unique()
-    fig = make_subplots(rows=1, cols=len(unique_groups), shared_yaxes=True, subplot_titles=unique_groups)
+    print("Unique Groups:", unique_groups)  # Verificação dos grupos únicos
+
+    fig = make_subplots(
+        rows=1,
+        cols=len(unique_groups),
+        shared_yaxes=True,  # Compartilha o eixo y para evitar duplicação
+        subplot_titles=unique_groups,
+        horizontal_spacing=0.1  # Ajustar espaçamento entre as facetas
+    )
 
     # Iterar sobre cada grupo e criar subplots
     for i, group in enumerate(unique_groups):
         group_df = df[df['grupo'] == group]
-        fig.add_trace(go.Scatter(x=group_df['sample'], y=group_df['compoundname'], mode='markers', name=group, showlegend=False), row=1, col=i+1)
+        print(f"Data for Group {group}:", group_df.head())  # Verificação dos dados de cada grupo
+
+        # Remover NaNs e garantir dados limpos
+        group_df = group_df.dropna(subset=['sample', 'compoundname'])
+
+        # Adicionar trace ao subplot
+        fig.add_trace(
+            go.Scatter(
+                x=group_df['sample'],
+                y=group_df['compoundname'],
+                mode='markers',
+                name=group,
+                showlegend=False
+            ),
+            row=1,
+            col=i+1
+        )
     
+    # Configurar layout
     fig.update_layout(
-        title_text='Sample Groups by Compound Interaction', 
+        title_text='Sample Groups by Compound Interaction',
         template='simple_white',
-        showlegend=False
+        showlegend=False,
+        height=600,  # Altura total do gráfico
+        width=300 * len(unique_groups),  # Largura proporcional ao número de facetas
     )
 
-    # Atualizar eixos para cada subplot
+    # Configurar eixos
+    fig.update_yaxes(
+        tickangle=0,  # Rótulos verticais
+        tickfont=dict(size=10),  # Reduzir o tamanho da fonte
+    )
+
     for i in range(1, len(unique_groups) + 1):
-        fig.update_xaxes(row=1, col=i, tickangle= -45, title_text=None)
-        fig.update_yaxes(row=1, col=i, tickangle=-45, title_text=None)
+        fig.update_xaxes(row=1, col=i, tickangle=-45, title_text=None)
     
     return fig
-
-
 
 # ----------------------------------------
 # P11 HADEG HEATMAP ORTHOLOGS BY SAMPLE
