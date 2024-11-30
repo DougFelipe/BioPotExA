@@ -44,9 +44,6 @@ def get_dataAnalysis_page():
                         )
                     ])
                 ], className='text-container'),
-                html.Div([
-                    create_list_card("Data Analysis Features", features_list_1)
-                ], className='list-container')
             ], className='content-container')
         ]),
 

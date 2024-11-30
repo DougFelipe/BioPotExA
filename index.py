@@ -9,14 +9,15 @@ Este arquivo inicializa a aplicação Dash, define o layout principal e configur
 # -------------------------------
 
 # Importa os componentes principais do Dash para construção da interface.
-from dash import Dash, dcc, html
+from dash import Dash, dcc, html,Input, Output
 
 # Importa o componente de cabeçalho personalizado.
 from components.header import Header
 
 # Importa funções para obter layouts das páginas.
 from layouts.about import get_about_layout
-from layouts.data_analysis import get_dataAnalysis_layout
+from layouts.data_analysis import get_dataAnalysis_page
+from layouts.results import get_results_layout  # Importa o layout dos resultados
 
 # Certifique-se de importar os callbacks antes de importar a aplicação
 import callbacks.P1_COUNT_KO_callbacks  # Importa os callbacks do novo arquivo
@@ -38,40 +39,46 @@ import callbacks.P12_callbacks
 # Importação da aplicação deve vir depois dos callbacks
 from app import app
 
+
 # -------------------------------
 # Configuração do Layout Principal
 # -------------------------------
-# Define o layout da aplicação, incluindo o cabeçalho e as abas para navegação.
+# Define o layout inicial da aplicação com suporte à navegação entre páginas
 app.layout = html.Div(
-    className='main-content', 
+    className='main-content',
     children=[
+        # Localização da URL para navegação entre páginas
+        dcc.Location(id='url', refresh=False),
+
         # Cabeçalho da Aplicação
         Header(),
 
-        # Navegação por Abas
-        dcc.Tabs(
-            id="tabs", 
-            value='tab-about', 
-            className='main-tabs',  # Adiciona a classe CSS personalizada
-            children=[
-                dcc.Tab(label='About', value='tab-about', className='tab', selected_className='tab--selected'),
-                dcc.Tab(label='Data Analysis', value='tab-data-analysis', className='tab', selected_className='tab--selected')
-            ]
-        ),
-
-        # Conteúdo das Abas
-        # Atualizado dinamicamente com base na aba selecionada.
-        html.Div(id='tabs-content', className='tabs-content'),
+        # Conteúdo Dinâmico Atualizado com base na URL
+        html.Div(id='page-content'),
 
         # Armazenamento de Dados no Lado do Cliente
-        # Utilizado para compartilhar dados entre callbacks sem afetar o layout.
         dcc.Store(id='stored-data'),
 
         # Container para Gráficos (Inicialmente Oculto)
-        # Pode ser utilizado para exibir gráficos com base em dados processados.
         html.Div(id='output-graphs', style={'display': 'none'})
     ]
 )
+# -------------------------------
+# Callback para Navegação entre Páginas
+# -------------------------------
+@app.callback(
+    Output('page-content', 'children'),
+    Input('url', 'pathname')
+)
+def display_page(pathname):
+    if pathname == '/data-analysis':
+        return get_dataAnalysis_page()
+    elif pathname == '/results':  # Adiciona página de resultados como rota separada
+        return get_results_layout()
+    else:  # Página padrão é "About"
+        return get_about_layout()
+
+
 
 # -------------------------------
 # Inicialização do Servidor
