@@ -108,13 +108,9 @@ def handle_upload_or_example(contents, n_clicks_example, filename):
 
 @app.callback(
     Output('output-data-upload', 'children'),
-    [Input('process-data', 'n_clicks')],
-    [State('stored-data', 'data')]
+    Input('stored-data', 'data')  # Atualiza com qualquer modificação no stored-data
 )
-def update_table(n_clicks, stored_data):
-    if n_clicks is None or n_clicks < 1:
-        raise PreventUpdate
-
+def update_table(stored_data):
     if stored_data is None:
         return html.Div('Nenhum dado para exibir.')
 
@@ -224,14 +220,12 @@ def display_results(n_clicks, current_state):
     return {'display': 'block'}, {'display': 'none'}
 
 
-# Callback para atualizar a tabela mesclada com o banco de dados hadegDB
 @app.callback(
     Output('output-merge-hadeg-table', 'children'),
-    [Input('view-results', 'n_clicks')],
-    [State('stored-data', 'data')]
+    Input('stored-data', 'data')  # Dispara ao atualizar o stored-data
 )
-def update_merged_hadeg_table(n_clicks, stored_data):
-    if n_clicks is None or n_clicks < 1 or not stored_data:
+def update_merged_hadeg_table(stored_data):
+    if not stored_data:
         return None
 
     input_df = pd.DataFrame(stored_data)
@@ -241,18 +235,15 @@ def update_merged_hadeg_table(n_clicks, stored_data):
         return 'No matches found with the hadegDB database.'
 
     table = create_table_from_dataframe(merged_df, 'output-merge-hadeg-table')
-
     return html.Div(table)
 
 
-# Callback para atualizar a tabela mesclada com o banco de dados ToxCSM
 @app.callback(
     Output('output-merge-toxcsm-table', 'children'),
-    [Input('view-results', 'n_clicks')],
-    [State('stored-data', 'data')]
+    Input('stored-data', 'data')  # Dispara ao atualizar o stored-data
 )
-def update_merged_toxcsm_table(n_clicks, stored_data):
-    if n_clicks is None or n_clicks < 1 or not stored_data:
+def update_merged_toxcsm_table(stored_data):
+    if not stored_data:
         return None
 
     input_df = pd.DataFrame(stored_data)
@@ -266,10 +257,7 @@ def update_merged_toxcsm_table(n_clicks, stored_data):
     if final_merged_df.empty:
         return 'No matches found with the ToxCSM database.'
 
-    # Especificar as colunas a serem ocultadas
     hidden_columns = ['ko', 'compoundclass']
-
     table = create_table_from_dataframe(final_merged_df, 'output-merge-toxcsm-table', hidden_columns=hidden_columns)
 
     return html.Div(table)
-
