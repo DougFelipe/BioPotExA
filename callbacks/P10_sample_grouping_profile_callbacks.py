@@ -38,19 +38,15 @@ def update_sample_groups_plot(compound_class, stored_data):
     input_df = pd.DataFrame(stored_data)
     merged_df = merge_input_with_database(input_df)
 
-    print("Merged DataFrame:", merged_df.head())  # Verificação após o merge
 
     grouped_df = group_by_class(compound_class, merged_df)
 
-    print("Grouped DataFrame:", grouped_df.head())  # Verificação após o agrupamento
 
     minimized_groups = minimize_groups(grouped_df)
 
-    print("Minimized Groups:", minimized_groups)  # Verificação dos grupos minimizados
 
     minimized_df = grouped_df[grouped_df['grupo'].isin(minimized_groups)]
 
-    print("Filtered DataFrame for Plotting:", minimized_df.head())  # Verificação dos dados finais para o plot
 
     fig = plot_sample_groups(minimized_df)
     return fig

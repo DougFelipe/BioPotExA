@@ -17,92 +17,50 @@ from utils.plot_processing import plot_pathway_ko_counts, plot_sample_ko_counts
 from utils.data_processing import merge_input_with_database_hadegDB, merge_with_toxcsm
 
 
-# Callback para controle de conteúdo das abas
-@app.callback(
-    Output('tabs-content', 'children'),
-    [Input('tabs', 'value')]
-)
-def render_tab_content(tab):
-    if tab == 'tab-about':
-        return get_about_layout()
-    elif tab == 'tab-data-analysis':
-        return get_dataAnalysis_layout()
-    # Adicionar mais condições elif para outras abas conforme necessário
 
-# Callback para upload e processamento de arquivo ou carregar o exemplo
 @callback(
-    [Output('stored-data', 'data'),  # Armazena os dados processados
-     Output('process-data', 'disabled'),  # Habilita ou desabilita o botão de processamento
-     Output('alert-container', 'children'),  # Exibe mensagens de erro ou sucesso
-     Output('results-content', 'style'),  # Exibe ou oculta o layout de resultados
-     Output('results-content', 'children')],  # Atualiza o layout de resultados
-    [Input('upload-data', 'contents'),  # Dados carregados via upload
-     Input('see-example-data', 'n_clicks')],  # Clique no botão "See Example"
-    [State('upload-data', 'filename')]  # Nome do arquivo carregado
+    [Output('stored-data', 'data'),  
+     Output('process-data', 'disabled'),  
+     Output('alert-container', 'children'),  
+     Output('page-state', 'data', allow_duplicate=True)],  # Incluído para atualizar o estado
+    [Input('upload-data', 'contents'),  
+     Input('see-example-data', 'n_clicks')],  
+    [State('upload-data', 'filename')],
+    prevent_initial_call=True
 )
 def handle_upload_or_example(contents, n_clicks_example, filename):
-    # Caso clique no botão "See Example"
     if n_clicks_example:
         try:
-            # Caminho para o dataset de exemplo
             example_data_path = 'data/sample_data.txt'
-            
-            # Lê o arquivo de exemplo como conteúdo
             with open(example_data_path, 'r') as file:
                 example_contents = file.read()
 
-            # Chama a função de validação e processamento para o dataset de exemplo
             df, error = validate_and_process_input(example_contents, 'sample_data.txt')
             if error:
-                # Caso haja erro no processamento do exemplo
-                return (
-                    None,  # Nenhum dado armazenado
-                    True,  # Botão de processamento desabilitado
-                    html.Div(f'Error processing example dataset: {error}', style={'color': 'red'}),
-                    {'display': 'none'},  # Oculta resultados
-                    None  # Nenhum layout de resultados
-                )
+                return None, True, html.Div(f'Error processing example dataset: {error}', style={'color': 'red'}), 'initial'
             
-            # Retorna os dados processados do exemplo e exibe o layout de resultados
             return (
-                df.to_dict('records'),  # Converte o DataFrame para um formato serializável
-                False,  # Habilita o botão de processamento
-                html.Div('Example dataset loaded successfully', style={'color': 'green'}),  # Mensagem de sucesso
-                {'display': 'block'},  # Exibe o layout de resultados
-                get_results_layout()  # Exibe o layout de resultados
+                df.to_dict('records'), 
+                False,  
+                html.Div('Example dataset loaded successfully', style={'color': 'green'}),  
+                'loaded'  # Estado atualizado para "loaded"
             )
         except Exception as e:
-            # Captura erros ao carregar o dataset de exemplo
-            return (
-                None,  # Nenhum dado armazenado
-                True,  # Botão de processamento desabilitado
-                html.Div(f'Error loading example dataset: {str(e)}', style={'color': 'red'}),
-                {'display': 'none'},  # Oculta resultados
-                None  # Nenhum layout de resultados
-            )
+            return None, True, html.Div(f'Error loading example dataset: {str(e)}', style={'color': 'red'}), 'initial'
 
-    # Caso seja carregado um arquivo via upload
-    if contents is not None:
-        df, error = validate_and_process_input(contents, filename)  # Função para validar e processar o upload
+    if contents:
+        df, error = validate_and_process_input(contents, filename)
         if error:
-            # Caso haja erro no processamento do upload
-            return (
-                None,  # Nenhum dado armazenado
-                True,  # Botão de processamento desabilitado
-                html.Div(error, style={'color': 'red'}),  # Retorna mensagem de erro
-                {'display': 'none'},  # Oculta resultados
-                None  # Nenhum layout de resultados
-            )
+            return None, True, html.Div(error, style={'color': 'red'}), 'initial'
+
         return (
-            df.to_dict('records'),  # Converte o DataFrame para um formato serializável
-            False,  # Habilita o botão de processamento
-            html.Div('File uploaded and validated successfully', style={'color': 'green'}),  # Mensagem de sucesso
-            {'display': 'block'},  # Exibe o layout de resultados
-            get_results_layout()  # Exibe o layout de resultados
+            df.to_dict('records'),
+            False,  
+            html.Div('File uploaded and validated successfully', style={'color': 'green'}),  
+            'loaded'  
         )
 
-    # Previne atualizações se nenhum evento ocorreu
-    raise PreventUpdate   
+    raise PreventUpdate
 
 
 
@@ -197,21 +155,24 @@ def toggle_graph_visibility(tab):
 
 
 @app.callback(
-    [Output('view-results', 'style',allow_duplicate=True), Output('process-data', 'style'), Output('page-state', 'data')],
+    [Output('view-results', 'style', allow_duplicate=True), 
+     Output('process-data', 'style'), 
+     Output('page-state', 'data')],
     [Input('process-data', 'n_clicks')],
-    [State('upload-data', 'contents'), State('page-state', 'data')],
+    [State('stored-data', 'data'), 
+     State('page-state', 'data')],
     prevent_initial_call=True
 )
-def process_and_show_view_button(n_clicks, contents, current_state):
-    if n_clicks > 0 and contents and current_state == 'initial':
-        # Processar os dados aqui
-        # data = process_ko_data(contents)
+def process_and_show_view_button(n_clicks, stored_data, current_state):
+    if n_clicks > 0 and stored_data and current_state == 'loaded':
         return {'display': 'inline-block'}, {'display': 'none'}, 'processed'
     return {'display': 'none'}, {'display': 'inline-block'}, current_state
 
 @app.callback(
-    [Output('initial-content', 'style'), Output('results-content', 'style',allow_duplicate=True)],
-    [Input('view-results', 'n_clicks'), State('page-state', 'data')],
+    [Output('initial-content', 'style'), 
+     Output('results-content', 'style')],
+    [Input('view-results', 'n_clicks'), 
+     State('page-state', 'data')],
     prevent_initial_call=True
 )
 def display_results(n_clicks, current_state):

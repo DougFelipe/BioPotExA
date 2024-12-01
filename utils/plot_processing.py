@@ -319,7 +319,6 @@ def plot_sample_groups(df):
     :return: Objeto Figure com os subplots.
     """
     unique_groups = df['grupo'].unique()
-    print("Unique Groups:", unique_groups)  # Verificação dos grupos únicos
 
     fig = make_subplots(
         rows=1,
@@ -332,7 +331,6 @@ def plot_sample_groups(df):
     # Iterar sobre cada grupo e criar subplots
     for i, group in enumerate(unique_groups):
         group_df = df[df['grupo'] == group]
-        print(f"Data for Group {group}:", group_df.head())  # Verificação dos dados de cada grupo
 
         # Remover NaNs e garantir dados limpos
         group_df = group_df.dropna(subset=['sample', 'compoundname'])
