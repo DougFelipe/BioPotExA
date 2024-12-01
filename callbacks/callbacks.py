@@ -30,15 +30,17 @@ def render_tab_content(tab):
     # Adicionar mais condições elif para outras abas conforme necessário
 
 # Callback para upload e processamento de arquivo ou carregar o exemplo
-@app.callback(
+@callback(
     [Output('stored-data', 'data'),  # Armazena os dados processados
      Output('process-data', 'disabled'),  # Habilita ou desabilita o botão de processamento
-     Output('alert-container', 'children')],  # Exibe mensagens de erro ou sucesso
+     Output('alert-container', 'children'),  # Exibe mensagens de erro ou sucesso
+     Output('results-content', 'style'),  # Exibe ou oculta o layout de resultados
+     Output('results-content', 'children')],  # Atualiza o layout de resultados
     [Input('upload-data', 'contents'),  # Dados carregados via upload
      Input('see-example-data', 'n_clicks')],  # Clique no botão "See Example"
     [State('upload-data', 'filename')]  # Nome do arquivo carregado
 )
-def handle_upload(contents, n_clicks_example, filename):
+def handle_upload_or_example(contents, n_clicks_example, filename):
     # Caso clique no botão "See Example"
     if n_clicks_example:
         try:
@@ -53,32 +55,54 @@ def handle_upload(contents, n_clicks_example, filename):
             df, error = validate_and_process_input(example_contents, 'sample_data.txt')
             if error:
                 # Caso haja erro no processamento do exemplo
-                return None, True, html.Div(f'Error processing example dataset: {error}', style={'color': 'red'})
+                return (
+                    None,  # Nenhum dado armazenado
+                    True,  # Botão de processamento desabilitado
+                    html.Div(f'Error processing example dataset: {error}', style={'color': 'red'}),
+                    {'display': 'none'},  # Oculta resultados
+                    None  # Nenhum layout de resultados
+                )
             
-            # Retorna os dados processados do exemplo
+            # Retorna os dados processados do exemplo e exibe o layout de resultados
             return (
                 df.to_dict('records'),  # Converte o DataFrame para um formato serializável
                 False,  # Habilita o botão de processamento
-                html.Div('Example dataset loaded successfully', style={'color': 'green'})  # Mensagem de sucesso
+                html.Div('Example dataset loaded successfully', style={'color': 'green'}),  # Mensagem de sucesso
+                {'display': 'block'},  # Exibe o layout de resultados
+                get_results_layout()  # Exibe o layout de resultados
             )
         except Exception as e:
             # Captura erros ao carregar o dataset de exemplo
-            return None, True, html.Div(f'Error loading example dataset: {str(e)}', style={'color': 'red'})
+            return (
+                None,  # Nenhum dado armazenado
+                True,  # Botão de processamento desabilitado
+                html.Div(f'Error loading example dataset: {str(e)}', style={'color': 'red'}),
+                {'display': 'none'},  # Oculta resultados
+                None  # Nenhum layout de resultados
+            )
 
     # Caso seja carregado um arquivo via upload
     if contents is not None:
         df, error = validate_and_process_input(contents, filename)  # Função para validar e processar o upload
         if error:
             # Caso haja erro no processamento do upload
-            return None, True, html.Div(error, style={'color': 'red'})  # Retorna mensagem de erro
+            return (
+                None,  # Nenhum dado armazenado
+                True,  # Botão de processamento desabilitado
+                html.Div(error, style={'color': 'red'}),  # Retorna mensagem de erro
+                {'display': 'none'},  # Oculta resultados
+                None  # Nenhum layout de resultados
+            )
         return (
             df.to_dict('records'),  # Converte o DataFrame para um formato serializável
             False,  # Habilita o botão de processamento
-            html.Div('File uploaded and validated successfully', style={'color': 'green'})  # Mensagem de sucesso
+            html.Div('File uploaded and validated successfully', style={'color': 'green'}),  # Mensagem de sucesso
+            {'display': 'block'},  # Exibe o layout de resultados
+            get_results_layout()  # Exibe o layout de resultados
         )
 
     # Previne atualizações se nenhum evento ocorreu
-   
+    raise PreventUpdate   
 
 
 
