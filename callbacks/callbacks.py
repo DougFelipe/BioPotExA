@@ -29,23 +29,59 @@ def render_tab_content(tab):
         return get_dataAnalysis_layout()
     # Adicionar mais condições elif para outras abas conforme necessário
 
-# Callback para upload e processamento de arquivo
+# Callback para upload e processamento de arquivo ou carregar o exemplo
 @app.callback(
-    [Output('stored-data', 'data'), Output('process-data', 'disabled'), Output('alert-container', 'children')],
-    [Input('upload-data', 'contents')],
-    [State('upload-data', 'filename')]
+    [Output('stored-data', 'data'),  # Armazena os dados processados
+     Output('process-data', 'disabled'),  # Habilita ou desabilita o botão de processamento
+     Output('alert-container', 'children')],  # Exibe mensagens de erro ou sucesso
+    [Input('upload-data', 'contents'),  # Dados carregados via upload
+     Input('see-example-data', 'n_clicks')],  # Clique no botão "See Example"
+    [State('upload-data', 'filename')]  # Nome do arquivo carregado
 )
-def handle_upload(contents, filename):
-    if contents is None:
-        raise PreventUpdate
+def handle_upload(contents, n_clicks_example, filename):
+    # Caso clique no botão "See Example"
+    if n_clicks_example:
+        try:
+            # Caminho para o dataset de exemplo
+            example_data_path = 'data/sample_data.txt'
+            
+            # Lê o arquivo de exemplo como conteúdo
+            with open(example_data_path, 'r') as file:
+                example_contents = file.read()
 
-    df, error = validate_and_process_input(contents, filename)
-    if error:
-        return None, True, html.Div(error, style={'color': 'red'})
+            # Chama a função de validação e processamento para o dataset de exemplo
+            df, error = validate_and_process_input(example_contents, 'sample_data.txt')
+            if error:
+                # Caso haja erro no processamento do exemplo
+                return None, True, html.Div(f'Error processing example dataset: {error}', style={'color': 'red'})
+            
+            # Retorna os dados processados do exemplo
+            return (
+                df.to_dict('records'),  # Converte o DataFrame para um formato serializável
+                False,  # Habilita o botão de processamento
+                html.Div('Example dataset loaded successfully', style={'color': 'green'})  # Mensagem de sucesso
+            )
+        except Exception as e:
+            # Captura erros ao carregar o dataset de exemplo
+            return None, True, html.Div(f'Error loading example dataset: {str(e)}', style={'color': 'red'})
 
-    return df.to_dict('records'), False, html.Div('File uploaded and validated successfully', style={'color': 'green'})
+    # Caso seja carregado um arquivo via upload
+    if contents is not None:
+        df, error = validate_and_process_input(contents, filename)  # Função para validar e processar o upload
+        if error:
+            # Caso haja erro no processamento do upload
+            return None, True, html.Div(error, style={'color': 'red'})  # Retorna mensagem de erro
+        return (
+            df.to_dict('records'),  # Converte o DataFrame para um formato serializável
+            False,  # Habilita o botão de processamento
+            html.Div('File uploaded and validated successfully', style={'color': 'green'})  # Mensagem de sucesso
+        )
 
-# Callback para atualizar tabela na UI após processamento
+    # Previne atualizações se nenhum evento ocorreu
+   
+
+
+
 @app.callback(
     Output('output-data-upload', 'children'),
     [Input('process-data', 'n_clicks')],
@@ -213,26 +249,3 @@ def update_merged_toxcsm_table(n_clicks, stored_data):
 
     return html.Div(table)
 
-
-# Callback para processar o botão "See Example"
-@callback(
-    [Output('results-content', 'style',allow_duplicate=True),  # Mostra a seção de resultados
-     Output('results-content', 'children',allow_duplicate=True),  # Atualiza o layout com os resultados
-     Output('view-results', 'style',allow_duplicate=True)],  # Exibe o botão "View Results"
-    [Input('see-example-data', 'n_clicks')],  # Clique no botão "See Example"
-    prevent_initial_call=True
-)
-def load_example_data(n_clicks_example):
-    if n_clicks_example < 1:
-        raise PreventUpdate
-
-    # Carrega o arquivo sample_data.txt
-    example_data_path = 'data/sample_data.txt'
-    sample_data = pd.read_csv(example_data_path, sep='\t', header=None)  # Ajustar conforme o formato do arquivo
-    print("Sample Data Loaded:", sample_data.head())  # Log para verificar o carregamento do dataset
-
-    # Simula o armazenamento dos dados processados (em um dcc.Store, por exemplo)
-    processed_data = sample_data.to_dict('records')
-
-    # Exibe os resultados com base nos dados do exemplo
-    return {'display': 'block'}, get_results_layout(), {'display': 'block'}
