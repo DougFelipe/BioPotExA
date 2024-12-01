@@ -1,13 +1,11 @@
-# my_dash_app/layouts/data_analysis.py
-
 # Importações necessárias para a aplicação Dash e manipulação de dados
 from dash import dcc, html
 from dash.dependencies import Input, Output, State
 import dash_bootstrap_components as dbc
+import pandas as pd  # Importar para carregar o sample_data.txt
 
 # Importações de utilitários e layouts específicos da aplicação
 from components.step_guide import create_step_guide  # Importa a função do componente de passo a passo
-from components.features_list import create_list_card, features_list_1  # Importa a função e lista de características
 from layouts.results import get_results_layout  # Importa o novo layout de resultados
 
 # Função para criar a página de Análise de Dados
@@ -35,6 +33,13 @@ def get_dataAnalysis_page():
                             n_clicks=0,
                             className='process-button-style'
                         ),
+                        # Botão "See Example"
+                        html.Button(
+                            'See Example',
+                            id='see-example-data',
+                            n_clicks=0,
+                            className='process-button-style'
+                        ),
                         html.Button(
                             'View Results',
                             id='view-results',
@@ -58,17 +63,3 @@ def get_dataAnalysis_layout():
     return html.Div([
         get_dataAnalysis_page()
     ])
-
-# Função para criar um card de título e conteúdo
-def create_card(title, content):
-    """
-    Cria e retorna um card HTML com um título e conteúdo.
-    
-    :param title: Título do card.
-    :param content: Conteúdo do card, geralmente um parágrafo de texto.
-    :return: Um componente HTML Div contendo o título e conteúdo do card.
-    """
-    return html.Div([
-        html.H3(title, className='card-title'),
-        html.P(content, className='card-content')
-    ], className='card')

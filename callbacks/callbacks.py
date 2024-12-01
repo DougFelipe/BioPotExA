@@ -141,9 +141,10 @@ def toggle_graph_visibility(tab):
 
 
 @app.callback(
-    [Output('view-results', 'style'), Output('process-data', 'style'), Output('page-state', 'data')],
+    [Output('view-results', 'style',allow_duplicate=True), Output('process-data', 'style'), Output('page-state', 'data')],
     [Input('process-data', 'n_clicks')],
-    [State('upload-data', 'contents'), State('page-state', 'data')]
+    [State('upload-data', 'contents'), State('page-state', 'data')],
+    prevent_initial_call=True
 )
 def process_and_show_view_button(n_clicks, contents, current_state):
     if n_clicks > 0 and contents and current_state == 'initial':
@@ -153,8 +154,9 @@ def process_and_show_view_button(n_clicks, contents, current_state):
     return {'display': 'none'}, {'display': 'inline-block'}, current_state
 
 @app.callback(
-    [Output('initial-content', 'style'), Output('results-content', 'style')],
-    [Input('view-results', 'n_clicks'), State('page-state', 'data')]
+    [Output('initial-content', 'style'), Output('results-content', 'style',allow_duplicate=True)],
+    [Input('view-results', 'n_clicks'), State('page-state', 'data')],
+    prevent_initial_call=True
 )
 def display_results(n_clicks, current_state):
     if n_clicks > 0 and current_state == 'processed':
@@ -210,3 +212,27 @@ def update_merged_toxcsm_table(n_clicks, stored_data):
     table = create_table_from_dataframe(final_merged_df, 'output-merge-toxcsm-table', hidden_columns=hidden_columns)
 
     return html.Div(table)
+
+
+# Callback para processar o botão "See Example"
+@callback(
+    [Output('results-content', 'style',allow_duplicate=True),  # Mostra a seção de resultados
+     Output('results-content', 'children',allow_duplicate=True),  # Atualiza o layout com os resultados
+     Output('view-results', 'style',allow_duplicate=True)],  # Exibe o botão "View Results"
+    [Input('see-example-data', 'n_clicks')],  # Clique no botão "See Example"
+    prevent_initial_call=True
+)
+def load_example_data(n_clicks_example):
+    if n_clicks_example < 1:
+        raise PreventUpdate
+
+    # Carrega o arquivo sample_data.txt
+    example_data_path = 'data/sample_data.txt'
+    sample_data = pd.read_csv(example_data_path, sep='\t', header=None)  # Ajustar conforme o formato do arquivo
+    print("Sample Data Loaded:", sample_data.head())  # Log para verificar o carregamento do dataset
+
+    # Simula o armazenamento dos dados processados (em um dcc.Store, por exemplo)
+    processed_data = sample_data.to_dict('records')
+
+    # Exibe os resultados com base nos dados do exemplo
+    return {'display': 'block'}, get_results_layout(), {'display': 'block'}
