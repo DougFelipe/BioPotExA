@@ -624,3 +624,43 @@ body, html {
 }
 
 
+/* ------------------------------- */
+/* Alinhamento dos Cards e Texto   */
+/* ------------------------------- */
+
+/* Organiza os cards em coluna, alinhados à esquerda */
+.step-cards-column {
+    display: flex;
+    flex-direction: column; /* Empilha os itens verticalmente */
+    gap: 30px; /* Espaçamento entre os cards */
+    margin: 20px 0; /* Espaçamento vertical */
+    align-items: flex-start; /* Alinha os itens à esquerda */
+    max-width: 100%; /* Permite que os elementos ocupem toda a largura disponível */
+}
+
+/* Alinha o card e o texto lado a lado */
+.step-row {
+    display: flex;
+    flex-direction: row; /* Coloca o card e o texto na mesma linha */
+    gap: 20px; /* Espaçamento entre o card e o texto */
+    align-items: center; /* Centraliza verticalmente */
+    width: 100%; /* Garante que ocupem toda a largura */
+}
+
+/* Ajusta o card */
+.step-card {
+    flex: 0 0 30%; /* Limita a largura do card para 30% do container */
+    max-width: 300px; /* Garante que o card não ultrapasse 300px */
+}
+
+/* Ajusta o texto ao lado do card */
+.step-text {
+    border: solid 2px #b6e9be;
+    border-radius: 5px ;
+    padding: 10px;
+    flex: 1; /* Faz o texto ocupar o espaço restante */
+    font-size: 16px; /* Tamanho da fonte do texto */
+    color: #333; /* Cor do texto */
+    line-height: 1.5; /* Espaçamento entre as linhas */
+    text-align: justify; /* Alinha o texto dos dois lados */
+}

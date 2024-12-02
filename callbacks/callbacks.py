@@ -42,7 +42,7 @@ def handle_upload_or_example(contents, n_clicks_example, filename):
             return (
                 df.to_dict('records'), 
                 False,  
-                html.Div('Example dataset loaded successfully', style={'color': 'green'}),  
+                html.Div('Example dataset loaded successfully, click to submit and view results', style={'color': 'green'}),  
                 'loaded'  # Estado atualizado para "loaded"
             )
         except Exception as e:
