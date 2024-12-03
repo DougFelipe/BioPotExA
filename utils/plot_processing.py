@@ -445,3 +445,28 @@ def plot_pathway_heatmap(df, selected_sample):
     )
 
     return fig
+
+
+import plotly.express as px
+
+def plot_sample_ko_scatter(scatter_data, selected_pathway):
+    """
+    Cria um scatter plot para mostrar os KOs associados a cada sample para uma via metabólica.
+
+    :param scatter_data: DataFrame com `sample` e `ko`.
+    :param selected_pathway: A via metabólica selecionada (usada no título do gráfico).
+    :return: Objeto Figure com o scatter plot.
+    """
+    fig = px.scatter(
+        scatter_data,
+        x='sample',
+        y='ko',
+        title=f'Scatter Plot of KOs by Sample for Pathway: {selected_pathway}',
+        template='simple_white'
+    )
+    fig.update_layout(
+        xaxis_title='',  # Remove título do eixo x
+        yaxis_title='',  # Remove título do eixo y
+        xaxis_tickangle=-45  # Rotaciona os rótulos do eixo x
+    )
+    return fig

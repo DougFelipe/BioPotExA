@@ -12,6 +12,7 @@ from layouts.P9_sample_x_referenceAG_layout import get_sample_reference_heatmap_
 from layouts.P10_sample_grouping_profile_layout import get_sample_groups_layout
 from layouts.P11_layout import get_gene_sample_heatmap_layout
 from layouts.P12_layout import get_pathway_heatmap_layout
+from layouts.P13_layout import get_sample_ko_scatter_layout
 
 def get_results_layout():
     return html.Div([
@@ -47,6 +48,10 @@ def get_results_layout():
                 dbc.AccordionItem(
                     get_sample_ko_pathway_bar_chart_layout(),
                     title="KEGG Xenobiotics Biodegradation and Metabolism (Grouped by Pathway)"
+                ),
+                dbc.AccordionItem(
+                    get_sample_ko_scatter_layout(),
+                    title="Scatter Plot of KOs by Sample for Pathway"
                 ),
                 dbc.AccordionItem(
                     get_compound_scatter_layout(),

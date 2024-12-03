@@ -43,3 +43,5 @@ def get_sample_ko_pathway_bar_chart_layout():
             className='bar-chart-style'
         ),
     ], className='graph-card')
+
+

@@ -331,3 +331,19 @@ def process_pathway_data(merged_df):
     """
     grouped_df = merged_df.groupby(['Pathway', 'compound_pathway', 'sample'])['ko'].nunique().reset_index(name='ko_count')
     return grouped_df
+
+
+
+
+def get_ko_per_sample_for_pathway(merged_df, selected_pathway):
+    """
+    Filtra os dados para retornar os KOs únicos associados a cada sample para a via selecionada.
+
+    :param merged_df: DataFrame mesclado com os dados do KEGG.
+    :param selected_pathway: A via metabólica selecionada.
+    :return: DataFrame com as `sample` e os respectivos `ko` associados.
+    """
+    filtered_df = merged_df[merged_df['pathname'] == selected_pathway]  # Filtra pela via
+    if filtered_df.empty:
+        return pd.DataFrame(columns=['sample', 'ko'])  # Retorna um DataFrame vazio
+    return filtered_df[['sample', 'ko']].drop_duplicates()  # Remove duplicatas e retorna sample e ko
