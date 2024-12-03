@@ -521,7 +521,7 @@ body, html {
     padding: 20px;
     margin: 20px auto;
     width: fit-content;
-    width: 500px;
+    width: 1200px;
     height: fit-content;
     display: flex;
     flex-direction: column;
@@ -558,6 +558,21 @@ body, html {
 
 .process-button-style:hover {
     background-color: #218838;
+}
+
+/* Estilo para o botão de Sample */
+.process-sample-button-style {
+    background-color: #2848a7;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.process-sample-button-style:hover {
+    background-color: #3a5fbb;
 }
 /* ------------------------------- */
 /* Estilo para o botão "View Results" */
@@ -649,8 +664,8 @@ body, html {
 
 /* Ajusta o card */
 .step-card {
-    flex: 0 0 30%; /* Limita a largura do card para 30% do container */
-    max-width: 300px; /* Garante que o card não ultrapasse 300px */
+    flex: 0 0 50%; /* Limita a largura do card para 30% do container */
+    max-width: 500px; /* Garante que o card não ultrapasse 300px */
 }
 
 /* Ajusta o texto ao lado do card */

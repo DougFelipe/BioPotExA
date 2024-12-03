@@ -26,6 +26,7 @@ def get_dataAnalysis_page():
             html.Div(
                 className='step-cards-column',  # Classe para os cards alinhados verticalmente
                 children=[
+                    # Step 1: Upload
                     html.Div(
                         className='step-row',  # Linha que contém o card e o texto
                         children=[
@@ -35,11 +36,13 @@ def get_dataAnalysis_page():
                                 description="Upload your data files in the specified format for analysis"
                             ),
                             html.P(
-                                "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                                "Start by uploading your dataset. Ensure the file is in the specified format to avoid processing issues. "
+                                "This step allows the application to read and validate the structure of your data, ensuring it meets the requirements for analysis.",
                                 className='step-text'
                             )
                         ]
                     ),
+                    # Step 2: Process
                     html.Div(
                         className='step-row',
                         children=[
@@ -49,11 +52,13 @@ def get_dataAnalysis_page():
                                 description="Submit your data for processing and analysis"
                             ),
                             html.P(
-                                "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit",
+                                "Once your data is uploaded, click the button to process it. During this step, the system will validate the dataset, "
+                                "checking for completeness, correct formatting, and potential errors. This ensures the data is ready for in-depth analysis.",
                                 className='step-text'
                             )
                         ]
                     ),
+                    # Step 3: Analyze
                     html.Div(
                         className='step-row',
                         children=[
@@ -63,13 +68,20 @@ def get_dataAnalysis_page():
                                 description="Analyze results and visualize insights"
                             ),
                             html.P(
-                                "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                                "After processing, move on to analyzing your data. In this step, you can explore detailed results presented in tables and interactive visualizations. "
+                                "These insights are designed to help you understand trends, patterns, and key information within your dataset.",
                                 className='step-text'
                             )
                         ]
                     )
                 ]
             ),
+            # Título "How to Use"
+            html.Div([
+                html.H2('Upload and Analyze Your Data', className='how-to-use'),
+                html.Hr(className="my-2"),
+            ], className='title-container'),
+
 
             # Seção de Upload e Botões
             html.Div(
@@ -83,16 +95,16 @@ def get_dataAnalysis_page():
                     ),
                     html.Div(id='alert-container'),
                     html.Button(
-                        'Click to Submit and Process Data',
+                        'Upload Your File (or sample data) and Click to Submit',
                         id='process-data',
                         n_clicks=0,
                         className='process-button-style'
                     ),
                     html.Button(
-                        'See Example',
+                        'Click to Upload Sample Data',
                         id='see-example-data',
                         n_clicks=0,
-                        className='process-button-style'
+                        className='process-sample-button-style'
                     ),
                     html.Button(
                         'View Results',
