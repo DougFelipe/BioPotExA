@@ -345,5 +345,5 @@ def get_ko_per_sample_for_pathway(merged_df, selected_pathway):
     """
     filtered_df = merged_df[merged_df['pathname'] == selected_pathway]  # Filtra pela via
     if filtered_df.empty:
-        return pd.DataFrame(columns=['sample', 'ko'])  # Retorna um DataFrame vazio
-    return filtered_df[['sample', 'ko']].drop_duplicates()  # Remove duplicatas e retorna sample e ko
+        return pd.DataFrame(columns=['sample', 'genesymbol'])  # Retorna um DataFrame vazio
+    return filtered_df[['sample', 'genesymbol']].drop_duplicates()  # Remove duplicatas e retorna sample e ko

@@ -13,7 +13,6 @@ from dash import Dash, dcc, html,Input, Output
 
 # Importa o componente de cabeçalho personalizado.
 from components.header import Header
-from components.see_exemple import get_see_example_layout
 
 # Importa funções para obter layouts das páginas.
 from layouts.about import get_about_layout

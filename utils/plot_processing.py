@@ -460,7 +460,7 @@ def plot_sample_ko_scatter(scatter_data, selected_pathway):
     fig = px.scatter(
         scatter_data,
         x='sample',
-        y='ko',
+        y='genesymbol',
         title=f'Scatter Plot of KOs by Sample for Pathway: {selected_pathway}',
         template='simple_white'
     )
