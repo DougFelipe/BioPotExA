@@ -76,12 +76,12 @@ def get_dataAnalysis_page():
                     )
                 ]
             ),
-            # Título "How to Use"
+
+            # Título "Upload and Analyze Your Data"
             html.Div([
                 html.H2('Upload and Analyze Your Data', className='how-to-use'),
                 html.Hr(className="my-2"),
             ], className='title-container'),
-
 
             # Seção de Upload e Botões
             html.Div(
@@ -114,7 +114,53 @@ def get_dataAnalysis_page():
                         style={'display': 'none'}  # Inicialmente oculto
                     )
                 ]
-            )
+            ),
+
+            # Título "Related Publications"
+            html.Div([
+                html.H2('Related Publications', className='how-to-use'),
+                html.Hr(className="my-2"),
+            ], className='title-container'),
+
+            # Seção de Publicações Relacionadas
+            html.Div(
+                id='related-publications-card',
+                className='upload-process-card-style',
+                children=[
+                    html.Div([
+                        html.H4('Disclaimer for Citation', className='publication-subtitle'),
+                        html.P(
+                            "If you use BioPExA in your research, please cite the following publication:",
+                            className='publication-text'
+                        ),
+                        html.Blockquote(
+                            """
+                            Author(s). "BioPExA: A Bioinformatics Tool for Exploring Bioremediation Potential". 
+                            Journal of Environmental Research and Biotechnology, Year. DOI:xxxx/xxxxxx
+                            """,
+                            className='citation-text'
+                        )
+                    ], className='citation-container'),
+
+                    html.Div([
+                        html.H4('Related Articles', className='publication-subtitle'),
+                        html.Ul([
+                            html.Li(
+                                "Author(s). 'Integration of Functional Genomics for Pollutant Degradation Analysis'. "
+                                "Environmental Bioinformatics Journal, Year."
+                            ),
+                            html.Li(
+                                "Author(s). 'Advances in Metagenomic Analysis for Bioremediation'. "
+                                "Biotechnology Progress Journal, Year."
+                            ),
+                            html.Li(
+                                "Author(s). 'Functional Genomics and Bioremediation Potential Assessment'. "
+                                "Proceedings of the Biotechnology Conference, Year. *Winner of Best Oral Presentation Award*"
+                            )
+                        ], className='related-articles-list')
+                    ])
+                ]
+            ),
         ]),
 
         # Conteúdo dos Resultados
