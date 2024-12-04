@@ -18,7 +18,8 @@ def get_sample_clustering_layout():
                     {'label': 'Manhattan', 'value': 'cityblock'},
                     {'label': 'Cosine', 'value': 'cosine'}
                 ],
-                value='euclidean',  # Valor padrão
+                value=None,  # Começa vazio
+                placeholder='Select a distance metric',  # Texto do placeholder
             ),
         ], className='navigation-menu'),
         html.Div([
@@ -31,7 +32,8 @@ def get_sample_clustering_layout():
                     {'label': 'Average Linkage', 'value': 'average'},
                     {'label': 'Ward', 'value': 'ward'}
                 ],
-                value='ward',  # Valor padrão
+                value=None,  # Começa vazio
+                placeholder='Select a clustering method',  # Texto do placeholder
             ),
         ], className='navigation-menu'),
         html.Div(

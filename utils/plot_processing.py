@@ -511,20 +511,37 @@ import base64
 import io
 
 
-def plot_dendrogram(clustering_matrix, sample_labels):
+# my_dash_app/utils/plot_processing.py
+from dash import html
+import matplotlib
+matplotlib.use('Agg')  # Define o backend não interativo
+import matplotlib.pyplot as plt
+from scipy.cluster.hierarchy import dendrogram
+import base64
+import io
+
+
+def plot_dendrogram(clustering_matrix, sample_labels, distance_metric, method):
     """
     Plota o dendrograma com os nomes das amostras como rótulos no eixo X.
 
     :param clustering_matrix: Matriz de clustering gerada pela função `calculate_sample_clustering`.
     :param sample_labels: Lista de nomes das amostras para usar como rótulos no eixo X.
-    :return: Gráfico do dendrograma no formato Dash Figure.
+    :param distance_metric: Métrica de distância utilizada no clustering.
+    :param method: Método de clustering utilizado.
+    :return: Gráfico do dendrograma no formato Dash HTML.
     """
     # Criar o dendrograma em uma figura
     plt.figure(figsize=(10, 6))
     dendrogram(clustering_matrix, labels=sample_labels)  # Passa os nomes das amostras como labels
+
+    # Adicionar o título dinâmico
+    plt.title(f'Sample Clustering Dendrogram\nDistance: {distance_metric.capitalize()}, Method: {method.capitalize()}')
     plt.xlabel('Samples')
     plt.ylabel('Distance')
-    plt.title('Sample Clustering Dendrogram')
+
+    # Ajustar o ângulo dos rótulos no eixo X
+    plt.xticks(rotation=-45, ha='left')  # Gira os rótulos para -45 graus e alinha à esquerda
 
     # Converter a figura para base64
     buf = io.BytesIO()
