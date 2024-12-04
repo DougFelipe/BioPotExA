@@ -394,3 +394,29 @@ def calculate_sample_clustering(input_df, distance_metric, method):
     clustering_matrix = sch.linkage(distance_matrix, method=method)
 
     return clustering_matrix
+
+#p16
+# my_dash_app/utils/data_processing.py
+import pandas as pd
+
+def prepare_upsetplot_data(stored_data):
+    """
+    Prepara os dados para o UpSet Plot com base nos KOs e amostras.
+
+    :param stored_data: Dados armazenados no formato dicionário (stored-data).
+    :return: DataFrame contendo as amostras e seus respectivos KOs.
+    """
+    input_df = pd.DataFrame(stored_data)
+    print("DEBUG: Dados armazenados carregados no DataFrame:")
+    print(input_df.head())
+
+    # Verifica se as colunas necessárias existem
+    if 'sample' not in input_df.columns or 'ko' not in input_df.columns:
+        raise KeyError("As colunas 'sample' e 'ko' são necessárias para o UpSet Plot.")
+
+    # Retorna o DataFrame preparado
+    result_df = input_df[['sample', 'ko']]
+    print("DEBUG: DataFrame preparado para o UpSet Plot:")
+    print(result_df.head())
+
+    return result_df

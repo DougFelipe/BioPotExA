@@ -555,3 +555,76 @@ def plot_dendrogram(clustering_matrix, sample_labels, distance_metric, method):
 
     # Retornar apenas a imagem como Dash HTML
     return html.Img(src=f'data:image/png;base64,{encoded_image}', style={"width": "100%"})
+
+#P16
+# my_dash_app/utils/plot_processing.py
+from upsetplot import from_memberships, plot
+import matplotlib.pyplot as plt
+import pandas as pd
+import base64
+import io
+from sklearn.preprocessing import LabelEncoder
+
+def render_upsetplot(stored_data, selected_samples):
+    """
+    Renderiza o gráfico UpSet Plot baseado nas amostras e KOs selecionados.
+
+    :param stored_data: Dados armazenados no formato dicionário (stored-data).
+    :param selected_samples: Lista de amostras selecionadas.
+    :return: Imagem do gráfico UpSet Plot em formato base64.
+    """
+    # Verificar se há pelo menos 2 amostras selecionadas
+    if len(selected_samples) < 2:
+        raise ValueError("É necessário selecionar pelo menos duas amostras para renderizar o gráfico.")
+
+    input_df = pd.DataFrame(stored_data)
+    print("DEBUG: DataFrame inicial:")
+    print(input_df.head())
+
+    # Filtrar pelas amostras selecionadas
+    filtered_df = input_df[input_df['sample'].isin(selected_samples)]
+    print("DEBUG: DataFrame filtrado pelas amostras selecionadas:")
+    print(filtered_df.head())
+
+    # Preparar os memberships para o UpSet Plot
+    memberships = filtered_df.groupby('ko')['sample'].apply(list)
+    memberships = memberships.apply(lambda x: list(set(x)))  # Remover duplicatas
+    print("DEBUG: Memberships gerados:")
+    print(memberships.head())
+
+    # Converter os memberships em dados do UpSet Plot
+    upset_data = from_memberships(memberships)
+    print("DEBUG: Dados do UpSet Plot gerados:")
+    print(upset_data)
+
+    # Resolver duplicatas no índice
+    upset_data = upset_data.groupby(upset_data.index).sum()
+    print("DEBUG: Dados após consolidação:")
+    print(upset_data)
+
+    # Validar e ajustar o índice dinamicamente
+    try:
+        num_levels = len(upset_data.index[0])  # Determinar o número de níveis do índice
+        index_names = [f"Sample_{i+1}" for i in range(num_levels)]  # Gerar nomes dinamicamente
+        print(f"DEBUG: Nomes do índice gerados dinamicamente: {index_names}")
+
+        new_index = pd.MultiIndex.from_tuples(upset_data.index, names=index_names)
+        upset_data.index = new_index
+        print("DEBUG: Índice ajustado para MultiIndex:")
+        print(upset_data.index)
+    except Exception as e:
+        print(f"DEBUG: Falha ao criar MultiIndex: {e}")
+        raise ValueError("Falha ao criar MultiIndex: dados malformados ou inconsistentes.")
+
+    # Gerar o gráfico
+    plt.figure(figsize=(10, 6))
+    plot(upset_data, orientation='horizontal')
+    buffer = io.BytesIO()
+    plt.savefig(buffer, format='png', bbox_inches='tight')
+    plt.close()
+    buffer.seek(0)
+
+    # Converter gráfico para base64
+    image_data = base64.b64encode(buffer.read()).decode('utf-8')
+    print("DEBUG: Gráfico gerado com sucesso.")
+    return f"data:image/png;base64,{image_data}"
