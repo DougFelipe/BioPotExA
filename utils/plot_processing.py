@@ -446,8 +446,7 @@ def plot_pathway_heatmap(df, selected_sample):
 
     return fig
 
-
-import plotly.express as px
+##P13
 
 def plot_sample_ko_scatter(scatter_data, selected_pathway):
     """
@@ -470,3 +469,34 @@ def plot_sample_ko_scatter(scatter_data, selected_pathway):
         xaxis_tickangle=-45  # Rotaciona os rótulos do eixo x
     )
     return fig
+
+
+# my_dash_app/utils/plot_processing.py
+
+
+def plot_enzyme_activity_counts(enzyme_count_df, sample):
+    """
+    Plota um gráfico de barras das atividades enzimáticas únicas por amostra.
+
+    :param enzyme_count_df: DataFrame com a contagem de atividades enzimáticas únicas.
+    :param sample: Nome da amostra selecionada.
+    :return: Objeto Figure com o gráfico de barras.
+    """
+    if enzyme_count_df.empty:
+        raise ValueError("O DataFrame de contagem de atividades enzimáticas está vazio.")
+
+    fig = px.bar(
+        enzyme_count_df,
+        x='enzyme_activity',
+        y='unique_ko_count',
+        title=f'Unique Enzyme Activities for {sample}',
+        text='unique_ko_count',
+        template="simple_white"
+    )
+    fig.update_layout(
+        xaxis_title='Enzyme Activity',
+        yaxis_title='Unique Gene Count',
+        xaxis_tickangle=45
+    )
+    return fig
+

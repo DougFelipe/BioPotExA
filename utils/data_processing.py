@@ -347,3 +347,21 @@ def get_ko_per_sample_for_pathway(merged_df, selected_pathway):
     if filtered_df.empty:
         return pd.DataFrame(columns=['sample', 'genesymbol'])  # Retorna um DataFrame vazio
     return filtered_df[['sample', 'genesymbol']].drop_duplicates()  # Remove duplicatas e retorna sample e ko
+
+
+# my_dash_app/utils/data_processing.py
+
+def count_unique_enzyme_activities(merged_df, sample):
+    """
+    Conta as atividades enzimáticas únicas associadas a uma amostra.
+
+    :param merged_df: DataFrame resultante da mesclagem com o banco de dados.
+    :param sample: Nome da amostra selecionada.
+    :return: DataFrame com a contagem de atividades enzimáticas únicas por amostra.
+    """
+    # Filtrar pelo nome da amostra
+    filtered_df = merged_df[merged_df['sample'] == sample]
+
+    # Agrupar pela atividade enzimática e contar
+    enzyme_count = filtered_df.groupby('enzyme_activity')['ko'].nunique().reset_index(name='unique_ko_count')
+    return enzyme_count.sort_values('unique_ko_count', ascending=False)

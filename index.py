@@ -34,6 +34,7 @@ import callbacks.P10_sample_grouping_profile_callbacks
 import callbacks.P11_callbacks
 import callbacks.P12_callbacks
 import callbacks.P13_callbacks
+import callbacks.P14_sample_enzyme_activity_callbacks
 
 
 # Importação da aplicação deve vir depois dos callbacks

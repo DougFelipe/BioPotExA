@@ -1,4 +1,4 @@
-# Importações necessárias
+# my_dash_app/utils/data_validator.py
 import pandas as pd
 import re
 import base64
