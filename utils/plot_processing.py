@@ -500,3 +500,41 @@ def plot_enzyme_activity_counts(enzyme_count_df, sample):
     )
     return fig
 
+#P15
+# my_dash_app/utils/plot_processing.py
+from dash import html  # Importa o módulo html para criar componentes HTML
+import matplotlib
+matplotlib.use('Agg')  # Define o backend não interativo
+import matplotlib.pyplot as plt
+from scipy.cluster.hierarchy import dendrogram
+import base64
+import io
+
+
+def plot_dendrogram(clustering_matrix, sample_labels):
+    """
+    Plota o dendrograma com os nomes das amostras como rótulos no eixo X.
+
+    :param clustering_matrix: Matriz de clustering gerada pela função `calculate_sample_clustering`.
+    :param sample_labels: Lista de nomes das amostras para usar como rótulos no eixo X.
+    :return: Gráfico do dendrograma no formato Dash Figure.
+    """
+    # Criar o dendrograma em uma figura
+    plt.figure(figsize=(10, 6))
+    dendrogram(clustering_matrix, labels=sample_labels)  # Passa os nomes das amostras como labels
+    plt.xlabel('Samples')
+    plt.ylabel('Distance')
+    plt.title('Sample Clustering Dendrogram')
+
+    # Converter a figura para base64
+    buf = io.BytesIO()
+    plt.savefig(buf, format='png', bbox_inches='tight')
+    buf.seek(0)
+    encoded_image = base64.b64encode(buf.read()).decode('utf-8')
+    buf.close()
+
+    # Fechar a figura para evitar conflitos com o Matplotlib
+    plt.close()
+
+    # Retornar apenas a imagem como Dash HTML
+    return html.Img(src=f'data:image/png;base64,{encoded_image}', style={"width": "100%"})

@@ -14,6 +14,7 @@ from layouts.P11_layout import get_gene_sample_heatmap_layout
 from layouts.P12_layout import get_pathway_heatmap_layout
 from layouts.P13_layout import get_sample_ko_scatter_layout
 from layouts.P14_sample_enzyme_activity_layout import get_sample_enzyme_activity_layout
+from layouts.P15_sample_clustering_layout import get_sample_clustering_layout
 
 def get_results_layout():
     return html.Div([
@@ -97,7 +98,11 @@ def get_results_layout():
                 dbc.AccordionItem(
                     get_sample_enzyme_activity_layout(),
                     title="Enzyme Activity Counts per Sample"
-        ),               
+                ),
+                dbc.AccordionItem(
+                    get_sample_clustering_layout(),
+                    title="Sample Clustering Dendrogram"
+                ),              
             ],
             start_collapsed=True,
             always_open=True,

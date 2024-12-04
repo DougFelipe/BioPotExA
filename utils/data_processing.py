@@ -365,3 +365,32 @@ def count_unique_enzyme_activities(merged_df, sample):
     # Agrupar pela atividade enzimática e contar
     enzyme_count = filtered_df.groupby('enzyme_activity')['ko'].nunique().reset_index(name='unique_ko_count')
     return enzyme_count.sort_values('unique_ko_count', ascending=False)
+
+
+#P15
+# my_dash_app/utils/data_processing.py
+import scipy.spatial.distance as ssd
+import scipy.cluster.hierarchy as sch
+import pandas as pd
+
+def calculate_sample_clustering(input_df, distance_metric, method):
+    """
+    Calcula a matriz de clustering com base no input do usuário.
+
+    :param input_df: DataFrame com os dados de entrada (colunas `sample` e `ko`).
+    :param distance_metric: Métrica de distância selecionada (e.g., 'euclidean', 'cityblock').
+    :param method: Método de agrupamento selecionado (e.g., 'single', 'ward').
+    :return: Matriz de clustering calculada.
+    """
+    # Pivotar os dados para criar uma matriz de amostras por KOs
+    pivot_df = input_df.pivot_table(
+        index='sample', columns='ko', aggfunc='size', fill_value=0
+    )
+
+    # Calcular a matriz de distância
+    distance_matrix = ssd.pdist(pivot_df, metric=distance_metric)
+
+    # Realizar o clustering hierárquico
+    clustering_matrix = sch.linkage(distance_matrix, method=method)
+
+    return clustering_matrix
