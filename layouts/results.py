@@ -22,20 +22,79 @@ def get_results_layout():
         html.H2('Data Analysis Results', className='results-title'),
         html.Hr(className="my-2"),
         html.H4('Results from your submitted data', className='results-subtitle'),
+        
+        # Resultado 1: Merge com o banco de dados
+        html.Div([
+            html.H5("Analysis Name: Results Table", className="analysis-title"),
+            html.P(
+                "Description: This table presents the processed data merged with the main database, offering a comprehensive overview of the input data and its matched records.",
+                className="analysis-description"
+            ),
+            html.P(
+                "Relevant insights: The merged table reveals how well the input data aligns with the main database, providing insights into the completeness and relevance of the data.",
+                className="analysis-insights"
+            ),
+        ], className="analysis-header"),
         dbc.Accordion(
             [
                 dbc.AccordionItem(
                     html.Div(id='output-merge-table'),
                     title="Results Table"
                 ),
+            ],
+            start_collapsed=False,
+            always_open=False,
+        ),
+
+        # Resultado 2: Merge com hadegDB
+        html.Div([
+            html.H5("Analysis Name: Results Table (hadegDB)", className="analysis-title"),
+            html.P(
+                "Description: This table contains data merged with the hadegDB database, enabling the exploration of additional annotations and insights.",
+                className="analysis-description"
+            ),
+            html.P(
+                "Relevant insights: The table helps identify significant matches with hadegDB, enhancing the understanding of potential functional and structural associations.",
+                className="analysis-insights"
+            ),
+        ], className="analysis-header"),
+        dbc.Accordion(
+            [
                 dbc.AccordionItem(
-                    html.Div(id='output-merge-hadeg-table'),  # Contêiner para a tabela mesclada com hadegDB
+                    html.Div(id='output-merge-hadeg-table'),
                     title="Results Table (hadegDB)"
                 ),
+            ],
+            start_collapsed=False,
+            always_open=False,
+        ),
+
+        # Resultado 3: Merge com ToxCSM
+        html.Div([
+            html.H5("Analysis Name: Results Table (ToxCSM)", className="analysis-title"),
+            html.P(
+                "Description: This table shows data merged with the ToxCSM database, providing toxicity predictions and compound interactions.",
+                className="analysis-description"
+            ),
+            html.P(
+                "Relevant insights: By analyzing the merged table, you can assess the toxicity potential and prioritize compounds for further investigation.",
+                className="analysis-insights"
+            ),
+        ], className="analysis-header"),
+        dbc.Accordion(
+            [
                 dbc.AccordionItem(
-                    html.Div(id='output-merge-toxcsm-table'),  # Contêiner para a tabela mesclada com ToxCSM
+                    html.Div(id='output-merge-toxcsm-table'),
                     title="Results Table (ToxCSM)"
                 ),
+            ],
+            start_collapsed=False,
+            always_open=False,
+        ),
+
+        # Grande accordion para os outros resultados
+        dbc.Accordion(
+            [
                 dbc.AccordionItem(
                     get_ko_count_bar_chart_layout(),
                     title="Gene count associated with priority compounds",
