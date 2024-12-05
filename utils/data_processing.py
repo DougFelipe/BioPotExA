@@ -396,27 +396,27 @@ def calculate_sample_clustering(input_df, distance_metric, method):
     return clustering_matrix
 
 #p16
-# my_dash_app/utils/data_processing.py
 import pandas as pd
 
-def prepare_upsetplot_data(stored_data):
+def prepare_upsetplot_data(merged_data, selected_samples):
     """
-    Prepara os dados para o UpSet Plot com base nos KOs e amostras.
+    Prepara os dados para o UpSet Plot com base no merge do input com o database.
 
-    :param stored_data: Dados armazenados no formato dicionário (stored-data).
-    :return: DataFrame contendo as amostras e seus respectivos KOs.
+    :param merged_data: Dados mesclados contendo as colunas `sample` e `ko`.
+    :param selected_samples: Lista de amostras selecionadas.
+    :return: DataFrame contendo as amostras e seus respectivos KOs únicos.
     """
-    input_df = pd.DataFrame(stored_data)
-    print("DEBUG: Dados armazenados carregados no DataFrame:")
-    print(input_df.head())
+    print("DEBUG: Dados mesclados carregados no DataFrame:")
+    print(merged_data.head())
 
-    # Verifica se as colunas necessárias existem
-    if 'sample' not in input_df.columns or 'ko' not in input_df.columns:
-        raise KeyError("As colunas 'sample' e 'ko' são necessárias para o UpSet Plot.")
+    # Filtrar pelas amostras selecionadas
+    filtered_df = merged_data[merged_data['sample'].isin(selected_samples)]
+    print("DEBUG: Dados filtrados pelas amostras selecionadas:")
+    print(filtered_df.head())
 
-    # Retorna o DataFrame preparado
-    result_df = input_df[['sample', 'ko']]
-    print("DEBUG: DataFrame preparado para o UpSet Plot:")
-    print(result_df.head())
+    # Considerar apenas KOs únicos por amostra
+    unique_ko_df = filtered_df.drop_duplicates(subset=['sample', 'ko'])
+    print("DEBUG: Dados com valores únicos de KO por amostra:")
+    print(unique_ko_df.head())
 
-    return result_df
+    return unique_ko_df

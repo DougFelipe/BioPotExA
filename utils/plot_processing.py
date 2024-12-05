@@ -3,6 +3,9 @@ import plotly.graph_objects as go
 import pandas as pd
 from plotly.subplots import make_subplots
 import math
+from utils.data_processing import prepare_upsetplot_data
+from utils.data_processing import merge_input_with_database  # Importa a função de merge
+
 
 
 
@@ -565,9 +568,11 @@ import base64
 import io
 from sklearn.preprocessing import LabelEncoder
 
+
+
 def render_upsetplot(stored_data, selected_samples):
     """
-    Renderiza o gráfico UpSet Plot baseado nas amostras e KOs selecionados.
+    Renderiza o gráfico UpSet Plot baseado nas amostras e KOs selecionados após merge com o database.
 
     :param stored_data: Dados armazenados no formato dicionário (stored-data).
     :param selected_samples: Lista de amostras selecionadas.
@@ -577,13 +582,24 @@ def render_upsetplot(stored_data, selected_samples):
     if len(selected_samples) < 2:
         raise ValueError("É necessário selecionar pelo menos duas amostras para renderizar o gráfico.")
 
+    # Converter stored_data para DataFrame
     input_df = pd.DataFrame(stored_data)
-    print("DEBUG: DataFrame inicial:")
+    print("DEBUG: Dados armazenados carregados no DataFrame:")
     print(input_df.head())
 
+    # Mesclar os dados do input com o banco de dados
+    merged_data = merge_input_with_database(input_df)
+    print("DEBUG: Dados após merge com o database:")
+    print(merged_data.head())
+
     # Filtrar pelas amostras selecionadas
-    filtered_df = input_df[input_df['sample'].isin(selected_samples)]
-    print("DEBUG: DataFrame filtrado pelas amostras selecionadas:")
+    filtered_df = merged_data[merged_data['sample'].isin(selected_samples)]
+    print("DEBUG: Dados filtrados pelas amostras selecionadas:")
+    print(filtered_df.head())
+
+    # Garantir apenas valores únicos de `ko` para cada `sample`
+    filtered_df = filtered_df[['sample', 'ko']].drop_duplicates()
+    print("DEBUG: Dados após remoção de duplicatas (únicos por sample e KO):")
     print(filtered_df.head())
 
     # Preparar os memberships para o UpSet Plot
