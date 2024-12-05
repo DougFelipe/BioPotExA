@@ -23,15 +23,21 @@ def get_results_layout():
         html.Hr(className="my-2"),
         html.H4('Results from your submitted data', className='results-subtitle'),
         
-        # Resultado 1: Merge com o banco de dados
+        # Resultado 1: Merge com o banco de 
+                html.Div(
+            [
+                dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs"), 
+            ]
+        ),
+
         html.Div([
-            html.H5("Analysis Name: Results Table", className="analysis-title"),
+            html.H5("Main Results Table", className="analysis-title"),
             html.P(
-                "Description: This table presents the processed data merged with the main database, offering a comprehensive overview of the input data and its matched records.",
+                "This table presents the processed data merged with the main database, offering a comprehensive overview of the input data and its matched records.",
                 className="analysis-description"
             ),
             html.P(
-                "Relevant insights: The merged table reveals how well the input data aligns with the main database, providing insights into the completeness and relevance of the data.",
+                "The merged table reveals how well the input data aligns with the main database, providing insights into the completeness and relevance of the data.",
                 className="analysis-insights"
             ),
         ], className="analysis-header"),
@@ -42,19 +48,24 @@ def get_results_layout():
                     title="Results Table"
                 ),
             ],
-            start_collapsed=False,
-            always_open=False,
+            start_collapsed=True,
+            always_open=True,
+        ),
+        html.Div(
+            [
+                dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs"), 
+            ]
         ),
 
         # Resultado 2: Merge com hadegDB
         html.Div([
-            html.H5("Analysis Name: Results Table (hadegDB)", className="analysis-title"),
+            html.H5("Results Table (hadegDB)", className="analysis-title"),
             html.P(
-                "Description: This table contains data merged with the hadegDB database, enabling the exploration of additional annotations and insights.",
+                "This table contains data merged with the hadegDB database, enabling the exploration of additional annotations and insights.",
                 className="analysis-description"
             ),
             html.P(
-                "Relevant insights: The table helps identify significant matches with hadegDB, enhancing the understanding of potential functional and structural associations.",
+                "The table helps identify significant matches with hadegDB, enhancing the understanding of potential functional and structural associations.",
                 className="analysis-insights"
             ),
         ], className="analysis-header"),
@@ -65,19 +76,24 @@ def get_results_layout():
                     title="Results Table (hadegDB)"
                 ),
             ],
-            start_collapsed=False,
-            always_open=False,
+            start_collapsed=True,
+            always_open=True,
+        ),
+        html.Div(
+            [
+                dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs"), 
+            ]
         ),
 
         # Resultado 3: Merge com ToxCSM
         html.Div([
-            html.H5("Analysis Name: Results Table (ToxCSM)", className="analysis-title"),
+            html.H5("Results Table (ToxCSM)", className="analysis-title"),
             html.P(
-                "Description: This table shows data merged with the ToxCSM database, providing toxicity predictions and compound interactions.",
+                "This table shows data merged with the ToxCSM database, providing toxicity predictions and compound interactions.",
                 className="analysis-description"
             ),
             html.P(
-                "Relevant insights: By analyzing the merged table, you can assess the toxicity potential and prioritize compounds for further investigation.",
+                "By analyzing the merged table, you can assess the toxicity potential and prioritize compounds for further investigation.",
                 className="analysis-insights"
             ),
         ], className="analysis-header"),
@@ -88,8 +104,13 @@ def get_results_layout():
                     title="Results Table (ToxCSM)"
                 ),
             ],
-            start_collapsed=False,
-            always_open=False,
+            start_collapsed=True,
+            always_open=True,
+        ),
+        html.Div(
+            [
+                dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs"), 
+            ]
         ),
 
         # Grande accordion para os outros resultados

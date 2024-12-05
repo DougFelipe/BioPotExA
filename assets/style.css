@@ -498,8 +498,8 @@ body, html {
 
 /* Título e descrição para os cards de análise, com estilos específicos para alinhamento e tamanho de fonte */
 .analysis-title,
-.analysis-description {
-    text-align: center;
+.analysis-description{
+    text-align: left;
     font-size: 1.5em; /* Título */
     margin-bottom: 8px;
 }
@@ -507,6 +507,12 @@ body, html {
 .analysis-description {
     font-size: 1em; /* Descrição */
     color: #000000;
+}
+
+.analysis-insights {
+    text-align: left;
+    font-size: 1em; /* Título */
+    margin-bottom: 8px;
 }
 
 /* ------------------------------- */
