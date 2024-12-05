@@ -602,12 +602,16 @@ def render_upsetplot(stored_data, selected_samples):
     print("DEBUG: Dados após consolidação:")
     print(upset_data)
 
-    # Validar e ajustar o índice dinamicamente
+    # Validar e ajustar o índice dinamicamente usando os nomes originais das amostras
     try:
-        num_levels = len(upset_data.index[0])  # Determinar o número de níveis do índice
-        index_names = [f"Sample_{i+1}" for i in range(num_levels)]  # Gerar nomes dinamicamente
+        # Determinar o número de níveis do índice
+        num_levels = len(upset_data.index[0]) if isinstance(upset_data.index[0], tuple) else 1
+
+        # Mapear nomes das amostras originais para os níveis
+        index_names = selected_samples[:num_levels]  # Usar os nomes originais das amostras selecionadas
         print(f"DEBUG: Nomes do índice gerados dinamicamente: {index_names}")
 
+        # Ajustar o índice para usar os nomes das amostras
         new_index = pd.MultiIndex.from_tuples(upset_data.index, names=index_names)
         upset_data.index = new_index
         print("DEBUG: Índice ajustado para MultiIndex:")
