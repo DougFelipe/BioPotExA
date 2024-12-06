@@ -667,8 +667,8 @@ def generate_gene_compound_network(network_data):
     # Adicionar nós e arestas
     for _, row in network_data.iterrows():
         G.add_node(row['genesymbol'], type='gene')
-        G.add_node(row['cpd'], type='compound')
-        G.add_edge(row['genesymbol'], row['cpd'])
+        G.add_node(row['compoundname'], type='compound')
+        G.add_edge(row['genesymbol'], row['compoundname'])
 
     print(f"DEBUG: Número de nós: {G.number_of_nodes()}, Número de arestas: {G.number_of_edges()}")
 

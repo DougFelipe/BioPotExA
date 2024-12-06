@@ -453,7 +453,7 @@ def prepare_gene_compound_network_data(stored_data):
         raise KeyError("As colunas 'genesymbol' e 'cpd' são necessárias para criar o gráfico de rede.")
 
     # Filtrar apenas as colunas relevantes e remover duplicatas
-    network_df = merged_data[['genesymbol', 'cpd']].dropna().drop_duplicates()
+    network_df = merged_data[['genesymbol', 'compoundname']].dropna().drop_duplicates()
 
     print("DEBUG: Dados processados para a rede:")
     print(network_df.head())
