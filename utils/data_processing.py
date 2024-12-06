@@ -420,3 +420,42 @@ def prepare_upsetplot_data(merged_data, selected_samples):
     print(unique_ko_df.head())
 
     return unique_ko_df
+
+
+#P17
+# my_dash_app/utils/data_processing.py
+# my_dash_app/utils/data_processing.py
+import pandas as pd
+from utils.data_processing import merge_input_with_database
+
+def prepare_gene_compound_network_data(stored_data):
+    """
+    Prepara os dados para o gráfico de rede Gene-Compound.
+
+    :param stored_data: Dados armazenados no formato dicionário.
+    :return: DataFrame contendo as relações gene-composto.
+    """
+    input_df = pd.DataFrame(stored_data)
+
+    # Garantir que os dados estão no formato esperado
+    if input_df.empty:
+        raise ValueError("O stored-data está vazio.")
+
+    # Realizar o merge com o banco de dados
+    print("DEBUG: Realizando merge com o banco de dados...")
+    merged_data = merge_input_with_database(input_df)
+
+    print("DEBUG: Dados após o merge:")
+    print(merged_data.head())
+
+    # Verificar se as colunas necessárias existem
+    if 'genesymbol' not in merged_data.columns or 'cpd' not in merged_data.columns:
+        raise KeyError("As colunas 'genesymbol' e 'cpd' são necessárias para criar o gráfico de rede.")
+
+    # Filtrar apenas as colunas relevantes e remover duplicatas
+    network_df = merged_data[['genesymbol', 'cpd']].dropna().drop_duplicates()
+
+    print("DEBUG: Dados processados para a rede:")
+    print(network_df.head())
+
+    return network_df

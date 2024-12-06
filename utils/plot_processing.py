@@ -648,3 +648,86 @@ def render_upsetplot(stored_data, selected_samples):
     image_data = base64.b64encode(buffer.read()).decode('utf-8')
     print("DEBUG: Gráfico gerado com sucesso.")
     return f"data:image/png;base64,{image_data}"
+
+#P17
+# my_dash_app/utils/plot_processing.py
+import networkx as nx
+import plotly.graph_objects as go
+
+def generate_gene_compound_network(network_data):
+    """
+    Gera um gráfico de rede Gene-Compound usando Plotly e NetworkX.
+
+    :param network_data: DataFrame com colunas 'genesymbol' e 'cpd'.
+    :return: Figura Plotly com a rede.
+    """
+    # Criar o grafo usando NetworkX
+    G = nx.Graph()
+
+    # Adicionar nós e arestas
+    for _, row in network_data.iterrows():
+        G.add_node(row['genesymbol'], type='gene')
+        G.add_node(row['cpd'], type='compound')
+        G.add_edge(row['genesymbol'], row['cpd'])
+
+    print(f"DEBUG: Número de nós: {G.number_of_nodes()}, Número de arestas: {G.number_of_edges()}")
+
+    # Posição dos nós (usando spring layout para distribuição)
+    pos = nx.spring_layout(G, seed=42)
+
+    # Extrair informações para plotly
+    node_x = []
+    node_y = []
+    node_text = []
+    node_color = []
+
+    for node, position in pos.items():
+        node_x.append(position[0])
+        node_y.append(position[1])
+        node_text.append(node)
+        # Definir cor diferente para genes e compostos
+        node_color.append('blue' if G.nodes[node]['type'] == 'gene' else 'green')
+
+    edge_x = []
+    edge_y = []
+    for edge in G.edges():
+        x0, y0 = pos[edge[0]]
+        x1, y1 = pos[edge[1]]
+        edge_x.extend([x0, x1, None])
+        edge_y.extend([y0, y1, None])
+
+    # Criar as arestas
+    edge_trace = go.Scatter(
+        x=edge_x, y=edge_y,
+        line=dict(width=1, color='#888'),
+        hoverinfo='none',
+        mode='lines'
+    )
+
+    # Criar os nós
+    node_trace = go.Scatter(
+        x=node_x, y=node_y,
+        mode='markers',
+        hoverinfo='text',
+        marker=dict(
+            size=10,
+            color=node_color,
+            line=dict(width=2)
+        ),
+        text=node_text
+    )
+
+    # Criar o layout do gráfico
+    fig = go.Figure(
+        data=[edge_trace, node_trace],
+        layout=go.Layout(
+            title="Gene-Compound Network",
+            titlefont_size=16,
+            showlegend=False,
+            margin=dict(b=0, l=0, r=0, t=40),
+            xaxis=dict(showgrid=False, zeroline=False),
+            yaxis=dict(showgrid=False, zeroline=False)
+        )
+    )
+
+    return fig

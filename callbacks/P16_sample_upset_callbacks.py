@@ -17,15 +17,12 @@ def initialize_upsetplot_dropdown(n_clicks, merged_data):
     if not merged_data or n_clicks < 1:
         raise PreventUpdate
 
-    print("DEBUG: Inicializando dropdown com merged_data:")
-    print(merged_data)
 
     # Preparar os dados e obter as amostras únicas
     unique_samples = pd.DataFrame(merged_data)['sample'].unique()
     options = [{'label': sample, 'value': sample} for sample in unique_samples]
 
-    print("DEBUG: Opções geradas para o dropdown:")
-    print(options)
+
 
     return options, None  # Nenhuma seleção inicial
 
@@ -43,16 +40,14 @@ def update_upsetplot(selected_samples, stored_data):
             style={"textAlign": "center", "color": "gray"}
         )
 
-    print("DEBUG: Atualizando gráfico UpSet Plot com as amostras selecionadas:")
-    print(selected_samples)
+
 
     # Converter stored-data para DataFrame
     input_df = pd.DataFrame(stored_data)
 
     # Mesclar os dados do input com o banco de dados
     merged_data = merge_input_with_database(input_df)
-    print("DEBUG: Dados após merge com o banco de dados no callback:")
-    print(merged_data.head())
+
 
     # Renderizar o gráfico UpSet Plot com os dados mesclados
     image_src = render_upsetplot(merged_data.to_dict('records'), selected_samples)

@@ -16,7 +16,7 @@ from layouts.P13_layout import get_sample_ko_scatter_layout
 from layouts.P14_sample_enzyme_activity_layout import get_sample_enzyme_activity_layout
 from layouts.P15_sample_clustering_layout import get_sample_clustering_layout
 from layouts.P16_sample_upset_layout import get_sample_upset_layout
-
+from layouts.P17_gene_compound_network_layout import get_gene_compound_network_layout
 def get_results_layout():
     return html.Div([
         html.H2('Data Analysis Results', className='results-title'),
@@ -187,6 +187,10 @@ def get_results_layout():
                 dbc.AccordionItem(
                     get_sample_upset_layout(),
                     title="UpSet Plot: Amostras e KOs"
+                ),
+                dbc.AccordionItem(
+                    get_gene_compound_network_layout(),
+                    title="Gene-Compound Interaction Network",
                 ),             
             ],
             start_collapsed=True,
