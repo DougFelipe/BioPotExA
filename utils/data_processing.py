@@ -442,11 +442,8 @@ def prepare_gene_compound_network_data(stored_data):
         raise ValueError("O stored-data está vazio.")
 
     # Realizar o merge com o banco de dados
-    print("DEBUG: Realizando merge com o banco de dados...")
     merged_data = merge_input_with_database(input_df)
 
-    print("DEBUG: Dados após o merge:")
-    print(merged_data.head())
 
     # Verificar se as colunas necessárias existem
     if 'genesymbol' not in merged_data.columns or 'cpd' not in merged_data.columns:
@@ -455,7 +452,5 @@ def prepare_gene_compound_network_data(stored_data):
     # Filtrar apenas as colunas relevantes e remover duplicatas
     network_df = merged_data[['genesymbol', 'compoundname']].dropna().drop_duplicates()
 
-    print("DEBUG: Dados processados para a rede:")
-    print(network_df.head())
 
     return network_df

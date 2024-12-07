@@ -8,23 +8,38 @@ from utils.data_processing import merge_input_with_database  # Importa a funçã
 
 
 
-
 def plot_ko_count(ko_count_df):
     """
     Cria um gráfico de barras da contagem de KOs por amostra com base no DataFrame processado.
+    Inclui os valores acima das barras.
 
     :param ko_count_df: DataFrame com a contagem de KOs por amostra.
     :return: Objeto Figure com o gráfico de barras.
     """
-    fig = px.bar(ko_count_df, x='sample', y='ko_count',template="simple_white")
-    # Ajustar o layout do gráfico, se necessário
+    # Criação do gráfico com valores textuais exibidos
+    fig = px.bar(
+        ko_count_df, 
+        x='sample', 
+        y='ko_count', 
+        text='ko_count',  # Adiciona os valores da coluna `ko_count` como texto
+        template="simple_white"
+    )
+    
+    # Ajustar a posição do texto e o layout do gráfico
+    fig.update_traces(
+        textposition='auto',  # Posiciona o texto fora das barras
+        marker=dict(color='steelblue')  # Configura a cor das barras
+    )
+    
     fig.update_layout(
+        title="KO Count by Sample",
         xaxis_title='Sample',
         yaxis_title='Unique Gene Count',
-        xaxis={'categoryorder':'total descending'},
-        xaxis_tickangle=45  # Garante que a ordenação será mantida no gráfico
+        xaxis={'categoryorder': 'total descending'},
+        xaxis_tickangle=45,  # Inclina os rótulos do eixo X
+        uniformtext_minsize=10,  # Garante tamanho mínimo do texto
+        uniformtext_mode='hide'  # Oculta texto que não couber
     )
-
     
     return fig
 
