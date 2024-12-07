@@ -160,7 +160,7 @@ def plot_compound_scatter(df):
     """
     # Define a altura base do gráfico e a altura adicional por rótulo excedente
     base_height = 400  # Altura base do gráfico
-    extra_height_per_label = 20  # Altura adicional por cada rótulo excedente
+    extra_height_per_label = 25  # Altura adicional por cada rótulo excedente
 
     # Calcula o número de rótulos no eixo y
     num_labels = df['compoundname'].nunique()
@@ -175,17 +175,27 @@ def plot_compound_scatter(df):
         height = base_height
 
     # Cria o gráfico de dispersão
-    fig = px.scatter(df, x='sample', y='compoundname', color='compoundclass', title='Scatter Plot of Samples vs Compounds', template="simple_white")
+    fig = px.scatter(
+        df,
+        x='sample',
+        y='compoundname',
+        color='compoundclass',
+        title='Scatter Plot of Samples vs Compounds',
+        template="simple_white"
+    )
 
-    # Ajusta o layout do gráfico com a altura calculada
+    # Ajusta o layout do gráfico com a altura calculada e configurações para melhorar a visualização
     fig.update_layout(
         height=height,
         yaxis=dict(
             tickmode='array',
             tickvals=df['compoundname'].unique(),
             ticktext=df['compoundname'].unique(),
+            automargin=True,  # Garante margens automáticas para rótulos longos
+            tickfont=dict(size=10),  # Ajusta o tamanho da fonte dos rótulos
         ),
-        xaxis_tickangle=45
+        xaxis_tickangle=45,
+        margin=dict(l=200)  # Adiciona margem extra para o lado esquerdo para rótulos longos
     )
 
     return fig
@@ -465,15 +475,44 @@ def plot_pathway_heatmap(df, selected_sample):
     return fig
 
 ##P13
-
 def plot_sample_ko_scatter(scatter_data, selected_pathway):
     """
     Cria um scatter plot para mostrar os KOs associados a cada sample para uma via metabólica.
 
-    :param scatter_data: DataFrame com `sample` e `ko`.
+    :param scatter_data: DataFrame com sample e genesymbol.
     :param selected_pathway: A via metabólica selecionada (usada no título do gráfico).
     :return: Objeto Figure com o scatter plot.
     """
+    # Define parâmetros base
+    base_height = 400  # Altura base do gráfico
+    base_width = 800   # Largura base do gráfico
+    extra_width_per_label = 10  # Largura extra por rótulo adicional no eixo X
+    label_limit_x = 20  # Limite de rótulos no eixo X antes de ajustar a largura
+
+    # Calcula o número de rótulos únicos no eixo X (samples)
+    num_labels_x = scatter_data['sample'].nunique()
+
+    # Ajusta a largura do gráfico dinamicamente
+    if num_labels_x > label_limit_x:
+        width = base_width + (num_labels_x - label_limit_x) * extra_width_per_label
+    else:
+        width = base_width
+
+    # Calcula a altura do gráfico com base nos rótulos do eixo Y (genesymbol)
+    base_height = 400
+    extra_height_per_label = 15
+    num_labels_y = scatter_data['genesymbol'].nunique()
+    label_limit_y = 1
+
+    if num_labels_y > label_limit_y:
+        height = base_height + (num_labels_y - label_limit_y) * extra_height_per_label
+    else:
+        height = base_height
+
+    # Define espaçamento dinâmico para rótulos no eixo X
+    tick_spacing_x = max(1, num_labels_x // 20)  # Exibe no máximo 20 rótulos no eixo X
+
+    # Cria o scatter plot
     fig = px.scatter(
         scatter_data,
         x='sample',
@@ -481,11 +520,31 @@ def plot_sample_ko_scatter(scatter_data, selected_pathway):
         title=f'Scatter Plot of KOs by Sample for Pathway: {selected_pathway}',
         template='simple_white'
     )
+
+    # Ajusta o layout do gráfico
     fig.update_layout(
-        xaxis_title='',  # Remove título do eixo x
-        yaxis_title='',  # Remove título do eixo y
-        xaxis_tickangle=-45  # Rotaciona os rótulos do eixo x
+        height=height,
+        width=width,
+        yaxis=dict(
+            categoryorder='total ascending',
+            title='Genesymbol',  # Rótulo do eixo Y
+            tickmode='array',
+            tickvals=scatter_data['genesymbol'].unique(),
+            ticktext=scatter_data['genesymbol'].unique(),
+            automargin=True,
+            tickfont=dict(size=10),
+        ),
+        xaxis=dict(
+            title='Sample',  # Rótulo do eixo X
+            tickangle=45,  # Rotaciona rótulos no eixo X em 45 graus
+            tickmode='linear',
+            tickvals=scatter_data['sample'].unique()[::tick_spacing_x],
+            ticktext=scatter_data['sample'].unique()[::tick_spacing_x],
+            automargin=True,
+        ),
+        margin=dict(l=200, b=150)  # Margens para rótulos longos
     )
+
     return fig
 
 
