@@ -1,5 +1,5 @@
 # my_dash_app/callbacks/callbacks.py
-
+import dash_bootstrap_components as dbc
 from dash import html, dcc, callback, callback_context, dash_table
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
@@ -37,31 +37,30 @@ def handle_upload_or_example(contents, n_clicks_example, filename):
 
             df, error = validate_and_process_input(example_contents, 'sample_data.txt')
             if error:
-                return None, True, html.Div(f'Error processing example dataset: {error}', style={'color': 'red'}), 'initial'
+                return None, True, dbc.Alert(f'Error processing example dataset: {error}', color='danger', dismissable=True), 'initial'
             
             return (
                 df.to_dict('records'), 
                 False,  
-                html.Div('Example dataset loaded successfully, click to submit and view results', style={'color': 'green'}),  
+                dbc.Alert('Example dataset loaded successfully', color='success', dismissable=True),  
                 'loaded'  # Estado atualizado para "loaded"
             )
         except Exception as e:
-            return None, True, html.Div(f'Error loading example dataset: {str(e)}', style={'color': 'red'}), 'initial'
+            return None, True, dbc.Alert(f'Error loading example dataset: {str(e)}', color='danger', dismissable=True), 'initial'
 
     if contents:
         df, error = validate_and_process_input(contents, filename)
         if error:
-            return None, True, html.Div(error, style={'color': 'red'}), 'initial'
+            return None, True, dbc.Alert(error, color='danger', dismissable=True), 'initial'
 
         return (
             df.to_dict('records'),
             False,  
-            html.Div('File uploaded and validated successfully', style={'color': 'green'}),  
+            dbc.Alert('File uploaded and validated successfully', color='success', dismissable=True),  
             'loaded'  
         )
 
     raise PreventUpdate
-
 
 
 @app.callback(

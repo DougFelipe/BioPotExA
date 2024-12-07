@@ -518,6 +518,36 @@ body, html {
 /* ------------------------------- */
 /* Botão de Upload */
 /* ------------------------------- */
+/* Estilo para o container dos botões de upload */
+.upload-buttons-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Espaçamento entre os elementos */
+}
+
+/* Texto "Or" entre os botões */
+.upload-or-text {
+    font-size: 30px;
+    font-weight: bold;
+    color: #555; /* Cor do texto */
+}
+
+/* Estilo para os textos explicativos dos passos */
+.step-explanation {
+    font-size: 20px;
+    font-weight: 500;
+    color: #0e47d6;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* Ajuste no container dos textos explicativos */
+.upload-explanatory-text,
+.process-explanatory-text {
+    margin-bottom: 15px;
+}
+
 
 /* Estilo para o card de upload e processamento */
 .upload-process-card-style {

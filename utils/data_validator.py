@@ -76,7 +76,7 @@ def process_content_lines(content):
         elif line.strip() == '':
             continue
         else:
-            return None, f"O arquivo contém linhas inválidas: {line}"
+            return None, f"File must be in valid format, such as in sample data! Invalid characters identified: {line}"
     
     if not data:
         return None, "O arquivo não contém dados válidos."

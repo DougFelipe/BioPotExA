@@ -3,6 +3,8 @@ from dash import callback, Output, Input, State
 from app import app
 from utils.data_processing import prepare_gene_compound_network_data
 from utils.plot_processing import generate_gene_compound_network
+import plotly.graph_objects as go
+
 
 @app.callback(
     Output("gene-compound-network-graph", "figure"),

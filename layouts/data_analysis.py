@@ -9,6 +9,7 @@ from components.step_guide import create_step_card  # Importa a função do comp
 from layouts.results import get_results_layout  # Importa o novo layout de resultados
 
 # Função para criar a página de Análise de Dados
+# Função para criar a página de Análise de Dados
 def get_dataAnalysis_page():
     return html.Div([
         dcc.Store(id='page-state', data='initial'),  # Armazena o estado da página
@@ -88,23 +89,41 @@ def get_dataAnalysis_page():
                 id='upload-process-card',
                 className='upload-process-card-style',
                 children=[
-                    dcc.Upload(
-                        id='upload-data',
-                        children=html.Div(['Drag and Drop or ', html.A('Select a File')]),
-                        className='upload-button-style'
+                    html.Div(  # Texto explicativo do passo 1
+                        className='upload-explanatory-text',
+                        children=[
+                            html.P("Submit your file or click the button to load the example dataset.", className='step-explanation')
+                        ]
+                    ),
+                    html.Div(  # Container para alinhar os botões lado a lado
+                        className='upload-buttons-container',
+                        children=[
+                            dcc.Upload(
+                                id='upload-data',
+                                children=html.Div(['Drag and Drop or ', html.A('Select a File')]),
+                                className='upload-button-style'
+                            ),
+                            html.Span('Or', className='upload-or-text'),  # Texto "Or" entre os botões
+                            html.Button(
+                                'Upload Sample Data',
+                                id='see-example-data',
+                                n_clicks=0,
+                                className='process-sample-button-style'
+                            )
+                        ]
                     ),
                     html.Div(id='alert-container'),
+                    html.Div(  # Texto explicativo do passo 2
+                        className='process-explanatory-text',
+                        children=[
+                            html.P("Click to submit your data for processing and results presentation.", className='step-explanation')
+                        ]
+                    ),
                     html.Button(
-                        'Upload Your File (or sample data) and Click to Submit',
+                        'Click to Submit',
                         id='process-data',
                         n_clicks=0,
                         className='process-button-style'
-                    ),
-                    html.Button(
-                        'Click to Upload Sample Data',
-                        id='see-example-data',
-                        n_clicks=0,
-                        className='process-sample-button-style'
                     ),
                     html.Button(
                         'View Results',
