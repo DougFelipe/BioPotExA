@@ -287,5 +287,32 @@ def get_results_layout():
         html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
 
 
+                # Seção 11: Ranking of Compounds by Gene Interaction
+        html.Div(id="compound-rank-gene-chart", className="section"),  # ID para link no navbar
+        html.Div([
+            html.H5("Ranking of Compounds by Gene Interaction", className="analysis-title"),
+            html.P(
+                "This ranking chart identifies compounds based on their interactions with genes, revealing compounds associated with higher genetic activity.",
+                className="analysis-description"
+            ),
+            html.P(
+                "This visualization is useful to prioritize compounds with significant genetic interactions, aiding in targeted research and analysis.",
+                className="analysis-insights"
+            ),
+            dbc.Accordion(
+                [
+                    dbc.AccordionItem(
+                        html.Div(get_rank_compounds_gene_layout(), className="chart-container"),
+                        title="Ranking of Compounds by Gene Interaction"
+                    )
+                ],
+                start_collapsed=True,
+                always_open=False,
+            ),
+        ], className="analysis-header"),
+        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
+
+
+
 
     ])
