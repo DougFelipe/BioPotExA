@@ -22,7 +22,6 @@ from layouts.P17_gene_compound_network_layout import get_gene_compound_network_l
 def get_results_layout():
     return html.Div([
         # Navbar fixo no topo da página
-        # Adiciona o Navbar fixo
         navbar,
 
         # Espaçamento para compensar o menu fixo
@@ -45,18 +44,18 @@ def get_results_layout():
                 "The merged table reveals how well the input data aligns with the main database, providing insights into the completeness and relevance of the data.",
                 className="analysis-insights"
             ),
+            dbc.Accordion(
+                [
+                    dbc.AccordionItem(
+                        html.Div(id='output-merge-table'),
+                        title="Results Table"
+                    )
+                ],
+                start_collapsed=True,
+                always_open=True,
+            ),
         ], className="analysis-header"),
-        dbc.Accordion(
-            [
-                dbc.AccordionItem(
-                    html.Div(id='output-merge-table'),
-                    title="Results Table"
-                ),
-            ],
-            start_collapsed=True,
-            always_open=True,
-        ),
-        html.Div(dbc.Placeholder(color="success", className="divider")),
+        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size = "xs"),]),
 
         # Seção 2: Results Table (hadegDB)
         html.Div(id="hadeg-results-table", className="section"),
@@ -70,18 +69,18 @@ def get_results_layout():
                 "The table helps identify significant matches with hadegDB, enhancing the understanding of potential functional and structural associations.",
                 className="analysis-insights"
             ),
+            dbc.Accordion(
+                [
+                    dbc.AccordionItem(
+                        html.Div(id='output-merge-hadeg-table'),
+                        title="Results Table (hadegDB)"
+                    )
+                ],
+                start_collapsed=True,
+                always_open=True,
+            ),
         ], className="analysis-header"),
-        dbc.Accordion(
-            [
-                dbc.AccordionItem(
-                    html.Div(id='output-merge-hadeg-table'),
-                    title="Results Table (hadegDB)"
-                ),
-            ],
-            start_collapsed=True,
-            always_open=True,
-        ),
-        html.Div(dbc.Placeholder(color="success", className="divider")),
+        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size = "xs"),]),
 
         # Seção 3: Results Table (ToxCSM)
         html.Div(id="toxcsm-results-table", className="section"),
@@ -92,21 +91,21 @@ def get_results_layout():
                 className="analysis-description"
             ),
             html.P(
-                "By analyzing the merged table, you can assess the toxicity potential and prioritize compounds for further investigation.",
+                "By analyzing this table, you can assess the toxicity potential and prioritize compounds for further investigation.",
                 className="analysis-insights"
             ),
+            dbc.Accordion(
+                [
+                    dbc.AccordionItem(
+                        html.Div(id='output-merge-toxcsm-table'),
+                        title="Results Table (ToxCSM)"
+                    )
+                ],
+                start_collapsed=True,
+                always_open=True,
+            ),
         ], className="analysis-header"),
-        dbc.Accordion(
-            [
-                dbc.AccordionItem(
-                    html.Div(id='output-merge-toxcsm-table'),
-                    title="Results Table (ToxCSM)"
-                ),
-            ],
-            start_collapsed=True,
-            always_open=True,
-        ),
-        html.Div(dbc.Placeholder(color="success", className="divider")),
+        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size = "xs"),]),
 
         # Seção 4: Gene Count Chart
         html.Div(id="gene-count-chart", className="section"),
@@ -128,20 +127,136 @@ def get_results_layout():
                     )
                 ],
                 start_collapsed=True,
-                always_open=False
-            )
+                always_open=False,
+            ),
         ], className="analysis-header"),
-        html.Div(dbc.Placeholder(color="success", className="divider")),
+        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size = "xs"),]),
 
-        # Grande Accordion: Outros Gráficos e Resultados
-        dbc.Accordion(
-            [
-                dbc.AccordionItem(get_ko_violin_boxplot_layout(), title="Violin Boxplot"),
-                dbc.AccordionItem(get_pathway_ko_bar_chart_layout(), title="Pathway KO Bar Chart"),
-                dbc.AccordionItem(get_sample_ko_pathway_bar_chart_layout(), title="Sample KO Pathway Chart"),
-                # Outros gráficos podem ser adicionados aqui.
-            ],
-            start_collapsed=True,
-            always_open=True,
-        )
+        # Seção 5: Violin Boxplot
+        html.Div(id="violin-boxplot", className="section"),
+        html.Div([
+            html.H5("Violin Boxplot for Gene Distribution", className="analysis-title"),
+            html.P(
+                "This violin boxplot illustrates the distribution of unique genes associated with priority compounds across samples.",
+                className="analysis-description"
+            ),
+            html.P(
+                "This visualization helps identify patterns and variability in gene distribution, highlighting sample-specific trends.",
+                className="analysis-insights"
+            ),
+            dbc.Accordion(
+                [
+                    dbc.AccordionItem(
+                        html.Div(get_ko_violin_boxplot_layout(), className="chart-container"),
+                        title="Violin Boxplot"
+                    )
+                ],
+                start_collapsed=True,
+                always_open=False,
+            ),
+        ], className="analysis-header"),
+        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size = "xs"),]),
+        
+        
+        # Seção 6: Pathway KO Bar Chart
+        html.Div(id="pathway-ko-bar-chart", className="section"),  # ID para link no navbar
+        html.Div([
+            html.H5("Pathway KO Bar Chart", className="analysis-title"),
+            html.P(
+                "This bar chart highlights the distribution of KEGG Ortholog (KO) counts across various pathways.",
+                className="analysis-description"
+            ),
+            html.P(
+                "By analyzing this chart, you can gain insights into the functional diversity of pathways influenced by the data.",
+                className="analysis-insights"
+            ),
+            dbc.Accordion(
+                [
+                    dbc.AccordionItem(
+                        html.Div(get_pathway_ko_bar_chart_layout(), className="chart-container"),
+                        title="Pathway KO Bar Chart"
+                    )
+                ],
+                start_collapsed=True,
+                always_open=False,
+            ),
+        ], className="analysis-header"),
+        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
+
+                # Seção 7: Sample KO Pathway Chart
+        html.Div(id="sample-ko-pathway-chart", className="section"),  # ID para link no navbar
+        html.Div([
+            html.H5("Sample KO Pathway Chart", className="analysis-title"),
+            html.P(
+                "This bar chart presents the KEGG Ortholog (KO) distribution across pathways, grouped by sample.",
+                className="analysis-description"
+            ),
+            html.P(
+                "This visualization allows you to understand how different pathways are represented within each sample, helping to identify pathway-specific trends.",
+                className="analysis-insights"
+            ),
+            dbc.Accordion(
+                [
+                    dbc.AccordionItem(
+                        html.Div(get_sample_ko_pathway_bar_chart_layout(), className="chart-container"),
+                        title="Sample KO Pathway Bar Chart"
+                    )
+                ],
+                start_collapsed=True,
+                always_open=False,
+            ),
+        ], className="analysis-header"),
+        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
+        
+
+                # Seção 8: Scatter Plot of Samples vs Compounds
+        html.Div(id="compound-scatter-chart", className="section"),  # ID para link no navbar
+        html.Div([
+            html.H5("Scatter Plot of Samples vs Compounds", className="analysis-title"),
+            html.P(
+                "This scatter plot visualizes the relationship between samples and compounds, highlighting the interactions between these entities.",
+                className="analysis-description"
+            ),
+            html.P(
+                "By exploring this chart, you can identify key interactions and trends, helping to focus on samples or compounds of interest.",
+                className="analysis-insights"
+            ),
+            dbc.Accordion(
+                [
+                    dbc.AccordionItem(
+                        html.Div(get_compound_scatter_layout(), className="chart-container"),
+                        title="Scatter Plot of Samples vs Compounds"
+                    )
+                ],
+                start_collapsed=True,
+                always_open=False,
+            ),
+        ], className="analysis-header"),
+        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
+                # Seção 8: Ranking of Samples by Compound Interaction
+        html.Div(id="sample-rank-compounds-chart", className="section"),  # ID para link no navbar
+        html.Div([
+            html.H5("Ranking of Samples by Compound Interaction", className="analysis-title"),
+            html.P(
+                "This ranking chart highlights the interaction of samples with compounds, showcasing which samples are more active or relevant in the dataset.",
+                className="analysis-description"
+            ),
+            html.P(
+                "By examining this chart, you can identify samples with the most interactions, providing valuable insights into their significance in the analysis.",
+                className="analysis-insights"
+            ),
+            dbc.Accordion(
+                [
+                    dbc.AccordionItem(
+                        html.Div(get_sample_rank_compounds_layout(), className="chart-container"),
+                        title="Ranking of Samples by Compound Interaction"
+                    )
+                ],
+                start_collapsed=True,
+                always_open=False,
+            ),
+        ], className="analysis-header"),
+        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
+
+
     ])

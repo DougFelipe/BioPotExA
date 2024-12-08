@@ -21,6 +21,15 @@ navbar = html.Div(
         html.A("Results Table (hadegDB)", href="#hadeg-results-table", className="nav-link"),
         html.A("Results Table (ToxCSM)", href="#toxcsm-results-table", className="nav-link"),
         html.A("Gene Count Chart", href="#gene-count-chart", className="nav-link"),
+        html.A("Violin Boxplot", href="#violin-boxplot", className="nav-link"),
+        html.A("Pathway KO Bar Chart", href="#pathway-ko-bar-chart", className="nav-link"),
+        html.A("Sample KO Pathway Chart", href="#sample-ko-pathway-chart", className="nav-link"),
+        html.A("Samples vs Compounds", href="#compound-scatter-chart", className="nav-link"),
+        html.A("Sample Ranking by Compounds", href="#sample-rank-compounds-chart", className="nav-link"),
+
+
+
+
     ],
     className="navbar",
     style={
