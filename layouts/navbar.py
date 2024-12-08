@@ -30,6 +30,8 @@ navbar = html.Div(
         html.A("Compound Ranking by Genes", href="#compound-rank-gene-chart", className="nav-link"),
         html.A("Genes vs Compounds", href="#gene-compound-scatter-chart", className="nav-link"),
         html.A("Samples vs Genes", href="#sample-gene-scatter-chart", className="nav-link"),
+        html.A("Samples vs Reference AG", href="#sample-reference-heatmap", className="nav-link"),
+
 
 
 

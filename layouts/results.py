@@ -364,6 +364,33 @@ def get_results_layout():
         html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
 
 
+                # Seção 14: Heatmap of Samples vs Reference AG
+        html.Div(id="sample-reference-heatmap", className="section"),  # ID para link no navbar
+        html.Div([
+            html.H5("Heatmap of Samples vs Reference AG", className="analysis-title"),
+            html.P(
+                "This heatmap displays the association between samples and reference AGs, highlighting compound occurrences and interactions.",
+                className="analysis-description"
+            ),
+            html.P(
+                "By analyzing this heatmap, you can identify patterns and relationships between the samples and reference AGs, supporting further exploration of compound interactions.",
+                className="analysis-insights"
+            ),
+            dbc.Accordion(
+                [
+                    dbc.AccordionItem(
+                        html.Div(get_sample_reference_heatmap_layout(), className="chart-container"),
+                        title="Heatmap of Samples vs Reference AG"
+                    )
+                ],
+                start_collapsed=True,
+                always_open=False,
+            ),
+        ], className="analysis-header"),
+        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
+
+
+
 
 
 
