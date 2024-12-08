@@ -328,16 +328,33 @@ def plot_compound_gene_ranking(compound_gene_ranking_df):
     :param compound_gene_ranking_df: DataFrame com os compostos e o número de genes únicos atuantes.
     :return: Objeto Figure com o gráfico de barras.
     """
-    # Cria o gráfico de barras
-    fig = px.bar(compound_gene_ranking_df, x='compoundname', y='num_genes',
-                 title='Ranking of Compounds by Gene Interaction', template='simple_white')
+    # Ordena os dados pelo número de genes em ordem decrescente
+    compound_gene_ranking_df = compound_gene_ranking_df.sort_values(by='num_genes', ascending=False)
 
-    # Atualiza o layout do gráfico
+    # Cria o gráfico de barras com valores textuais exibidos
+    fig = px.bar(
+        compound_gene_ranking_df,
+        x='compoundname',
+        y='num_genes',
+        text='num_genes',  # Adiciona valores textuais às barras
+        title='Ranking of Compounds by Gene Interaction',
+        template='simple_white'
+    )
+
+    # Ajusta a posição do texto e o layout do gráfico
+    fig.update_traces(
+        textposition='auto',  # Posiciona o texto automaticamente sobre as barras
+        marker=dict(color='steelblue')  # Define a cor das barras
+    )
     fig.update_layout(
         xaxis_title='Compound',
         yaxis_title='Number of Genes',
-        xaxis={'categoryorder': 'total descending'},  # Ordena o eixo x de forma decrescente
-        xaxis_tickangle=45
+        xaxis=dict(
+            categoryorder='total descending',  # Ordena compostos em ordem decrescente
+            tickangle=45  # Rotaciona os rótulos do eixo X
+        ),
+        uniformtext_minsize=10,  # Define um tamanho mínimo para o texto
+        uniformtext_mode='hide'  # Oculta textos que não cabem
     )
 
     return fig
