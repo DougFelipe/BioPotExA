@@ -150,52 +150,80 @@ def plot_sample_ko_counts(sample_count_df, selected_pathway):
 
 
 
-
+#get_compound_scatter_layout
+#get_compound_scatter_layout
 def plot_compound_scatter(df):
     """
-    Cria um gráfico de dispersão para visualizar a relação entre amostras e compostos, filtrados por classe de composto.
+    Cria um gráfico de dispersão para visualizar a relação entre amostras e compostos,
+    recalculando o layout dinamicamente para cada novo conjunto de dados.
 
     :param df: DataFrame filtrado contendo as colunas 'sample', 'compoundname', e 'compoundclass'.
     :return: Objeto Figure com o gráfico de dispersão.
     """
-    # Define a altura base do gráfico e a altura adicional por rótulo excedente
+    # Certifica-se de que o DataFrame não está vazio
+    if df.empty:
+        raise ValueError("O DataFrame está vazio. Não há dados para exibir.")
+
+    # Define parâmetros base
     base_height = 400  # Altura base do gráfico
-    extra_height_per_label = 25  # Altura adicional por cada rótulo excedente
+    base_width = 800   # Largura base do gráfico
+    extra_width_per_label = 10  # Largura extra por rótulo adicional no eixo X
+    label_limit_x = 20  # Limite de rótulos no eixo X antes de ajustar a largura
 
-    # Calcula o número de rótulos no eixo y
-    num_labels = df['compoundname'].nunique()
+    # Calcula o número de rótulos únicos no eixo X (samples)
+    num_labels_x = df['sample'].nunique()
 
-    # Define um limite para quando adicionar altura extra
-    label_limit = 20  # Número de rótulos que podem caber na altura base
+    # Ajusta a largura do gráfico dinamicamente
+    if num_labels_x > label_limit_x:
+        width = base_width + (num_labels_x - label_limit_x) * extra_width_per_label
+    else:
+        width = base_width
 
-    # Calcula a altura total do gráfico
-    if num_labels > label_limit:
-        height = base_height + (num_labels - label_limit) * extra_height_per_label
+    # Calcula a altura do gráfico com base nos rótulos do eixo Y (compoundname)
+    base_height = 400
+    extra_height_per_label = 15
+    num_labels_y = df['compoundname'].nunique()
+    label_limit_y = 1
+
+    if num_labels_y > label_limit_y:
+        height = base_height + (num_labels_y - label_limit_y) * extra_height_per_label
     else:
         height = base_height
 
-    # Cria o gráfico de dispersão
+    # Define espaçamento dinâmico para rótulos no eixo X
+    tick_spacing_x = max(1, num_labels_x // 20)  # Exibe no máximo 20 rótulos no eixo X
+
+    # Cria o scatter plot
     fig = px.scatter(
         df,
         x='sample',
         y='compoundname',
-        color='compoundclass',
         title='Scatter Plot of Samples vs Compounds',
-        template="simple_white"
+        template='simple_white'
     )
 
-    # Ajusta o layout do gráfico com a altura calculada e configurações para melhorar a visualização
+    # Recalcula o layout e garante configurações consistentes
     fig.update_layout(
         height=height,
+        width=width,
         yaxis=dict(
+            categoryorder='total ascending',
+            title='Compoundname',  # Rótulo do eixo Y
             tickmode='array',
             tickvals=df['compoundname'].unique(),
             ticktext=df['compoundname'].unique(),
-            automargin=True,  # Garante margens automáticas para rótulos longos
-            tickfont=dict(size=10),  # Ajusta o tamanho da fonte dos rótulos
+            automargin=True,
+            tickfont=dict(size=10),
         ),
-        xaxis_tickangle=45,
-        margin=dict(l=200)  # Adiciona margem extra para o lado esquerdo para rótulos longos
+        xaxis=dict(
+            title='Sample',  # Rótulo do eixo X
+            tickangle=45,  # Rotaciona rótulos no eixo X em 45 graus
+            tickmode='linear',
+            tickvals=df['sample'].unique()[::tick_spacing_x],
+            ticktext=df['sample'].unique()[::tick_spacing_x],
+            automargin=True,
+        ),
+        margin=dict(l=200, b=150)  # Margens para rótulos longos
     )
 
     return fig
@@ -203,6 +231,11 @@ def plot_compound_scatter(df):
 
 
 
+
+
+# utils/plot_processing.py
+
+import plotly.express as px
 
 def plot_sample_ranking(sample_ranking_df):
     """
@@ -214,17 +247,31 @@ def plot_sample_ranking(sample_ranking_df):
     # Ordena os dados pelo número de compostos em ordem decrescente
     sample_ranking_df = sample_ranking_df.sort_values(by='num_compounds', ascending=False)
 
-    # Cria o gráfico de barras
-    fig = px.bar(sample_ranking_df, x='sample', y='num_compounds',
-                 title='Ranking of Samples by Compound Interaction', template='simple_white')
-
-    # Atualiza o layout do gráfico
-    fig.update_layout(
-        xaxis_title='Sample',
-        yaxis_title='Number of Compounds',
-        xaxis={'categoryorder': 'total descending'}  # Ordena o eixo x de forma decrescente
+    # Cria o gráfico de barras com valores textuais
+    fig = px.bar(
+        sample_ranking_df,
+        x='sample',
+        y='num_compounds',
+        text='num_compounds',  # Adiciona valores textuais às barras
+        template='simple_white'
     )
 
+    # Ajusta o layout e os textos do gráfico
+    fig.update_traces(
+        textposition='auto',
+        marker=dict(color='steelblue')  # Define a cor das barras
+    )
+    fig.update_layout(
+        title='Ranking of Samples by Compound Interaction',
+        xaxis_title='Sample',
+        yaxis_title='Number of Compounds',
+        xaxis=dict(
+            categoryorder='total descending',
+            tickangle=45  # Rotaciona os rótulos do eixo X
+        ),
+        uniformtext_minsize=10,
+        uniformtext_mode='hide'
+    )
     return fig
 
 
