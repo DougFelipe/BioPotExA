@@ -1,5 +1,4 @@
-from dash import callback
-from dash.dependencies import Input, Output, State
+from dash import callback, Output, Input, State,html,dcc
 from dash.exceptions import PreventUpdate
 import pandas as pd
 
@@ -20,26 +19,37 @@ def initialize_pathway_dropdown(n_clicks, stored_data):
     input_df = pd.DataFrame(stored_data)
     merged_df = merge_with_kegg(input_df)
     pathways = sorted(merged_df['pathname'].unique())
-    default_pathway = pathways[0] if pathways else None
-
+    
+    # Se nenhum pathway estiver disponível, evitar erro
     dropdown_options = [{'label': pathway, 'value': pathway} for pathway in pathways]
-    return dropdown_options, default_pathway
+    return dropdown_options, None  # Nenhum valor padrão
 
 @app.callback(
-    Output('scatter-plot-ko-sample', 'figure'),
+    Output('scatter-plot-container', 'children'),
     [Input('pathway-dropdown-p13', 'value')],
     [State('stored-data', 'data')]
 )
 def update_scatter_plot(selected_pathway, stored_data):
     if not selected_pathway or not stored_data:
-        raise PreventUpdate
+        return html.P(
+            "No data available. Please select a pathway.",
+            id="no-data-message-p13",
+            style={"textAlign": "center", "color": "gray"}
+        )
 
     input_df = pd.DataFrame(stored_data)
     merged_df = merge_with_kegg(input_df)
-    scatter_data = get_ko_per_sample_for_pathway(merged_df, selected_pathway)
-    
-    if scatter_data.empty:
-        return {}
 
+    # Obter os dados do scatter plot
+    scatter_data = get_ko_per_sample_for_pathway(merged_df, selected_pathway)
+
+    if scatter_data.empty:
+        return html.P(
+            "No data found for the selected pathway.",
+            id="no-data-message-p13",
+            style={"textAlign": "center", "color": "gray"}
+        )
+
+    # Gerar o gráfico
     fig = plot_sample_ko_scatter(scatter_data, selected_pathway)
-    return fig
+    return dcc.Graph(figure=fig, style={'height': '600px'})

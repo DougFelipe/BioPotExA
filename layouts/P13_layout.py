@@ -13,11 +13,19 @@ def get_sample_ko_scatter_layout():
             dcc.Dropdown(
                 id='pathway-dropdown-p13',  # ID do dropdown para o filtro por pathway
                 multi=False,
-                placeholder='Select a Pathway'
+                placeholder='Select a Pathway',  # Mensagem de placeholder
+                style={'margin-bottom': '20px'}  # Espaçamento inferior
             )
         ], className='navigation-menu'),
         html.Div(
-            dcc.Graph(id='scatter-plot-ko-sample'),  # ID do gráfico scatter plot
+            id='scatter-plot-container',  # Container para mensagens ou o gráfico
+            children=[
+                html.P(
+                    "No data available. Please select a pathway.",  # Mensagem padrão
+                    id="no-data-message-p13",
+                    style={"textAlign": "center", "color": "gray"}
+                )
+            ],
             className='graph-container',
             style={'height': 'auto', 'overflowY': 'auto'}
         )
