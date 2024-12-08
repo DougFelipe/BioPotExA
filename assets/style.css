@@ -719,7 +719,6 @@ body, html {
 
 
 /* Estilo para centralizar o título e menu */
-/* Estilo atualizado do navbar */
 .navbar-container {
     display: flex;
     flex-direction: column;
@@ -737,9 +736,18 @@ body, html {
     z-index: 1000;
 }
 
-/* Título da aplicação */
+/* Contêiner para título, subtítulo e links */
+.navbar-menu-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; /* Garante que o contêiner ocupe toda a largura */
+}
+
+/* Estilo para o título */
 .navbar-title {
-    font-size: 20px; /* Ajuste o tamanho do texto do título */
+    font-size: 20px;
     font-weight: bold;
     color: #007BFF;
     text-decoration: none;
@@ -750,29 +758,45 @@ body, html {
 
 /* Subtítulo */
 .navbar-subtitle {
-    font-size: 14px; /* Ajuste o tamanho do texto do subtítulo */
+    font-size: 14px;
     font-weight: normal;
     color: #6c757d;
-    margin-bottom: 8px; /* Controle o espaçamento abaixo do subtítulo */
+    margin-bottom: 8px;
     text-align: center;
     width: 100%;
+    cursor: pointer; /* Indica interatividade */
 }
 
-/* Links */
+/* Links inicialmente ocultos */
 .nav-links {
-    display: flex;
+    display: none; /* Oculta os links inicialmente */
     flex-wrap: wrap;
     justify-content: center;
-    gap: 8px; /* Controle o espaçamento horizontal entre links */
-    width: 100%;
-    max-width: 2200px;
+    gap: 8px;
+    width: 100%; /* Garante a mesma largura do contêiner */
+    background-color: #F8F9FA;
+    padding: 10px; /* Espaçamento interno */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ao exibir */
+    border-top: 1px solid #ddd; /* Adiciona separação visual entre o subtítulo e os links */
+    position: absolute; /* Exibe os links abaixo */
+    top: 100%; /* Exibe logo abaixo do subtítulo */
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    transition: all 0.3s ease-in-out; /* Animação suave */
 }
 
+/* Exibe os links ao passar o mouse no contêiner */
+.navbar-menu-container:hover .nav-links {
+    display: flex; /* Exibe os links */
+}
+
+/* Links individuais */
 .nav-link {
-    font-size: 12px; /* Ajuste o tamanho do texto dos links */
+    font-size: 12px;
     color: #007BFF;
     text-decoration: none;
-    padding: 3px 8px; /* Controle o padding interno dos links */
+    padding: 3px 8px;
     transition: color 0.3s ease;
 }
 
