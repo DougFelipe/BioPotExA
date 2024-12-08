@@ -4,12 +4,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const linksContainer = document.getElementById("navbar-links");
 
     // Adiciona evento de clique ao botão
-    toggleButton.addEventListener("click", function () {
-        linksContainer.classList.toggle("show"); // Alterna a classe "show"
-    });
+    if (toggleButton) {
+        toggleButton.addEventListener("click", function () {
+            linksContainer.classList.toggle("show"); // Alterna a classe "show"
+        });
+    }
 
     // Configura scroll suave ao clicar nos links
     const links = document.querySelectorAll(".nav-link");
+    const navbarHeight = document.querySelector(".navbar-container").offsetHeight; // Calcula a altura do navbar
+
     links.forEach(link => {
         link.addEventListener("click", function (event) {
             event.preventDefault();
@@ -17,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const targetElement = document.getElementById(targetId);
             if (targetElement) {
                 window.scrollTo({
-                    top: targetElement.offsetTop - 100,  // Ajusta para compensar a altura do navbar
+                    top: targetElement.offsetTop - navbarHeight - 10, // Compensa a altura do navbar
                     behavior: "smooth",
                 });
             }

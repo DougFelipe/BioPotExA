@@ -19,6 +19,7 @@ body, html {
     height: 100%; /* Garante que ocupem 100% da altura da tela */
     display: flex;
     flex-direction: column;
+    scroll-padding-top: 180px; /* Altura do navbar + espaçamento extra */
 }
 
 /* Garante que o container principal ocupe a altura completa */
@@ -717,12 +718,14 @@ body, html {
 }
 
 
-/* Navbar principal */
+/* Estilo para centralizar o título e menu */
+/* Estilo atualizado do navbar */
 .navbar-container {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    padding: 30px 20px;
+    justify-content: center;
+    padding: 10px 0; /* Altura do navbar ajustada */
     background-color: #F8F9FA;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     border-bottom: 1px solid #ddd;
@@ -730,58 +733,50 @@ body, html {
     top: 0;
     left: 0;
     right: 0;
+    width: 100%;
     z-index: 1000;
 }
 
-/* Título principal */
+/* Título da aplicação */
 .navbar-title {
-    font-size: 24px;
+    font-size: 20px; /* Ajuste o tamanho do texto do título */
     font-weight: bold;
     color: #007BFF;
     text-decoration: none;
-}
-
-/* Botão de abrir o menu */
-.open-menu-button {
-    font-size: 16px;
-    padding: 5px 10px;
-    border: none;
-    background-color: #007BFF;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.open-menu-button:hover {
-    background-color: #0056b3;
-}
-
-/* Estilo para o Offcanvas */
-.offcanvas-title {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #007BFF;
+    margin-bottom: 5px;
     text-align: center;
+    width: 100%;
 }
 
-.offcanvas-links-container {
+/* Subtítulo */
+.navbar-subtitle {
+    font-size: 14px; /* Ajuste o tamanho do texto do subtítulo */
+    font-weight: normal;
+    color: #6c757d;
+    margin-bottom: 8px; /* Controle o espaçamento abaixo do subtítulo */
+    text-align: center;
+    width: 100%;
+}
+
+/* Links */
+.nav-links {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 15px;
-    padding: 10px 20px;
+    gap: 8px; /* Controle o espaçamento horizontal entre links */
+    width: 100%;
+    max-width: 2200px;
 }
 
 .nav-link {
-    font-size: 16px;
+    font-size: 12px; /* Ajuste o tamanho do texto dos links */
     color: #007BFF;
     text-decoration: none;
-    padding: 5px 10px;
+    padding: 3px 8px; /* Controle o padding interno dos links */
     transition: color 0.3s ease;
 }
 
 .nav-link:hover {
-    color: #0056b3;
     text-decoration: underline;
+    color: #0056b3;
 }

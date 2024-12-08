@@ -88,18 +88,6 @@ def display_page(pathname):
         return get_see_example_layout()
     else:  # Página padrão é "About"
         return get_about_layout()
-    
-from dash import Input, Output, State
-
-@app.callback(
-    Output("navigation-offcanvas", "is_open"),  # Alvo: abrir/fechar o offcanvas
-    Input("open-navigation-menu", "n_clicks"),  # Ação: clique no botão
-    State("navigation-offcanvas", "is_open"),  # Estado atual do offcanvas
-)
-def toggle_navigation_menu(n_clicks, is_open):
-    if n_clicks:
-        return not is_open  # Alterna o estado (abre/fecha)
-    return is_open
 
 
 
