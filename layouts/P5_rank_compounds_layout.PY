@@ -1,4 +1,3 @@
-#my_dash_app/layouts/P5_rank_compounds_layout.py
 from dash import html, dcc
 
 def get_rank_compounds_layout():
@@ -18,7 +17,14 @@ def get_rank_compounds_layout():
             )
         ], className='navigation-menu'),
         html.Div(
-            dcc.Graph(id='p5-rank-compounds-bar-plot'),
+            id='p5-compound-ranking-container',  # Container dinâmico para a mensagem ou gráfico
+            children=[
+                html.P(
+                    "No data available. Please select a compound class.",
+                    id="p5-placeholder-message",
+                    style={"textAlign": "center", "color": "gray"}
+                )
+            ],
             className='graph-container',
             style={'height': 'auto', 'overflowY': 'auto'}
         )
