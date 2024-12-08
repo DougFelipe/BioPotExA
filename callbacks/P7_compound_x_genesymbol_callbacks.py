@@ -1,46 +1,69 @@
-from dash import callback
+from dash import callback,html,dcc
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 import pandas as pd
 
 from app import app
-from utils.data_processing import merge_input_with_database, process_gene_compound_association
+from utils.data_processing import merge_input_with_database
 from utils.plot_processing import plot_gene_compound_scatter
 
 @app.callback(
-    [Output('p7-compound-association-dropdown', 'options'),
-     Output('p7-compound-association-dropdown', 'value')],
+    [Output('p7-compound-dropdown', 'options'),
+     Output('p7-gene-dropdown', 'options')],
     [Input('process-data', 'n_clicks')],
     [State('stored-data', 'data')]
 )
-def initialize_compound_association_dropdown(n_clicks, stored_data):
+def initialize_dropdown_options(n_clicks, stored_data):
     if n_clicks < 1 or not stored_data:
         raise PreventUpdate
 
     input_df = pd.DataFrame(stored_data)
     merged_df = merge_input_with_database(input_df)
-    gene_compound_association = process_gene_compound_association(merged_df)
-    association_counts = sorted(gene_compound_association['num_compounds'].unique(), reverse=True)
-    default_count = association_counts[0]
 
-    dropdown_options = [{'label': f'Association with {count} compounds', 'value': count} for count in association_counts]
+    # Opções para compostos (ordenadas alfabeticamente)
+    compound_options = [{'label': compound, 'value': compound} for compound in sorted(merged_df['compoundname'].unique())]
 
-    return dropdown_options, default_count
+    # Opções para genes (ordenadas alfabeticamente)
+    gene_options = [{'label': gene, 'value': gene} for gene in sorted(merged_df['genesymbol'].unique())]
 
+    return compound_options, gene_options
+
+# Callback para atualizar o gráfico ou exibir a mensagem inicial
 @app.callback(
-    Output('p7-gene-compound-scatter-plot', 'figure'),
-    [Input('process-data', 'n_clicks'), Input('p7-compound-association-dropdown', 'value')],
+    Output('p7-gene-compound-scatter-container', 'children'),
+    [Input('p7-compound-dropdown', 'value'),
+     Input('p7-gene-dropdown', 'value')],
     [State('stored-data', 'data')]
 )
-def update_gene_compound_scatter_plot(n_clicks, selected_count, stored_data):
-    if n_clicks < 1 or not stored_data or not selected_count:
+def update_gene_compound_scatter(selected_compounds, selected_genes, stored_data):
+    if not stored_data:
         raise PreventUpdate
+
+    # Verificar se nenhum filtro foi aplicado
+    if not selected_compounds and not selected_genes:
+        return html.P(
+            "Select compound or gene to view results",
+            style={'textAlign': 'center', 'color': 'gray', 'fontSize': '16px'}
+        )
 
     input_df = pd.DataFrame(stored_data)
     merged_df = merge_input_with_database(input_df)
+
+    # Aplicar filtro por compostos, se selecionado
+    if selected_compounds:
+        merged_df = merged_df[merged_df['compoundname'].isin(selected_compounds)]
     
-    # Filtrar os dados pela quantidade de compostos associados selecionada
-    filtered_df = merged_df.groupby('genesymbol').filter(lambda x: x['compoundname'].nunique() == selected_count)
+    # Aplicar filtro por genes, se selecionado
+    if selected_genes:
+        merged_df = merged_df[merged_df['genesymbol'].isin(selected_genes)]
     
-    fig = plot_gene_compound_scatter(filtered_df)
-    return fig
+    # Se o DataFrame filtrado estiver vazio, exibir mensagem de "sem resultados"
+    if merged_df.empty:
+        return html.P(
+            "No results found for the selected filters",
+            style={'textAlign': 'center', 'color': 'gray', 'fontSize': '16px'}
+        )
+    
+    # Gerar o gráfico com os dados filtrados
+    fig = plot_gene_compound_scatter(merged_df)
+    return dcc.Graph(figure=fig)

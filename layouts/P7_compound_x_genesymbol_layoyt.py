@@ -2,23 +2,34 @@ from dash import html, dcc
 
 def get_gene_compound_scatter_layout():
     """
-    Constrói o layout para o scatter plot da relação entre genes e compostos, incluindo um filtro por quantidade de compostos únicos associados.
+    Constrói o layout para o scatter plot da relação entre genes e compostos,
+    exibindo uma mensagem inicial até que os filtros sejam aplicados.
 
     Returns:
-        Uma `html.Div` contendo o scatter plot e o filtro.
+        Uma `html.Div` contendo os filtros e a área do gráfico.
     """
     return html.Div([
         html.Div([
-            html.Div('Filter by Number of Compounds Associated', className='menu-text'),
+            html.Div('Filter by Compound Name', className='menu-text'),
             dcc.Dropdown(
-                id='p7-compound-association-dropdown',
-                multi=False,  # Permite seleção única
-                placeholder='Select a Number of Compounds'
+                id='p7-compound-dropdown',
+                multi=True,  # Permite multiseleção
+                placeholder='Select Compound(s)'
+            ),
+            html.Div('Filter by Gene Symbol', className='menu-text'),
+            dcc.Dropdown(
+                id='p7-gene-dropdown',
+                multi=True,  # Permite multiseleção
+                placeholder='Select Gene(s)'
             )
         ], className='navigation-menu'),
         html.Div(
-            dcc.Graph(id='p7-gene-compound-scatter-plot'),
+            id='p7-gene-compound-scatter-container',  # Container para o gráfico ou mensagem inicial
             className='graph-container',
-            style={'height': 'auto', 'overflowY': 'auto'}
+            style={'height': 'auto', 'overflowY': 'auto'},
+            children=html.P(  # Mensagem inicial
+                "Select compound or gene to view results",
+                style={'textAlign': 'center', 'color': 'gray', 'fontSize': '16px'}
+            )
         )
     ], className='graph-card')
