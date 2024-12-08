@@ -1,47 +1,53 @@
-# my_dash_app/layouts/P2_KO_20PATHWAY.py
 from dash import html, dcc
-from utils.components import create_card
 
 def get_pathway_ko_bar_chart_layout():
     """
     Constrói o layout para o gráfico de barras da análise das vias KO, incluindo filtros.
-
-    Returns:
-        Uma `html.Div` contendo o gráfico de barras e os filtros.
     """
     return html.Div([
-       # create_card('', 'Esta seção fornece uma análise detalhada da interação entre KOs e vias de degradação específicas.'),
         html.Div([
-            html.Div('Filter by Sample', className='menu-text'),  # Título do menu de navegação
+            html.Div('Filter by Sample', className='menu-text'),
             dcc.Dropdown(
-                id='pathway-sample-dropdown',  # O ID deve combinar com o ID usado no callback
+                id='pathway-sample-dropdown',
+                placeholder="Selecione uma amostra",  # Texto de instrução
+                style={"margin-bottom": "20px"}  # Espaçamento inferior
             ),
-        ], className='navigation-menu'),  # Estilização do menu de navegação
-        dcc.Graph(
-            id='pathway-ko-bar-chart',  # O ID aqui deve combinar com o ID usado no callback
-            className='bar-chart-style'
-        ),
-    ], className='graph-card')
+        ], className='navigation-menu'),
+        html.Div(
+            id='pathway-ko-chart-container',  # Container do gráfico
+            children=[
+                html.P(
+                    "Nenhum gráfico disponível. Por favor, selecione uma amostra.",
+                    id="no-pathway-ko-chart-message",
+                    style={"textAlign": "center", "color": "gray"}
+                )
+            ],
+            className='graph-card'
+        )
+    ])
 
 def get_sample_ko_pathway_bar_chart_layout():
     """
-    Constrói o layout para o gráfico de barras da análise dos KOs em samples para a via selecionada, incluindo filtros.
-
-    Returns:
-        Uma `html.Div` contendo o gráfico de barras e os filtros.
+    Constrói o layout para o gráfico de barras da análise dos KOs em samples para a via selecionada.
     """
     return html.Div([
-        #create_card('', content =  'Esta seção fornece uma análise detalhada dos KOs em samples para a via selecionada.'),
         html.Div([
-            html.Div('Filter by Sample', className='menu-text'),  # Título do menu de navegação
+            html.Div('Filter by Pathway', className='menu-text'),
             dcc.Dropdown(
-                id='via-dropdown',  # O ID deve combinar com o ID usado no callback
+                id='via-dropdown',
+                placeholder="Selecione uma via",  # Texto de instrução
+                style={"margin-bottom": "20px"}  # Espaçamento inferior
             ),
-        ], className='navigation-menu'),  # Estilização do menu de navegação
-        dcc.Graph(
-            id='via-ko-bar-chart',  # Novo ID para o gráfico de barras das samples
-            className='bar-chart-style'
-        ),
-    ], className='graph-card')
-
-
+        ], className='navigation-menu'),
+        html.Div(
+            id='via-ko-chart-container',  # Container do gráfico
+            children=[
+                html.P(
+                    "Nenhum gráfico disponível. Por favor, selecione uma via.",
+                    id="no-via-ko-chart-message",
+                    style={"textAlign": "center", "color": "gray"}
+                )
+            ],
+            className='graph-card'
+        )
+    ])
