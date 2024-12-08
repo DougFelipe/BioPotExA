@@ -1,3 +1,4 @@
+from layouts.navbar import navbar  # Importe o navbar definido acima
 from dash import html
 import dash_bootstrap_components as dbc
 from layouts.P1_KO_COUNT import get_ko_count_bar_chart_layout, get_ko_violin_boxplot_layout
@@ -17,19 +18,23 @@ from layouts.P14_sample_enzyme_activity_layout import get_sample_enzyme_activity
 from layouts.P15_sample_clustering_layout import get_sample_clustering_layout
 from layouts.P16_sample_upset_layout import get_sample_upset_layout
 from layouts.P17_gene_compound_network_layout import get_gene_compound_network_layout
+
 def get_results_layout():
     return html.Div([
+        # Navbar fixo no topo da página
+        # Adiciona o Navbar fixo
+        navbar,
+
+        # Espaçamento para compensar o menu fixo
+        html.Div(style={"height": "100px"}),
+
+        # Título principal
         html.H2('Data Analysis Results', className='results-title'),
         html.Hr(className="my-2"),
         html.H4('Results from your submitted data', className='results-subtitle'),
-        
-        # Resultado 1: Merge com o banco de 
-                html.Div(
-            [
-                dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs"), 
-            ]
-        ),
 
+        # Seção 1: Main Results Table
+        html.Div(id="main-results-table", className="section"),
         html.Div([
             html.H5("Main Results Table", className="analysis-title"),
             html.P(
@@ -51,13 +56,10 @@ def get_results_layout():
             start_collapsed=True,
             always_open=True,
         ),
-        html.Div(
-            [
-                dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs"), 
-            ]
-        ),
+        html.Div(dbc.Placeholder(color="success", className="divider")),
 
-        # Resultado 2: Merge com hadegDB
+        # Seção 2: Results Table (hadegDB)
+        html.Div(id="hadeg-results-table", className="section"),
         html.Div([
             html.H5("Results Table (hadegDB)", className="analysis-title"),
             html.P(
@@ -79,13 +81,10 @@ def get_results_layout():
             start_collapsed=True,
             always_open=True,
         ),
-        html.Div(
-            [
-                dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs"), 
-            ]
-        ),
+        html.Div(dbc.Placeholder(color="success", className="divider")),
 
-        # Resultado 3: Merge com ToxCSM
+        # Seção 3: Results Table (ToxCSM)
+        html.Div(id="toxcsm-results-table", className="section"),
         html.Div([
             html.H5("Results Table (ToxCSM)", className="analysis-title"),
             html.P(
@@ -107,12 +106,10 @@ def get_results_layout():
             start_collapsed=True,
             always_open=True,
         ),
-        html.Div(
-            [
-                dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs"), 
-            ]
-        ),
-        # Adicionando o gráfico "Gene count associated with priority compounds"
+        html.Div(dbc.Placeholder(color="success", className="divider")),
+
+        # Seção 4: Gene Count Chart
+        html.Div(id="gene-count-chart", className="section"),
         html.Div([
             html.H5("Gene Count Associated with Priority Compounds", className="analysis-title"),
             html.P(
@@ -134,88 +131,15 @@ def get_results_layout():
                 always_open=False
             )
         ], className="analysis-header"),
+        html.Div(dbc.Placeholder(color="success", className="divider")),
 
-        # Linha divisória
-        html.Div(
-            dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")
-        ),
-
-
-        # Grande accordion para os outros resultados
+        # Grande Accordion: Outros Gráficos e Resultados
         dbc.Accordion(
             [
-                dbc.AccordionItem(
-                    get_ko_violin_boxplot_layout(),
-                    title="Distribution of genes associated with priority compounds"
-                ),
-                dbc.AccordionItem(
-                    get_pathway_ko_bar_chart_layout(),
-                    title="KEGG Xenobiotics Biodegradation and Metabolism (Grouped by Sample)"
-                ),
-                dbc.AccordionItem(
-                    get_sample_ko_pathway_bar_chart_layout(),
-                    title="KEGG Xenobiotics Biodegradation and Metabolism (Grouped by Pathway)"
-                ),
-                dbc.AccordionItem(
-                    get_sample_ko_scatter_layout(),
-                    title="Scatter Plot of KOs by Sample for Pathway"
-                ),
-                dbc.AccordionItem(
-                    get_compound_scatter_layout(),
-                    title="Scatter Plot of Samples vs Compounds"
-                ),
-                dbc.AccordionItem(
-                    get_sample_rank_compounds_layout(),
-                    title="Ranking of Samples by Compound Interaction"
-                ),
-                dbc.AccordionItem(
-                    get_compound_rank_layout(),
-                    title="Ranking of Compounds by Sample Interaction"
-                ),
-                dbc.AccordionItem(
-                    get_rank_compounds_gene_layout(),
-                    title="Ranking of Compounds by Gene Interaction"
-                ),
-                dbc.AccordionItem(
-                    get_gene_compound_scatter_layout(),
-                    title="Scatter Plot of Genes vs Compounds"
-                ),
-                dbc.AccordionItem(
-                    get_sample_gene_scatter_layout(),
-                    title="Scatter Plot of Samples vs Genes"
-                ),
-                dbc.AccordionItem(
-                    get_sample_reference_heatmap_layout(),
-                    title="Heatmap of Samples vs Reference AG"
-                ),
-                dbc.AccordionItem(
-                    get_sample_groups_layout(),
-                    title="Sample Groups by Compound Class"
-                ),
-                dbc.AccordionItem(
-                    get_gene_sample_heatmap_layout(),
-                    title="Heatmap of Genes vs Samples"
-                ),
-                dbc.AccordionItem(
-                    get_pathway_heatmap_layout(),
-                    title="Heatmap of Pathways vs Compound Pathways"
-                ),
-                dbc.AccordionItem(
-                    get_sample_enzyme_activity_layout(),
-                    title="Enzyme Activity Counts per Sample"
-                ),
-                dbc.AccordionItem(
-                    get_sample_clustering_layout(),
-                    title="Sample Clustering Dendrogram"
-                ),
-                dbc.AccordionItem(
-                    get_sample_upset_layout(),
-                    title="UpSet Plot: Amostras e KOs"
-                ),
-                dbc.AccordionItem(
-                    get_gene_compound_network_layout(),
-                    title="Gene-Compound Interaction Network",
-                ),             
+                dbc.AccordionItem(get_ko_violin_boxplot_layout(), title="Violin Boxplot"),
+                dbc.AccordionItem(get_pathway_ko_bar_chart_layout(), title="Pathway KO Bar Chart"),
+                dbc.AccordionItem(get_sample_ko_pathway_bar_chart_layout(), title="Sample KO Pathway Chart"),
+                # Outros gráficos podem ser adicionados aqui.
             ],
             start_collapsed=True,
             always_open=True,
