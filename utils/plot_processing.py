@@ -366,34 +366,168 @@ def plot_compound_gene_ranking(compound_gene_ranking_df):
 
 def plot_gene_compound_scatter(df):
     """
-    Cria um scatter plot para visualizar a relação entre genes e compostos, filtrados pela quantidade de compostos únicos associados.
+    Cria um scatter plot para visualizar a relação entre genes e compostos, garantindo que todos os rótulos nos eixos X e Y 
+    estejam visíveis e que a ordenação seja feita com os compostos mais frequentes na parte superior.
 
     :param df: DataFrame filtrado contendo as colunas 'genesymbol' e 'compoundname'.
     :return: Objeto Figure com o scatter plot.
     """
-    fig = px.scatter(df, x='genesymbol', y='compoundname', title='Scatter Plot of Genes vs Compounds', template='simple_white')
-    fig.update_layout(
-        xaxis_title='Gene Symbol',
-        yaxis_title='Compound Name'
+    # Define a altura base do gráfico e a altura adicional por rótulo excedente para o eixo Y
+    base_height = 400  # Altura base do gráfico
+    extra_height_per_label_y = 25  # Altura adicional por cada rótulo excedente no eixo Y
+
+    # Define a largura base do gráfico e a largura adicional por rótulo excedente para o eixo X
+    base_width = 800  # Largura base do gráfico
+    extra_width_per_label_x = 10  # Largura adicional por cada rótulo excedente no eixo X
+
+    # Calcula o número de rótulos no eixo Y
+    num_labels_y = df['compoundname'].nunique()
+
+    # Define um limite para quando adicionar altura extra
+    label_limit_y = 1  # Garante que a altura será ajustada mesmo com poucos rótulos
+
+    # Calcula a altura total do gráfico
+    if num_labels_y > label_limit_y:
+        height = base_height + (num_labels_y - label_limit_y) * extra_height_per_label_y
+    else:
+        height = base_height
+
+    # Calcula o número de rótulos no eixo X
+    num_labels_x = df['genesymbol'].nunique()
+
+    # Define um limite para quando adicionar largura extra
+    label_limit_x = 10  # Número de rótulos que cabem na largura base
+
+    # Calcula a largura total do gráfico
+    if num_labels_x > label_limit_x:
+        width = base_width + (num_labels_x - label_limit_x) * extra_width_per_label_x
+    else:
+        width = base_width
+
+    # Ordena os compostos pela frequência de ocorrência para priorizar os mais comuns no topo
+    compound_order = df['compoundname'].value_counts().index.tolist()
+
+    # Cria o scatter plot
+    fig = px.scatter(
+        df,
+        x='genesymbol',
+        y='compoundname',
+        title='Scatter Plot of Genes vs Compounds',
+        template='simple_white',
+        category_orders={'compoundname': compound_order}  # Define a ordem do eixo Y
     )
+
+    # Ajusta o layout do gráfico
+    fig.update_layout(
+        height=height,
+        width=width,
+        yaxis=dict(
+            categoryorder='total ascending',
+            tickmode='array',
+            tickvals=df['compoundname'].unique(),
+            ticktext=df['compoundname'].unique(),
+            automargin=True,  # Garante margens automáticas para rótulos longos
+            tickfont=dict(size=10),  # Ajusta o tamanho da fonte dos rótulos
+        ),
+        xaxis=dict(
+            tickangle=-45,  # Rotaciona os rótulos do eixo X
+            tickmode='array',
+            tickvals=df['genesymbol'].unique(),
+            ticktext=df['genesymbol'].unique(),
+            automargin=True,  # Garante margens automáticas para rótulos longos
+            tickfont=dict(size=10),  # Ajusta o tamanho da fonte dos rótulos do eixo X
+        ),
+        xaxis_title='Gene Symbol',
+        yaxis_title='Compound Name',
+        margin=dict(l=200, b=100)  # Adiciona margens extras para os eixos X e Y
+    )
+
     return fig
+
 
 # ----------------------------------------
 # P8_gene_sample_association
 # ----------------------------------------
+
 def plot_sample_gene_scatter(df):
     """
-    Cria um scatter plot para visualizar a relação entre samples e genes, filtrados pela quantidade de compostos únicos associados.
+    Cria um scatter plot para visualizar a relação entre samples e genes, garantindo que todos os rótulos nos eixos X e Y 
+    estejam visíveis e que a ordenação seja feita com os genes mais frequentes na parte superior.
 
     :param df: DataFrame filtrado contendo as colunas 'sample' e 'genesymbol'.
     :return: Objeto Figure com o scatter plot.
     """
-    fig = px.scatter(df, x='sample', y='genesymbol', title='Scatter Plot of Samples vs Genes', template='simple_white')
-    fig.update_layout(
-        xaxis_title='Sample',
-        yaxis_title='Gene Symbol'
+    # Define a altura base do gráfico e a altura adicional por rótulo excedente para o eixo Y
+    base_height = 400  # Altura base do gráfico
+    extra_height_per_label_y = 25  # Altura adicional por cada rótulo excedente no eixo Y
+
+    # Define a largura base do gráfico e a largura adicional por rótulo excedente para o eixo X
+    base_width = 800  # Largura base do gráfico
+    extra_width_per_label_x = 10  # Largura adicional por cada rótulo excedente no eixo X
+
+    # Calcula o número de rótulos no eixo Y
+    num_labels_y = df['genesymbol'].nunique()
+
+    # Define um limite para quando adicionar altura extra
+    label_limit_y = 1  # Garante que a altura será ajustada mesmo com poucos rótulos
+
+    # Calcula a altura total do gráfico
+    if num_labels_y > label_limit_y:
+        height = base_height + (num_labels_y - label_limit_y) * extra_height_per_label_y
+    else:
+        height = base_height
+
+    # Calcula o número de rótulos no eixo X
+    num_labels_x = df['sample'].nunique()
+
+    # Define um limite para quando adicionar largura extra
+    label_limit_x = 10  # Número de rótulos que cabem na largura base
+
+    # Calcula a largura total do gráfico
+    if num_labels_x > label_limit_x:
+        width = base_width + (num_labels_x - label_limit_x) * extra_width_per_label_x
+    else:
+        width = base_width
+
+    # Ordena os genes pela frequência de ocorrência para priorizar os mais comuns no topo
+    gene_order = df['genesymbol'].value_counts().index.tolist()
+
+    # Cria o scatter plot
+    fig = px.scatter(
+        df,
+        x='sample',
+        y='genesymbol',
+        title='Scatter Plot of Samples vs Genes',
+        template='simple_white',
+        category_orders={'genesymbol': gene_order}  # Define a ordem do eixo Y
     )
+
+    # Ajusta o layout do gráfico
+    fig.update_layout(
+        height=height,
+        width=width,
+        yaxis=dict(
+            tickmode='array',
+            tickvals=df['genesymbol'].unique(),
+            ticktext=df['genesymbol'].unique(),
+            automargin=True,  # Garante margens automáticas para rótulos longos
+            tickfont=dict(size=10),  # Ajusta o tamanho da fonte dos rótulos
+        ),
+        xaxis=dict(
+            tickangle=-45,  # Rotaciona os rótulos do eixo X
+            tickmode='array',
+            tickvals=df['sample'].unique(),
+            ticktext=df['sample'].unique(),
+            automargin=True,  # Garante margens automáticas para rótulos longos
+            tickfont=dict(size=10),  # Ajusta o tamanho da fonte dos rótulos do eixo X
+        ),
+        xaxis_title='Sample',
+        yaxis_title='Gene Symbol',
+        margin=dict(l=200, b=100)  # Adiciona margens extras para os eixos X e Y
+    )
+
     return fig
+
 
 
 # ----------------------------------------
