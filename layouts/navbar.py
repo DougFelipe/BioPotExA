@@ -32,13 +32,8 @@ navbar = html.Div(
         html.A("Samples vs Genes", href="#sample-gene-scatter-chart", className="nav-link"),
         html.A("Samples vs Reference AG", href="#sample-reference-heatmap", className="nav-link"),
         html.A("Sample Groups by Compound Class", href="#sample-groups-chart", className="nav-link"),
-
-
-
-
-
-
-
+        html.A("Genes vs Samples Heatmap", href="#gene-sample-heatmap", className="nav-link"),
+        html.A("Pathways vs Compound Pathways", href="#pathway-heatmap", className="nav-link"),
 
 
     ],

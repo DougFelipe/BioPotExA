@@ -415,10 +415,54 @@ def get_results_layout():
         html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
 
 
+                # Seção 16: Heatmap of Genes vs Samples
+        html.Div(id="gene-sample-heatmap", className="section"),  # ID para link no navbar
+        html.Div([
+            html.H5("Heatmap of Genes vs Samples", className="analysis-title"),
+            html.P(
+                "This heatmap illustrates the relationship between genes and samples, showing unique associations through a color gradient.",
+                className="analysis-description"
+            ),
+            html.P(
+                "By analyzing this heatmap, you can identify trends and hotspots in the gene-sample interactions, providing insights into their biological relevance.",
+                className="analysis-insights"
+            ),
+            dbc.Accordion(
+                [
+                    dbc.AccordionItem(
+                        html.Div(get_gene_sample_heatmap_layout(), className="chart-container"),
+                        title="Genes vs Samples Heatmap"
+                    )
+                ],
+                start_collapsed=True,
+                always_open=False,
+            ),
+        ], className="analysis-header"),
+        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
 
-
-
-
-
+                # Seção 17: Heatmap of Pathways vs Compound Pathways
+        html.Div(id="pathway-heatmap", className="section"),  # ID para link no navbar
+        html.Div([
+            html.H5("Heatmap of Pathways vs Compound Pathways", className="analysis-title"),
+            html.P(
+                "This heatmap visualizes the interaction between metabolic pathways and compound pathways, showing unique KO counts for each interaction.",
+                className="analysis-description"
+            ),
+            html.P(
+                "Use this heatmap to explore how pathways and compound pathways are interconnected, identifying areas of higher KO activity.",
+                className="analysis-insights"
+            ),
+            dbc.Accordion(
+                [
+                    dbc.AccordionItem(
+                        html.Div(get_pathway_heatmap_layout(), className="chart-container"),
+                        title="Pathways vs Compound Pathways Heatmap"
+                    )
+                ],
+                start_collapsed=True,
+                always_open=False,
+            ),
+        ], className="analysis-header"),
+        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
 
     ])
