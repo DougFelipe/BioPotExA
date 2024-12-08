@@ -389,6 +389,32 @@ def get_results_layout():
         ], className="analysis-header"),
         html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
 
+                # Seção 15: Sample Groups by Compound Class
+        html.Div(id="sample-groups-chart", className="section"),  # ID para link no navbar
+        html.Div([
+            html.H5("Sample Groups by Compound Class", className="analysis-title"),
+            html.P(
+                "This visualization presents the grouping of samples based on compound classes, providing an overview of their classification.",
+                className="analysis-description"
+            ),
+            html.P(
+                "By analyzing these groups, you can identify patterns and relationships among samples and their associated compound classes.",
+                className="analysis-insights"
+            ),
+            dbc.Accordion(
+                [
+                    dbc.AccordionItem(
+                        html.Div(get_sample_groups_layout(), className="chart-container"),
+                        title="Sample Groups by Compound Class"
+                    )
+                ],
+                start_collapsed=True,
+                always_open=False,
+            ),
+        ], className="analysis-header"),
+        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
+
+
 
 
 
