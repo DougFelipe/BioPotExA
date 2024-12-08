@@ -35,6 +35,8 @@ navbar = html.Div(
         html.A("Genes vs Samples Heatmap", href="#gene-sample-heatmap", className="nav-link"),
         html.A("Pathways vs Compound Pathways", href="#pathway-heatmap", className="nav-link"),
         html.A("Scatter Plot of KOs by Sample", href="#sample-ko-scatter", className="nav-link"),
+        html.A("Enzyme Activity per Sample", href="#sample-enzyme-activity", className="nav-link"),
+
 
 
 

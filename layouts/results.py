@@ -490,5 +490,31 @@ def get_results_layout():
         ], className="analysis-header"),
         html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
 
+                # Seção 19: Enzyme Activity Counts per Sample
+        html.Div(id="sample-enzyme-activity", className="section"),  # ID para link no navbar
+        html.Div([
+            html.H5("Enzyme Activity Counts per Sample", className="analysis-title"),
+            html.P(
+                "This bar chart shows the distribution of enzyme activity counts across different samples.",
+                className="analysis-description"
+            ),
+            html.P(
+                "Analyzing enzyme activity counts helps identify variations in enzymatic activity across samples, providing insights into metabolic activity.",
+                className="analysis-insights"
+            ),
+            dbc.Accordion(
+                [
+                    dbc.AccordionItem(
+                        html.Div(get_sample_enzyme_activity_layout(), className="chart-container"),
+                        title="Enzyme Activity Bar Chart"
+                    )
+                ],
+                start_collapsed=True,
+                always_open=False,
+            ),
+        ], className="analysis-header"),
+        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
+
+
 
     ])
