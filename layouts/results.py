@@ -313,6 +313,33 @@ def get_results_layout():
         html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
 
 
+                # Seção 12: Scatter Plot of Genes vs Compounds
+        html.Div(id="gene-compound-scatter-chart", className="section"),  # ID para link no navbar
+        html.Div([
+            html.H5("Scatter Plot of Genes vs Compounds", className="analysis-title"),
+            html.P(
+                "This scatter plot visualizes the relationships between genes and compounds, highlighting associations that may indicate important interactions.",
+                className="analysis-description"
+            ),
+            html.P(
+                "By analyzing this chart, researchers can identify gene-compound pairs with potential biological or chemical significance.",
+                className="analysis-insights"
+            ),
+            dbc.Accordion(
+                [
+                    dbc.AccordionItem(
+                        html.Div(get_gene_compound_scatter_layout(), className="chart-container"),
+                        title="Scatter Plot of Genes vs Compounds"
+                    )
+                ],
+                start_collapsed=True,
+                always_open=False,
+            ),
+        ], className="analysis-header"),
+        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
+
+
+
 
 
     ])
