@@ -20,7 +20,7 @@ def get_about_layout():
             [
                 html.Div(
                     [
-                        html.H3('BioPExA', className='about-biopexa-title'),  # Título principal
+                        html.H3('BioRemPP', className='about-biopexa-title'),  # Título principal
                         html.H3('Biorremediation Potential Explorer & Analyzer', className='about-biopexa-subtitle'),  # Subtítulo
                         html.Hr(className="my-2"),  # Linha horizontal para separação
                         html.P([

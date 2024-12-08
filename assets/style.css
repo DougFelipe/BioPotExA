@@ -717,42 +717,71 @@ body, html {
 }
 
 
-/* Estilo para o navbar */
-.navbar {
+/* Navbar principal */
+.navbar-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px 20px;
+    background-color: #F8F9FA;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid #ddd;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    background-color: #F8F9FA;
-    padding: 10px 20px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 1000;
-    display: flex;
-    align-items: center;
 }
 
-/* Estilo para os links do navbar */
-.nav-link {
-    margin-left: 15px;
-    font-size: 16px;
-    color: #007BFF;
-    text-decoration: none;
-}
-
-.nav-link:hover {
-    text-decoration: underline;
-}
-
-/* Estilo para o título "BioRemPP" */
-.navbar-brand {
+/* Título principal */
+.navbar-title {
     font-size: 24px;
     font-weight: bold;
     color: #007BFF;
     text-decoration: none;
-    margin-right: 20px;
 }
 
-.navbar-brand:hover {
+/* Botão de abrir o menu */
+.open-menu-button {
+    font-size: 16px;
+    padding: 5px 10px;
+    border: none;
+    background-color: #007BFF;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.open-menu-button:hover {
+    background-color: #0056b3;
+}
+
+/* Estilo para o Offcanvas */
+.offcanvas-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007BFF;
+    text-align: center;
+}
+
+.offcanvas-links-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    padding: 10px 20px;
+}
+
+.nav-link {
+    font-size: 16px;
+    color: #007BFF;
     text-decoration: none;
-    color: #0056b3;  /* Cor ao passar o mouse */
+    padding: 5px 10px;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #0056b3;
+    text-decoration: underline;
 }
