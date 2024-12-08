@@ -564,6 +564,32 @@ def get_results_layout():
             ),
         ], className="analysis-header"),
         html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
+
+                # Seção 22: Gene-Compound Interaction Network
+        html.Div(id="gene-compound-network", className="section"),  # ID para link no navbar
+        html.Div([
+            html.H5("Gene-Compound Interaction Network", className="analysis-title"),
+            html.P(
+                "This network graph visualizes the interactions between genes and compounds, providing insights into functional relationships.",
+                className="analysis-description"
+            ),
+            html.P(
+                "By analyzing this graph, you can explore the connectivity and association strength between genes and compounds, uncovering potential targets or key interactions.",
+                className="analysis-insights"
+            ),
+            dbc.Accordion(
+                [
+                    dbc.AccordionItem(
+                        html.Div(get_gene_compound_network_layout(), className="chart-container"),
+                        title="Gene-Compound Network"
+                    )
+                ],
+                start_collapsed=True,
+                always_open=False,
+            ),
+        ], className="analysis-header"),
+        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
+
     
 
 

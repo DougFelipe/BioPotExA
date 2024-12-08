@@ -38,6 +38,8 @@ navbar = html.Div(
         html.A("Enzyme Activity per Sample", href="#sample-enzyme-activity", className="nav-link"),
         html.A("Sample Clustering Dendrogram", href="#sample-clustering-dendrogram", className="nav-link"),
         html.A("Sample UpSet Plot", href="#sample-upset-plot", className="nav-link"),
+        html.A("Gene-Compound Network", href="#gene-compound-network", className="nav-link"),
+
 
 
 
