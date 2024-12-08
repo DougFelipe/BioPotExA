@@ -655,19 +655,53 @@ def plot_sample_groups(df):
 # ----------------------------------------
 def plot_sample_gene_heatmap(grouped_df):
     """
-    Cria um heatmap para visualizar a relação entre genes e samples com a contagem de KOs únicos.
+    Cria um heatmap para visualizar a relação entre genes e samples com a contagem de KOs únicos, 
+    lidando corretamente com células vazias para evitar fundo indesejado.
 
     :param grouped_df: DataFrame agrupado por gene e sample com a contagem de KOs únicos.
     :return: Objeto Figure com o heatmap.
     """
-    fig = px.density_heatmap(grouped_df, x='sample', y='Gene', z='ko_count', color_continuous_scale='Oranges', template='simple_white')
-    fig.update_layout(
-        xaxis_title='',  # Remove o título do eixo x
-        yaxis_title='',  # Remove o título do eixo y
-        xaxis_tickangle=45,
-    )
-    return fig
+    # Criação do DataFrame pivotado
+    pivot_df = grouped_df.pivot(index='Gene', columns='sample', values='ko_count')
 
+    # Substituir valores nulos por um indicador (opcional: 0 ou '')
+    pivot_df = pivot_df.fillna(0)  # Substituir NaN por 0 (ou escolha um valor adequado para células vazias)
+    
+    # Criação do heatmap
+    fig = px.imshow(
+        pivot_df,
+        color_continuous_scale='Oranges',  # Escala de cor para valores inteiros
+        labels=dict(x="Sample", y="Gene", color="KO Count"),
+        title="Heatmap of Ortholog Counts by Sample",
+        zmin=0,  # Define o mínimo da escala para garantir valores consistentes
+        zmax=pivot_df.max().max(),  # Define o máximo da escala com base nos dados
+    )
+
+    # Ajuste do layout para melhorar visualização
+    fig.update_layout(
+        xaxis=dict(
+            title='Sample',
+            tickangle=45,  # Rotaciona os labels no eixo X
+            automargin=True
+        ),
+        yaxis=dict(
+            title='Gene',
+            automargin=True
+        ),
+        coloraxis_colorbar=dict(
+            title="KO Count",
+            tickvals=list(range(int(grouped_df['ko_count'].min()), int(grouped_df['ko_count'].max()) + 1)),
+            ticktext=list(range(int(grouped_df['ko_count'].min()), int(grouped_df['ko_count'].max()) + 1))
+        ),
+        plot_bgcolor='white',  # Define o fundo branco
+        paper_bgcolor='white'  # Define o fundo branco para o layout
+    )
+
+    # Removendo as linhas da grade
+    fig.update_xaxes(showgrid=False)
+    fig.update_yaxes(showgrid=False)
+
+    return fig
 
 # ----------------------------------------
 # P12 HADEG HEATMAP ORTHOLOGS BY sample
