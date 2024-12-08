@@ -2,7 +2,7 @@ from dash import html, dcc
 
 def get_gene_sample_heatmap_layout():
     """
-    Constrói o layout para o heatmap de genes e samples.
+    Constrói o layout para o heatmap de genes e samples com mensagens dinâmicas e renderização condicional.
 
     Returns:
         Uma `html.Div` contendo o heatmap e os filtros.
@@ -23,7 +23,14 @@ def get_gene_sample_heatmap_layout():
             )
         ], className='navigation-menu'),
         html.Div(
-            dcc.Graph(id='gene-sample-heatmap'),
+            id='gene-sample-heatmap-container',
+            children=[
+                html.P(
+                    "No data available. Please select a compound pathway and pathway.",
+                    id="no-gene-sample-heatmap-message",
+                    style={"textAlign": "center", "color": "gray"}
+                )
+            ],
             className='graph-container',
             style={'height': 'auto', 'overflowY': 'auto'}
         )
