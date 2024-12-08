@@ -515,6 +515,31 @@ def get_results_layout():
         ], className="analysis-header"),
         html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
 
+                # Seção 20: Sample Clustering Dendrogram
+        html.Div(id="sample-clustering-dendrogram", className="section"),  # ID para link no navbar
+        html.Div([
+            html.H5("Sample Clustering Dendrogram", className="analysis-title"),
+            html.P(
+                "This dendrogram visualizes the hierarchical clustering of samples based on their genetic or metabolic profiles.",
+                className="analysis-description"
+            ),
+            html.P(
+                "By analyzing this clustering, you can identify patterns of similarity or divergence between samples, aiding in deeper insights into their relationships.",
+                className="analysis-insights"
+            ),
+            dbc.Accordion(
+                [
+                    dbc.AccordionItem(
+                        html.Div(get_sample_clustering_layout(), className="chart-container"),
+                        title="Clustering Dendrogram"
+                    )
+                ],
+                start_collapsed=True,
+                always_open=False,
+            ),
+        ], className="analysis-header"),
+        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),     
+
 
 
     ])
