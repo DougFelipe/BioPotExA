@@ -430,7 +430,7 @@ def plot_gene_compound_scatter(df):
             tickfont=dict(size=10),  # Ajusta o tamanho da fonte dos rótulos
         ),
         xaxis=dict(
-            tickangle=-45,  # Rotaciona os rótulos do eixo X
+            tickangle=45,  # Rotaciona os rótulos do eixo X
             tickmode='array',
             tickvals=df['genesymbol'].unique(),
             ticktext=df['genesymbol'].unique(),
@@ -514,7 +514,7 @@ def plot_sample_gene_scatter(df):
             tickfont=dict(size=10),  # Ajusta o tamanho da fonte dos rótulos
         ),
         xaxis=dict(
-            tickangle=-45,  # Rotaciona os rótulos do eixo X
+            tickangle=45,  # Rotaciona os rótulos do eixo X
             tickmode='array',
             tickvals=df['genesymbol'].unique(),
             ticktext=df['genesymbol'].unique(),
@@ -540,13 +540,52 @@ def plot_sample_reference_heatmap(df):
     :param df: DataFrame pivotado contendo as contagens.
     :return: Objeto Figure com o heatmap.
     """
-    fig = px.imshow(df, 
-                    labels=dict(x="Sample", y="Reference AG", color="Compound Count"), 
-                    x=df.columns, 
-                    y=df.index, 
-                    color_continuous_scale='Viridis', 
-                    title='Heatmap of Samples vs Reference AG')
-    fig.update_layout(template='simple_white')
+    # Calcula o número de rótulos nos eixos X e Y
+    num_labels_x = len(df.columns)  # Número de rótulos no eixo X (Samples)
+    num_labels_y = len(df.index)    # Número de rótulos no eixo Y (Reference AG)
+
+    # Define parâmetros para o tamanho do gráfico
+    base_height = 400  # Altura base do gráfico
+    base_width = 400   # Largura base do gráfico
+    extra_height_per_label = 20  # Altura adicional por rótulo no eixo Y
+    extra_width_per_label = 20   # Largura adicional por rótulo no eixo X
+
+    # Calcula altura e largura finais com base no número de rótulos
+    height = base_height + (num_labels_y * extra_height_per_label)
+    width = base_width + (num_labels_x * extra_width_per_label)
+
+    # Cria o heatmap
+    fig = px.imshow(
+        df,
+        labels=dict(x="Sample", y="Reference AG", color="Compound Count"),
+        x=df.columns,
+        y=df.index,
+        color_continuous_scale="Viridis",
+        title="Heatmap of Samples vs Reference AG"
+    )
+
+    # Ajusta o layout para exibir todos os rótulos
+    fig.update_layout(
+        xaxis=dict(
+            title=dict(
+                text="Sample",
+                standoff=50  # Distância entre os rótulos e o eixo X
+            ),
+            tickangle=45,
+            tickfont=dict(size=10),
+            automargin=True
+        ),
+        yaxis=dict(
+            title=dict(
+                text="Reference AG",
+                standoff=50  # Distância entre os rótulos e o eixo Y
+            ),
+            tickfont=dict(size=10),
+            automargin=True
+        ),
+        margin=dict(l=200, b=200)  # Ajusta as margens gerais do gráfico
+    )
+
     return fig
 
 
@@ -607,7 +646,7 @@ def plot_sample_groups(df):
     )
 
     for i in range(1, len(unique_groups) + 1):
-        fig.update_xaxes(row=1, col=i, tickangle=-45, title_text=None)
+        fig.update_xaxes(row=1, col=i, tickangle=45, title_text=None)
     
     return fig
 
@@ -625,8 +664,7 @@ def plot_sample_gene_heatmap(grouped_df):
     fig.update_layout(
         xaxis_title='',  # Remove o título do eixo x
         yaxis_title='',  # Remove o título do eixo y
-        xaxis_tickangle=-45,
-        yaxis_tickangle=-45,
+        xaxis_tickangle=45,
     )
     return fig
 
