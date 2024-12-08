@@ -538,7 +538,33 @@ def get_results_layout():
                 always_open=False,
             ),
         ], className="analysis-header"),
-        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),     
+        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]), 
+
+                # Seção 21: Sample UpSet Plot
+        html.Div(id="sample-upset-plot", className="section"),  # ID para link no navbar
+        html.Div([
+            html.H5("UpSet Plot: Samples and KOs", className="analysis-title"),
+            html.P(
+                "This UpSet plot visualizes intersections of KOs (Orthologous Genes) across multiple samples.",
+                className="analysis-description"
+            ),
+            html.P(
+                "By analyzing this plot, you can identify shared and unique orthologs between samples, highlighting potential relationships and diversity.",
+                className="analysis-insights"
+            ),
+            dbc.Accordion(
+                [
+                    dbc.AccordionItem(
+                        html.Div(get_sample_upset_layout(), className="chart-container"),
+                        title="Sample UpSet Plot"
+                    )
+                ],
+                start_collapsed=True,
+                always_open=False,
+            ),
+        ], className="analysis-header"),
+        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
+    
 
 
 
