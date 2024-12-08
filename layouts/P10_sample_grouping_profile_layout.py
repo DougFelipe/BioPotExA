@@ -12,12 +12,19 @@ def get_sample_groups_layout():
             html.Div('Filter by Compound Class', className='menu-text'),
             dcc.Dropdown(
                 id='compound-class-dropdown-p10',
-                multi=False,  # Permite seleção única
+                multi=False,
                 placeholder='Select a Compound Class'
             )
         ], className='navigation-menu'),
         html.Div(
-            dcc.Graph(id='sample-groups-plot'),
+            id='sample-groups-container',
+            children=[
+                html.P(
+                    "No data available. Please select a compound class.",
+                    id="no-sample-groups-message",
+                    style={"textAlign": "center", "color": "gray"}
+                )
+            ],
             className='graph-container',
             style={'height': 'auto', 'overflowY': 'auto'}
         )
