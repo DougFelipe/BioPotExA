@@ -452,7 +452,7 @@ def plot_gene_compound_scatter(df):
 def plot_sample_gene_scatter(df):
     """
     Cria um scatter plot para visualizar a relação entre samples e genes, garantindo que todos os rótulos nos eixos X e Y 
-    estejam visíveis e que a ordenação seja feita com os genes mais frequentes na parte superior.
+    estejam visíveis e que a ordenação seja feita com os samples mais frequentes na parte superior.
 
     :param df: DataFrame filtrado contendo as colunas 'sample' e 'genesymbol'.
     :return: Objeto Figure com o scatter plot.
@@ -466,7 +466,7 @@ def plot_sample_gene_scatter(df):
     extra_width_per_label_x = 10  # Largura adicional por cada rótulo excedente no eixo X
 
     # Calcula o número de rótulos no eixo Y
-    num_labels_y = df['genesymbol'].nunique()
+    num_labels_y = df['sample'].nunique()
 
     # Define um limite para quando adicionar altura extra
     label_limit_y = 1  # Garante que a altura será ajustada mesmo com poucos rótulos
@@ -478,7 +478,7 @@ def plot_sample_gene_scatter(df):
         height = base_height
 
     # Calcula o número de rótulos no eixo X
-    num_labels_x = df['sample'].nunique()
+    num_labels_x = df['genesymbol'].nunique()
 
     # Define um limite para quando adicionar largura extra
     label_limit_x = 10  # Número de rótulos que cabem na largura base
@@ -489,17 +489,17 @@ def plot_sample_gene_scatter(df):
     else:
         width = base_width
 
-    # Ordena os genes pela frequência de ocorrência para priorizar os mais comuns no topo
-    gene_order = df['genesymbol'].value_counts().index.tolist()
+    # Ordena os samples pela frequência de ocorrência para priorizar os mais comuns no topo
+    sample_order = df['sample'].value_counts().index.tolist()
 
     # Cria o scatter plot
     fig = px.scatter(
         df,
-        x='sample',
-        y='genesymbol',
-        title='Scatter Plot of Samples vs Genes',
+        x='genesymbol',
+        y='sample',
+        title='Scatter Plot of Genes vs Samples',
         template='simple_white',
-        category_orders={'genesymbol': gene_order}  # Define a ordem do eixo Y
+        category_orders={'sample': sample_order}  # Define a ordem do eixo Y
     )
 
     # Ajusta o layout do gráfico
@@ -508,26 +508,25 @@ def plot_sample_gene_scatter(df):
         width=width,
         yaxis=dict(
             tickmode='array',
-            tickvals=df['genesymbol'].unique(),
-            ticktext=df['genesymbol'].unique(),
+            tickvals=df['sample'].unique(),
+            ticktext=df['sample'].unique(),
             automargin=True,  # Garante margens automáticas para rótulos longos
             tickfont=dict(size=10),  # Ajusta o tamanho da fonte dos rótulos
         ),
         xaxis=dict(
             tickangle=-45,  # Rotaciona os rótulos do eixo X
             tickmode='array',
-            tickvals=df['sample'].unique(),
-            ticktext=df['sample'].unique(),
+            tickvals=df['genesymbol'].unique(),
+            ticktext=df['genesymbol'].unique(),
             automargin=True,  # Garante margens automáticas para rótulos longos
             tickfont=dict(size=10),  # Ajusta o tamanho da fonte dos rótulos do eixo X
         ),
-        xaxis_title='Sample',
-        yaxis_title='Gene Symbol',
+        xaxis_title='Gene Symbol',
+        yaxis_title='Sample',
         margin=dict(l=200, b=100)  # Adiciona margens extras para os eixos X e Y
     )
 
     return fig
-
 
 
 # ----------------------------------------
