@@ -233,7 +233,9 @@ def get_results_layout():
             ),
         ], className="analysis-header"),
         html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
-                # Seção 8: Ranking of Samples by Compound Interaction
+        
+        
+        # Seção 9: Ranking of Samples by Compound Interaction
         html.Div(id="sample-rank-compounds-chart", className="section"),  # ID para link no navbar
         html.Div([
             html.H5("Ranking of Samples by Compound Interaction", className="analysis-title"),
@@ -257,6 +259,33 @@ def get_results_layout():
             ),
         ], className="analysis-header"),
         html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
+
+
+                # Seção 10: Ranking of Compounds by Sample Interaction
+        html.Div(id="compound-rank-chart", className="section"),  # ID para link no navbar
+        html.Div([
+            html.H5("Ranking of Compounds by Sample Interaction", className="analysis-title"),
+            html.P(
+                "This ranking chart identifies compounds based on their interactions with samples, revealing compounds with higher significance.",
+                className="analysis-description"
+            ),
+            html.P(
+                "Use this chart to focus on compounds with the most interactions, which can help prioritize targets for further investigation.",
+                className="analysis-insights"
+            ),
+            dbc.Accordion(
+                [
+                    dbc.AccordionItem(
+                        html.Div(get_compound_rank_layout(), className="chart-container"),
+                        title="Ranking of Compounds by Sample Interaction"
+                    )
+                ],
+                start_collapsed=True,
+                always_open=False,
+            ),
+        ], className="analysis-header"),
+        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
+
 
 
     ])

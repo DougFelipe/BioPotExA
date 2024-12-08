@@ -26,6 +26,7 @@ navbar = html.Div(
         html.A("Sample KO Pathway Chart", href="#sample-ko-pathway-chart", className="nav-link"),
         html.A("Samples vs Compounds", href="#compound-scatter-chart", className="nav-link"),
         html.A("Sample Ranking by Compounds", href="#sample-rank-compounds-chart", className="nav-link"),
+        html.A("Compound Ranking by Samples", href="#compound-rank-chart", className="nav-link"),
 
 
 
