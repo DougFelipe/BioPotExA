@@ -465,4 +465,30 @@ def get_results_layout():
         ], className="analysis-header"),
         html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
 
+                # Seção 18: Scatter Plot of KOs by Sample for Pathway
+        html.Div(id="sample-ko-scatter", className="section"),  # ID para link no navbar
+        html.Div([
+            html.H5("Scatter Plot of KOs by Sample for Pathway", className="analysis-title"),
+            html.P(
+                "This scatter plot visualizes the distribution of KOs across different samples for a specific pathway.",
+                className="analysis-description"
+            ),
+            html.P(
+                "By analyzing this scatter plot, you can identify patterns of KO distribution across samples, helping to pinpoint critical samples for specific pathways.",
+                className="analysis-insights"
+            ),
+            dbc.Accordion(
+                [
+                    dbc.AccordionItem(
+                        html.Div(get_sample_ko_scatter_layout(), className="chart-container"),
+                        title="Scatter Plot of KOs by Sample"
+                    )
+                ],
+                start_collapsed=True,
+                always_open=False,
+            ),
+        ], className="analysis-header"),
+        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
+
+
     ])
