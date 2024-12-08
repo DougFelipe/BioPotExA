@@ -338,6 +338,32 @@ def get_results_layout():
         ], className="analysis-header"),
         html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
 
+                # Seção 13: Scatter Plot of Samples vs Genes
+        html.Div(id="sample-gene-scatter-chart", className="section"),  # ID para link no navbar
+        html.Div([
+            html.H5("Scatter Plot of Samples vs Genes", className="analysis-title"),
+            html.P(
+                "This scatter plot visualizes the relationships between samples and genes, providing insights into genetic patterns across various samples.",
+                className="analysis-description"
+            ),
+            html.P(
+                "By analyzing this plot, users can identify significant gene associations across different samples, aiding in the discovery of genetic hotspots.",
+                className="analysis-insights"
+            ),
+            dbc.Accordion(
+                [
+                    dbc.AccordionItem(
+                        html.Div(get_sample_gene_scatter_layout(), className="chart-container"),
+                        title="Scatter Plot of Samples vs Genes"
+                    )
+                ],
+                start_collapsed=True,
+                always_open=False,
+            ),
+        ], className="analysis-header"),
+        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
+
+
 
 
 
