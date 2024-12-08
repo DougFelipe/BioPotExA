@@ -112,14 +112,38 @@ def get_results_layout():
                 dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs"), 
             ]
         ),
+        # Adicionando o gráfico "Gene count associated with priority compounds"
+        html.Div([
+            html.H5("Gene Count Associated with Priority Compounds", className="analysis-title"),
+            html.P(
+                "This bar chart displays the count of unique genes associated with priority compounds for each sample.",
+                className="analysis-description"
+            ),
+            html.P(
+                "By analyzing this chart, you can identify which samples have a higher number of unique gene associations, offering insights into potential hotspots of genetic activity.",
+                className="analysis-insights"
+            ),
+            dbc.Accordion(
+                [
+                    dbc.AccordionItem(
+                        html.Div(get_ko_count_bar_chart_layout(), className="chart-container"),
+                        title="Gene Count Bar Chart"
+                    )
+                ],
+                start_collapsed=True,
+                always_open=False
+            )
+        ], className="analysis-header"),
+
+        # Linha divisória
+        html.Div(
+            dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")
+        ),
+
 
         # Grande accordion para os outros resultados
         dbc.Accordion(
             [
-                dbc.AccordionItem(
-                    get_ko_count_bar_chart_layout(),
-                    title="Gene count associated with priority compounds",
-                ),
                 dbc.AccordionItem(
                     get_ko_violin_boxplot_layout(),
                     title="Distribution of genes associated with priority compounds"
