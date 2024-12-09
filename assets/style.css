@@ -804,3 +804,36 @@ body, html {
     text-decoration: underline;
     color: #0056b3;
 }
+
+
+/* Estilo da página de ajuda */
+.help-page {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+.help-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #007BFF;
+    margin-bottom: 20px;
+}
+
+.help-section-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+    color: #343a40;
+}
+
+.help-text {
+    font-size: 16px;
+    color: #6c757d;
+}
+
+.help-list {
+    font-size: 16px;
+    color: #6c757d;
+    padding-left: 20px;
+}

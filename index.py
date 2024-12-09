@@ -18,6 +18,7 @@ from components.header import Header
 from layouts.about import get_about_layout
 from layouts.data_analysis import get_dataAnalysis_page
 from layouts.results import get_results_layout  # Importa o layout dos resultados
+from layouts.help import get_help_layout
 
 # Certifique-se de importar os callbacks antes de importar a aplicação
 import callbacks.P1_COUNT_KO_callbacks  # Importa os callbacks do novo arquivo
@@ -69,24 +70,19 @@ app.layout = html.Div(
 # -------------------------------
 # Callback para Navegação entre Páginas
 # -------------------------------
+# Ajustar o callback de navegação
 @app.callback(
     Output('page-content', 'children'),
     Input('url', 'pathname')
 )
 def display_page(pathname):
-    """
-    Callback para renderizar o layout correspondente com base na URL do aplicativo.
-
-    :param pathname: Caminho atual da URL.
-    :return: Layout correspondente para o caminho especificado.
-    """
-    if pathname == '/data-analysis':  # Rota para análise de dados
+    if pathname == '/data-analysis':
         return get_dataAnalysis_page()
-    elif pathname == '/results':  # Rota para página de resultados
+    elif pathname == '/results':
         return get_results_layout()
-    elif pathname == '/see-example':  # Rota para página "See Example"
-        return get_see_example_layout()
-    else:  # Página padrão é "About"
+    elif pathname == '/help':  # Nova rota para a página de ajuda
+        return get_help_layout()
+    else:
         return get_about_layout()
 
 

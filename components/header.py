@@ -12,5 +12,6 @@ def Header():
             html.A('Regulatory Agencies', href='/regulatory', className='header-link'),
             html.A('Changelog', href='/changelog', className='header-link'),
             html.A('Contact', href='/contact', className='header-link'),
+            html.A("Help", href="/help", className="header-link"),
         ])
     ])

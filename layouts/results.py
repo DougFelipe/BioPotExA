@@ -106,6 +106,7 @@ def get_results_layout():
             ),
         ], className="analysis-header"),
         html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size = "xs"),]),
+        
 
         # Seção 4: Gene Count Chart
         html.Div(id="gene-count-chart", className="section"),
