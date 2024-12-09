@@ -881,3 +881,39 @@ body, html {
 .features-section {
     margin-bottom: 30px;
 }
+
+
+/* Standardized Styles for Regulatory Agencies Page */
+.regulatory-agencies-page {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+.regulatory-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #007BFF;
+    margin-bottom: 20px;
+}
+
+.regulatory-section-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+    color: #343a40;
+}
+
+.regulatory-text, .regulatory-intro {
+    font-size: 16px;
+    color: #6c757d;
+    margin-bottom: 15px;
+}
+
+.regulatory-agency-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+    color: #0056b3;
+}
+

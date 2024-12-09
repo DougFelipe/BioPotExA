@@ -14,6 +14,8 @@ from dash import Dash, dcc, html,Input, Output
 # Importa o componente de cabeçalho personalizado.
 from components.header import Header
 from components.features import get_features_layout  # Import the new layout
+from components.bioremediation import get_bioremediation_layout
+from components.regulatory_agencies import get_regulatory_agencies_layout
 
 # Importa funções para obter layouts das páginas.
 from layouts.about import get_about_layout
@@ -85,6 +87,10 @@ def display_page(pathname):
         return get_help_layout()
     elif pathname == '/features':  # Add the route for the Features page
         return get_features_layout()
+    elif pathname == '/bioremediation':  # New Bioremediation Page
+        return get_bioremediation_layout()
+    elif pathname == '/regulatory':
+        return get_regulatory_agencies_layout()
     else:
         return get_about_layout()
 
