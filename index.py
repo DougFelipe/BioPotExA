@@ -13,6 +13,7 @@ from dash import Dash, dcc, html,Input, Output
 
 # Importa o componente de cabeçalho personalizado.
 from components.header import Header
+from components.features import get_features_layout  # Import the new layout
 
 # Importa funções para obter layouts das páginas.
 from layouts.about import get_about_layout
@@ -82,6 +83,8 @@ def display_page(pathname):
         return get_results_layout()
     elif pathname == '/help':  # Nova rota para a página de ajuda
         return get_help_layout()
+    elif pathname == '/features':  # Add the route for the Features page
+        return get_features_layout()
     else:
         return get_about_layout()
 
