@@ -1,5 +1,4 @@
-# my_dash_app/callbacks/P14_sample_enzyme_activity_callbacks.py
-from dash import callback
+from dash import callback, html,dcc
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 import pandas as pd
@@ -23,20 +22,23 @@ def initialize_sample_dropdown(n_clicks, stored_data):
 
     # Obter amostras únicas
     samples = sorted(merged_df['sample'].unique())
-    default_sample = samples[0]
-
     dropdown_options = [{'label': sample, 'value': sample} for sample in samples]
-    return dropdown_options, default_sample
+
+    return dropdown_options, None  # Nenhum valor padrão é definido inicialmente
 
 # Callback para atualizar o gráfico de barras com base na amostra selecionada
 @app.callback(
-    Output('sample-enzyme-bar-chart', 'figure'),
+    Output('enzyme-bar-chart-container', 'children'),
     [Input('sample-enzyme-dropdown', 'value')],
     [State('stored-data', 'data')]
 )
 def update_enzyme_activity_chart(selected_sample, stored_data):
-    if not stored_data or not selected_sample:
-        raise PreventUpdate
+    if not selected_sample or not stored_data:
+        return html.P(
+            "No data available. Please select a sample.",
+            id="no-enzyme-bar-chart-message",
+            style={"textAlign": "center", "color": "gray"}
+        )
 
     input_df = pd.DataFrame(stored_data)
     merged_df = merge_input_with_database(input_df)
@@ -44,6 +46,14 @@ def update_enzyme_activity_chart(selected_sample, stored_data):
     # Contar atividades enzimáticas únicas
     enzyme_count_df = count_unique_enzyme_activities(merged_df, selected_sample)
 
+    if enzyme_count_df.empty:
+        return html.P(
+            "No data found for the selected sample.",
+            id="no-enzyme-bar-chart-message",
+            style={"textAlign": "center", "color": "gray"}
+        )
+
     # Criar o gráfico
     fig = plot_enzyme_activity_counts(enzyme_count_df, selected_sample)
-    return fig
+
+    return dcc.Graph(figure=fig, className='bar-chart-style')

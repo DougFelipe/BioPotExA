@@ -1,4 +1,3 @@
-# my_dash_app/layouts/P14_sample_enzyme_activity_layout.py
 from dash import html, dcc
 
 def get_sample_enzyme_activity_layout():
@@ -13,10 +12,18 @@ def get_sample_enzyme_activity_layout():
             html.Div('Filter by Sample', className='menu-text'),  # Título do dropdown
             dcc.Dropdown(
                 id='sample-enzyme-dropdown',  # ID associado ao dropdown
+                placeholder="Select a Sample",  # Placeholder para instruir o usuário
             ),
         ], className='navigation-menu'),  # Estilização do menu de navegação
-        dcc.Graph(
-            id='sample-enzyme-bar-chart',  # ID do gráfico de barras
-            className='bar-chart-style'
-        ),
+        html.Div(
+            id='enzyme-bar-chart-container',  # ID do container do gráfico
+            children=[
+                html.P(
+                    "No data available. Please select a sample.",
+                    id="no-enzyme-bar-chart-message",
+                    style={"textAlign": "center", "color": "gray"}
+                )
+            ],
+            className='graph-container',  # Classe de estilização do container
+        )
     ], className='graph-card')
