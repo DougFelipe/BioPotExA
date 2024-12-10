@@ -1224,7 +1224,7 @@ def generate_gene_compound_network(network_data):
 
 def plot_heatmap_faceted(df):
     """
-    Gera um heatmap faceted para as categorias de toxicidade com uma única legenda compartilhada.
+    Gera um heatmap faceted para as categorias de toxicidade com uma única legenda compartilhada e hover personalizado.
 
     :param df: DataFrame com 'compoundname', 'value', 'label', 'category' e 'subcategoria'.
     :return: Figura Plotly com facetas.
@@ -1255,8 +1255,8 @@ def plot_heatmap_faceted(df):
         subset = df[df['category'] == category]
         print(f"DEBUG: Subset para a categoria '{category}':\n{subset.head()}")
 
-        # Resolver duplicatas agrupando por 'compoundname' e 'subcategoria'
-        subset_grouped = subset.groupby(['compoundname', 'subcategoria'], as_index=False)['value'].mean()
+        # Resolver duplicatas agrupando por 'compoundname', 'subcategoria', e 'label'
+        subset_grouped = subset.groupby(['compoundname', 'subcategoria', 'label'], as_index=False)['value'].mean()
         print(f"DEBUG: Subset agrupado para a categoria '{category}':\n{subset_grouped.head()}")
 
         # Criar pivot table para o heatmap
@@ -1266,11 +1266,21 @@ def plot_heatmap_faceted(df):
             print(f"WARNING: Nenhum dado disponível para a categoria '{category}'. Pulando faceta.")
             continue
 
-        # Adicionar o heatmap ao subplot (desabilitar legenda individual)
+        # Criar matriz para o hover personalizado
+        hover_text = subset_grouped.pivot(index='compoundname', columns='subcategoria', values='label')
+
+        # Adicionar o heatmap ao subplot
         heatmap = go.Heatmap(
             z=heatmap_data.values,
             x=heatmap_data.columns,
             y=heatmap_data.index,
+            text=hover_text.values,  # Adicionar os labels no hover
+            hovertemplate=(
+                "<b>Compound:</b> %{y}<br>"
+                "<b>Subcategory:</b> %{x}<br>"
+                "<b>Label:</b> %{text}<br>"
+                "<b>Toxicity Score:</b> %{z}<extra></extra>"
+            ),
             colorscale="reds",
             showscale=(i == 1),  # Mostra a escala de cores apenas na primeira faceta
             colorbar=dict(
