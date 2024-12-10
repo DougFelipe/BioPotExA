@@ -6,6 +6,7 @@ import pandas as pd  # Importar para carregar o sample_data.txt
 
 # Importações de utilitários e layouts específicos da aplicação
 from components.step_guide import create_step_card  # Importa a função do componente de passo a passo
+from components.tooltip_sample import input_format_tooltip
 from layouts.results import get_results_layout  # Importa o novo layout de resultados
 
 # Função para criar a página de Análise de Dados
@@ -37,11 +38,14 @@ def get_dataAnalysis_page():
                                 description="Upload your data files in the specified format for analysis"
                             ),
                             html.P(
-                                "Start by uploading your dataset. Ensure the file is in the specified format to avoid processing issues. "
-                                "This step allows the application to read and validate the structure of your data, ensuring it meets the requirements for analysis.",
+                                [
+                                    "Start by uploading ",
+                                    input_format_tooltip(),
+                                    ". Ensure the file is in the specified format to avoid processing issues. "
+                                    "This step allows the application to read and validate the structure of your data, ensuring it meets the requirements for analysis."
+                                ],
                                 className='step-text'
-                            )
-                        ]
+)                        ]
                     ),
                     # Step 2: Process
                     html.Div(
