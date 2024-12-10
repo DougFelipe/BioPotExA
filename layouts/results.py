@@ -462,38 +462,7 @@ def get_results_layout():
         ),
              ], className="section-header"),
 
-        html.Div([
-        html.H3("6 - Intersection and Group Exploration", className="section-title"),
-        html.P(
-            "Investigate overlap and grouping patterns among samples.",
-            className="section-objective"
-        ),
-            ], className="section-header"),
-
-
-        html.Div([
-        html.H3("7 - Toxicity Predictions", className="section-title"),
-        html.P(
-            "Visualize and understand toxicity predictions.",
-            className="section-objective"
-        ),
-             ], className="section-header"),
-             
-
-
-        
-            
-
-        
-
-               
-        
-
-
-
-               
-
-                # Seção 14: Heatmap of Samples vs Reference AG
+                             # Seção 14: Heatmap of Samples vs Reference AG
         html.Div(id="sample-reference-heatmap", className="section"),  # ID para link no navbar
         html.Div([
             html.H5("Heatmap of Samples vs Reference AG", className="analysis-title"),
@@ -518,33 +487,7 @@ def get_results_layout():
         ], className="analysis-header"),
         html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
 
-                # Seção 15: Sample Groups by Compound Class
-        html.Div(id="sample-groups-chart", className="section"),  # ID para link no navbar
-        html.Div([
-            html.H5("Sample Groups by Compound Class", className="analysis-title"),
-            html.P(
-                "This visualization presents the grouping of samples based on compound classes, providing an overview of their classification.",
-                className="analysis-description"
-            ),
-            html.P(
-                "By analyzing these groups, you can identify patterns and relationships among samples and their associated compound classes.",
-                className="analysis-insights"
-            ),
-            dbc.Accordion(
-                [
-                    dbc.AccordionItem(
-                        html.Div(get_sample_groups_layout(), className="chart-container"),
-                        title="Sample Groups by Compound Class"
-                    )
-                ],
-                start_collapsed=True,
-                always_open=False,
-            ),
-        ], className="analysis-header"),
-        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
-
-
-                # Seção 16: Heatmap of Genes vs Samples
+                        # Seção 16: Heatmap of Genes vs Samples
         html.Div(id="gene-sample-heatmap", className="section"),  # ID para link no navbar
         html.Div([
             html.H5("Heatmap of Genes vs Samples", className="analysis-title"),
@@ -619,31 +562,43 @@ def get_results_layout():
         ], className="analysis-header"),
         html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
 
-               
-                # Seção 20: Sample Clustering Dendrogram
-        html.Div(id="sample-clustering-dendrogram", className="section"),  # ID para link no navbar
+
+
+
+
         html.Div([
-            html.H5("Sample Clustering Dendrogram", className="analysis-title"),
+        html.H3("6 - Intersection and Group Exploration", className="section-title"),
+        html.P(
+            "Investigate overlap and grouping patterns among samples.",
+            className="section-objective"
+        ),
+            ], className="section-header"),
+                                        # Seção 15: Sample Groups by Compound Class
+        html.Div(id="sample-groups-chart", className="section"),  # ID para link no navbar
+        html.Div([
+            html.H5("Sample Groups by Compound Class", className="analysis-title"),
             html.P(
-                "This dendrogram visualizes the hierarchical clustering of samples based on their genetic or metabolic profiles.",
+                "This visualization presents the grouping of samples based on compound classes, providing an overview of their classification.",
                 className="analysis-description"
             ),
             html.P(
-                "By analyzing this clustering, you can identify patterns of similarity or divergence between samples, aiding in deeper insights into their relationships.",
+                "By analyzing these groups, you can identify patterns and relationships among samples and their associated compound classes.",
                 className="analysis-insights"
             ),
             dbc.Accordion(
                 [
                     dbc.AccordionItem(
-                        html.Div(get_sample_clustering_layout(), className="chart-container"),
-                        title="Clustering Dendrogram"
+                        html.Div(get_sample_groups_layout(), className="chart-container"),
+                        title="Sample Groups by Compound Class"
                     )
                 ],
                 start_collapsed=True,
                 always_open=False,
             ),
         ], className="analysis-header"),
-        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]), 
+        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
+
+               
 
                 # Seção 21: Sample UpSet Plot
         html.Div(id="sample-upset-plot", className="section"),  # ID para link no navbar
@@ -670,9 +625,44 @@ def get_results_layout():
         ], className="analysis-header"),
         html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
 
+                                # Seção 20: Sample Clustering Dendrogram
+        html.Div(id="sample-clustering-dendrogram", className="section"),  # ID para link no navbar
+        html.Div([
+            html.H5("Sample Clustering Dendrogram", className="analysis-title"),
+            html.P(
+                "This dendrogram visualizes the hierarchical clustering of samples based on their genetic or metabolic profiles.",
+                className="analysis-description"
+            ),
+            html.P(
+                "By analyzing this clustering, you can identify patterns of similarity or divergence between samples, aiding in deeper insights into their relationships.",
+                className="analysis-insights"
+            ),
+            dbc.Accordion(
+                [
+                    dbc.AccordionItem(
+                        html.Div(get_sample_clustering_layout(), className="chart-container"),
+                        title="Clustering Dendrogram"
+                    )
+                ],
+                start_collapsed=True,
+                always_open=False,
+            ),
+        ], className="analysis-header"),
+        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]), 
 
 
-        # Seção 23: Heatmap of Toxicity Predictions
+
+
+        html.Div([
+        html.H3("7 - Toxicity Predictions", className="section-title"),
+        html.P(
+            "Visualize and understand toxicity predictions.",
+            className="section-objective"
+        ),
+             ], className="section-header"),     
+
+    
+            # Seção 23: Heatmap of Toxicity Predictions
         html.Div(id="toxicity-heatmap-faceted", className="section"),  # ID for navbar linking
         html.Div([
             html.H5("Faceted Heatmap of Toxicity Predictions", className="analysis-title"),
@@ -702,4 +692,15 @@ def get_results_layout():
 
 
 
-    ])
+    ])    
+           
+      
+
+
+
+               
+
+
+
+
+
