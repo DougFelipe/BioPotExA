@@ -377,41 +377,7 @@ def get_results_layout():
         ),
             ], className="section-header"),
 
-        html.Div([
-        html.H3("5 - Heatmaps and Clustering", className="section-title"),
-        html.P(
-            "Explore complex relationships using heatmap and dendrogram visualizations.",
-            className="section-objective"
-        ),
-             ], className="section-header"),
-
-        html.Div([
-        html.H3("6 - Intersection and Group Exploration", className="section-title"),
-        html.P(
-            "Investigate overlap and grouping patterns among samples.",
-            className="section-objective"
-        ),
-            ], className="section-header"),
-
-
-        html.Div([
-        html.H3("7 - Toxicity Predictions", className="section-title"),
-        html.P(
-            "Visualize and understand toxicity predictions.",
-            className="section-objective"
-        ),
-             ], className="section-header"),
-             
-
-
-        
-            
-
-        
-
-               
-        
-        # Seção 9: Ranking of Samples by Compound Interaction
+                    # Seção 9: Ranking of Samples by Compound Interaction
         html.Div(id="sample-rank-compounds-chart", className="section"),  # ID para link no navbar
         html.Div([
             html.H5("Ranking of Samples by Compound Interaction", className="analysis-title"),
@@ -487,6 +453,42 @@ def get_results_layout():
             ),
         ], className="analysis-header"),
         html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
+
+        html.Div([
+        html.H3("5 - Heatmaps and Clustering", className="section-title"),
+        html.P(
+            "Explore complex relationships using heatmap and dendrogram visualizations.",
+            className="section-objective"
+        ),
+             ], className="section-header"),
+
+        html.Div([
+        html.H3("6 - Intersection and Group Exploration", className="section-title"),
+        html.P(
+            "Investigate overlap and grouping patterns among samples.",
+            className="section-objective"
+        ),
+            ], className="section-header"),
+
+
+        html.Div([
+        html.H3("7 - Toxicity Predictions", className="section-title"),
+        html.P(
+            "Visualize and understand toxicity predictions.",
+            className="section-objective"
+        ),
+             ], className="section-header"),
+             
+
+
+        
+            
+
+        
+
+               
+        
+
 
 
                
