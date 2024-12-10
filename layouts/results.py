@@ -594,7 +594,7 @@ def get_results_layout():
 
 
         # Seção 23: Heatmap of Toxicity Predictions
-        html.Div(id="toxicity-heatmap-faceted", className="section"),  # ID para link no navbar
+        html.Div(id="toxicity-heatmap-faceted", className="section"),  # ID for navbar linking
         html.Div([
             html.H5("Faceted Heatmap of Toxicity Predictions", className="analysis-title"),
             html.P(
