@@ -7,6 +7,7 @@ import pandas as pd  # Importar para carregar o sample_data.txt
 # Importações de utilitários e layouts específicos da aplicação
 from components.step_guide import create_step_card  # Importa a função do componente de passo a passo
 from components.tooltip_sample import input_format_tooltip
+from components.download_button import get_sample_data_button
 from layouts.results import get_results_layout  # Importa o novo layout de resultados
 
 # Função para criar a página de Análise de Dados
@@ -37,16 +38,27 @@ def get_dataAnalysis_page():
                                 title="Upload",
                                 description="Upload your data files in the specified format for analysis"
                             ),
-                            html.P(
+                            html.Div(
                                 [
-                                    "Start by uploading ",
-                                    input_format_tooltip(),
-                                    ". Ensure the file is in the specified format to avoid processing issues. "
-                                    "This step allows the application to read and validate the structure of your data, ensuring it meets the requirements for analysis."
+                                    html.P(
+                                        [
+                                            "Start by uploading ",
+                                            input_format_tooltip(),
+                                            ". Ensure the file is in the specified format to avoid processing issues. "
+                                            "This step allows the application to read and validate the structure of your data, ensuring it meets the requirements for analysis."
+                                        ],
+                                        className='step-text'
+                                    ),
+                                    html.Div(
+                                        get_sample_data_button(),  # Botão de download incluído no Step 1
+                                        className="button-container"  # Classe para centralizar o botão
+                                    )
                                 ],
-                                className='step-text'
-)                        ]
+                                className="card-content"  # Classe para estilizar o conteúdo do card
+                            )
+                        ]
                     ),
+
                     # Step 2: Process
                     html.Div(
                         className='step-row',
@@ -56,13 +68,19 @@ def get_dataAnalysis_page():
                                 title="Process",
                                 description="Submit your data for processing and analysis"
                             ),
-                            html.P(
-                                "Once your data is uploaded, click the button to process it. During this step, the system will validate the dataset, "
-                                "checking for completeness, correct formatting, and potential errors. This ensures the data is ready for in-depth analysis.",
-                                className='step-text'
+                            html.Div(
+                                [
+                                    html.P(
+                                        "Once your data is uploaded, click the button to process it. During this step, the system will validate the dataset, "
+                                        "checking for completeness, correct formatting, and potential errors. This ensures the data is ready for in-depth analysis.",
+                                        className='step-text'
+                                    )
+                                ],
+                                className="card-content"  # Classe para estilizar o conteúdo do card
                             )
                         ]
                     ),
+
                     # Step 3: Analyze
                     html.Div(
                         className='step-row',
