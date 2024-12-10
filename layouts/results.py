@@ -26,12 +26,23 @@ def get_results_layout():
         navbar,
 
         # Espaçamento para compensar o menu fixo
-        html.Div(style={"height": "100px"}),
+        html.Div(style={"height": "50px"}),
 
         # Título principal
         html.H2('Data Analysis Results', className='results-title'),
-        html.Hr(className="my-2"),
         html.H4('Results from your submitted data', className='results-subtitle'),
+        html.Hr(className="my-2"),
+
+
+
+        html.Div([
+                html.H3("1 - Data Tables and Database Integration", className="section-title"),
+                html.P(
+                    "Provide an overview of the data integrated into the databases.",
+                    className="section-objective"
+                ),
+            ], className="section-header"),
+
 
         # Seção 1: Main Results Table
         html.Div(id="main-results-table", className="section"),
@@ -58,6 +69,8 @@ def get_results_layout():
         ], className="analysis-header"),
         html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size = "xs"),]),
 
+
+
         # Seção 2: Results Table (hadegDB)
         html.Div(id="hadeg-results-table", className="section"),
         html.Div([
@@ -81,10 +94,10 @@ def get_results_layout():
                 always_open=True,
             ),
         ], className="analysis-header"),
-        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size = "xs"),]),
 
         # Seção 3: Results Table (ToxCSM)
         html.Div(id="toxcsm-results-table", className="section"),
+        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size = "xs"),]),
         html.Div([
             html.H5("Results Table (ToxCSM)", className="analysis-title"),
             html.P(
@@ -107,9 +120,17 @@ def get_results_layout():
             ),
         ], className="analysis-header"),
         html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size = "xs"),]),
-        
 
-        # Seção 4: Gene Count Chart
+      
+        html.Div([
+                html.H3("2 - Gene and Metabolic Pathway Analysis", className="section-title"),
+                html.P(
+                    "Explore genes and metabolic pathways associated with compounds.",
+                    className="section-objective"
+                ),
+            ], className="section-header"),
+
+                    # Seção 4: Gene Count Chart
         html.Div(id="gene-count-chart", className="section"),
         html.Div([
             html.H5("Gene Count Associated with Priority Compounds", className="analysis-title"),
@@ -209,6 +230,54 @@ def get_results_layout():
             ),
         ], className="analysis-header"),
         html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
+
+
+        html.Div([
+        html.H3("3 - Interactions Between Entities (Samples, Compounds, and Genes)", className="section-title"),
+        html.P(
+            "Identify interaction patterns between samples, compounds, and genes.",
+            className="section-objective"
+        ),
+             ], className="section-header"),
+
+        html.Div([
+        html.H3("4 - Interaction-Based Rankings", className="section-title"),
+        html.P(
+            "Prioritize samples or compounds based on specific interactions.",
+            className="section-objective"
+        ),
+            ], className="section-header"),
+
+        html.Div([
+        html.H3("5 - Heatmaps and Clustering", className="section-title"),
+        html.P(
+            "Explore complex relationships using heatmap and dendrogram visualizations.",
+            className="section-objective"
+        ),
+             ], className="section-header"),
+
+        html.Div([
+        html.H3("6 - Intersection and Group Exploration", className="section-title"),
+        html.P(
+            "Investigate overlap and grouping patterns among samples.",
+            className="section-objective"
+        ),
+            ], className="section-header"),
+
+
+        html.Div([
+        html.H3("7 - Toxicity Predictions", className="section-title"),
+        html.P(
+            "Visualize and understand toxicity predictions.",
+            className="section-objective"
+        ),
+             ], className="section-header"),
+             
+
+
+        
+            
+
         
 
                 # Seção 8: Scatter Plot of Samples vs Compounds
