@@ -1218,3 +1218,71 @@ def generate_gene_compound_network(network_data):
     )
 
     return fig
+
+
+#P18
+
+def plot_heatmap_faceted(df):
+    """
+    Gera um heatmap faceted para as categorias de toxicidade.
+
+    :param df: DataFrame com 'compoundname', 'value', 'label', 'category' e 'subcategoria'.
+    :return: Figura Plotly com facetas.
+    """
+    from plotly.subplots import make_subplots
+    import plotly.graph_objects as go
+
+    print("DEBUG: Inicializando a criação do gráfico de heatmap com facetas...")
+    print(f"DEBUG: DataFrame recebido:\n{df.head()}")
+
+    # Obter categorias únicas
+    categories = df['category'].unique()
+    print(f"DEBUG: Categorias identificadas: {categories}")
+
+    n_cols = len(categories)
+    if n_cols == 0:
+        raise ValueError("Nenhuma categoria disponível para plotagem.")
+
+    # Configurar subplots
+    fig = make_subplots(
+        rows=1, cols=n_cols,
+        shared_yaxes=False,
+        horizontal_spacing=0.05,
+        subplot_titles=categories
+    )
+
+    # Adicionar heatmaps
+    for i, category in enumerate(categories, start=1):
+        subset = df[df['category'] == category]
+        print(f"DEBUG: Subset para a categoria '{category}':\n{subset.head()}")
+
+        # Resolver duplicatas agrupando por 'compoundname' e 'subcategoria'
+        subset_grouped = subset.groupby(['compoundname', 'subcategoria'], as_index=False)['value'].mean()
+        print(f"DEBUG: Subset agrupado para a categoria '{category}':\n{subset_grouped.head()}")
+
+        # Criar pivot table para o heatmap
+        heatmap_data = subset_grouped.pivot(index='compoundname', columns='subcategoria', values='value')
+
+        if heatmap_data.empty:
+            print(f"WARNING: Nenhum dado disponível para a categoria '{category}'. Pulando faceta.")
+            continue
+
+        # Adicionar o heatmap ao subplot
+        heatmap = go.Heatmap(
+            z=heatmap_data.values,
+            x=heatmap_data.columns,
+            y=heatmap_data.index,
+            colorscale='Viridis',
+            colorbar=dict(title='Toxicity Score'),
+        )
+        fig.add_trace(heatmap, row=1, col=i)
+
+    # Layout
+    fig.update_layout(
+        height=600,
+        width=300 * n_cols,
+        title="Faceted Heatmap of Toxicity Predictions with Subcategories on X-axis",
+        template="simple_white",
+    )
+    print("DEBUG: Gráfico criado com sucesso!")
+    return fig

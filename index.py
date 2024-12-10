@@ -42,6 +42,8 @@ import callbacks.P14_sample_enzyme_activity_callbacks
 import callbacks.P15_sample_clustering_callbacks
 import callbacks.P16_sample_upset_callbacks
 import callbacks.P17_gene_compound_network_callbacks
+import callbacks.p18_heatmap_faceted_callbacks
+
 
 # Importação da aplicação deve vir depois dos callbacks
 from app import app

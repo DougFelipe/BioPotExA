@@ -454,3 +454,100 @@ def prepare_gene_compound_network_data(stored_data):
 
 
     return network_df
+
+
+#P18
+# utils/data_processing.py
+# utils/data_processing.py
+
+def get_merged_toxcsm_data(input_data):
+    """
+    Realiza o merge do input_data com o banco ToxCSM.
+
+    :param input_data: Dados brutos armazenados no `stored-data`.
+    :return: DataFrame processado com as colunas de `value_` e `label_`.
+    """
+    print("DEBUG: Iniciando o merge com o banco ToxCSM...")
+    
+    # Verifica se os dados de entrada estão disponíveis
+    if not input_data:
+        print("WARNING: Nenhum dado fornecido para o merge.")
+        return pd.DataFrame()  # Retorna um DataFrame vazio
+
+    # Converte para DataFrame
+    input_df = pd.DataFrame(input_data)
+    print(f"DEBUG: DataFrame inicial:\n{input_df.head()}")
+
+    # Primeiro merge com a base principal
+    merged_df = merge_input_with_database(input_df)
+    if merged_df.empty:
+        print("WARNING: Merge inicial com a base principal resultou em um DataFrame vazio.")
+        return pd.DataFrame()
+
+    # Segundo merge com o ToxCSM
+    final_merged_df = merge_with_toxcsm(merged_df)
+    if final_merged_df.empty:
+        print("WARNING: Merge com o banco ToxCSM resultou em um DataFrame vazio.")
+        return pd.DataFrame()
+
+    print(f"DEBUG: DataFrame final após o merge:\n{final_merged_df.head()}")
+    return final_merged_df
+
+
+# utils/data_processing.py
+
+def process_heatmap_data(df):
+    """
+    Processa os dados para gerar o heatmap de toxicidade com facetas.
+
+    :param df: DataFrame de entrada com colunas de 'value_' e 'label_'.
+    :return: DataFrame transformado com as categorias e valores necessários.
+    """
+    print("DEBUG: Inicializando o processamento de dados para o heatmap...")
+    print(f"DEBUG: DataFrame recebido:\n{df.head()}")
+
+    # Remover colunas desnecessárias
+    columns_to_drop = ['SMILES', 'cpd', 'ChEBI']
+    df = df.drop(columns=columns_to_drop, errors='ignore')
+    print(f"DEBUG: DataFrame após remoção de colunas {columns_to_drop}:\n{df.head()}")
+
+    # Selecionar colunas de valores e labels
+    value_columns = [col for col in df.columns if col.startswith('value_')]
+    label_columns = [col for col in df.columns if col.startswith('label_')]
+    print(f"DEBUG: Colunas de valores: {value_columns}")
+    print(f"DEBUG: Colunas de labels: {label_columns}")
+
+    # Mapear as categorias principais
+    category_mapping = {
+        'NR': 'Nuclear Response',
+        'SR': 'Stress Response',
+        'Gen': 'Genomic',
+        'Env': 'Environmental',
+        'Org': 'Organic',
+    }
+
+    # Transformar os dados
+    heatmap_data = []
+    for value_col, label_col in zip(value_columns, label_columns):
+        # Extrair a subcategoria
+        subcategoria = value_col.split('_', 1)[1]  # NR_AR, SR_ARE, etc.
+        category_prefix = subcategoria.split('_')[0]  # NR, SR, etc.
+        mapped_category = category_mapping.get(category_prefix, None)
+
+        if mapped_category:
+            print(f"DEBUG: Processando '{value_col}' e '{label_col}' para a categoria '{mapped_category}'")
+            df_subset = df[['compoundname', value_col, label_col]].rename(
+                columns={value_col: 'value', label_col: 'label'}
+            )
+            df_subset['category'] = mapped_category
+            df_subset['subcategoria'] = subcategoria  # Adicionar a subcategoria
+            heatmap_data.append(df_subset)
+
+    if not heatmap_data:
+        print("WARNING: Nenhuma coluna correspondente às categorias mapeadas foi encontrada!")
+        raise ValueError("Nenhuma coluna válida foi processada para o heatmap.")
+
+    # Combinar os dados transformados
+    result_df = pd.concat(heatmap_data, ignore_index=True)
+    print(f"DEBUG: DataFrame final para o heatmap:\n{result_df.head()}")
+    return result_df
