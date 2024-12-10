@@ -131,9 +131,28 @@ def get_dataAnalysis_page():
                         n_clicks=0,
                         className='view-results-style',
                         style={'display': 'none'}  # Inicialmente oculto
+                    ),
+                    # Texto "Disclaimer for Citation" abaixo do botão de Submit
+                    html.Div(
+                        className='citation-disclaimer-container',
+                        children=[
+                            html.H4('Disclaimer for Citation', className='publication-subtitle'),
+                            html.P(
+                                "If you use BioPExA in your research, please cite the following publication:",
+                                className='publication-text'
+                            ),
+                            html.Blockquote(
+                                """
+                                Author(s). "BioPExA: A Bioinformatics Tool for Exploring Bioremediation Potential". 
+                                Journal of Environmental Research and Biotechnology, Year. DOI:xxxx/xxxxxx
+                                """,
+                                className='citation-text'
+                            )
+                        ]
                     )
                 ]
             ),
+
 
             # Título "Related Publications"
             html.Div([
@@ -147,37 +166,39 @@ def get_dataAnalysis_page():
                 className='upload-process-card-style',
                 children=[
                     html.Div([
-                        html.H4('Disclaimer for Citation', className='publication-subtitle'),
-                        html.P(
-                            "If you use BioPExA in your research, please cite the following publication:",
-                            className='publication-text'
-                        ),
-                        html.Blockquote(
-                            """
-                            Author(s). "BioPExA: A Bioinformatics Tool for Exploring Bioremediation Potential". 
-                            Journal of Environmental Research and Biotechnology, Year. DOI:xxxx/xxxxxx
-                            """,
-                            className='citation-text'
-                        )
                     ], className='citation-container'),
 
-                    html.Div([
-                        html.H4('Related Articles', className='publication-subtitle'),
-                        html.Ul([
-                            html.Li(
-                                "Author(s). 'Integration of Functional Genomics for Pollutant Degradation Analysis'. "
-                                "Environmental Bioinformatics Journal, Year."
-                            ),
-                            html.Li(
-                                "Author(s). 'Advances in Metagenomic Analysis for Bioremediation'. "
-                                "Biotechnology Progress Journal, Year."
-                            ),
-                            html.Li(
-                                "Author(s). 'Functional Genomics and Bioremediation Potential Assessment'. "
-                                "Proceedings of the Biotechnology Conference, Year. *Winner of Best Oral Presentation Award*"
-                            )
-                        ], className='related-articles-list')
-                    ])
+            html.Div([
+                html.Ul([
+                    html.Li([
+                        html.Span("Freitas, Júlia Firme; Lima Silva, Douglas Felipe de; Castro, Jenielly Noronha Ferreira; Agnez-Lima, Lucymara Fassarella. "),
+                        html.Span("Genomic and phenotypic characterization of novel Ochrobactrum species isolated from Brazilian oil reservoirs: Genomic diversity and bioremediation potential. ", className="article-title"),
+                        html.Span("Process Biochemistry, Volume 149, Pages 74-84, 2025. "),
+                        html.A("Read more",
+                            href="https://www.sciencedirect.com/science/article/pii/S1359511324003970",
+                            target="_blank", className="related-article-link")
+                    ]),
+                                html.Hr(className="my-2"),
+
+                    html.Li([
+                        html.Span("Freitas, Júlia Firme; Silva, Douglas Felipe de Lima; Silva, Beatriz Soares; Castro, Jenielly Noronha Ferreira; Felipe, Marcus Bruno Mendonça Chaves; Silva-Portela, Renata Cláudia Brito; Minnicelli, Carolina Farah; Agnez-Lima, Lucymara Fassarella. "),
+                        html.Span("Genomic and phenotypic features of Acinetobacter baumannii isolated from oil reservoirs reveal a novel subspecies specialized in degrading hazardous hydrocarbons. ", className="article-title"),
+                        html.Span("Microbiological Research, Volume 273, 127420, August 2023. "),
+                        html.A("Read more",
+                            href="https://doi.org/10.1016/j.micres.2023.127420",
+                            target="_blank", className="related-article-link")
+                    ]),
+                                html.Hr(className="my-2"),
+
+                    html.Li([
+                        html.Span("Silva, Douglas Felipe de Lima; Agnez-Lima, Lucymara Fassarella. "),
+                        html.Span("MicroBioReToxiC (MicroBRTC) - A bioinformatics pipeline for analyzing the bioremediation potential of environmental pollutants in microorganisms. ", className="article-title"),
+                        html.Span("Presented at the XXIV Encontro de Genética do Nordeste (XXIV ENGENE), 2023. *Winner of Oral Presentation Award*. "),
+                    ]),
+                ], className='related-articles-list')
+            ])
+
+
                 ]
             ),
         ]),

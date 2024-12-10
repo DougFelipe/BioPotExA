@@ -917,3 +917,32 @@ body, html {
     color: #0056b3;
 }
 
+
+
+.related-articles-list {
+    list-style-type: none; /* Remove o ponto */
+    font-size: 16px;
+    color: #6c757d;
+    padding-left: 20px;
+    line-height: 1.8;
+}
+
+.related-articles-list li {
+    margin-bottom: 1.5em; /* Espaçamento entre os itens da lista */
+}
+
+.article-title {
+    font-weight: bold; /* Makes the title bold */
+    color: #343a40; /* Slightly darker color for emphasis */
+}
+
+.related-article-link {
+    color: #007BFF;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.related-article-link:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
