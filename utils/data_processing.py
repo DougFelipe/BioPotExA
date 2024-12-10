@@ -503,19 +503,14 @@ def process_heatmap_data(df):
     :param df: DataFrame de entrada com colunas de 'value_' e 'label_'.
     :return: DataFrame transformado com as categorias e valores necessários.
     """
-    print("DEBUG: Inicializando o processamento de dados para o heatmap...")
-    print(f"DEBUG: DataFrame recebido:\n{df.head()}")
 
     # Remover colunas desnecessárias
     columns_to_drop = ['SMILES', 'cpd', 'ChEBI']
     df = df.drop(columns=columns_to_drop, errors='ignore')
-    print(f"DEBUG: DataFrame após remoção de colunas {columns_to_drop}:\n{df.head()}")
 
     # Selecionar colunas de valores e labels
     value_columns = [col for col in df.columns if col.startswith('value_')]
     label_columns = [col for col in df.columns if col.startswith('label_')]
-    print(f"DEBUG: Colunas de valores: {value_columns}")
-    print(f"DEBUG: Colunas de labels: {label_columns}")
 
     # Mapear as categorias principais
     category_mapping = {
@@ -535,7 +530,6 @@ def process_heatmap_data(df):
         mapped_category = category_mapping.get(category_prefix, None)
 
         if mapped_category:
-            print(f"DEBUG: Processando '{value_col}' e '{label_col}' para a categoria '{mapped_category}'")
             df_subset = df[['compoundname', value_col, label_col]].rename(
                 columns={value_col: 'value', label_col: 'label'}
             )
@@ -544,10 +538,8 @@ def process_heatmap_data(df):
             heatmap_data.append(df_subset)
 
     if not heatmap_data:
-        print("WARNING: Nenhuma coluna correspondente às categorias mapeadas foi encontrada!")
         raise ValueError("Nenhuma coluna válida foi processada para o heatmap.")
 
     # Combinar os dados transformados
     result_df = pd.concat(heatmap_data, ignore_index=True)
-    print(f"DEBUG: DataFrame final para o heatmap:\n{result_df.head()}")
     return result_df

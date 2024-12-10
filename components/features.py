@@ -47,7 +47,7 @@ def get_features_layout():
                         "Each result provides detailed information and actionable data to support your research objectives.",
                         className="features-text"
                     ),
-                            # Section 1: Results Table (ToxCSM)
+                            # Section 1: Main Results Table
                     html.Div([
                         html.H5("Main Results Table", className="analysis-title"),
                         html.P(

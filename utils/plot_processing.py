@@ -1224,7 +1224,7 @@ def generate_gene_compound_network(network_data):
 
 def plot_heatmap_faceted(df):
     """
-    Gera um heatmap faceted para as categorias de toxicidade.
+    Gera um heatmap faceted para as categorias de toxicidade com uma única legenda compartilhada.
 
     :param df: DataFrame com 'compoundname', 'value', 'label', 'category' e 'subcategoria'.
     :return: Figura Plotly com facetas.
@@ -1233,7 +1233,6 @@ def plot_heatmap_faceted(df):
     import plotly.graph_objects as go
 
     print("DEBUG: Inicializando a criação do gráfico de heatmap com facetas...")
-    print(f"DEBUG: DataFrame recebido:\n{df.head()}")
 
     # Obter categorias únicas
     categories = df['category'].unique()
@@ -1243,10 +1242,10 @@ def plot_heatmap_faceted(df):
     if n_cols == 0:
         raise ValueError("Nenhuma categoria disponível para plotagem.")
 
-    # Configurar subplots
+    # Configurar subplots com eixos Y compartilhados e uma única legenda
     fig = make_subplots(
         rows=1, cols=n_cols,
-        shared_yaxes=False,
+        shared_yaxes=True,  # Compartilhar o eixo Y entre as facetas
         horizontal_spacing=0.05,
         subplot_titles=categories
     )
@@ -1267,22 +1266,37 @@ def plot_heatmap_faceted(df):
             print(f"WARNING: Nenhum dado disponível para a categoria '{category}'. Pulando faceta.")
             continue
 
-        # Adicionar o heatmap ao subplot
+        # Adicionar o heatmap ao subplot (desabilitar legenda individual)
         heatmap = go.Heatmap(
             z=heatmap_data.values,
             x=heatmap_data.columns,
             y=heatmap_data.index,
-            colorscale='Viridis',
-            colorbar=dict(title='Toxicity Score'),
+            colorscale="reds",
+            showscale=(i == 1),  # Mostra a escala de cores apenas na primeira faceta
+            colorbar=dict(
+                title='Toxicity Score',  # Título global da escala
+                len=0.8,  # Altura da legenda
+                x=1.02  # Posição no lado direito
+            ) if i == 1 else None  # Configura a legenda apenas para a primeira faceta
         )
         fig.add_trace(heatmap, row=1, col=i)
 
-    # Layout
+        # Atualizar os eixos X
+        fig.update_xaxes(
+            tickangle=45,  # Rotação de 45 graus nos rótulos
+            automargin=True,  # Ajustar margens para evitar sobreposição
+            row=1, col=i
+        )
+
+    # Layout global
     fig.update_layout(
         height=600,
-        width=300 * n_cols,
+        width=300 * n_cols,  # Largura proporcional ao número de facetas
         title="Faceted Heatmap of Toxicity Predictions with Subcategories on X-axis",
         template="simple_white",
+        yaxis_title="Compound Names",  # Define o título global do eixo Y
+        margin=dict(l=100, r=50, t=80, b=100)  # Ajusta as margens
     )
+
     print("DEBUG: Gráfico criado com sucesso!")
     return fig
