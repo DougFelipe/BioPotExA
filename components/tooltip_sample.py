@@ -7,7 +7,7 @@ def input_format_tooltip():
     return html.Div(
         className="tooltip-container",
         children=[
-            html.Span("your dataset", className="tooltip-text"),
+            html.Span("your dataset in this format", className="tooltip-text"),
             html.Div(
                 className="tooltip-content",
                 children=[

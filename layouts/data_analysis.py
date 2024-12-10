@@ -1,5 +1,5 @@
 # Importações necessárias para a aplicação Dash e manipulação de dados
-from dash import dcc, html
+from dash import Input, Output, callback, dash,dcc, html
 from dash.dependencies import Input, Output, State
 import dash_bootstrap_components as dbc
 import pandas as pd  # Importar para carregar o sample_data.txt
@@ -9,6 +9,8 @@ from components.step_guide import create_step_card  # Importa a função do comp
 from components.tooltip_sample import input_format_tooltip
 from components.download_button import get_sample_data_button
 from layouts.results import get_results_layout  # Importa o novo layout de resultados
+
+
 
 # Função para criar a página de Análise de Dados
 # Função para criar a página de Análise de Dados
@@ -106,7 +108,6 @@ def get_dataAnalysis_page():
                 html.Hr(className="my-2"),
             ], className='title-container'),
 
-            # Seção de Upload e Botões
             html.Div(
                 id='upload-process-card',
                 className='upload-process-card-style',
@@ -114,7 +115,10 @@ def get_dataAnalysis_page():
                     html.Div(  # Texto explicativo do passo 1
                         className='upload-explanatory-text',
                         children=[
-                            html.P("Submit your file or click the button to load the example dataset.", className='step-explanation')
+                            html.P(
+                                "Submit your file or click the button to load the example dataset.",
+                                className='step-explanation'
+                            )
                         ]
                     ),
                     html.Div(  # Container para alinhar os botões lado a lado
@@ -125,7 +129,7 @@ def get_dataAnalysis_page():
                                 children=html.Div(['Drag and Drop or ', html.A('Select a File')]),
                                 className='upload-button-style'
                             ),
-                            html.Span('Or', className='upload-or-text'),  # Texto "Or" entre os botões
+                            html.Span('Or', className='upload-or-text'),
                             html.Button(
                                 'Upload Sample Data',
                                 id='see-example-data',
@@ -134,18 +138,52 @@ def get_dataAnalysis_page():
                             )
                         ]
                     ),
-                    html.Div(id='alert-container'),
+                    html.Div(  # Alerta para o botão "Upload"
+                        id='alert-container',
+                        className='alert-container'
+                    ),
                     html.Div(  # Texto explicativo do passo 2
                         className='process-explanatory-text',
                         children=[
-                            html.P("Click to submit your data for processing and results presentation.", className='step-explanation')
+                            html.P(
+                                "Click to submit your data for processing and results presentation.",
+                                className='step-explanation'
+                            )
                         ]
                     ),
-                    html.Button(
-                        'Click to Submit',
-                        id='process-data',
-                        n_clicks=0,
-                        className='process-button-style'
+                    html.Div(  # Botão "Click to Submit" e barra de progresso
+                        children=[
+                            html.Button(
+                                'Click to Submit',
+                                id='process-data',
+                                n_clicks=0,
+                                className='process-button-style'
+                            ),
+                            html.Div(
+                                [
+                                    dcc.Interval(
+                                        id="progress-interval",
+                                        n_intervals=0,
+                                        interval=1000,  # Intervalo de 1 segundo
+                                        disabled=True  # Inicialmente desabilitado
+                                    ),
+                                    dbc.Progress(
+                                        id="progress-bar",
+                                        value=0,
+                                        striped=True,
+                                        animated=True,
+                                        className="mt-3"
+                                    ),
+                                ],
+                                id="progress-container",
+                                style={"display": "none"}  # Inicialmente oculto
+                            ),
+                            html.Div(  # Contêiner do alerta de submissão
+                                id='submit-alert-container',
+                                className='alert-container',  # Classe CSS para estilizar o alerta
+                            ),
+                        ],
+                        className='button-progress-container'
                     ),
                     html.Button(
                         'View Results',
@@ -154,8 +192,7 @@ def get_dataAnalysis_page():
                         className='view-results-style',
                         style={'display': 'none'}  # Inicialmente oculto
                     ),
-                    # Texto "Disclaimer for Citation" abaixo do botão de Submit
-                    html.Div(
+                    html.Div(  # Disclaimer para citação
                         className='citation-disclaimer-container',
                         children=[
                             html.H4('Disclaimer for Citation', className='publication-subtitle'),
@@ -174,6 +211,7 @@ def get_dataAnalysis_page():
                     )
                 ]
             ),
+
 
 
             # Título "Related Publications"
