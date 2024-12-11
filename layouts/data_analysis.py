@@ -151,14 +151,17 @@ def get_dataAnalysis_page():
                             )
                         ]
                     ),
-                    html.Div(  # Botão "Click to Submit" e barra de progresso
+                    html.Div(  # Contêiner principal para o botão, barra de progresso e alerta
                         children=[
+                            # Botão "Click to Submit"
                             html.Button(
                                 'Click to Submit',
                                 id='process-data',
                                 n_clicks=0,
                                 className='process-button-style'
                             ),
+
+                            # Barra de progresso (inicialmente oculta)
                             html.Div(
                                 [
                                     dcc.Interval(
@@ -172,19 +175,23 @@ def get_dataAnalysis_page():
                                         value=0,
                                         striped=True,
                                         animated=True,
-                                        className="mt-3"
+                                        className="mt-3"  # Adiciona margem superior
                                     ),
                                 ],
                                 id="progress-container",
                                 style={"display": "none"}  # Inicialmente oculto
                             ),
-                            html.Div(  # Contêiner do alerta de submissão
+
+                            # Alerta de submissão (inicialmente vazio)
+                            html.Div(
                                 id='submit-alert-container',
-                                className='alert-container',  # Classe CSS para estilizar o alerta
+                                className='alert-container mt-3',  # Classe CSS com margem
                             ),
                         ],
-                        className='button-progress-container'
+                        className='button-progress-container'  # Classe que organiza os elementos
                     ),
+
+
                     html.Button(
                         'View Results',
                         id='view-results',

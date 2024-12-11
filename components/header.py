@@ -4,7 +4,7 @@ from dash import html
 def Header():
     return html.Header(className='main-header', children=[
         html.Div(className='header-left', children=[
-            html.A('BioPExA', href='/about', className='main-title')
+            html.A('BioRemPP', href='/about', className='main-title')
         ]),
         html.Div(className='header-right', children=[
             html.A("Help", href="/help", className="header-link"),

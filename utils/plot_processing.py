@@ -1232,11 +1232,9 @@ def plot_heatmap_faceted(df):
     from plotly.subplots import make_subplots
     import plotly.graph_objects as go
 
-    print("DEBUG: Inicializando a criação do gráfico de heatmap com facetas...")
 
     # Obter categorias únicas
     categories = df['category'].unique()
-    print(f"DEBUG: Categorias identificadas: {categories}")
 
     n_cols = len(categories)
     if n_cols == 0:
@@ -1253,17 +1251,14 @@ def plot_heatmap_faceted(df):
     # Adicionar heatmaps
     for i, category in enumerate(categories, start=1):
         subset = df[df['category'] == category]
-        print(f"DEBUG: Subset para a categoria '{category}':\n{subset.head()}")
 
         # Resolver duplicatas agrupando por 'compoundname', 'subcategoria', e 'label'
         subset_grouped = subset.groupby(['compoundname', 'subcategoria', 'label'], as_index=False)['value'].mean()
-        print(f"DEBUG: Subset agrupado para a categoria '{category}':\n{subset_grouped.head()}")
 
         # Criar pivot table para o heatmap
         heatmap_data = subset_grouped.pivot(index='compoundname', columns='subcategoria', values='value')
 
         if heatmap_data.empty:
-            print(f"WARNING: Nenhum dado disponível para a categoria '{category}'. Pulando faceta.")
             continue
 
         # Criar matriz para o hover personalizado
@@ -1308,5 +1303,4 @@ def plot_heatmap_faceted(df):
         margin=dict(l=100, r=50, t=80, b=100)  # Ajusta as margens
     )
 
-    print("DEBUG: Gráfico criado com sucesso!")
     return fig
