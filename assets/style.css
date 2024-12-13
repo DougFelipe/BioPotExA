@@ -709,8 +709,6 @@ body, html {
 
 /* Ajusta o texto ao lado do card */
 .step-text {
-    border: solid 2px #b6e9be;
-    border-radius: 5px ;
     padding: 10px;
     flex: 1; /* Faz o texto ocupar o espaço restante */
     font-size: 16px; /* Tamanho da fonte do texto */
@@ -1111,4 +1109,56 @@ body, html {
     color: #0056b3; /* Azul escuro para destaque */
     margin-top: 20px; /* Espaçamento acima do título */
     margin-bottom: 10px; /* Espaçamento abaixo do título */
+}
+
+/* Container para alinhar e organizar os elementos: barra de progresso, botão e alerta */
+/* Corrige o alinhamento geral no contêiner */
+.button-progress-container {
+    display: flex;
+    flex-direction: column; /* Empilha os elementos verticalmente */
+    align-items: center; /* Centraliza os elementos no eixo horizontal */
+    width: 100%; /* Garante que o contêiner ocupe toda a largura */
+    gap: 10px; /* Espaçamento entre os elementos */
+}
+
+
+/* Classe para adicionar margem superior consistente */
+.mt-3 {
+    margin-top: 10px;
+}
+
+/* Estilização do contêiner do alerta */
+.alert-container {
+    width: 100%; /* Alinhamento consistente */
+    text-align: center;
+}
+
+/* Ajusta a barra de progresso para centralizar */
+#progress-bar {
+    width: 80%; /* Largura relativa para maior responsividade */
+    max-width: 600px; /* Define um limite máximo para a largura */
+    margin: auto; /* Centraliza a barra de progresso horizontalmente */
+    margin-top: 5px; /* Espaçamento entre a barra e os outros elementos */
+}
+
+/* Ajusta o contêiner da barra de progresso */
+#progress-container {
+    width: 100%; /* Garante largura total para o contêiner */
+    text-align: center; /* Centraliza o conteúdo do contêiner */
+    margin-bottom: 10px; /* Espaçamento inferior */
+}
+
+/* Ajustes adicionais para responsividade */
+@media (max-width: 768px) {
+    .button-progress-container {
+        align-items: center; /* Centraliza os elementos em telas menores */
+    }
+
+    #progress-bar {
+        width: 90%; /* Ajusta a largura em telas menores */
+    }
+
+    .alert-container {
+        width: 90%; /* Reduz a largura para melhor adaptação */
+    }
 }

@@ -24,27 +24,23 @@ from utils.data_processing import merge_input_with_database_hadegDB, merge_with_
         Output('stored-data', 'data'),
         Output('process-data', 'disabled'),
         Output('alert-container', 'children'),
-        Output('submit-alert-container', 'children'),  # Alerta para submissão
         Output('page-state', 'data', allow_duplicate=True)
     ],
     [
         Input('upload-data', 'contents'),
-        Input('see-example-data', 'n_clicks'),
-        Input('process-data', 'n_clicks')  # Inclui o clique no botão "Click to Submit"
+        Input('see-example-data', 'n_clicks')
     ],
     [State('upload-data', 'filename')],
     prevent_initial_call=True
 )
-def handle_upload_or_example(contents, n_clicks_example, n_clicks_submit, filename):
+def handle_upload_or_example(contents, n_clicks_example, filename):
     ctx = dash.callback_context
 
     if not ctx.triggered:
         raise PreventUpdate
 
-    # Identifica qual botão foi clicado
     triggered_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
-    # Caso o botão "Upload Sample Data" seja clicado
     if triggered_id == 'see-example-data':
         try:
             example_data_path = 'data/sample_data.txt'
@@ -55,65 +51,52 @@ def handle_upload_or_example(contents, n_clicks_example, n_clicks_submit, filena
             if error:
                 return None, True, dbc.Alert(
                     f'Error processing example dataset: {error}', 
-                    color='danger',  
+                    color='danger', 
                     is_open=True, 
                     duration=4000
-                ), None, 'initial'
-            
+                ), 'initial'
+
             return (
                 df.to_dict('records'), 
-                False,  
+                False, 
                 dbc.Alert(
                     'Example dataset loaded successfully', 
                     color='success', 
                     is_open=True, 
                     duration=4000
-                ),
-                None,  # Nenhum alerta para submissão ainda
+                ), 
                 'loaded'
             )
         except Exception as e:
             return None, True, dbc.Alert(
                 f'Error loading example dataset: {str(e)}', 
-                color='danger',  
+                color='danger', 
                 is_open=True, 
                 duration=4000
-            ), None, 'initial'
+            ), 'initial'
 
-    # Caso o usuário faça o upload de um arquivo
     if triggered_id == 'upload-data':
         if contents:
             df, error = validate_and_process_input(contents, filename)
             if error:
                 return None, True, dbc.Alert(
                     error, 
-                    color='danger',  
+                    color='danger', 
                     is_open=True, 
                     duration=4000
-                ), None, 'initial'
+                ), 'initial'
 
             return (
                 df.to_dict('records'),
-                False,  
+                False, 
                 dbc.Alert(
                     'File uploaded and validated successfully', 
-                    color='success',  
+                    color='success', 
                     is_open=True, 
                     duration=4000
                 ), 
-                None,  # Nenhum alerta para submissão ainda
                 'loaded'
             )
-
-    # Caso o botão "Click to Submit" seja clicado
-    if triggered_id == 'process-data':
-        # Atualiza apenas o alerta de submissão
-        return dash.no_update, dash.no_update, dash.no_update, dbc.Alert(
-            'File submitted to processing',
-            color='info',
-            is_open=True,
-            duration=10000
-        ), dash.no_update
 
     raise PreventUpdate
 
@@ -282,8 +265,7 @@ def update_merged_toxcsm_table(stored_data):
     [
         Output('progress-bar', 'value'),
         Output('progress-bar', 'label'),
-        Output('progress-container', 'style'),  # Controla a exibição da barra de progresso
-        Output('progress-interval', 'disabled')  # Habilita ou desabilita o intervalo
+        Output('progress-interval', 'disabled'),  # Habilita ou desabilita o intervalo
     ],
     [
         Input('process-data', 'n_clicks'),
@@ -296,18 +278,31 @@ def update_progress(n_clicks_submit, n_intervals):
 
     # Se o botão "Click to Submit" for clicado
     if ctx.triggered_id == 'process-data':
-        # Mostra a barra de progresso e habilita o intervalo
-        return 0, "", {"display": "block"}, False
+        return 0, "", False
 
-    # Atualiza a barra de progresso com base nos intervalos
+    # Atualiza a barra com base nos intervalos
     if ctx.triggered_id == 'progress-interval':
-        progress = min(n_intervals * 10, 100)  # Aumenta 10% a cada intervalo (1 segundo)
+        progress = min(n_intervals * 10, 100)  # Incrementa 10% por segundo
 
-        # Quando o progresso atingir 100%, desabilita o intervalo
         if progress == 100:
-            return progress, "Processing Complete!", {"display": "block"}, True
+            return progress, "Processing Complete!", True  # Desabilita o intervalo
 
-        # Retorna o progresso e o rótulo
-        return progress, f"{progress}%", {"display": "block"}, False
+        return progress, f"{progress}%", False
 
+    raise PreventUpdate
+
+
+
+@callback(
+    Output('progress-container', 'style'),
+    [
+        Input('upload-data', 'contents'),
+        Input('see-example-data', 'n_clicks')
+    ],
+    prevent_initial_call=True
+)
+def show_progress_bar(contents, n_clicks_example):
+    if contents or n_clicks_example:
+        # Mostra a barra de progresso, mas ainda sem iniciar o progresso
+        return {"display": "block"}
     raise PreventUpdate

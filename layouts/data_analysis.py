@@ -151,45 +151,37 @@ def get_dataAnalysis_page():
                             )
                         ]
                     ),
-                    html.Div(  # Contêiner principal para o botão, barra de progresso e alerta
+                    html.Div(
+                        className='button-progress-container',  # Classe para alinhar o botão e a barra
                         children=[
-                            # Botão "Click to Submit"
                             html.Button(
                                 'Click to Submit',
                                 id='process-data',
                                 n_clicks=0,
                                 className='process-button-style'
                             ),
-
-                            # Barra de progresso (inicialmente oculta)
                             html.Div(
-                                [
+                                id="progress-container",
+                                children=[
                                     dcc.Interval(
                                         id="progress-interval",
                                         n_intervals=0,
-                                        interval=1000,  # Intervalo de 1 segundo
-                                        disabled=True  # Inicialmente desabilitado
+                                        interval=1000,
+                                        disabled=True  # Começa desabilitado
                                     ),
                                     dbc.Progress(
                                         id="progress-bar",
                                         value=0,
                                         striped=True,
                                         animated=True,
-                                        className="mt-3"  # Adiciona margem superior
-                                    ),
+                                    )
                                 ],
-                                id="progress-container",
                                 style={"display": "none"}  # Inicialmente oculto
                             ),
-
-                            # Alerta de submissão (inicialmente vazio)
-                            html.Div(
-                                id='submit-alert-container',
-                                className='alert-container mt-3',  # Classe CSS com margem
-                            ),
-                        ],
-                        className='button-progress-container'  # Classe que organiza os elementos
+                        ]
                     ),
+
+
 
 
                     html.Button(
