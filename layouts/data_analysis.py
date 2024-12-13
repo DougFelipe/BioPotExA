@@ -143,13 +143,7 @@ def get_dataAnalysis_page():
                         className='alert-container'
                     ),
                     html.Div(  # Texto explicativo do passo 2
-                        className='process-explanatory-text',
-                        children=[
-                            html.P(
-                                "Click to submit your data for processing and results presentation.",
-                                className='step-explanation'
-                            )
-                        ]
+                        html.Hr(className="my-2"),
                     ),
                     html.Div(
                         className='button-progress-container',  # Classe que organiza os elementos

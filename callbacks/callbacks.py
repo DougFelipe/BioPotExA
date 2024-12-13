@@ -60,11 +60,18 @@ def handle_upload_or_example(contents, n_clicks_example, filename):
                 df.to_dict('records'), 
                 False, 
                 dbc.Alert(
-                    'Example dataset loaded successfully', 
-                    color='success', 
-                    is_open=True, 
-                    duration=4000
-                ), 
+                    [
+                        "Example dataset loaded successfully",
+                        html.Br(),
+                        'Click "Click to Submit" to process the data',
+                        html.Br(),
+                        "Please wait until the progress is complete to view the results"
+                    ],
+                    color='success',
+                    is_open=True,
+                    dismissable=True  # Permite que o usuário feche o alerta manualmente
+                ),
+
                 'loaded'
             )
         except Exception as e:
