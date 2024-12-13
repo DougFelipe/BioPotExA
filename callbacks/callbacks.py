@@ -191,19 +191,41 @@ def toggle_graph_visibility(tab):
         return {'display': 'block'}
 
 
-@app.callback(
-    [Output('view-results', 'style', allow_duplicate=True), 
-     Output('process-data', 'style'), 
-     Output('page-state', 'data')],
-    [Input('process-data', 'n_clicks')],
-    [State('stored-data', 'data'), 
-     State('page-state', 'data')],
+@callback(
+    [
+        Output('progress-bar', 'value'),  # Atualiza o progresso
+        Output('progress-bar', 'label'),  # Atualiza o rótulo
+        Output('progress-interval', 'disabled'),  # Habilita ou desabilita o intervalo
+        Output('progress-container', 'style')  # Controla a exibição da barra
+    ],
+    [
+        Input('upload-data', 'contents'),
+        Input('see-example-data', 'n_clicks'),
+        Input('process-data', 'n_clicks'),
+        Input('progress-interval', 'n_intervals')
+    ],
     prevent_initial_call=True
 )
-def process_and_show_view_button(n_clicks, stored_data, current_state):
-    if n_clicks > 0 and stored_data and current_state == 'loaded':
-        return {'display': 'inline-block'}, {'display': 'none'}, 'processed'
-    return {'display': 'none'}, {'display': 'inline-block'}, current_state
+def handle_progress(contents, n_clicks_example, n_clicks_submit, n_intervals):
+    ctx = dash.callback_context
+    triggered_id = ctx.triggered_id
+
+    # Caso o usuário faça upload ou carregue o exemplo
+    if triggered_id in ['upload-data', 'see-example-data']:
+        return 0, "", True, {"display": "block", "textAlign": "center"}  # Mostra a barra, mas não inicia o progresso
+
+    # Caso o botão "Click to Submit" seja clicado
+    if triggered_id == 'process-data':
+        return 0, "", False, {"display": "block", "textAlign": "center"}  # Reseta e inicia o progresso
+
+    # Caso os intervalos estejam atualizando a barra
+    if triggered_id == 'progress-interval':
+        progress = min(n_intervals * 10, 100)  # Incrementa 10% por segundo
+        if progress == 100:
+            return progress, "Processing Complete!", True, {"display": "block", "textAlign": "center"}  # Finaliza
+        return progress, f"{progress}%", False, {"display": "block", "textAlign": "center"}  # Continua o progresso
+
+    raise PreventUpdate
 
 @app.callback(
     [Output('initial-content', 'style'), 
@@ -261,48 +283,4 @@ def update_merged_toxcsm_table(stored_data):
     return html.Div(table)
 
 
-@callback(
-    [
-        Output('progress-bar', 'value'),
-        Output('progress-bar', 'label'),
-        Output('progress-interval', 'disabled'),  # Habilita ou desabilita o intervalo
-    ],
-    [
-        Input('process-data', 'n_clicks'),
-        Input('progress-interval', 'n_intervals')
-    ],
-    prevent_initial_call=True
-)
-def update_progress(n_clicks_submit, n_intervals):
-    ctx = dash.callback_context
 
-    # Se o botão "Click to Submit" for clicado
-    if ctx.triggered_id == 'process-data':
-        return 0, "", False
-
-    # Atualiza a barra com base nos intervalos
-    if ctx.triggered_id == 'progress-interval':
-        progress = min(n_intervals * 10, 100)  # Incrementa 10% por segundo
-
-        if progress == 100:
-            return progress, "Processing Complete!", True  # Desabilita o intervalo
-
-        return progress, f"{progress}%", False
-
-    raise PreventUpdate
-
-
-
-@callback(
-    Output('progress-container', 'style'),
-    [
-        Input('upload-data', 'contents'),
-        Input('see-example-data', 'n_clicks')
-    ],
-    prevent_initial_call=True
-)
-def show_progress_bar(contents, n_clicks_example):
-    if contents or n_clicks_example:
-        # Mostra a barra de progresso, mas ainda sem iniciar o progresso
-        return {"display": "block"}
-    raise PreventUpdate

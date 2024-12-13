@@ -44,7 +44,7 @@ import callbacks.P16_sample_upset_callbacks
 import callbacks.P17_gene_compound_network_callbacks
 import callbacks.p18_heatmap_faceted_callbacks
 
-from callbacks.callbacks import update_progress, show_progress_bar
+from callbacks.callbacks import  handle_progress
 
 # Importação da aplicação deve vir depois dos callbacks
 from app import app
