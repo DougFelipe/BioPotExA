@@ -239,6 +239,30 @@ def display_results(n_clicks, current_state):
         return {'display': 'none'}, {'display': 'block'}
     return {'display': 'block'}, {'display': 'none'}
 
+@callback(
+    [
+        Output('view-results', 'style'),  # Controle de visibilidade do botão "View Results"
+        Output('process-data', 'style'),  # Controle de visibilidade do botão "Click to Submit"
+        Output('page-state', 'data')
+    ],
+    [Input('process-data', 'n_clicks')],
+    [State('stored-data', 'data'), State('page-state', 'data')],
+    prevent_initial_call=True
+)
+def process_and_toggle_elements(n_clicks, stored_data, current_state):
+    if n_clicks > 0 and stored_data and current_state == 'loaded':
+        return (
+            {'display': 'inline-block'},  # Mostra "View Results"
+            {'display': 'none'},  # Oculta "Click to Submit"
+            'processed'  # Atualiza o estado para "processed"
+        )
+    return (
+        {'display': 'none'},  # Oculta "View Results"
+        {'display': 'inline-block'},  # Mostra "Click to Submit"
+        current_state
+    )
+
+
 
 @app.callback(
     Output('output-merge-hadeg-table', 'children'),
