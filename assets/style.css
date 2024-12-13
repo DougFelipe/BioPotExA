@@ -1113,12 +1113,27 @@ body, html {
 
 /* Container para alinhar e organizar os elementos: barra de progresso, botão e alerta */
 /* Corrige o alinhamento geral no contêiner */
+/* Contêiner principal para os botões e barra */
 .button-progress-container {
     display: flex;
-    flex-direction: column; /* Empilha os elementos verticalmente */
-    align-items: center; /* Centraliza os elementos no eixo horizontal */
-    width: 100%; /* Garante que o contêiner ocupe toda a largura */
-    gap: 10px; /* Espaçamento entre os elementos */
+    flex-direction: column; /* Empilha verticalmente */
+    align-items: center; /* Centraliza os itens no contêiner */
+    gap: 15px; /* Espaçamento consistente entre os elementos */
+    width: 100%; /* Largura total */
+}
+
+/* Barra de progresso */
+#progress-bar {
+    width: 80%; /* Largura relativa para responsividade */
+    max-width: 600px; /* Largura máxima */
+    margin: 0 auto; /* Centraliza horizontalmente */
+}
+
+/* Contêiner da barra */
+#progress-container {
+    width: 100%; /* Largura total */
+    text-align: center; /* Centraliza conteúdo */
+    margin-top: 10px; /* Espaço entre a barra e o botão */
 }
 
 
@@ -1133,20 +1148,6 @@ body, html {
     text-align: center;
 }
 
-/* Ajusta a barra de progresso para centralizar */
-#progress-bar {
-    width: 80%; /* Largura relativa para maior responsividade */
-    max-width: 600px; /* Define um limite máximo para a largura */
-    margin: auto; /* Centraliza a barra de progresso horizontalmente */
-    margin-top: 5px; /* Espaçamento entre a barra e os outros elementos */
-}
-
-/* Ajusta o contêiner da barra de progresso */
-#progress-container {
-    width: 100%; /* Garante largura total para o contêiner */
-    text-align: center; /* Centraliza o conteúdo do contêiner */
-    margin-bottom: 10px; /* Espaçamento inferior */
-}
 
 /* Ajustes adicionais para responsividade */
 @media (max-width: 768px) {

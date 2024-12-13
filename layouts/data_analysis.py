@@ -152,21 +152,33 @@ def get_dataAnalysis_page():
                         ]
                     ),
                     html.Div(
-                        className='button-progress-container',  # Classe para alinhar o botão e a barra
+                        className='button-progress-container',  # Classe que organiza os elementos
                         children=[
+                            # Botão "Click to Submit"
                             html.Button(
                                 'Click to Submit',
                                 id='process-data',
                                 n_clicks=0,
                                 className='process-button-style'
                             ),
+                            
+                            # Botão "View Results" (Inicialmente oculto)
+                            html.Button(
+                                'View Results',
+                                id='view-results',
+                                n_clicks=0,
+                                className='view-results-style',
+                                style={'display': 'none'}  # Inicialmente oculto
+                            ),
+
+                            # Barra de Progresso (Sempre abaixo dos botões)
                             html.Div(
                                 id="progress-container",
                                 children=[
                                     dcc.Interval(
                                         id="progress-interval",
                                         n_intervals=0,
-                                        interval=1000,
+                                        interval=1000,  # Intervalo de 1 segundo
                                         disabled=True  # Começa desabilitado
                                     ),
                                     dbc.Progress(
@@ -180,8 +192,6 @@ def get_dataAnalysis_page():
                             ),
                         ]
                     ),
-
-
 
 
                     html.Button(
