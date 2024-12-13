@@ -1071,39 +1071,25 @@ def render_upsetplot(stored_data, selected_samples):
 
     # Converter stored_data para DataFrame
     input_df = pd.DataFrame(stored_data)
-    print("DEBUG: Dados armazenados carregados no DataFrame:")
-    print(input_df.head())
 
     # Mesclar os dados do input com o banco de dados
     merged_data = merge_input_with_database(input_df)
-    print("DEBUG: Dados após merge com o database:")
-    print(merged_data.head())
 
     # Filtrar pelas amostras selecionadas
     filtered_df = merged_data[merged_data['sample'].isin(selected_samples)]
-    print("DEBUG: Dados filtrados pelas amostras selecionadas:")
-    print(filtered_df.head())
 
     # Garantir apenas valores únicos de `ko` para cada `sample`
     filtered_df = filtered_df[['sample', 'ko']].drop_duplicates()
-    print("DEBUG: Dados após remoção de duplicatas (únicos por sample e KO):")
-    print(filtered_df.head())
 
     # Preparar os memberships para o UpSet Plot
     memberships = filtered_df.groupby('ko')['sample'].apply(list)
     memberships = memberships.apply(lambda x: list(set(x)))  # Remover duplicatas
-    print("DEBUG: Memberships gerados:")
-    print(memberships.head())
 
     # Converter os memberships em dados do UpSet Plot
     upset_data = from_memberships(memberships)
-    print("DEBUG: Dados do UpSet Plot gerados:")
-    print(upset_data)
 
     # Resolver duplicatas no índice
     upset_data = upset_data.groupby(upset_data.index).sum()
-    print("DEBUG: Dados após consolidação:")
-    print(upset_data)
 
     # Validar e ajustar o índice dinamicamente usando os nomes originais das amostras
     try:
@@ -1112,15 +1098,11 @@ def render_upsetplot(stored_data, selected_samples):
 
         # Mapear nomes das amostras originais para os níveis
         index_names = selected_samples[:num_levels]  # Usar os nomes originais das amostras selecionadas
-        print(f"DEBUG: Nomes do índice gerados dinamicamente: {index_names}")
 
         # Ajustar o índice para usar os nomes das amostras
         new_index = pd.MultiIndex.from_tuples(upset_data.index, names=index_names)
         upset_data.index = new_index
-        print("DEBUG: Índice ajustado para MultiIndex:")
-        print(upset_data.index)
     except Exception as e:
-        print(f"DEBUG: Falha ao criar MultiIndex: {e}")
         raise ValueError("Falha ao criar MultiIndex: dados malformados ou inconsistentes.")
 
     # Gerar o gráfico
@@ -1133,7 +1115,6 @@ def render_upsetplot(stored_data, selected_samples):
 
     # Converter gráfico para base64
     image_data = base64.b64encode(buffer.read()).decode('utf-8')
-    print("DEBUG: Gráfico gerado com sucesso.")
     return f"data:image/png;base64,{image_data}"
 
 #P17
@@ -1157,7 +1138,6 @@ def generate_gene_compound_network(network_data):
         G.add_node(row['compoundname'], type='compound')
         G.add_edge(row['genesymbol'], row['compoundname'])
 
-    print(f"DEBUG: Número de nós: {G.number_of_nodes()}, Número de arestas: {G.number_of_edges()}")
 
     # Posição dos nós (usando spring layout para distribuição)
     pos = nx.spring_layout(G, seed=42)

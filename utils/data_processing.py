@@ -406,18 +406,14 @@ def prepare_upsetplot_data(merged_data, selected_samples):
     :param selected_samples: Lista de amostras selecionadas.
     :return: DataFrame contendo as amostras e seus respectivos KOs únicos.
     """
-    print("DEBUG: Dados mesclados carregados no DataFrame:")
     print(merged_data.head())
 
     # Filtrar pelas amostras selecionadas
     filtered_df = merged_data[merged_data['sample'].isin(selected_samples)]
-    print("DEBUG: Dados filtrados pelas amostras selecionadas:")
     print(filtered_df.head())
 
     # Considerar apenas KOs únicos por amostra
     unique_ko_df = filtered_df.drop_duplicates(subset=['sample', 'ko'])
-    print("DEBUG: Dados com valores únicos de KO por amostra:")
-    print(unique_ko_df.head())
 
     return unique_ko_df
 
@@ -467,30 +463,24 @@ def get_merged_toxcsm_data(input_data):
     :param input_data: Dados brutos armazenados no `stored-data`.
     :return: DataFrame processado com as colunas de `value_` e `label_`.
     """
-    print("DEBUG: Iniciando o merge com o banco ToxCSM...")
     
     # Verifica se os dados de entrada estão disponíveis
     if not input_data:
-        print("WARNING: Nenhum dado fornecido para o merge.")
         return pd.DataFrame()  # Retorna um DataFrame vazio
 
     # Converte para DataFrame
     input_df = pd.DataFrame(input_data)
-    print(f"DEBUG: DataFrame inicial:\n{input_df.head()}")
 
     # Primeiro merge com a base principal
     merged_df = merge_input_with_database(input_df)
     if merged_df.empty:
-        print("WARNING: Merge inicial com a base principal resultou em um DataFrame vazio.")
         return pd.DataFrame()
 
     # Segundo merge com o ToxCSM
     final_merged_df = merge_with_toxcsm(merged_df)
     if final_merged_df.empty:
-        print("WARNING: Merge com o banco ToxCSM resultou em um DataFrame vazio.")
         return pd.DataFrame()
 
-    print(f"DEBUG: DataFrame final após o merge:\n{final_merged_df.head()}")
     return final_merged_df
 
 

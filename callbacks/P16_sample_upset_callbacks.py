@@ -52,5 +52,4 @@ def update_upsetplot(selected_samples, stored_data):
     # Renderizar o gráfico UpSet Plot com os dados mesclados
     image_src = render_upsetplot(merged_data.to_dict('records'), selected_samples)
 
-    print("DEBUG: Gráfico gerado com sucesso.")
     return html.Img(src=image_src, style={"width": "100%", "margin-top": "20px"})
