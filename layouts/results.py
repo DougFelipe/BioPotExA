@@ -380,9 +380,9 @@ def get_results_layout():
                     # Seção 9: Ranking of Samples by Compound Interaction
         html.Div(id="sample-rank-compounds-chart", className="section"),  # ID para link no navbar
         html.Div([
-            html.H5("Ranking of Samples by Compound Interaction", className="analysis-title"),
+            html.H5("Sample-Compound Interaction Rankings", className="analysis-title"),
             html.P(
-                "This ranking chart highlights the interaction of samples with compounds, showcasing which samples are more active or relevant in the dataset",
+                "This chart ranks samples based on the number and intensity of their interactions with compounds in the dataset",
                 className="analysis-description"
             ),
             html.P(
@@ -406,9 +406,9 @@ def get_results_layout():
                 # Seção 10: Ranking of Compounds by Sample Interaction
         html.Div(id="compound-rank-chart", className="section"),  # ID para link no navbar
         html.Div([
-            html.H5("Ranking of Compounds by Sample Interaction", className="analysis-title"),
+            html.H5("Compound-Sample Interaction Rankings", className="analysis-title"),
             html.P(
-                "This ranking chart identifies compounds based on their interactions with samples, revealing compounds with higher significance",
+                "This chart ranks compounds based on their interactions with samples, showcasing which compounds are most significant",
                 className="analysis-description"
             ),
             html.P(
@@ -432,9 +432,9 @@ def get_results_layout():
                 # Seção 11: Ranking of Compounds by Gene Interaction
         html.Div(id="compound-rank-gene-chart", className="section"),  # ID para link no navbar
         html.Div([
-            html.H5("Ranking of Compounds by Gene Interaction", className="analysis-title"),
+            html.H5("Compound-Gene Interaction Rankings", className="analysis-title"),
             html.P(
-                "This ranking chart identifies compounds based on their interactions with genes, revealing compounds associated with higher genetic activity",
+                "This ranking chart identifies compounds with associations with genes, revealing key genetic activity",
                 className="analysis-description"
             ),
             html.P(
