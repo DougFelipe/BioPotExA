@@ -2,22 +2,22 @@ from dash import html, dcc
 
 def get_pathway_ko_bar_chart_layout():
     """
-    Constrói o layout para o gráfico de barras da análise das vias KO, incluindo filtros.
+    Constructs the layout for the KO pathway analysis bar chart, including filters.
     """
     return html.Div([
         html.Div([
             html.Div('Filter by Sample', className='menu-text'),
             dcc.Dropdown(
                 id='pathway-sample-dropdown',
-                placeholder="Selecione uma amostra",  # Texto de instrução
-                style={"margin-bottom": "20px"}  # Espaçamento inferior
+                placeholder="Select a sample",  # Instructional text
+                style={"margin-bottom": "20px"}  # Bottom spacing
             ),
         ], className='navigation-menu'),
         html.Div(
-            id='pathway-ko-chart-container',  # Container do gráfico
+            id='pathway-ko-chart-container',  # Chart container
             children=[
                 html.P(
-                    "Nenhum gráfico disponível. Por favor, selecione uma amostra.",
+                    "No chart available. Please select a sample.",
                     id="no-pathway-ko-chart-message",
                     style={"textAlign": "center", "color": "gray"}
                 )
@@ -28,22 +28,22 @@ def get_pathway_ko_bar_chart_layout():
 
 def get_sample_ko_pathway_bar_chart_layout():
     """
-    Constrói o layout para o gráfico de barras da análise dos KOs em samples para a via selecionada.
+    Constructs the layout for the bar chart analyzing KOs in samples for the selected pathway.
     """
     return html.Div([
         html.Div([
             html.Div('Filter by Pathway', className='menu-text'),
             dcc.Dropdown(
                 id='via-dropdown',
-                placeholder="Selecione uma via",  # Texto de instrução
-                style={"margin-bottom": "20px"}  # Espaçamento inferior
+                placeholder="Select a pathway",  # Instructional text
+                style={"margin-bottom": "20px"}  # Bottom spacing
             ),
         ], className='navigation-menu'),
         html.Div(
-            id='via-ko-chart-container',  # Container do gráfico
+            id='via-ko-chart-container',  # Chart container
             children=[
                 html.P(
-                    "Nenhum gráfico disponível. Por favor, selecione uma via.",
+                    "No chart available. Please select a pathway.",
                     id="no-via-ko-chart-message",
                     style={"textAlign": "center", "color": "gray"}
                 )

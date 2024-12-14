@@ -32,7 +32,7 @@ def plot_ko_count(ko_count_df):
     )
     
     fig.update_layout(
-        title="KO Count by Sample",
+        title="Gene Count by Sample",
         xaxis_title='Sample',
         yaxis_title='Unique Gene Count',
         xaxis={'categoryorder': 'total descending'},

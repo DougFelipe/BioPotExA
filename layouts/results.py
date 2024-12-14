@@ -38,7 +38,7 @@ def get_results_layout():
         html.Div([
                 html.H3("1 - Data Tables and Database Integration", className="section-title"),
                 html.P(
-                    "Provide an overview of the data integrated into the databases.",
+                    "Provide an overview of the data integrated into the databases",
                     className="section-objective"
                 ),
             ], className="section-header"),
@@ -47,13 +47,13 @@ def get_results_layout():
         # Seção 1: Main Results Table
         html.Div(id="main-results-table", className="section"),
         html.Div([
-            html.H5("Main Results Table", className="analysis-title"),
+            html.H5("BioRemPP Results Table", className="analysis-title"),
             html.P(
-                "This table presents the processed data merged with the main database, offering a comprehensive overview of the input data and its matched records.",
+                "This table presents the processed data merged with the BioRemPP database, offering a comprehensive overview of the input data and its matched records",
                 className="analysis-description"
             ),
             html.P(
-                "The merged table reveals how well the input data aligns with the main database, providing insights into the completeness and relevance of the data.",
+                "The merged table reveals how well the input data aligns with the main database, providing insights into the completeness and relevance of the data",
                 className="analysis-insights"
             ),
             dbc.Accordion(
@@ -74,20 +74,20 @@ def get_results_layout():
         # Seção 2: Results Table (hadegDB)
         html.Div(id="hadeg-results-table", className="section"),
         html.Div([
-            html.H5("Results Table (hadegDB)", className="analysis-title"),
+            html.H5("Results Table HADEG", className="analysis-title"),
             html.P(
-                "This table contains data merged with the hadegDB database, enabling the exploration of additional annotations and insights.",
+                "This table contains data merged with the HADEG database, enabling the exploration of additional annotations and insights",
                 className="analysis-description"
             ),
             html.P(
-                "The table helps identify significant matches with hadegDB, enhancing the understanding of potential functional and structural associations.",
+                "The table helps identify significant matches with HADEG, enhancing the understanding of potential functional and structural associations",
                 className="analysis-insights"
             ),
             dbc.Accordion(
                 [
                     dbc.AccordionItem(
                         html.Div(id='output-merge-hadeg-table'),
-                        title="Results Table (hadegDB)"
+                        title="Results Table"
                     )
                 ],
                 start_collapsed=True,
@@ -99,20 +99,20 @@ def get_results_layout():
         html.Div(id="toxcsm-results-table", className="section"),
         html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size = "xs"),]),
         html.Div([
-            html.H5("Results Table (ToxCSM)", className="analysis-title"),
+            html.H5("Results Table ToxCSM", className="analysis-title"),
             html.P(
-                "This table shows data merged with the ToxCSM database, providing toxicity predictions and compound interactions.",
+                "This table shows data merged with the ToxCSM database, providing toxicity predictions and compound interactions",
                 className="analysis-description"
             ),
             html.P(
-                "By analyzing this table, you can assess the toxicity potential and prioritize compounds for further investigation.",
+                "By analyzing this table, you can assess the toxicity potential and prioritize compounds for further investigation",
                 className="analysis-insights"
             ),
             dbc.Accordion(
                 [
                     dbc.AccordionItem(
                         html.Div(id='output-merge-toxcsm-table'),
-                        title="Results Table (ToxCSM)"
+                        title="Results Table"
                     )
                 ],
                 start_collapsed=True,
@@ -125,7 +125,7 @@ def get_results_layout():
         html.Div([
                 html.H3("2 - Gene and Metabolic Pathway Analysis", className="section-title"),
                 html.P(
-                    "Explore genes and metabolic pathways associated with compounds.",
+                    "Explore genes and metabolic pathways associated with compounds",
                     className="section-objective"
                 ),
             ], className="section-header"),
@@ -135,18 +135,18 @@ def get_results_layout():
         html.Div([
             html.H5("Gene Count Associated with Priority Compounds", className="analysis-title"),
             html.P(
-                "This bar chart displays the count of unique genes associated with priority compounds for each sample.",
+                "This bar chart displays the count of unique genes associated with priority compounds for each sample",
                 className="analysis-description"
             ),
             html.P(
-                "By analyzing this chart, you can identify which samples have a higher number of unique gene associations, offering insights into potential hotspots of genetic activity.",
+                "By analyzing this chart, you can identify which samples have a higher number of unique gene associations, offering insights into potential hotspots of genetic activity",
                 className="analysis-insights"
             ),
             dbc.Accordion(
                 [
                     dbc.AccordionItem(
                         html.Div(get_ko_count_bar_chart_layout(), className="chart-container"),
-                        title="Gene Count Bar Chart"
+                        title="Gene Counts Across Samples"
                     )
                 ],
                 start_collapsed=True,
@@ -158,20 +158,20 @@ def get_results_layout():
         # Seção 5: Violin Boxplot
         html.Div(id="violin-boxplot", className="section"),
         html.Div([
-            html.H5("Violin Boxplot for Gene Distribution", className="analysis-title"),
+            html.H5("Gene Distribution", className="analysis-title"),
             html.P(
-                "This violin boxplot illustrates the distribution of unique genes associated with priority compounds across samples.",
+                "This violin boxplot illustrates the distribution of unique genes associated with priority compounds across samples",
                 className="analysis-description"
             ),
             html.P(
-                "This visualization helps identify patterns and variability in gene distribution, highlighting sample-specific trends.",
+                "Identifies trends and outliers in gene distribution, providing a comprehensive view of genetic activitys",
                 className="analysis-insights"
             ),
             dbc.Accordion(
                 [
                     dbc.AccordionItem(
                         html.Div(get_ko_violin_boxplot_layout(), className="chart-container"),
-                        title="Violin Boxplot"
+                        title="Gene Distribution Among Samples"
                     )
                 ],
                 start_collapsed=True,
@@ -184,20 +184,20 @@ def get_results_layout():
         # Seção 6: Pathway KO Bar Chart
         html.Div(id="pathway-ko-bar-chart", className="section"),  # ID para link no navbar
         html.Div([
-            html.H5("Pathway KO Bar Chart", className="analysis-title"),
+            html.H5("Distribution of Genes in Xenobiotics Biodegradation Pathways", className="analysis-title"),
             html.P(
-                "This bar chart highlights the distribution of KEGG Ortholog (KO) counts across various pathways.",
+                "This bar chart highlights the distribution of KEGG Ortholog (KO) counts across 20 degradation pathways",
                 className="analysis-description"
             ),
             html.P(
-                "By analyzing this chart, you can gain insights into the functional diversity of pathways influenced by the data.",
+                "By analyzing this chart, you can gain insights into the functional diversity of pathways and identify dominant or underrepresented pathways in the dataset",
                 className="analysis-insights"
             ),
             dbc.Accordion(
                 [
                     dbc.AccordionItem(
                         html.Div(get_pathway_ko_bar_chart_layout(), className="chart-container"),
-                        title="Pathway KO Bar Chart"
+                        title="Distribution of KO in Pathways"
                     )
                 ],
                 start_collapsed=True,
@@ -209,20 +209,20 @@ def get_results_layout():
                 # Seção 7: Sample KO Pathway Chart
         html.Div(id="sample-ko-pathway-chart", className="section"),  # ID para link no navbar
         html.Div([
-            html.H5("Sample KO Pathway Chart", className="analysis-title"),
+            html.H5("Sample-Specific Pathway Activity", className="analysis-title"),
             html.P(
-                "This bar chart presents the KEGG Ortholog (KO) distribution across pathways, grouped by sample.",
+                "This bar chart presents the KEGG Ortholog (KO) distribution across pathways, grouped by sample",
                 className="analysis-description"
             ),
             html.P(
-                "This visualization allows you to understand how different pathways are represented within each sample, helping to identify pathway-specific trends.",
+                "This visualization allows you to understand how different pathways are represented within each sample, helping to identify pathway-specific trends",
                 className="analysis-insights"
             ),
             dbc.Accordion(
                 [
                     dbc.AccordionItem(
                         html.Div(get_sample_ko_pathway_bar_chart_layout(), className="chart-container"),
-                        title="Sample KO Pathway Bar Chart"
+                        title="Pathway Activity per Sample"
                     )
                 ],
                 start_collapsed=True,
@@ -235,7 +235,7 @@ def get_results_layout():
         html.Div([
         html.H3("3 - Interactions Between Entities (Samples, Compounds, and Genes)", className="section-title"),
         html.P(
-            "Identify interaction patterns between samples, compounds, and genes.",
+            "Identify interaction patterns between samples, compounds, and genes",
             className="section-objective"
         ),
              ], className="section-header"),
@@ -245,11 +245,11 @@ def get_results_layout():
         html.Div([
             html.H5("Scatter Plot of Samples vs Compounds", className="analysis-title"),
             html.P(
-                "This scatter plot visualizes the relationship between samples and compounds, highlighting the interactions between these entities.",
+                "This scatter plot visualizes the relationship between samples and compounds, highlighting the interactions between these entities",
                 className="analysis-description"
             ),
             html.P(
-                "By exploring this chart, you can identify key interactions and trends, helping to focus on samples or compounds of interest.",
+                "By exploring this chart, you can identify key interactions and trends, helping to focus on samples or compounds of interest",
                 className="analysis-insights"
             ),
             dbc.Accordion(
@@ -271,11 +271,11 @@ def get_results_layout():
         html.Div([
             html.H5("Scatter Plot of Genes vs Compounds", className="analysis-title"),
             html.P(
-                "This scatter plot visualizes the relationships between genes and compounds, highlighting associations that may indicate important interactions.",
+                "This scatter plot visualizes the relationships between genes and compounds, highlighting associations that may indicate important interactions",
                 className="analysis-description"
             ),
             html.P(
-                "By analyzing this chart, researchers can identify gene-compound pairs with potential biological or chemical significance.",
+                "By analyzing this chart, researchers can identify gene-compound pairs with potential biological or chemical significance",
                 className="analysis-insights"
             ),
             dbc.Accordion(
@@ -296,11 +296,11 @@ def get_results_layout():
         html.Div([
             html.H5("Scatter Plot of Samples vs Genes", className="analysis-title"),
             html.P(
-                "This scatter plot visualizes the relationships between samples and genes, providing insights into genetic patterns across various samples.",
+                "This scatter plot visualizes the relationships between samples and genes, providing insights into genetic patterns across various samples",
                 className="analysis-description"
             ),
             html.P(
-                "By analyzing this plot, users can identify significant gene associations across different samples, aiding in the discovery of genetic hotspots.",
+                "By analyzing this plot, users can identify significant gene associations across different samples, aiding in the discovery of genetic hotspots",
                 className="analysis-insights"
             ),
             dbc.Accordion(
@@ -322,11 +322,11 @@ def get_results_layout():
         html.Div([
             html.H5("Enzyme Activity Counts per Sample", className="analysis-title"),
             html.P(
-                "This bar chart shows the distribution of enzyme activity counts across different samples.",
+                "This bar chart shows the distribution of enzyme activity counts across different samples",
                 className="analysis-description"
             ),
             html.P(
-                "Analyzing enzyme activity counts helps identify variations in enzymatic activity across samples, providing insights into metabolic activity.",
+                "Analyzing enzyme activity counts helps identify variations in enzymatic activity across samples, providing insights into metabolic activity",
                 className="analysis-insights"
             ),
             dbc.Accordion(
@@ -348,11 +348,11 @@ def get_results_layout():
         html.Div([
             html.H5("Gene-Compound Interaction Network", className="analysis-title"),
             html.P(
-                "This network graph visualizes the interactions between genes and compounds, providing insights into functional relationships.",
+                "This network graph visualizes the interactions between genes and compounds, providing insights into functional relationships",
                 className="analysis-description"
             ),
             html.P(
-                "By analyzing this graph, you can explore the connectivity and association strength between genes and compounds, uncovering potential targets or key interactions.",
+                "By analyzing this graph, you can explore the connectivity and association strength between genes and compounds, uncovering potential targets or key interactions",
                 className="analysis-insights"
             ),
             dbc.Accordion(
@@ -372,7 +372,7 @@ def get_results_layout():
         html.Div([
         html.H3("4 - Interaction-Based Rankings", className="section-title"),
         html.P(
-            "Prioritize samples or compounds based on specific interactions.",
+            "Prioritize samples or compounds based on specific interactions",
             className="section-objective"
         ),
             ], className="section-header"),
@@ -382,11 +382,11 @@ def get_results_layout():
         html.Div([
             html.H5("Ranking of Samples by Compound Interaction", className="analysis-title"),
             html.P(
-                "This ranking chart highlights the interaction of samples with compounds, showcasing which samples are more active or relevant in the dataset.",
+                "This ranking chart highlights the interaction of samples with compounds, showcasing which samples are more active or relevant in the dataset",
                 className="analysis-description"
             ),
             html.P(
-                "By examining this chart, you can identify samples with the most interactions, providing valuable insights into their significance in the analysis.",
+                "By examining this chart, you can identify samples with the most interactions, providing valuable insights into their significance in the analysis",
                 className="analysis-insights"
             ),
             dbc.Accordion(
@@ -408,11 +408,11 @@ def get_results_layout():
         html.Div([
             html.H5("Ranking of Compounds by Sample Interaction", className="analysis-title"),
             html.P(
-                "This ranking chart identifies compounds based on their interactions with samples, revealing compounds with higher significance.",
+                "This ranking chart identifies compounds based on their interactions with samples, revealing compounds with higher significance",
                 className="analysis-description"
             ),
             html.P(
-                "Use this chart to focus on compounds with the most interactions, which can help prioritize targets for further investigation.",
+                "Use this chart to focus on compounds with the most interactions, which can help prioritize targets for further investigation",
                 className="analysis-insights"
             ),
             dbc.Accordion(
@@ -434,11 +434,11 @@ def get_results_layout():
         html.Div([
             html.H5("Ranking of Compounds by Gene Interaction", className="analysis-title"),
             html.P(
-                "This ranking chart identifies compounds based on their interactions with genes, revealing compounds associated with higher genetic activity.",
+                "This ranking chart identifies compounds based on their interactions with genes, revealing compounds associated with higher genetic activity",
                 className="analysis-description"
             ),
             html.P(
-                "This visualization is useful to prioritize compounds with significant genetic interactions, aiding in targeted research and analysis.",
+                "This visualization is useful to prioritize compounds with significant genetic interactions, aiding in targeted research and analysis",
                 className="analysis-insights"
             ),
             dbc.Accordion(
@@ -457,7 +457,7 @@ def get_results_layout():
         html.Div([
         html.H3("5 - Heatmaps and Clustering", className="section-title"),
         html.P(
-            "Explore complex relationships using heatmap and dendrogram visualizations.",
+            "Explore complex relationships using heatmap and dendrogram visualizations",
             className="section-objective"
         ),
              ], className="section-header"),
@@ -467,11 +467,11 @@ def get_results_layout():
         html.Div([
             html.H5("Heatmap of Samples vs Reference AG", className="analysis-title"),
             html.P(
-                "This heatmap displays the association between samples and reference AGs, highlighting compound occurrences and interactions.",
+                "This heatmap displays the association between samples and reference AGs, highlighting compound occurrences and interactions",
                 className="analysis-description"
             ),
             html.P(
-                "By analyzing this heatmap, you can identify patterns and relationships between the samples and reference AGs, supporting further exploration of compound interactions.",
+                "By analyzing this heatmap, you can identify patterns and relationships between the samples and reference AGs, supporting further exploration of compound interactions",
                 className="analysis-insights"
             ),
             dbc.Accordion(
@@ -492,11 +492,11 @@ def get_results_layout():
         html.Div([
             html.H5("Heatmap of Genes vs Samples", className="analysis-title"),
             html.P(
-                "This heatmap illustrates the relationship between genes and samples, showing unique associations through a color gradient.",
+                "This heatmap illustrates the relationship between genes and samples, showing unique associations through a color gradient",
                 className="analysis-description"
             ),
             html.P(
-                "By analyzing this heatmap, you can identify trends and hotspots in the gene-sample interactions, providing insights into their biological relevance.",
+                "By analyzing this heatmap, you can identify trends and hotspots in the gene-sample interactions, providing insights into their biological relevance",
                 className="analysis-insights"
             ),
             dbc.Accordion(
@@ -517,11 +517,11 @@ def get_results_layout():
         html.Div([
             html.H5("Heatmap of Pathways vs Compound Pathways", className="analysis-title"),
             html.P(
-                "This heatmap visualizes the interaction between metabolic pathways and compound pathways, showing unique KO counts for each interaction.",
+                "This heatmap visualizes the interaction between metabolic pathways and compound pathways, showing unique KO counts for each interaction",
                 className="analysis-description"
             ),
             html.P(
-                "Use this heatmap to explore how pathways and compound pathways are interconnected, identifying areas of higher KO activity.",
+                "Use this heatmap to explore how pathways and compound pathways are interconnected, identifying areas of higher KO activity",
                 className="analysis-insights"
             ),
             dbc.Accordion(
@@ -542,11 +542,11 @@ def get_results_layout():
         html.Div([
             html.H5("Scatter Plot of KOs by Sample for Pathway", className="analysis-title"),
             html.P(
-                "This scatter plot visualizes the distribution of KOs across different samples for a specific pathway.",
+                "This scatter plot visualizes the distribution of KOs across different samples for a specific pathway",
                 className="analysis-description"
             ),
             html.P(
-                "By analyzing this scatter plot, you can identify patterns of KO distribution across samples, helping to pinpoint critical samples for specific pathways.",
+                "By analyzing this scatter plot, you can identify patterns of KO distribution across samples, helping to pinpoint critical samples for specific pathways",
                 className="analysis-insights"
             ),
             dbc.Accordion(
@@ -569,7 +569,7 @@ def get_results_layout():
         html.Div([
         html.H3("6 - Intersection and Group Exploration", className="section-title"),
         html.P(
-            "Investigate overlap and grouping patterns among samples.",
+            "Investigate overlap and grouping patterns among samples",
             className="section-objective"
         ),
             ], className="section-header"),
@@ -578,11 +578,11 @@ def get_results_layout():
         html.Div([
             html.H5("Sample Groups by Compound Class", className="analysis-title"),
             html.P(
-                "This visualization presents the grouping of samples based on compound classes, providing an overview of their classification.",
+                "This visualization presents the grouping of samples based on compound classes, providing an overview of their classification",
                 className="analysis-description"
             ),
             html.P(
-                "By analyzing these groups, you can identify patterns and relationships among samples and their associated compound classes.",
+                "By analyzing these groups, you can identify patterns and relationships among samples and their associated compound classes",
                 className="analysis-insights"
             ),
             dbc.Accordion(
@@ -605,11 +605,11 @@ def get_results_layout():
         html.Div([
             html.H5("UpSet Plot: Samples and KOs", className="analysis-title"),
             html.P(
-                "This UpSet plot visualizes intersections of KOs (Orthologous Genes) across multiple samples.",
+                "This UpSet plot visualizes intersections of KOs (Orthologous Genes) across multiple samples",
                 className="analysis-description"
             ),
             html.P(
-                "By analyzing this plot, you can identify shared and unique orthologs between samples, highlighting potential relationships and diversity.",
+                "By analyzing this plot, you can identify shared and unique orthologs between samples, highlighting potential relationships and diversity",
                 className="analysis-insights"
             ),
             dbc.Accordion(
@@ -630,11 +630,11 @@ def get_results_layout():
         html.Div([
             html.H5("Sample Clustering Dendrogram", className="analysis-title"),
             html.P(
-                "This dendrogram visualizes the hierarchical clustering of samples based on their genetic or metabolic profiles.",
+                "This dendrogram visualizes the hierarchical clustering of samples based on their genetic or metabolic profiles",
                 className="analysis-description"
             ),
             html.P(
-                "By analyzing this clustering, you can identify patterns of similarity or divergence between samples, aiding in deeper insights into their relationships.",
+                "By analyzing this clustering, you can identify patterns of similarity or divergence between samples, aiding in deeper insights into their relationships",
                 className="analysis-insights"
             ),
             dbc.Accordion(
@@ -656,7 +656,7 @@ def get_results_layout():
         html.Div([
         html.H3("7 - Toxicity Predictions", className="section-title"),
         html.P(
-            "Visualize and understand toxicity predictions.",
+            "Visualize and understand toxicity predictions",
             className="section-objective"
         ),
              ], className="section-header"),     
@@ -667,11 +667,11 @@ def get_results_layout():
         html.Div([
             html.H5("Faceted Heatmap of Toxicity Predictions", className="analysis-title"),
             html.P(
-                "This heatmap provides a visual representation of toxicity predictions across the five main categories of analysis.",
+                "This heatmap provides a visual representation of toxicity predictions across the five main categories of analysis",
                 className="analysis-description"
             ),
             html.P(
-                "Explore toxicity patterns and trends using this faceted visualization, which divides predictions into easily comparable groups.",
+                "Explore toxicity patterns and trends using this faceted visualization, which divides predictions into easily comparable groups",
                 className="analysis-insights"
             ),
             dbc.Accordion(
