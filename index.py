@@ -24,6 +24,9 @@ from layouts.results import get_results_layout  # Importa o layout dos resultado
 from layouts.help import get_help_layout
 
 # Certifique-se de importar os callbacks antes de importar a aplicação
+import callbacks.T1_biorempp_callbacks
+import callbacks.T2_hadeg_callbacks
+import callbacks.T3_toxcsm_callbacks
 import callbacks.P1_COUNT_KO_callbacks  # Importa os callbacks do novo arquivo
 import callbacks.P2_KO_20PATHWAY_callbacks  # Importa os callbacks do novo arquivo
 import callbacks.callbacks  # Importa os callbacks existentes
@@ -43,8 +46,7 @@ import callbacks.P15_sample_clustering_callbacks
 import callbacks.P16_sample_upset_callbacks
 import callbacks.P17_gene_compound_network_callbacks
 import callbacks.p18_heatmap_faceted_callbacks
-import callbacks.T1_biorempp_callbacks
-import callbacks.T2_hadeg_callbacks
+
 
 from callbacks.callbacks import  handle_progress
 

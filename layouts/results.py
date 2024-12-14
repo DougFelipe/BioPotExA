@@ -3,6 +3,10 @@ from components.alerts import hadeg_alert, toxcsm_alert
 from layouts.navbar import navbar  # Importe o navbar definido acima
 from dash import html
 import dash_bootstrap_components as dbc
+
+from layouts.T1_biorempp import get_biorempp_results_table_layout
+from layouts.T2_hadeg import get_hadeg_results_table_layout
+from layouts.T3_toxcsm import get_toxcsm_results_table_layout
 from layouts.P1_KO_COUNT import get_ko_count_bar_chart_layout, get_ko_violin_boxplot_layout
 from layouts.P2_KO_20PATHWAY import get_pathway_ko_bar_chart_layout, get_sample_ko_pathway_bar_chart_layout
 from layouts.P3_compounds_layout import get_compound_scatter_layout
@@ -21,8 +25,8 @@ from layouts.P15_sample_clustering_layout import get_sample_clustering_layout
 from layouts.P16_sample_upset_layout import get_sample_upset_layout
 from layouts.P17_gene_compound_network_layout import get_gene_compound_network_layout
 from layouts.p18_heatmap_faceted_layout import get_toxicity_heatmap_layout
-from layouts.T1_biorempp import get_biorempp_results_table_layout
-from layouts.T2_hadeg import get_hadeg_results_table_layout
+
+
 
 
 
@@ -106,31 +110,33 @@ def get_results_layout():
         html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size = "xs"),]),
 
 
-        # Seção 3: Results Table (ToxCSM)
-        html.Div(id="toxcsm-results-table", className="section"),
+
+        # Seção 3: TOXCSM Results Table
+        html.Div(id="toxcsm-results-table", className="section"),  # ID para ancoragem no navbar
         html.Div([
-            html.H5("Results Table ToxCSM", className="analysis-title"),
+            html.H5("ToxCSM Results Table", className="analysis-title"),
             html.P(
-                "This table shows data merged with the ToxCSM database, providing toxicity predictions and compound interactions",
+                "This table shows data merged with the TOXCSM database, providing toxicity predictions and compound interactions.",
                 className="analysis-description"
             ),
             html.P(
-                "By analyzing this table, you can assess the toxicity potential and prioritize compounds for further investigation",
+                "By analyzing this table, you can assess the toxicity potential and prioritize compounds for further investigation.",
                 className="analysis-insights"
             ),
-            toxcsm_alert(), 
+            toxcsm_alert(),
             dbc.Accordion(
                 [
                     dbc.AccordionItem(
-                        html.Div(id='output-merge-toxcsm-table'),
+                        html.Div(get_toxcsm_results_table_layout(), className="chart-container"),
                         title="Results Table"
                     )
                 ],
                 start_collapsed=True,
-                always_open=True,
+                always_open=False
             ),
         ], className="analysis-header"),
-        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size = "xs"),]),
+        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
+
 
       
         html.Div([

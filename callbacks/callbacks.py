@@ -258,29 +258,6 @@ def process_and_toggle_elements(n_clicks, stored_data, current_state):
     )
 
 
-@app.callback(
-    Output('output-merge-toxcsm-table', 'children'),
-    Input('stored-data', 'data')  # Dispara ao atualizar o stored-data
-)
-def update_merged_toxcsm_table(stored_data):
-    if not stored_data:
-        return None
-
-    input_df = pd.DataFrame(stored_data)
-    merged_df = merge_input_with_database(input_df)
-
-    if merged_df.empty:
-        return 'No matches found with the database.'
-
-    final_merged_df = merge_with_toxcsm(merged_df)
-
-    if final_merged_df.empty:
-        return 'No matches found with the ToxCSM database.'
-
-    hidden_columns = ['ko', 'compoundclass']
-    table = create_table_from_dataframe(final_merged_df, 'output-merge-toxcsm-table', hidden_columns=hidden_columns)
-
-    return html.Div(table)
 
 
 
