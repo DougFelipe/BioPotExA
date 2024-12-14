@@ -1,3 +1,5 @@
+from components.alerts import hadeg_alert, toxcsm_alert
+
 from layouts.navbar import navbar  # Importe o navbar definido acima
 from dash import html
 import dash_bootstrap_components as dbc
@@ -83,6 +85,7 @@ def get_results_layout():
                 "The table helps identify significant matches with HADEG, enhancing the understanding of potential functional and structural associations",
                 className="analysis-insights"
             ),
+            hadeg_alert(),
             dbc.Accordion(
                 [
                     dbc.AccordionItem(
@@ -108,6 +111,7 @@ def get_results_layout():
                 "By analyzing this table, you can assess the toxicity potential and prioritize compounds for further investigation",
                 className="analysis-insights"
             ),
+            toxcsm_alert(), 
             dbc.Accordion(
                 [
                     dbc.AccordionItem(
@@ -526,6 +530,7 @@ def get_results_layout():
                 "By analyzing this heatmap, you can identify trends and hotspots in the gene-sample-pathways interactions, providing insights into their biological relevance",
                 className="analysis-insights"
             ),
+            hadeg_alert(),
             dbc.Accordion(
                 [
                     dbc.AccordionItem(
@@ -551,6 +556,7 @@ def get_results_layout():
                 "Use this heatmap to explore how pathways and compound pathways are interconnected for each sample",
                 className="analysis-insights"
             ),
+            hadeg_alert(),
             dbc.Accordion(
                 [
                     dbc.AccordionItem(
@@ -575,20 +581,20 @@ def get_results_layout():
                                         # Seção 15: Sample Groups by Compound Class
         html.Div(id="sample-groups-chart", className="section"),  # ID para link no navbar
         html.Div([
-            html.H5("Sample Groups by Compound Class", className="analysis-title"),
+            html.H5("Compound-Based Sample Grouping", className="analysis-title"),
             html.P(
-                "This visualization presents the grouping of samples based on compound classes, providing an overview of their classification",
+                "Displays how samples are grouped and classified according to their compound content, emphasizing patterns in their composition",
                 className="analysis-description"
             ),
             html.P(
-                "By analyzing these groups, you can identify patterns and relationships among samples and their associated compound classes",
+                "Use this visualization to detect clusters of samples with similar compound profiles, supporting targeted compound or sample research",
                 className="analysis-insights"
             ),
             dbc.Accordion(
                 [
                     dbc.AccordionItem(
                         html.Div(get_sample_groups_layout(), className="chart-container"),
-                        title="Sample Groups by Compound Class"
+                        title="Sample Grouping by Compound Class Pattern"
                     )
                 ],
                 start_collapsed=True,
@@ -602,20 +608,20 @@ def get_results_layout():
                 # Seção 21: Sample UpSet Plot
         html.Div(id="sample-upset-plot", className="section"),  # ID para link no navbar
         html.Div([
-            html.H5("UpSet Plot: Samples and KOs", className="analysis-title"),
+            html.H5("Intersection of Genes Across Samples", className="analysis-title"),
             html.P(
-                "This UpSet plot visualizes intersections of KOs (Orthologous Genes) across multiple samples",
+                "This UpSet plot visualizes intersections of orthologous genes (KOs) across multiple samples, highlighting overlaps and unique associations",
                 className="analysis-description"
             ),
             html.P(
-                "By analyzing this plot, you can identify shared and unique orthologs between samples, highlighting potential relationships and diversity",
+                "By analyzing this plot, you can identify shared and unique orthologs between samples, highlighting potential relationships and  prioritize samples with shared or unique genes for further exploration",
                 className="analysis-insights"
             ),
             dbc.Accordion(
                 [
                     dbc.AccordionItem(
                         html.Div(get_sample_upset_layout(), className="chart-container"),
-                        title="Sample UpSet Plot"
+                        title="Intersection Analysis"
                     )
                 ],
                 start_collapsed=True,
@@ -627,13 +633,13 @@ def get_results_layout():
                                 # Seção 20: Sample Clustering Dendrogram
         html.Div(id="sample-clustering-dendrogram", className="section"),  # ID para link no navbar
         html.Div([
-            html.H5("Sample Clustering Dendrogram", className="analysis-title"),
+            html.H5("Hierarchical Clustering of Samples", className="analysis-title"),
             html.P(
-                "This dendrogram visualizes the hierarchical clustering of samples based on their genetic or metabolic profiles",
+                "Hierarchically clusters samples based on genes associated with priority compounds, providing a detailed view of their relationships",
                 className="analysis-description"
             ),
             html.P(
-                "By analyzing this clustering, you can identify patterns of similarity or divergence between samples, aiding in deeper insights into their relationships",
+                "By analyzing this clustering, you can identify patterns of similarity or divergence between samples",
                 className="analysis-insights"
             ),
             dbc.Accordion(
@@ -664,15 +670,16 @@ def get_results_layout():
             # Seção 23: Heatmap of Toxicity Predictions
         html.Div(id="toxicity-heatmap-faceted", className="section"),  # ID for navbar linking
         html.Div([
-            html.H5("Faceted Heatmap of Toxicity Predictions", className="analysis-title"),
+            html.H5("Comprehensive Toxicity Heatmap", className="analysis-title"),
             html.P(
                 "This heatmap provides a visual representation of toxicity predictions across the five main categories of analysis",
                 className="analysis-description"
             ),
             html.P(
-                "Explore toxicity patterns and trends using this faceted visualization, which divides predictions into easily comparable groups",
+                "Explore toxicity predictions to identify high-risk compounds or category, supporting risk assessment and decision-making",
                 className="analysis-insights"
             ),
+            toxcsm_alert(), 
             dbc.Accordion(
                 [
                     dbc.AccordionItem(

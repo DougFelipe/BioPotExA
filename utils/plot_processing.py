@@ -1277,7 +1277,7 @@ def plot_heatmap_faceted(df):
     fig.update_layout(
         height=600,
         width=300 * n_cols,  # Largura proporcional ao número de facetas
-        title="Faceted Heatmap of Toxicity Predictions with Subcategories on X-axis",
+        title="Toxicity Predictions",
         template="simple_white",
         yaxis_title="Compound Names",  # Define o título global do eixo Y
         margin=dict(l=100, r=50, t=80, b=100)  # Ajusta as margens
