@@ -1,6 +1,6 @@
 from components.alerts import hadeg_alert, toxcsm_alert
 
-from layouts.navbar import navbar  # Importe o navbar definido acima
+from components.navbar import navbar  # Importe o navbar definido acima
 from dash import html
 import dash_bootstrap_components as dbc
 
