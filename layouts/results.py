@@ -22,6 +22,8 @@ from layouts.P16_sample_upset_layout import get_sample_upset_layout
 from layouts.P17_gene_compound_network_layout import get_gene_compound_network_layout
 from layouts.p18_heatmap_faceted_layout import get_toxicity_heatmap_layout
 from layouts.T1_biorempp import get_biorempp_results_table_layout
+from layouts.T2_hadeg import get_hadeg_results_table_layout
+
 
 
 def get_results_layout():
@@ -49,17 +51,15 @@ def get_results_layout():
 
 
         # Seção 1: Main Results Table
-
-        # Adiciona a seção 1 da BioRemPP Results Table
         html.Div(id="main-results-table", className="section"),  # ID para ancoragem no navbar
         html.Div([
             html.H5("BioRemPP Results Table", className="analysis-title"),
             html.P(
-                "This table presents the processed data merged with the BioRemPP database, offering a comprehensive overview of the input data and its matched records.",
+                "This table presents the processed data merged with the BioRemPP database, offering a comprehensive overview of the input data and its matched records",
                 className="analysis-description"
             ),
             html.P(
-                "The merged table reveals how well the input data aligns with the main database, providing insights into the completeness and relevance of the data.",
+                "The merged table reveals how well the input data aligns with the main database, providing insights into the completeness and relevance of the data",
                 className="analysis-insights"
             ),
             dbc.Accordion(
@@ -78,34 +78,36 @@ def get_results_layout():
 
 
 
-        # Seção 2: Results Table (hadegDB)
-        html.Div(id="hadeg-results-table", className="section"),
+
+        # Seção 2: HADEG Results Table
+        html.Div(id="hadeg-results-table", className="section"),  # ID para ancoragem no navbar
         html.Div([
-            html.H5("Results Table HADEG", className="analysis-title"),
+            html.H5("HADEG Results Table", className="analysis-title"),
             html.P(
-                "This table contains data merged with the HADEG database, enabling the exploration of additional annotations and insights",
+                "This table contains data merged with the HADEG database, enabling the exploration of additional annotations and insights.",
                 className="analysis-description"
             ),
             html.P(
-                "The table helps identify significant matches with HADEG, enhancing the understanding of potential functional and structural associations",
+                "The table helps identify significant matches with HADEG, enhancing the understanding of potential functional and structural associations.",
                 className="analysis-insights"
             ),
             hadeg_alert(),
             dbc.Accordion(
                 [
                     dbc.AccordionItem(
-                        html.Div(id='output-merge-hadeg-table'),
+                        html.Div(get_hadeg_results_table_layout(), className="chart-container"),
                         title="Results Table"
                     )
                 ],
                 start_collapsed=True,
-                always_open=True,
+                always_open=False
             ),
         ], className="analysis-header"),
+        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size = "xs"),]),
+
 
         # Seção 3: Results Table (ToxCSM)
         html.Div(id="toxcsm-results-table", className="section"),
-        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size = "xs"),]),
         html.Div([
             html.H5("Results Table ToxCSM", className="analysis-title"),
             html.P(

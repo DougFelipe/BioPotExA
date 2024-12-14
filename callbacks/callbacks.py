@@ -258,25 +258,6 @@ def process_and_toggle_elements(n_clicks, stored_data, current_state):
     )
 
 
-
-@app.callback(
-    Output('output-merge-hadeg-table', 'children'),
-    Input('stored-data', 'data')  # Dispara ao atualizar o stored-data
-)
-def update_merged_hadeg_table(stored_data):
-    if not stored_data:
-        return None
-
-    input_df = pd.DataFrame(stored_data)
-    merged_df = merge_input_with_database_hadegDB(input_df)
-
-    if merged_df.empty:
-        return 'No matches found with the hadegDB database.'
-
-    table = create_table_from_dataframe(merged_df, 'output-merge-hadeg-table')
-    return html.Div(table)
-
-
 @app.callback(
     Output('output-merge-toxcsm-table', 'children'),
     Input('stored-data', 'data')  # Dispara ao atualizar o stored-data
