@@ -798,12 +798,58 @@ body, html {
     text-decoration: none;
     padding: 3px 8px;
     transition: color 0.3s ease;
+    text-align: center; /* Centraliza o texto do título */
+
 }
 
 .nav-link:hover {
     text-decoration: underline;
     color: #0056b3;
 }
+
+/* Coluna individual */
+.nav-column {
+    display: flex;
+    flex-direction: column; /* Itens empilhados verticalmente */
+    align-items: flex-start; /* Alinha os links à esquerda dentro da coluna */
+    width: 14%; /* Cada coluna ocupa aproximadamente 14% da largura */
+    min-width: 250px; /* Define uma largura mínima */
+    max-width: 180px; /* Define uma largura máxima */
+}
+
+/* Column Title (Session Titles) */
+.navbar-section-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #6c757d;
+    margin-bottom: 8px;
+    text-align: center; /* Centraliza o texto do título */
+}
+
+/* Ajustes para os cards */
+.nav-card {
+    width: 14%; /* Define a largura de cada card */
+    min-width: 150px; /* Largura mínima para não quebrar */
+    margin: 0 8px; /* Espaçamento horizontal entre os cards */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra nos cards */
+    border: 1px solid #ddd; /* Bordas sutis */
+    transition: transform 0.2s ease; /* Animação de hover */
+}
+
+.nav-card:hover {
+    transform: scale(1.05); /* Efeito de hover nos cards */
+}
+
+/* Ajustes para o título dos cards */
+.card-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #007BFF;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+
 
 
 /* Estilo da página de ajuda */
