@@ -243,20 +243,20 @@ def get_results_layout():
               # Seção 8: Scatter Plot of Samples vs Compounds
         html.Div(id="compound-scatter-chart", className="section"),  # ID para link no navbar
         html.Div([
-            html.H5("Scatter Plot of Samples vs Compounds", className="analysis-title"),
+            html.H5("Sample-Compound Interactions", className="analysis-title"),
             html.P(
-                "This scatter plot visualizes the relationship between samples and compounds, highlighting the interactions between these entities",
+                "This scatter plot highlights the relationship between samples and compounds, illustrating their interactions and associations",
                 className="analysis-description"
             ),
             html.P(
-                "By exploring this chart, you can identify key interactions and trends, helping to focus on samples or compounds of interest",
+                "Use this visualization to detect key sample-compound interactions and prioritize samples or compounds of interest",
                 className="analysis-insights"
             ),
             dbc.Accordion(
                 [
                     dbc.AccordionItem(
                         html.Div(get_compound_scatter_layout(), className="chart-container"),
-                        title="Scatter Plot of Samples vs Compounds"
+                        title="Sample-Compound Interaction Plot"
                     )
                 ],
                 start_collapsed=True,
@@ -269,20 +269,20 @@ def get_results_layout():
          # Seção 12: Scatter Plot of Genes vs Compounds
         html.Div(id="gene-compound-scatter-chart", className="section"),  # ID para link no navbar
         html.Div([
-            html.H5("Scatter Plot of Genes vs Compounds", className="analysis-title"),
+            html.H5("Gene-Compound Interactions", className="analysis-title"),
             html.P(
-                "This scatter plot visualizes the relationships between genes and compounds, highlighting associations that may indicate important interactions",
+                "This scatter plot highlights the relationships between genes and compounds, highlighting associations that may indicate important interactions",
                 className="analysis-description"
             ),
             html.P(
-                "By analyzing this chart, researchers can identify gene-compound pairs with potential biological or chemical significance",
+                "By analyzing this chart, you can identify gene-compound pairs with potential biological or chemical significance",
                 className="analysis-insights"
             ),
             dbc.Accordion(
                 [
                     dbc.AccordionItem(
                         html.Div(get_gene_compound_scatter_layout(), className="chart-container"),
-                        title="Scatter Plot of Genes vs Compounds"
+                        title="Gene-Compound Interaction Plot"
                     )
                 ],
                 start_collapsed=True,
@@ -294,20 +294,20 @@ def get_results_layout():
                 # Seção 13: Scatter Plot of Samples vs Genes
         html.Div(id="sample-gene-scatter-chart", className="section"),  # ID para link no navbar
         html.Div([
-            html.H5("Scatter Plot of Samples vs Genes", className="analysis-title"),
+            html.H5("Sample-Gene Associations", className="analysis-title"),
             html.P(
-                "This scatter plot visualizes the relationships between samples and genes, providing insights into genetic patterns across various samples",
+                "This scatter plot highlights the relationships between samples and genes, providing insights into genetic patterns across various samples",
                 className="analysis-description"
             ),
             html.P(
-                "By analyzing this plot, users can identify significant gene associations across different samples, aiding in the discovery of genetic hotspots",
+                "By analyzing this plot, you can identify significant gene associations across different samples, aiding in the discovery of genetic hotspots",
                 className="analysis-insights"
             ),
             dbc.Accordion(
                 [
                     dbc.AccordionItem(
                         html.Div(get_sample_gene_scatter_layout(), className="chart-container"),
-                        title="Scatter Plot of Samples vs Genes"
+                        title="Sample-Gene Associations Plot"
                     )
                 ],
                 start_collapsed=True,
@@ -320,7 +320,7 @@ def get_results_layout():
          # Seção 19: Enzyme Activity Counts per Sample
         html.Div(id="sample-enzyme-activity", className="section"),  # ID para link no navbar
         html.Div([
-            html.H5("Enzyme Activity Counts per Sample", className="analysis-title"),
+            html.H5("Metabolic Enzyme Activity Counts per Sample", className="analysis-title"),
             html.P(
                 "This bar chart shows the distribution of enzyme activity counts across different samples",
                 className="analysis-description"
@@ -333,7 +333,7 @@ def get_results_layout():
                 [
                     dbc.AccordionItem(
                         html.Div(get_sample_enzyme_activity_layout(), className="chart-container"),
-                        title="Enzyme Activity Bar Chart"
+                        title="Enzyme Activity by Sample"
                     )
                 ],
                 start_collapsed=True,
@@ -359,7 +359,7 @@ def get_results_layout():
                 [
                     dbc.AccordionItem(
                         html.Div(get_gene_compound_network_layout(), className="chart-container"),
-                        title="Gene-Compound Network"
+                        title="Gene-Compound Interaction"
                     )
                 ],
                 start_collapsed=True,
