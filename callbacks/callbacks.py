@@ -175,24 +175,6 @@ def toggle_additional_analysis_visibility(n_clicks):
     else:
         raise PreventUpdate
 
-@app.callback(
-    Output('output-merge-table', 'children'),
-    [Input('view-results', 'n_clicks')],
-    [State('stored-data', 'data')]
-)
-def update_merged_table(n_clicks, stored_data):
-    if n_clicks is None or n_clicks < 1 or not stored_data:
-        return None
-
-    input_df = pd.DataFrame(stored_data)
-    merged_df = merge_input_with_database(input_df)
-
-    if merged_df.empty:
-        return 'No matches found with KEGG data.'
-
-    table = create_table_from_dataframe(merged_df, 'output-merge-table')
-
-    return html.Div(table)
 
 # Callback para alternar visibilidade dos gráficos
 @app.callback(

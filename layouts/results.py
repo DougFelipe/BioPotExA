@@ -21,6 +21,8 @@ from layouts.P15_sample_clustering_layout import get_sample_clustering_layout
 from layouts.P16_sample_upset_layout import get_sample_upset_layout
 from layouts.P17_gene_compound_network_layout import get_gene_compound_network_layout
 from layouts.p18_heatmap_faceted_layout import get_toxicity_heatmap_layout
+from layouts.T1_biorempp import get_biorempp_results_table_layout
+
 
 def get_results_layout():
     return html.Div([
@@ -47,29 +49,32 @@ def get_results_layout():
 
 
         # Seção 1: Main Results Table
-        html.Div(id="main-results-table", className="section"),
+
+        # Adiciona a seção 1 da BioRemPP Results Table
+        html.Div(id="main-results-table", className="section"),  # ID para ancoragem no navbar
         html.Div([
             html.H5("BioRemPP Results Table", className="analysis-title"),
             html.P(
-                "This table presents the processed data merged with the BioRemPP database, offering a comprehensive overview of the input data and its matched records",
+                "This table presents the processed data merged with the BioRemPP database, offering a comprehensive overview of the input data and its matched records.",
                 className="analysis-description"
             ),
             html.P(
-                "The merged table reveals how well the input data aligns with the main database, providing insights into the completeness and relevance of the data",
+                "The merged table reveals how well the input data aligns with the main database, providing insights into the completeness and relevance of the data.",
                 className="analysis-insights"
             ),
             dbc.Accordion(
                 [
                     dbc.AccordionItem(
-                        html.Div(id='output-merge-table'),
+                        html.Div(get_biorempp_results_table_layout(), className="chart-container"),
                         title="Results Table"
                     )
                 ],
                 start_collapsed=True,
-                always_open=True,
+                always_open=False
             ),
         ], className="analysis-header"),
-        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size = "xs"),]),
+        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
+
 
 
 
@@ -684,7 +689,7 @@ def get_results_layout():
                 [
                     dbc.AccordionItem(
                         html.Div(get_toxicity_heatmap_layout(), className="chart-container"),
-                        title="Faceted Toxicity Heatmap"
+                        title="Toxicity Prediction Heatmap"
                     )
                 ],
                 start_collapsed=True,
