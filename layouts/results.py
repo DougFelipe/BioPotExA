@@ -231,6 +231,33 @@ def get_results_layout():
         ], className="analysis-header"),
         html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
 
+        
+                # Seção 18: Scatter Plot of KOs by Sample for Pathway
+        html.Div(id="sample-ko-scatter", className="section"),  # ID para link no navbar
+        html.Div([
+            html.H5("Sample-Compound Interactions in Xenobiotics Biodegradation Pathways", className="analysis-title"),
+            html.P(
+                "This scatter plot shows the distribution of genes across different samples for a specific pathway",
+                className="analysis-description"
+            ),
+            html.P(
+                "By analyzing this scatter plot, you can identify patterns of genes across samples, helping to pinpoint critical samples for specific pathways",
+                className="analysis-insights"
+            ),
+            dbc.Accordion(
+                [
+                    dbc.AccordionItem(
+                        html.Div(get_sample_ko_scatter_layout(), className="chart-container"),
+                        title="Scatter Plot of KOs by Sample"
+                    )
+                ],
+                start_collapsed=True,
+                always_open=False,
+            ),
+        ], className="analysis-header"),
+        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
+
+
 
         html.Div([
         html.H3("3 - Interactions Between Entities (Samples, Compounds, and Genes)", className="section-title"),
@@ -372,7 +399,7 @@ def get_results_layout():
         html.Div([
         html.H3("4 - Interaction-Based Rankings", className="section-title"),
         html.P(
-            "Prioritize samples or compounds based on specific interactions",
+            "Prioritize samples, genes or compounds based on specific interactions",
             className="section-objective"
         ),
             ], className="section-header"),
@@ -455,9 +482,9 @@ def get_results_layout():
         html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
 
         html.Div([
-        html.H3("5 - Heatmaps and Clustering", className="section-title"),
+        html.H3("5 - Patterns and Interactions with Heatmaps", className="section-title"),
         html.P(
-            "Explore complex relationships using heatmap and dendrogram visualizations",
+            "This session highlights associations between biological variables such as samples, genes, and pathways",
             className="section-objective"
         ),
              ], className="section-header"),
@@ -465,20 +492,20 @@ def get_results_layout():
                              # Seção 14: Heatmap of Samples vs Reference AG
         html.Div(id="sample-reference-heatmap", className="section"),  # ID para link no navbar
         html.Div([
-            html.H5("Heatmap of Samples vs Reference AG", className="analysis-title"),
+            html.H5("Sample-Reference Agency Associations Heatmap", className="analysis-title"),
             html.P(
-                "This heatmap displays the association between samples and reference AGs, highlighting compound occurrences and interactions",
+                "This heatmap displays the association between samples and reference agencies, highlighting compound occurrences and interactions",
                 className="analysis-description"
             ),
             html.P(
-                "By analyzing this heatmap, you can identify patterns and relationships between the samples and reference AGs, supporting further exploration of compound interactions",
+                "Analyze this heatmap to discover hotspots of compound activity linked to reference agencies",
                 className="analysis-insights"
             ),
             dbc.Accordion(
                 [
                     dbc.AccordionItem(
                         html.Div(get_sample_reference_heatmap_layout(), className="chart-container"),
-                        title="Heatmap of Samples vs Reference AG"
+                        title="Sample-Reference Agency Heatmap"
                     )
                 ],
                 start_collapsed=True,
@@ -490,20 +517,20 @@ def get_results_layout():
                         # Seção 16: Heatmap of Genes vs Samples
         html.Div(id="gene-sample-heatmap", className="section"),  # ID para link no navbar
         html.Div([
-            html.H5("Heatmap of Genes vs Samples", className="analysis-title"),
+            html.H5("Gene-Sample Association Heatmap", className="analysis-title"),
             html.P(
-                "This heatmap illustrates the relationship between genes and samples, showing unique associations through a color gradient",
+                "This heatmap illustrates the relationship between genes, pathways and samples, providing insights into unique relationships",
                 className="analysis-description"
             ),
             html.P(
-                "By analyzing this heatmap, you can identify trends and hotspots in the gene-sample interactions, providing insights into their biological relevance",
+                "By analyzing this heatmap, you can identify trends and hotspots in the gene-sample-pathways interactions, providing insights into their biological relevance",
                 className="analysis-insights"
             ),
             dbc.Accordion(
                 [
                     dbc.AccordionItem(
                         html.Div(get_gene_sample_heatmap_layout(), className="chart-container"),
-                        title="Genes vs Samples Heatmap"
+                        title="Gene-Sample Heatmap"
                     )
                 ],
                 start_collapsed=True,
@@ -515,20 +542,20 @@ def get_results_layout():
                 # Seção 17: Heatmap of Pathways vs Compound Pathways
         html.Div(id="pathway-heatmap", className="section"),  # ID para link no navbar
         html.Div([
-            html.H5("Heatmap of Pathways vs Compound Pathways", className="analysis-title"),
+            html.H5("Pathway-Compound Heatmap", className="analysis-title"),
             html.P(
-                "This heatmap visualizes the interaction between metabolic pathways and compound pathways, showing unique KO counts for each interaction",
+                "This heatmap visualizes the interaction between metabolic pathways and compound pathways across samples, highlighting gene activity",
                 className="analysis-description"
             ),
             html.P(
-                "Use this heatmap to explore how pathways and compound pathways are interconnected, identifying areas of higher KO activity",
+                "Use this heatmap to explore how pathways and compound pathways are interconnected for each sample",
                 className="analysis-insights"
             ),
             dbc.Accordion(
                 [
                     dbc.AccordionItem(
                         html.Div(get_pathway_heatmap_layout(), className="chart-container"),
-                        title="Pathways vs Compound Pathways Heatmap"
+                        title="Pathway-Compound Interaction Map"
                     )
                 ],
                 start_collapsed=True,
@@ -536,34 +563,6 @@ def get_results_layout():
             ),
         ], className="analysis-header"),
         html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
-
-                # Seção 18: Scatter Plot of KOs by Sample for Pathway
-        html.Div(id="sample-ko-scatter", className="section"),  # ID para link no navbar
-        html.Div([
-            html.H5("Scatter Plot of KOs by Sample for Pathway", className="analysis-title"),
-            html.P(
-                "This scatter plot visualizes the distribution of KOs across different samples for a specific pathway",
-                className="analysis-description"
-            ),
-            html.P(
-                "By analyzing this scatter plot, you can identify patterns of KO distribution across samples, helping to pinpoint critical samples for specific pathways",
-                className="analysis-insights"
-            ),
-            dbc.Accordion(
-                [
-                    dbc.AccordionItem(
-                        html.Div(get_sample_ko_scatter_layout(), className="chart-container"),
-                        title="Scatter Plot of KOs by Sample"
-                    )
-                ],
-                start_collapsed=True,
-                always_open=False,
-            ),
-        ], className="analysis-header"),
-        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
-
-
-
 
 
         html.Div([
