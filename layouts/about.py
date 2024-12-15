@@ -1,7 +1,6 @@
 # Importações necessárias
 from dash import html
 from layouts.data_analysis import get_dataAnalysis_layout  # Importa o layout da página Data Analysis
-from components.about_features_list import create_about_features_list
 
 # -------------------------------
 # Layout da Página "About"
@@ -43,9 +42,10 @@ def get_about_layout():
                         # Container de Imagens
                         html.Div(
                             [
-                                html.Img(src='/assets/images/KEGG_LOGO.gif', className='about-image'),  
+                                html.Img(src='/assets/images/CHEBI_LOGO.png', className='about-image'),  
                                 html.Img(src='/assets/images/PUBCHEM_LOGO.png', className='about-image'),  
                                 html.Img(src='/assets/images/NCBI_LOGO.png', className='about-image'),  
+                                html.Img(src='/assets/images/KEGG_LOGO.gif', className='about-image'),  
                                 html.Img(src='/assets/images/HADEG_LOGO.png', className='about-image'), 
                                 html.Img(src='/assets/images/TOXCSM_LOGO.png', className='about-image'),  
                             ],

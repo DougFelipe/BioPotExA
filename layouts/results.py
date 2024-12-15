@@ -17,9 +17,9 @@ from layouts.P7_compound_x_genesymbol_layoyt import get_gene_compound_scatter_la
 from layouts.P8_sample_x_genesymbol_layout import get_sample_gene_scatter_layout
 from layouts.P9_sample_x_referenceAG_layout import get_sample_reference_heatmap_layout
 from layouts.P10_sample_grouping_profile_layout import get_sample_groups_layout
-from layouts.P11_layout import get_gene_sample_heatmap_layout
-from layouts.P12_layout import get_pathway_heatmap_layout
-from layouts.P13_layout import get_sample_ko_scatter_layout
+from layouts.P11_gene_sample__heatmap_layout import get_gene_sample_heatmap_layout
+from layouts.P12_compaund_pathway_layout import get_pathway_heatmap_layout
+from layouts.P13_gene_sample_scatter_layout import get_sample_ko_scatter_layout
 from layouts.P14_sample_enzyme_activity_layout import get_sample_enzyme_activity_layout
 from layouts.P15_sample_clustering_layout import get_sample_clustering_layout
 from layouts.P16_sample_upset_layout import get_sample_upset_layout
@@ -718,8 +718,3 @@ def get_results_layout():
 
 
                
-
-
-
-
-
