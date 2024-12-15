@@ -770,20 +770,15 @@ body, html {
 /* Links inicialmente ocultos */
 .nav-links {
     display: none; /* Oculta os links inicialmente */
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px;
-    width: 100%; /* Garante a mesma largura do contêiner */
+    flex-wrap: nowrap; /* Impede a quebra para a próxima linha */
+    justify-content: space-between; /* Espaça os cards uniformemente */
+    align-items: stretch; /* Alinha verticalmente os cards */
+    gap: 16px; /* Espaçamento horizontal entre os cards */
+    width: 100%; /* Garante que ocupe toda a largura do contêiner */
     background-color: #F8F9FA;
-    padding: 10px; /* Espaçamento interno */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ao exibir */
-    border-top: 1px solid #ddd; /* Adiciona separação visual entre o subtítulo e os links */
-    position: absolute; /* Exibe os links abaixo */
-    top: 100%; /* Exibe logo abaixo do subtítulo */
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    transition: all 0.3s ease-in-out; /* Animação suave */
+    padding: 10px 20px; /* Adiciona espaço interno */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+    border-top: 1px solid #ddd;
 }
 
 /* Exibe os links ao passar o mouse no contêiner */
@@ -828,13 +823,21 @@ body, html {
 
 /* Ajustes para os cards */
 .nav-card {
-    width: 14%; /* Define a largura de cada card */
-    min-width: 150px; /* Largura mínima para não quebrar */
-    margin: 0 8px; /* Espaçamento horizontal entre os cards */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra nos cards */
-    border: 1px solid #ddd; /* Bordas sutis */
-    transition: transform 0.2s ease; /* Animação de hover */
+    flex: 1; /* Faz os cards ocuparem larguras iguais */
+    max-width: 14%; /* Define o máximo de espaço por card */
+    min-width: 150px; /* Define uma largura mínima para evitar que fique pequeno demais */
+    display: flex;
+    flex-direction: column; /* Organiza o título e links dentro do card */
+    align-items: center;
+    justify-content: flex-start; /* Deixa o conteúdo no topo */
+    padding: 20px; /* Espaçamento interno */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+    border: 1px solid #ddd; /* Bordas discretas */
+    border-radius: 10px; /* Bordas arredondadas */
+    background-color: #ffffff; /* Fundo branco */
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Animação suave */
 }
+
 
 .nav-card:hover {
     transform: scale(1.05); /* Efeito de hover nos cards */
