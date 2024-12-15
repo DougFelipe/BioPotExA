@@ -824,13 +824,13 @@ body, html {
 /* Ajustes para os cards */
 .nav-card {
     flex: 1; /* Faz os cards ocuparem larguras iguais */
-    max-width: 14%; /* Define o máximo de espaço por card */
-    min-width: 150px; /* Define uma largura mínima para evitar que fique pequeno demais */
+    max-width: 30%; /* Define o máximo de espaço por card */
+    min-width: 100px; /* Define uma largura mínima para evitar que fique pequeno demais */
     display: flex;
     flex-direction: column; /* Organiza o título e links dentro do card */
     align-items: center;
     justify-content: flex-start; /* Deixa o conteúdo no topo */
-    padding: 20px; /* Espaçamento interno */
+    padding: 2px; /* Espaçamento interno */
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
     border: 1px solid #ddd; /* Bordas discretas */
     border-radius: 10px; /* Bordas arredondadas */
