@@ -317,149 +317,147 @@ def plot_sample_ranking(sample_ranking_df):
     
     return fig
 
-# ----------------------------------------
-# P5_rank_compounds
-# ----------------------------------------
+
+
+
+# -------------------------------
+# Function: plot_compound_ranking (P5_rank_compounds)
+# -------------------------------
 
 def plot_compound_ranking(compound_ranking_df):
     """
-    Cria um gráfico de barras para visualizar o ranking dos compostos com base no número de amostras únicas.
+    Creates a bar chart to visualize the ranking of compounds based on the number of unique samples associated.
 
-    :param compound_ranking_df: DataFrame com os compostos e o número de amostras únicas associadas.
-    :return: Objeto Figure com o gráfico de barras.
+    Parameters:
+    - compound_ranking_df (pd.DataFrame): A DataFrame containing compounds and the count of unique samples.
+                                          Expected columns: 'compoundname', 'num_samples'.
+
+    Returns:
+    - plotly.graph_objects.Figure: A Plotly bar chart object showing the compound rankings.
     """
-    # Ordena os dados pelo número de amostras em ordem decrescente
+    # Sort the DataFrame by the number of samples in descending order
     compound_ranking_df = compound_ranking_df.sort_values(by='num_samples', ascending=False)
 
-    # Cria o gráfico de barras com valores textuais exibidos
+    # Create the bar chart with text labels displaying the sample counts
     fig = px.bar(
         compound_ranking_df,
         x='compoundname',
         y='num_samples',
-        text='num_samples',  # Adiciona valores textuais às barras
+        text='num_samples',  # Display sample counts on the bars
         title='Ranking of Compounds by Sample Interaction',
         template='simple_white'
     )
 
-    # Ajusta a posição do texto e o layout do gráfico
+    # Update trace and layout for better visualization
     fig.update_traces(
-        textposition='auto',  # Posiciona o texto sobre as barras
-        marker=dict(color='steelblue')  # Define a cor das barras
+        textposition='auto',  # Automatically position the text labels
+        marker=dict(color='steelblue')  # Set the bar color
     )
     fig.update_layout(
         xaxis_title='Compound',
         yaxis_title='Number of Samples',
         xaxis=dict(
-            categoryorder='total descending',
-            tickangle=45  # Rotaciona os rótulos do eixo X
+            categoryorder='total descending',  # Order compounds by descending sample count
+            tickangle=45  # Rotate x-axis labels for readability
         ),
-        uniformtext_minsize=10,  # Define um tamanho mínimo para o texto
-        uniformtext_mode='hide'  # Oculta textos que não cabem
+        uniformtext_minsize=10,  # Ensure a minimum text size
+        uniformtext_mode='hide'  # Hide text labels that do not fit
     )
 
     return fig
 
+# -------------------------------
+# Function: plot_compound_gene_ranking (P6_rank_genes)
+# -------------------------------
 
-# ----------------------------------------
-# P6_rank_genes
-# ----------------------------------------
 def plot_compound_gene_ranking(compound_gene_ranking_df):
     """
-    Cria um gráfico de barras para visualizar o ranking dos compostos com base no número de genes únicos atuantes.
+    Creates a bar chart to visualize the ranking of compounds based on the number of unique genes associated.
 
-    :param compound_gene_ranking_df: DataFrame com os compostos e o número de genes únicos atuantes.
-    :return: Objeto Figure com o gráfico de barras.
+    Parameters:
+    - compound_gene_ranking_df (pd.DataFrame): A DataFrame containing compounds and the count of unique genes.
+                                               Expected columns: 'compoundname', 'num_genes'.
+
+    Returns:
+    - plotly.graph_objects.Figure: A Plotly bar chart object showing the compound rankings.
     """
-    # Ordena os dados pelo número de genes em ordem decrescente
+    # Sort the DataFrame by the number of genes in descending order
     compound_gene_ranking_df = compound_gene_ranking_df.sort_values(by='num_genes', ascending=False)
 
-    # Cria o gráfico de barras com valores textuais exibidos
+    # Create the bar chart with text labels displaying the gene counts
     fig = px.bar(
         compound_gene_ranking_df,
         x='compoundname',
         y='num_genes',
-        text='num_genes',  # Adiciona valores textuais às barras
+        text='num_genes',  # Display gene counts on the bars
         title='Ranking of Compounds by Gene Interaction',
         template='simple_white'
     )
 
-    # Ajusta a posição do texto e o layout do gráfico
+    # Update trace and layout for better visualization
     fig.update_traces(
-        textposition='auto',  # Posiciona o texto automaticamente sobre as barras
-        marker=dict(color='steelblue')  # Define a cor das barras
+        textposition='auto',  # Automatically position the text labels
+        marker=dict(color='steelblue')  # Set the bar color
     )
     fig.update_layout(
         xaxis_title='Compound',
         yaxis_title='Number of Genes',
         xaxis=dict(
-            categoryorder='total descending',  # Ordena compostos em ordem decrescente
-            tickangle=45  # Rotaciona os rótulos do eixo X
+            categoryorder='total descending',  # Order compounds by descending gene count
+            tickangle=45  # Rotate x-axis labels for readability
         ),
-        uniformtext_minsize=10,  # Define um tamanho mínimo para o texto
-        uniformtext_mode='hide'  # Oculta textos que não cabem
+        uniformtext_minsize=10,  # Ensure a minimum text size
+        uniformtext_mode='hide'  # Hide text labels that do not fit
     )
 
     return fig
 
-
-# ----------------------------------------
-# P7_gene_compound_association
-# ----------------------------------------
+# -------------------------------
+# Function: plot_gene_compound_scatter (P7_gene_compound_association)
+# -------------------------------
 
 def plot_gene_compound_scatter(df):
     """
-    Cria um scatter plot para visualizar a relação entre genes e compostos, garantindo que todos os rótulos nos eixos X e Y 
-    estejam visíveis e que a ordenação seja feita com os compostos mais frequentes na parte superior.
+    Creates a scatter plot to visualize the relationship between genes and compounds. 
+    Adjusts layout dynamically to ensure visibility of all axis labels and prioritizes the most frequent compounds.
 
-    :param df: DataFrame filtrado contendo as colunas 'genesymbol' e 'compoundname'.
-    :return: Objeto Figure com o scatter plot.
+    Parameters:
+    - df (pd.DataFrame): A filtered DataFrame containing gene and compound associations.
+                         Expected columns: 'genesymbol', 'compoundname'.
+
+    Returns:
+    - plotly.graph_objects.Figure: A Plotly scatter plot object.
     """
-    # Define a altura base do gráfico e a altura adicional por rótulo excedente para o eixo Y
-    base_height = 400  # Altura base do gráfico
-    extra_height_per_label_y = 25  # Altura adicional por cada rótulo excedente no eixo Y
+    # Define base dimensions and adjustments for dynamic layout
+    base_height = 400  # Default chart height
+    extra_height_per_label_y = 25  # Extra height per unique y-axis label
+    base_width = 800  # Default chart width
+    extra_width_per_label_x = 10  # Extra width per unique x-axis label
 
-    # Define a largura base do gráfico e a largura adicional por rótulo excedente para o eixo X
-    base_width = 800  # Largura base do gráfico
-    extra_width_per_label_x = 10  # Largura adicional por cada rótulo excedente no eixo X
-
-    # Calcula o número de rótulos no eixo Y
+    # Calculate dynamic height based on the number of unique compounds
     num_labels_y = df['compoundname'].nunique()
+    label_limit_y = 1  # Minimum threshold to add extra height
+    height = base_height + (num_labels_y - label_limit_y) * extra_height_per_label_y if num_labels_y > label_limit_y else base_height
 
-    # Define um limite para quando adicionar altura extra
-    label_limit_y = 1  # Garante que a altura será ajustada mesmo com poucos rótulos
-
-    # Calcula a altura total do gráfico
-    if num_labels_y > label_limit_y:
-        height = base_height + (num_labels_y - label_limit_y) * extra_height_per_label_y
-    else:
-        height = base_height
-
-    # Calcula o número de rótulos no eixo X
+    # Calculate dynamic width based on the number of unique genes
     num_labels_x = df['genesymbol'].nunique()
+    label_limit_x = 10  # Minimum threshold to add extra width
+    width = base_width + (num_labels_x - label_limit_x) * extra_width_per_label_x if num_labels_x > label_limit_x else base_width
 
-    # Define um limite para quando adicionar largura extra
-    label_limit_x = 10  # Número de rótulos que cabem na largura base
-
-    # Calcula a largura total do gráfico
-    if num_labels_x > label_limit_x:
-        width = base_width + (num_labels_x - label_limit_x) * extra_width_per_label_x
-    else:
-        width = base_width
-
-    # Ordena os compostos pela frequência de ocorrência para priorizar os mais comuns no topo
+    # Order compounds by frequency for better visualization
     compound_order = df['compoundname'].value_counts().index.tolist()
 
-    # Cria o scatter plot
+    # Create the scatter plot
     fig = px.scatter(
         df,
         x='genesymbol',
         y='compoundname',
         title='Scatter Plot of Genes vs Compounds',
         template='simple_white',
-        category_orders={'compoundname': compound_order}  # Define a ordem do eixo Y
+        category_orders={'compoundname': compound_order}  # Set compound order for the y-axis
     )
 
-    # Ajusta o layout do gráfico
+    # Update chart layout to adjust margins, axis labels, and font size
     fig.update_layout(
         height=height,
         width=width,
@@ -468,24 +466,23 @@ def plot_gene_compound_scatter(df):
             tickmode='array',
             tickvals=df['compoundname'].unique(),
             ticktext=df['compoundname'].unique(),
-            automargin=True,  # Garante margens automáticas para rótulos longos
-            tickfont=dict(size=10),  # Ajusta o tamanho da fonte dos rótulos
+            automargin=True,
+            tickfont=dict(size=10)
         ),
         xaxis=dict(
-            tickangle=45,  # Rotaciona os rótulos do eixo X
+            title='Gene Symbol',
+            tickangle=45,
             tickmode='array',
             tickvals=df['genesymbol'].unique(),
             ticktext=df['genesymbol'].unique(),
-            automargin=True,  # Garante margens automáticas para rótulos longos
-            tickfont=dict(size=10),  # Ajusta o tamanho da fonte dos rótulos do eixo X
+            automargin=True,
+            tickfont=dict(size=10)
         ),
-        xaxis_title='Gene Symbol',
         yaxis_title='Compound Name',
-        margin=dict(l=200, b=100)  # Adiciona margens extras para os eixos X e Y
+        margin=dict(l=200, b=100)  # Adjust margins for long labels
     )
 
     return fig
-
 
 # ----------------------------------------
 # P8_gene_sample_association
