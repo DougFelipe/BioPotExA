@@ -244,49 +244,76 @@ def process_compound_data(merged_df):
 # Função para processar ranking de amostras
 # utils/data_processing.py
 
-# ----------------------------------------
-# P4_rank_samples
-# ----------------------------------------
+# -------------------------------
+# Function: process_sample_ranking (P4_rank_samples)
+# -------------------------------
+
 def process_sample_ranking(merged_df):
     """
-    Processa os dados para calcular o número de compostos únicos associados a cada amostra.
+    Processes the data to calculate the number of unique compounds associated with each sample.
 
-    :param merged_df: DataFrame resultante da mesclagem com o banco de dados.
-    :return: DataFrame com as amostras e o número de compostos únicos associados.
+    Parameters:
+    - merged_df (pd.DataFrame): The DataFrame resulting from merging with the database.
+
+    Returns:
+    - pd.DataFrame: A DataFrame containing the samples and the count of unique compounds, 
+                    sorted in descending order of compound count.
     """
+    # Group by 'sample' and calculate the number of unique 'compoundname' entries for each sample.
     sample_ranking = merged_df.groupby('sample')['compoundname'].nunique().reset_index(name='num_compounds')
+    
+    # Sort the results by the number of unique compounds in descending order.
     sample_ranking = sample_ranking.sort_values(by='num_compounds', ascending=False)
+    
+    # Return the resulting ranked DataFrame.
     return sample_ranking
 
-
-# ----------------------------------------
-# P5_rank_compounds
-# ----------------------------------------
+# -------------------------------
+# Function: process_compound_ranking (P5_rank_compounds)
+# -------------------------------
 
 def process_compound_ranking(merged_df):
     """
-    Processa os dados para calcular o número de amostras únicas associadas a cada composto.
+    Processes the data to calculate the number of unique samples associated with each compound.
 
-    :param merged_df: DataFrame resultante da mesclagem com o banco de dados.
-    :return: DataFrame com os compostos e o número de amostras únicas associadas.
+    Parameters:
+    - merged_df (pd.DataFrame): The DataFrame resulting from merging with the database.
+
+    Returns:
+    - pd.DataFrame: A DataFrame containing the compounds and the count of unique samples, 
+                    sorted in descending order of sample count.
     """
+    # Group by 'compoundname' and calculate the number of unique 'sample' entries for each compound.
     compound_ranking = merged_df.groupby('compoundname')['sample'].nunique().reset_index(name='num_samples')
+    
+    # Sort the results by the number of unique samples in descending order.
     compound_ranking = compound_ranking.sort_values(by='num_samples', ascending=False)
+    
+    # Return the resulting ranked DataFrame.
     return compound_ranking
 
+# -------------------------------
+# Function: process_compound_gene_ranking (P6_rank_genes)
+# -------------------------------
 
-# ----------------------------------------
-# P6_rank_genes
-# ----------------------------------------
 def process_compound_gene_ranking(merged_df):
     """
-    Processa os dados para calcular o número de genes únicos atuantes em cada composto.
+    Processes the data to calculate the number of unique genes associated with each compound.
 
-    :param merged_df: DataFrame resultante da mesclagem com o banco de dados.
-    :return: DataFrame com os compostos e o número de genes únicos atuantes.
+    Parameters:
+    - merged_df (pd.DataFrame): The DataFrame resulting from merging with the database.
+
+    Returns:
+    - pd.DataFrame: A DataFrame containing the compounds and the count of unique genes, 
+                    sorted in descending order of gene count.
     """
+    # Group by 'compoundname' and calculate the number of unique 'genesymbol' entries for each compound.
     compound_gene_ranking = merged_df.groupby('compoundname')['genesymbol'].nunique().reset_index(name='num_genes')
+    
+    # Sort the results by the number of unique genes in descending order.
     compound_gene_ranking = compound_gene_ranking.sort_values(by='num_genes', ascending=False)
+    
+    # Return the resulting ranked DataFrame.
     return compound_gene_ranking
 
 
