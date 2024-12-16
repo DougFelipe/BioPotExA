@@ -113,76 +113,133 @@ def merge_with_toxcsm(merged_df: pd.DataFrame, toxcsm_filepath: str = 'data/data
 
 
 
-# ----------------------------------------
-# P1_COUNT_KO
-# ----------------------------------------
+"""
+P1_COUNT_KO
+-----------
+This script contains utility functions to process KO (KEGG Orthology) data, 
+including counting unique KOs per sample, pathway, or other groupings. 
+It also includes basic preprocessing functions for compound data visualization.
+"""
 
-# Função para processar dados de KO
+# -------------------------------
+# Function: process_ko_data
+# -------------------------------
+
 def process_ko_data(merged_df):
     """
-    Processa os dados de KO, contando os KOs únicos por amostra.
+    Processes KO data to count unique KOs for each sample.
 
-    :param merged_df: DataFrame com os dados mesclados ou uma lista de dicionários que possa ser convertida para DataFrame.
-    :return: DataFrame com a contagem de KOs únicos por amostra.
+    Parameters:
+    - merged_df: DataFrame with merged data or a list of dictionaries convertible to a DataFrame.
+
+    Returns:
+    - pd.DataFrame: A DataFrame containing the count of unique KOs per sample, sorted in descending order.
     """
-    if isinstance(merged_df, list):  # Verifica se merged_df é uma lista e converte para DataFrame
+    if isinstance(merged_df, list):
+        # Convert the list of dictionaries to a pandas DataFrame if needed.
         merged_df = pd.DataFrame(merged_df)
     elif not isinstance(merged_df, pd.DataFrame):
-        raise ValueError("O argumento merged_df deve ser um pandas DataFrame ou uma lista de dicionários.")
+        # Raise an error if the input is not a DataFrame or a list of dictionaries.
+        raise ValueError("The merged_df argument must be a pandas DataFrame or a list of dictionaries.")
+    
+    # Count unique 'ko' values for each 'sample'.
+    ko_count = merged_df.groupby('sample')['ko'].nunique().reset_index(name='ko_count')
+    
+    # Sort the results by the count of KOs in descending order.
+    ko_count_sorted = ko_count.sort_values('ko_count', ascending=False)
+    
+    # Return the sorted DataFrame with KO counts.
+    return ko_count_sorted
 
-    ko_count = merged_df.groupby('sample')['ko'].nunique().reset_index(name='ko_count')  # Contagem de 'ko' únicos por 'sample'
-    ko_count_sorted = ko_count.sort_values('ko_count', ascending=False)  # Ordenar os dados pela contagem de KOs em ordem decrescente
+# -------------------------------
+# Function: process_ko_data_violin
+# -------------------------------
 
-    return ko_count_sorted  # Retorna o DataFrame com a contagem de KOs
-
-# Função para processar dados para gráfico de violino
 def process_ko_data_violin(df):
     """
-    Processa os dados para obter a contagem de KOs únicos por amostra.
+    Processes KO data for generating violin plots by counting unique KOs per sample.
 
-    :param df: DataFrame com os dados de entrada.
-    :return: DataFrame com a contagem de KOs por amostra.
+    Parameters:
+    - df: DataFrame containing input data.
+
+    Returns:
+    - pd.DataFrame: A DataFrame with the count of unique KOs per sample.
     """
-    ko_count_per_sample = df.groupby('sample')['ko'].nunique().reset_index(name='ko_count')  # Contagem de KOs únicos por amostra
-    return ko_count_per_sample  # Retorna o DataFrame com a contagem de KOs
+    # Count unique 'ko' values for each 'sample'.
+    ko_count_per_sample = df.groupby('sample')['ko'].nunique().reset_index(name='ko_count')
+    
+    # Return the DataFrame with KO counts.
+    return ko_count_per_sample
 
-# Função para contar KOs por pathway
+# -------------------------------
+# Function: count_ko_per_pathway
+# -------------------------------
+
 def count_ko_per_pathway(merged_df):
     """
-    Conta os KOs únicos para cada pathway em cada amostra.
+    Counts unique KOs for each pathway in each sample.
 
-    :param merged_df: DataFrame resultante da mesclagem com os dados do KEGG.
-    :return: DataFrame com a contagem de KOs únicos por pathway por amostra.
+    Parameters:
+    - merged_df: DataFrame resulting from merging with KEGG data.
+
+    Returns:
+    - pd.DataFrame: A DataFrame containing the count of unique KOs per pathway for each sample.
+
+    Raises:
+    - KeyError: If the 'pathname' column is not present in the input DataFrame.
     """
-    if 'pathname' not in merged_df.columns:  # Verificar se a coluna 'pathname' existe
-        print("As colunas disponíveis no DataFrame são:", merged_df.columns)
-        raise KeyError("'pathname' não encontrada no DataFrame.")
+    # Check if the 'pathname' column exists in the DataFrame.
+    if 'pathname' not in merged_df.columns:
+        print("The available columns in the DataFrame are:", merged_df.columns)
+        raise KeyError("'pathname' column not found in the DataFrame.")
+    
+    # Group by 'sample' and 'pathname', counting unique 'ko' values.
+    pathway_count = merged_df.groupby(['sample', 'pathname'])['ko'].nunique().reset_index(name='unique_ko_count')
+    
+    # Return the DataFrame with KO counts per pathway.
+    return pathway_count
 
-    pathway_count = merged_df.groupby(['sample', 'pathname'])['ko'].nunique().reset_index(name='unique_ko_count')  # Contagem de KOs únicos por pathway
-    return pathway_count  # Retorna o DataFrame com a contagem de KOs por pathway
+# -------------------------------
+# Function: count_ko_per_sample_for_pathway
+# -------------------------------
 
-# Função para contar KOs por sample para uma via metabólica
 def count_ko_per_sample_for_pathway(merged_df, selected_pathway):
     """
-    Conta os KOs únicos para uma via metabólica em cada sample.
+    Counts unique KOs for a specific pathway in each sample.
 
-    :param merged_df: DataFrame resultante da mesclagem com os dados do KEGG.
-    :param selected_pathway: A via metabólica selecionada.
-    :return: DataFrame com a contagem de KOs únicos por sample para a via selecionada.
+    Parameters:
+    - merged_df: DataFrame resulting from merging with KEGG data.
+    - selected_pathway: The selected pathway to filter data.
+
+    Returns:
+    - pd.DataFrame: A DataFrame containing the count of unique KOs per sample for the selected pathway.
     """
-    filtered_df = merged_df[merged_df['pathname'] == selected_pathway]  # Filtra o DataFrame pela via selecionada
-    sample_count = filtered_df.groupby('sample')['ko'].nunique().reset_index(name='unique_ko_count')  # Contagem de KOs únicos por sample
-    return sample_count.sort_values('unique_ko_count', ascending=False)  # Retorna o DataFrame ordenado pela contagem de KOs
+    # Filter the DataFrame to include only the selected pathway.
+    filtered_df = merged_df[merged_df['pathname'] == selected_pathway]
+    
+    # Group by 'sample', counting unique 'ko' values.
+    sample_count = filtered_df.groupby('sample')['ko'].nunique().reset_index(name='unique_ko_count')
+    
+    # Sort the results by KO count in descending order.
+    return sample_count.sort_values('unique_ko_count', ascending=False)
 
-# Função para processar dados de compostos P4
+# -------------------------------
+# Function: process_compound_data
+# -------------------------------
+
 def process_compound_data(merged_df):
     """
-    Processa os dados para o gráfico de pontos de compostos.
+    Processes data for compound scatter plot visualization.
 
-    :param merged_df: DataFrame com os dados mesclados.
-    :return: DataFrame processado.
+    Parameters:
+    - merged_df: DataFrame containing merged data.
+
+    Returns:
+    - pd.DataFrame: The input DataFrame, potentially modified for visualization.
     """
-    return merged_df  # Lógica de processamento aqui, se necessário
+    # Currently, the function returns the input DataFrame as is.
+    # Additional processing logic can be implemented if needed.
+    return merged_df
 
 # Função para processar ranking de amostras
 # utils/data_processing.py
