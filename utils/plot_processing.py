@@ -155,89 +155,88 @@ def plot_pathway_ko_counts(pathway_count_df, selected_sample):
     # Return the final figure.
     return fig
 
+# -------------------------------
+# Function: plot_sample_ko_counts
+# -------------------------------
 
-# Função para plotar o gráfico de barras
 def plot_sample_ko_counts(sample_count_df, selected_pathway):
     """
-    Plota um gráfico de barras dos KOs únicos para uma via metabólica selecionada em cada sample.
+    Creates a bar chart showing the count of unique KOs for a selected metabolic pathway across samples.
 
-    :param sample_count_df: DataFrame com a contagem de KOs únicos por sample para a via selecionada.
-    :param selected_pathway: A via metabólica selecionada.
-    :return: Objeto Figure com o gráfico de barras.
+    Parameters:
+    - sample_count_df (pd.DataFrame): A DataFrame containing KO counts per sample for the selected pathway.
+                                      Expected columns: 'sample', 'unique_ko_count'.
+    - selected_pathway (str): The name of the selected metabolic pathway.
+
+    Returns:
+    - plotly.graph_objects.Figure: A Plotly bar chart object visualizing KO counts.
     """
-    # Verificação dos dados de entrada
+    # Validate input data
     if sample_count_df.empty:
-        raise ValueError("O DataFrame de contagem de amostras está vazio.")
+        raise ValueError("The sample count DataFrame is empty.")
     
     if 'sample' not in sample_count_df.columns or 'unique_ko_count' not in sample_count_df.columns:
-        raise ValueError("O DataFrame de contagem de amostras não contém as colunas necessárias: 'sample' e 'unique_ko_count'.")
-
-    # Verificando se há valores inválidos nas colunas 'sample' e 'unique_ko_count'
+        raise ValueError("The DataFrame must contain 'sample' and 'unique_ko_count' columns.")
+    
     if sample_count_df['sample'].isnull().any() or sample_count_df['unique_ko_count'].isnull().any():
-        raise ValueError("Há valores nulos nas colunas 'sample' ou 'unique_ko_count'.")
-
+        raise ValueError("Null values detected in 'sample' or 'unique_ko_count' columns.")
+    
+    # Create the bar chart
     fig = px.bar(
         sample_count_df,
         x='sample',
         y='unique_ko_count',
         title=f'Unique Gene Count for Pathway: {selected_pathway}',
-        text='unique_ko_count',
+        text='unique_ko_count',  # Display KO counts on bars
         template="simple_white"
     )
+    
+    # Update chart layout
     fig.update_layout(
         xaxis_title='Sample',
         yaxis_title='Unique Gene Count',
-        xaxis={'categoryorder':'total descending'},
-        xaxis_tickangle=45
+        xaxis={'categoryorder': 'total descending'},  # Order samples by descending KO count
+        xaxis_tickangle=45  # Rotate x-axis labels
     )
+    
     return fig
 
+# -------------------------------
+# Function: plot_compound_scatter
+# -------------------------------
 
-
-#get_compound_scatter_layout
-#get_compound_scatter_layout
 def plot_compound_scatter(df):
     """
-    Cria um gráfico de dispersão para visualizar a relação entre amostras e compostos,
-    recalculando o layout dinamicamente para cada novo conjunto de dados.
+    Creates a scatter plot to visualize the relationship between samples and compounds,
+    with dynamically adjusted layout based on data size.
 
-    :param df: DataFrame filtrado contendo as colunas 'sample', 'compoundname', e 'compoundclass'.
-    :return: Objeto Figure com o gráfico de dispersão.
+    Parameters:
+    - df (pd.DataFrame): A filtered DataFrame containing columns 'sample', 'compoundname', and 'compoundclass'.
+
+    Returns:
+    - plotly.graph_objects.Figure: A Plotly scatter plot object.
     """
-    # Certifica-se de que o DataFrame não está vazio
     if df.empty:
-        raise ValueError("O DataFrame está vazio. Não há dados para exibir.")
-
-    # Define parâmetros base
-    base_height = 400  # Altura base do gráfico
-    base_width = 800   # Largura base do gráfico
-    extra_width_per_label = 10  # Largura extra por rótulo adicional no eixo X
-    label_limit_x = 20  # Limite de rótulos no eixo X antes de ajustar a largura
-
-    # Calcula o número de rótulos únicos no eixo X (samples)
-    num_labels_x = df['sample'].nunique()
-
-    # Ajusta a largura do gráfico dinamicamente
-    if num_labels_x > label_limit_x:
-        width = base_width + (num_labels_x - label_limit_x) * extra_width_per_label
-    else:
-        width = base_width
-
-    # Calcula a altura do gráfico com base nos rótulos do eixo Y (compoundname)
+        raise ValueError("The DataFrame is empty. No data to display.")
+    
+    # Base layout parameters
     base_height = 400
+    base_width = 800
+    extra_width_per_label = 10
+    label_limit_x = 20
+
+    # Calculate dynamic chart dimensions
+    num_labels_x = df['sample'].nunique()
+    width = base_width + (num_labels_x - label_limit_x) * extra_width_per_label if num_labels_x > label_limit_x else base_width
+
     extra_height_per_label = 15
     num_labels_y = df['compoundname'].nunique()
-    label_limit_y = 1
+    height = base_height + (num_labels_y - 1) * extra_height_per_label if num_labels_y > 1 else base_height
 
-    if num_labels_y > label_limit_y:
-        height = base_height + (num_labels_y - label_limit_y) * extra_height_per_label
-    else:
-        height = base_height
+    # Dynamic tick spacing for x-axis
+    tick_spacing_x = max(1, num_labels_x // 20)
 
-    # Define espaçamento dinâmico para rótulos no eixo X
-    tick_spacing_x = max(1, num_labels_x // 20)  # Exibe no máximo 20 rótulos no eixo X
-
-    # Cria o scatter plot
+    # Create the scatter plot
     fig = px.scatter(
         df,
         x='sample',
@@ -245,65 +244,64 @@ def plot_compound_scatter(df):
         title='Scatter Plot of Samples vs Compounds',
         template='simple_white'
     )
-
-    # Recalcula o layout e garante configurações consistentes
+    
+    # Update chart layout
     fig.update_layout(
         height=height,
         width=width,
         yaxis=dict(
             categoryorder='total ascending',
-            title='Compoundname',  # Rótulo do eixo Y
+            title='Compoundname',
             tickmode='array',
             tickvals=df['compoundname'].unique(),
             ticktext=df['compoundname'].unique(),
             automargin=True,
-            tickfont=dict(size=10),
+            tickfont=dict(size=10)
         ),
         xaxis=dict(
-            title='Sample',  # Rótulo do eixo X
-            tickangle=45,  # Rotaciona rótulos no eixo X em 45 graus
+            title='Sample',
+            tickangle=45,
             tickmode='linear',
             tickvals=df['sample'].unique()[::tick_spacing_x],
             ticktext=df['sample'].unique()[::tick_spacing_x],
-            automargin=True,
+            automargin=True
         ),
-        margin=dict(l=200, b=150)  # Margens para rótulos longos
+        margin=dict(l=200, b=150)
     )
-
+    
     return fig
 
-
-
-
-
-
-# utils/plot_processing.py
-
-import plotly.express as px
+# -------------------------------
+# Function: plot_sample_ranking
+# -------------------------------
 
 def plot_sample_ranking(sample_ranking_df):
     """
-    Cria um gráfico de barras para visualizar o ranking das amostras com base no número de compostos únicos.
+    Creates a bar chart to visualize the ranking of samples based on the number of unique compounds.
 
-    :param sample_ranking_df: DataFrame com as amostras e o número de compostos únicos associados.
-    :return: Objeto Figure com o gráfico de barras.
+    Parameters:
+    - sample_ranking_df (pd.DataFrame): A DataFrame containing sample rankings by unique compounds.
+                                        Expected columns: 'sample', 'num_compounds'.
+
+    Returns:
+    - plotly.graph_objects.Figure: A Plotly bar chart object visualizing sample rankings.
     """
-    # Ordena os dados pelo número de compostos em ordem decrescente
+    # Sort the DataFrame by the number of compounds in descending order
     sample_ranking_df = sample_ranking_df.sort_values(by='num_compounds', ascending=False)
 
-    # Cria o gráfico de barras com valores textuais
+    # Create the bar chart
     fig = px.bar(
         sample_ranking_df,
         x='sample',
         y='num_compounds',
-        text='num_compounds',  # Adiciona valores textuais às barras
+        text='num_compounds',  # Display the number of compounds on the bars
         template='simple_white'
     )
-
-    # Ajusta o layout e os textos do gráfico
+    
+    # Update chart layout
     fig.update_traces(
         textposition='auto',
-        marker=dict(color='steelblue')  # Define a cor das barras
+        marker=dict(color='steelblue')  # Set bar color
     )
     fig.update_layout(
         title='Ranking of Samples by Compound Interaction',
@@ -311,13 +309,13 @@ def plot_sample_ranking(sample_ranking_df):
         yaxis_title='Number of Compounds',
         xaxis=dict(
             categoryorder='total descending',
-            tickangle=45  # Rotaciona os rótulos do eixo X
+            tickangle=45  # Rotate x-axis labels
         ),
         uniformtext_minsize=10,
         uniformtext_mode='hide'
     )
+    
     return fig
-
 
 # ----------------------------------------
 # P5_rank_compounds
