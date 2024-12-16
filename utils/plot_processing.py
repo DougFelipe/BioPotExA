@@ -1,116 +1,160 @@
+"""
+plot_processing.py
+------------------
+This script contains functions for creating various plots using Plotly
+
+"""
+
+# -------------------------------
+# Imports
+# -------------------------------
+
+# Import Plotly modules for visualization.
 import plotly.express as px
 import plotly.graph_objects as go
-import pandas as pd
 from plotly.subplots import make_subplots
+
+# Import pandas for data manipulation.
+import pandas as pd
+
+# Import math for mathematical operations (if needed).
 import math
+
+# Import data processing utilities.
 from utils.data_processing import prepare_upsetplot_data
-from utils.data_processing import merge_input_with_database  # Importa a função de merge
+from utils.data_processing import merge_input_with_database
 
-
+# -------------------------------
+# Function: plot_ko_count
+# -------------------------------
 
 def plot_ko_count(ko_count_df):
     """
-    Cria um gráfico de barras da contagem de KOs por amostra com base no DataFrame processado.
-    Inclui os valores acima das barras.
+    Creates a bar chart showing the count of unique KOs (genes) per sample.
 
-    :param ko_count_df: DataFrame com a contagem de KOs por amostra.
-    :return: Objeto Figure com o gráfico de barras.
+    Parameters:
+    - ko_count_df (pd.DataFrame): A DataFrame containing the KO counts per sample. 
+                                  Expected columns: 'sample', 'ko_count'.
+
+    Returns:
+    - plotly.graph_objects.Figure: A Plotly bar chart object with KO counts.
     """
-    # Criação do gráfico com valores textuais exibidos
+    # Create the bar chart and display the KO counts as text on the bars.
     fig = px.bar(
         ko_count_df, 
         x='sample', 
         y='ko_count', 
-        text='ko_count',  # Adiciona os valores da coluna `ko_count` como texto
-        template="simple_white"
+        text='ko_count',  # Display KO counts as text labels.
+        template="simple_white"  # Use the "simple_white" template for clean styling.
     )
     
-    # Ajustar a posição do texto e o layout do gráfico
+    # Update trace properties: text position and bar color.
     fig.update_traces(
-        textposition='auto',  # Posiciona o texto fora das barras
-        marker=dict(color='steelblue')  # Configura a cor das barras
+        textposition='auto',  # Automatically position the text above or inside bars.
+        marker=dict(color='steelblue')  # Set the bar color to 'steelblue'.
     )
     
+    # Update layout with titles, axis properties, and text formatting.
     fig.update_layout(
         title="Gene Count by Sample",
         xaxis_title='Sample',
         yaxis_title='Unique Gene Count',
-        xaxis={'categoryorder': 'total descending'},
-        xaxis_tickangle=45,  # Inclina os rótulos do eixo X
-        uniformtext_minsize=10,  # Garante tamanho mínimo do texto
-        uniformtext_mode='hide'  # Oculta texto que não couber
+        xaxis={'categoryorder': 'total descending'},  # Order categories based on descending values.
+        xaxis_tickangle=45,  # Rotate x-axis labels for better readability.
+        uniformtext_minsize=10,  # Ensure a minimum font size for text labels.
+        uniformtext_mode='hide'  # Hide text labels that don't fit in the bars.
     )
     
+    # Return the final figure.
     return fig
 
+# -------------------------------
+# Function: create_violin_plot
+# -------------------------------
 
 def create_violin_plot(ko_count_per_sample):
     """
-    Cria um gráfico de violino com caixa para a contagem de KOs únicos por amostra.
+    Creates a violin plot with a boxplot overlay to visualize the distribution of unique KO counts per sample.
 
-    :param ko_count_per_sample: DataFrame com a contagem de KOs por amostra.
-    :return: Objeto Figure com o gráfico de violino.
+    Parameters:
+    - ko_count_per_sample (pd.DataFrame): A DataFrame containing the KO counts per sample. 
+                                          Expected column: 'ko_count'.
+
+    Returns:
+    - plotly.graph_objects.Figure: A Plotly violin plot object.
     """
+    # Create the violin plot with box overlay and display all points.
+    fig = px.violin(
+        ko_count_per_sample,
+        y='ko_count',
+        box=True,  # Add a boxplot overlay.
+        points='all',  # Display all points on the plot.
+        hover_name='sample',  # Show sample name on hover.
+        hover_data={'sample': False, 'ko_count': True},  # Include 'ko_count' and hide 'sample' hover data.
+        template="simple_white"  # Use a clean template.
+    )
 
-    fig = go.Figure()
+    # Update trace properties: marker size, opacity, and jitter for better visualization.
+    fig.update_traces(
+        marker=dict(size=5, opacity=1),  # Set point size and opacity.
+        line=dict(width=1),  # Set line width.
+        jitter=0.3,  # Add jitter to points for better separation.
+        pointpos=0  # Center points within the violin.
+    )
 
-    # Adiciona o boxplot
-    # Adiciona o boxplot com pontos individuais
-     # Cria o gráfico de violino
-    fig = px.violin(ko_count_per_sample, y='ko_count', box=True, points='all',
-                    hover_name='sample', hover_data={'sample': False, 'ko_count': True}, template="simple_white")
-    
+    # Update the layout with axis titles and styling.
+    fig.update_layout(
+        yaxis_title='Unique Gene Count',
+        showlegend=False,  # Hide the legend.
+        template='plotly_white',  # Use a clean white template.
+        xaxis_title=''  # Remove the x-axis title.
+    )
 
-    
-    fig.update_traces(marker=dict(size=5, opacity=1),
-                      line=dict(width=1),
-                      jitter=0.3, pointpos=0)
-
-    # Atualiza o layout do gráfico
-    fig.update_layout(yaxis_title='Unique Gene Count',
-                      showlegend=False, template='plotly_white',
-                      #yaxis=dict(range=[0, ko_count_per_sample['ko_count'].max() + 100]),
-                      xaxis_title='')  # Definindo o título do eixo x como vazio
-
+    # Return the final figure.
     return fig
 
-
-# ----------------------------------------
-# Plots p/ analise das 20 vias
-# ----------------------------------------
+# -------------------------------
+# Function: plot_pathway_ko_counts
+# -------------------------------
 
 def plot_pathway_ko_counts(pathway_count_df, selected_sample):
     """
-    Plota um gráfico de barras dos KOs únicos para cada pathway na amostra selecionada.
+    Creates a bar chart showing the count of unique KOs for each pathway in a selected sample.
 
-    :param pathway_count_df: DataFrame com a contagem de KOs únicos por pathway por amostra.
-    :param selected_sample: Amostra selecionada para o plot.
-    :return: Objeto Figure com o gráfico de barras.
+    Parameters:
+    - pathway_count_df (pd.DataFrame): A DataFrame containing KO counts grouped by pathways and samples.
+                                       Expected columns: 'sample', 'pathname', 'unique_ko_count'.
+    - selected_sample (str): The sample name to filter the data.
+
+    Returns:
+    - plotly.graph_objects.Figure: A Plotly bar chart object showing KO counts per pathway.
     """
-    # Filtrar o DataFrame pela amostra selecionada
+    # Filter the DataFrame to include only the data for the selected sample.
     filtered_df = pathway_count_df[pathway_count_df['sample'] == selected_sample]
 
-    # Ordenar os valores de forma decrescente pela contagem de KOs únicos
+    # Sort the filtered data by KO count in descending order.
     filtered_df = filtered_df.sort_values('unique_ko_count', ascending=False)
 
-    # Plotar o gráfico de barras
+    # Create the bar chart with KO counts displayed as text.
     fig = px.bar(
         filtered_df,
-        x='pathname',  # Certifique-se de que 'pathway' é o nome correto da coluna no seu DataFrame
-        y='unique_ko_count',
-        title=f'Unique Gene Count to {selected_sample}',
-        text='unique_ko_count',  # Adiciona o valor da contagem sobre as barras
-        template="simple_white"
+        x='pathname',  # Pathway names on the x-axis.
+        y='unique_ko_count',  # KO counts on the y-axis.
+        title=f'Unique Gene Count to {selected_sample}',  # Dynamic title with the selected sample name.
+        text='unique_ko_count',  # Display KO counts as text on the bars.
+        template="simple_white"  # Use the "simple_white" template for clean styling.
     )
 
-    # Ajustar o layout do gráfico, se necessário
+    # Update the layout with axis titles and sorting options.
     fig.update_layout(
-        xaxis_title='Pathway',
-        yaxis_title='Unique Gene Count',
-        xaxis={'categoryorder':'total descending'}  # Garante que a ordenação será mantida no gráfico
+        xaxis_title='Pathway',  # Label for the x-axis.
+        yaxis_title='Unique Gene Count',  # Label for the y-axis.
+        xaxis={'categoryorder': 'total descending'}  # Order pathways by descending KO count.
     )
 
+    # Return the final figure.
     return fig
+
 
 # Função para plotar o gráfico de barras
 def plot_sample_ko_counts(sample_count_df, selected_pathway):

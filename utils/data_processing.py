@@ -9,18 +9,17 @@ for integrating input data with various external databases such as KEGG, HADEG, 
 # Imports
 # -------------------------------
 
-# Import pandas for data manipulation and handling DataFrame structures.
+# Data manipulation and handling DataFrame structures.
 import pandas as pd
 
-# Import Plotly modules for creating visualizations (currently unused but included for extensibility).
+# Plotly modules for creating visualizations (unused in the current script but included for extensibility).
 import plotly.graph_objects as go
 import plotly.express as px
 from plotly.subplots import make_subplots
 
+# Scipy modules for distance calculations and hierarchical clustering.
 import scipy.spatial.distance as ssd
 import scipy.cluster.hierarchy as sch
-import pandas as pd
-
 # -------------------------------
 # Functions for Data Merging
 # -------------------------------
