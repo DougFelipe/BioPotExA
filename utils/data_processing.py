@@ -1,88 +1,117 @@
-# my_dash_app/utils/data_processing.py
+"""
+data_processing.py
+------------------
+This script contains utility functions for processing and merging data, specifically tailored 
+for integrating input data with various external databases such as KEGG, HADEG, and ToxCSM.
+"""
 
+# -------------------------------
+# Imports
+# -------------------------------
 
+# Import pandas for data manipulation and handling DataFrame structures.
 import pandas as pd
+
+# Import Plotly modules for creating visualizations (currently unused but included for extensibility).
 import plotly.graph_objects as go
 import plotly.express as px
 from plotly.subplots import make_subplots
 
-# ----------------------------------------
-# Funções de Mesclagem de Dados
-# ----------------------------------------
+# -------------------------------
+# Functions for Data Merging
+# -------------------------------
 
-# Função para mesclar dados de entrada com o banco de dados
-def merge_input_with_database(input_data, database_filepath='data/database.xlsx'):
+def merge_input_with_database(input_data: pd.DataFrame, database_filepath: str = 'data/database.xlsx') -> pd.DataFrame:
     """
-    Mescla os dados de entrada com os dados do banco de dados.
+    Merges input data with the main database.
+
+    Parameters:
+    - input_data (pd.DataFrame): The input data to be merged.
+    - database_filepath (str): Path to the Excel file containing the database. Default is 'data/database.xlsx'.
+
+    Returns:
+    - pd.DataFrame: The merged DataFrame.
+    """
+    # Load the database from the specified file.
+    database_df = pd.read_excel(database_filepath)
     
-    :param input_data: DataFrame com os dados de entrada.
-    :param database_filepath: Caminho para o arquivo do banco de dados.
-    :return: DataFrame resultante da mesclagem.
-    """
-    database_df = pd.read_excel(database_filepath)  # Carrega os dados do banco de dados
-    merged_df = pd.merge(input_data, database_df, on='ko', how='inner')  # Mescla os DataFrames
-    return merged_df  # Retorna o DataFrame mesclado
-
-# Função para mesclar dados de entrada com os dados do KEGG
-def merge_with_kegg(input_df, kegg_path='data/kegg_20degradation_pathways.xlsx'):
-    """
-    Mescla os dados de entrada com os dados do KEGG.
+    # Merge the input data with the database on the 'ko' column using an inner join.
+    merged_df = pd.merge(input_data, database_df, on='ko', how='inner')
     
-    :param input_df: DataFrame com os dados de entrada.
-    :param kegg_path: Caminho para o arquivo de dados do KEGG.
-    :return: DataFrame resultante da mesclagem.
+    # Return the resulting merged DataFrame.
+    return merged_df
+
+def merge_with_kegg(input_df: pd.DataFrame, kegg_path: str = 'data/kegg_20degradation_pathways.xlsx') -> pd.DataFrame:
     """
-    kegg_df = pd.read_excel(kegg_path)  # Carregando os dados do KEGG
-    merged_df = pd.merge(input_df, kegg_df, on='ko', how='inner')  # Mesclando os dados de entrada com os dados do KEGG
-    return merged_df  # Retorna o DataFrame mesclado
+    Merges input data with KEGG pathway data.
 
-# ----------------------------------------
-# MERGE COM HADEG DATABASE
-# ----------------------------------------
+    Parameters:
+    - input_df (pd.DataFrame): The input data to be merged.
+    - kegg_path (str): Path to the Excel file containing KEGG data. Default is 'data/kegg_20degradation_pathways.xlsx'.
 
-import pandas as pd
-
-def merge_input_with_database_hadegDB(input_data, database_filepath='data/database_hadegDB.xlsx'):
+    Returns:
+    - pd.DataFrame: The merged DataFrame.
     """
-    Mescla os dados de entrada com os dados do banco de dados.
+    # Load the KEGG pathway data from the specified file.
+    kegg_df = pd.read_excel(kegg_path)
     
-    :param input_data: DataFrame com os dados de entrada.
-    :param database_filepath: Caminho para o arquivo do banco de dados.
-    :return: DataFrame resultante da mesclagem.
-    """
-    database_df = pd.read_excel(database_filepath)  # Carrega os dados do banco de dados
-    merged_df = pd.merge(input_data, database_df, on='ko', how='inner')  # Mescla os DataFrames
+    # Merge the input data with the KEGG data on the 'ko' column using an inner join.
+    merged_df = pd.merge(input_df, kegg_df, on='ko', how='inner')
     
+    # Return the resulting merged DataFrame.
+    return merged_df
+
+def merge_input_with_database_hadegDB(input_data: pd.DataFrame, database_filepath: str = 'data/database_hadegDB.xlsx') -> pd.DataFrame:
+    """
+    Merges input data with the HADEG database.
+
+    Parameters:
+    - input_data (pd.DataFrame): The input data to be merged.
+    - database_filepath (str): Path to the Excel file containing the HADEG database. Default is 'data/database_hadegDB.xlsx'.
+
+    Returns:
+    - pd.DataFrame: The merged DataFrame.
+
+    Raises:
+    - KeyError: If the 'ko' column is not present in the resulting DataFrame.
+    """
+    # Load the HADEG database from the specified file.
+    database_df = pd.read_excel(database_filepath)
+    
+    # Merge the input data with the HADEG database on the 'ko' column using an inner join.
+    merged_df = pd.merge(input_data, database_df, on='ko', how='inner')
+    
+    # Verify that the 'ko' column exists in the merged DataFrame.
     if 'ko' not in merged_df.columns:
-        raise KeyError("A coluna 'ko' não está presente no DataFrame após a mesclagem.")
+        raise KeyError("The 'ko' column is not present in the DataFrame after merging.")
     
-    return merged_df  # Retorna o DataFrame mesclado
+    # Return the resulting merged DataFrame.
+    return merged_df
 
-# ----------------------------------------
-# MERGE COM ToxCSM DATABASE
-
-def merge_with_toxcsm(merged_df, toxcsm_filepath='data/database_toxcsm.xlsx'):
+def merge_with_toxcsm(merged_df: pd.DataFrame, toxcsm_filepath: str = 'data/database_toxcsm.xlsx') -> pd.DataFrame:
     """
-    Mescla a tabela resultante do merge inicial com o banco de dados ToxCSM,
-    mantendo apenas a coluna 'compoundclass' da tabela inicial.
+    Merges the result of a previous merge with the ToxCSM database, retaining only specific columns.
 
-    :param merged_df: DataFrame resultante do merge inicial.
-    :param toxcsm_filepath: Caminho para o arquivo do banco de dados ToxCSM.
-    :return: DataFrame resultante da mesclagem.
+    Parameters:
+    - merged_df (pd.DataFrame): The DataFrame resulting from a previous merge operation.
+    - toxcsm_filepath (str): Path to the Excel file containing the ToxCSM database. Default is 'data/database_toxcsm.xlsx'.
+
+    Returns:
+    - pd.DataFrame: The merged DataFrame.
     """
-    # Carrega os dados do banco de dados ToxCSM
+    # Load the ToxCSM database from the specified file.
     toxcsm_df = pd.read_excel(toxcsm_filepath)
     
-    # Mantém apenas a coluna 'compoundclass' da tabela inicial
-    merged_df_reduced = merged_df[['compoundclass', 'cpd','ko']].drop_duplicates()
+    # Reduce the input DataFrame to retain only relevant columns and remove duplicates.
+    merged_df_reduced = merged_df[['compoundclass', 'cpd', 'ko']].drop_duplicates()
     
-    # Mescla os DataFrames pela coluna 'cpd'
+    # Merge the reduced DataFrame with the ToxCSM database on the 'cpd' column using an inner join.
     final_merged_df = pd.merge(merged_df_reduced, toxcsm_df, on='cpd', how='inner')
     
+    # Return the resulting merged DataFrame.
     return final_merged_df
-# ----------------------------------------
-# Funções de Processamento de Dados
-# ----------------------------------------
+
+
 
 # ----------------------------------------
 # P1_COUNT_KO
