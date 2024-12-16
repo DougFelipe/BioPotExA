@@ -17,6 +17,10 @@ import plotly.graph_objects as go
 import plotly.express as px
 from plotly.subplots import make_subplots
 
+import scipy.spatial.distance as ssd
+import scipy.cluster.hierarchy as sch
+import pandas as pd
+
 # -------------------------------
 # Functions for Data Merging
 # -------------------------------
@@ -317,16 +321,6 @@ def process_compound_gene_ranking(merged_df):
     return compound_gene_ranking
 
 
-"""
-P7_gene_compound_association, P8_gene_sample_association, P9_sample_reference_heatmap, P10_group_by_class
----------------------------------------------------------------------------------------------------------
-This script contains utility functions for processing and grouping data related to genes, compounds, 
-and samples. The functionalities include:
-- Ranking genes by the number of unique compounds or samples.
-- Preparing data for a heatmap of sample and reference associations.
-- Grouping samples by gene profiles for specific compound classes.
-- Minimizing group redundancy for compound classifications.
-"""
 
 # -------------------------------
 # P7: Function: process_gene_compound_association
@@ -499,15 +493,6 @@ def minimize_groups(df):
     return selected_groups
 
 
-"""
-HADEG HEATMAP ORTHOLOGS AND ENZYME PROCESSING
---------------------------------------------
-This script provides utility functions to process and analyze KO (KEGG Orthology) data, 
-enzyme activities, and pathway associations. It includes functionalities for:
-- Grouping and counting KOs by sample, gene, and pathway.
-- Filtering unique KOs for specific pathways.
-- Counting unique enzyme activities for selected samples.
-"""
 
 # -------------------------------
 # P11: Function: process_gene_sample_data
@@ -605,142 +590,160 @@ def count_unique_enzyme_activities(merged_df, sample):
     return enzyme_count.sort_values('unique_ko_count', ascending=False)
 
 
-#P15
-# my_dash_app/utils/data_processing.py
-import scipy.spatial.distance as ssd
-import scipy.cluster.hierarchy as sch
-import pandas as pd
+
+# -------------------------------
+# P15: Function: calculate_sample_clustering
+# -------------------------------
+
 
 def calculate_sample_clustering(input_df, distance_metric, method):
     """
-    Calcula a matriz de clustering com base no input do usuário.
+    Calculates a clustering matrix based on user input.
 
-    :param input_df: DataFrame com os dados de entrada (colunas `sample` e `ko`).
-    :param distance_metric: Métrica de distância selecionada (e.g., 'euclidean', 'cityblock').
-    :param method: Método de agrupamento selecionado (e.g., 'single', 'ward').
-    :return: Matriz de clustering calculada.
+    Parameters:
+    - input_df (pd.DataFrame): The input data containing 'sample' and 'ko' columns.
+    - distance_metric (str): The selected distance metric (e.g., 'euclidean', 'cityblock').
+    - method (str): The selected clustering method (e.g., 'single', 'ward').
+
+    Returns:
+    - np.ndarray: The clustering matrix calculated using the given metric and method.
     """
-    # Pivotar os dados para criar uma matriz de amostras por KOs
-    pivot_df = input_df.pivot_table(
-        index='sample', columns='ko', aggfunc='size', fill_value=0
-    )
+    # Pivot the input data to create a sample-by-KO matrix.
+    pivot_df = input_df.pivot_table(index='sample', columns='ko', aggfunc='size', fill_value=0)
 
-    # Calcular a matriz de distância
+    # Calculate the distance matrix using the specified metric.
     distance_matrix = ssd.pdist(pivot_df, metric=distance_metric)
 
-    # Realizar o clustering hierárquico
+    # Perform hierarchical clustering using the specified method.
     clustering_matrix = sch.linkage(distance_matrix, method=method)
 
+    # Return the clustering matrix.
     return clustering_matrix
 
-#p16
-import pandas as pd
+# -------------------------------
+# P16: Function: prepare_upsetplot_data
+# -------------------------------
 
 def prepare_upsetplot_data(merged_data, selected_samples):
     """
-    Prepara os dados para o UpSet Plot com base no merge do input com o database.
+    Prepares data for generating an UpSet plot based on merged input and database.
 
-    :param merged_data: Dados mesclados contendo as colunas `sample` e `ko`.
-    :param selected_samples: Lista de amostras selecionadas.
-    :return: DataFrame contendo as amostras e seus respectivos KOs únicos.
+    Parameters:
+    - merged_data (pd.DataFrame): The merged data containing 'sample' and 'ko' columns.
+    - selected_samples (list): A list of selected samples.
+
+    Returns:
+    - pd.DataFrame: A DataFrame containing the selected samples and their unique KOs.
     """
-    print(merged_data.head())
-
-    # Filtrar pelas amostras selecionadas
+    # Filter the data to include only the selected samples.
     filtered_df = merged_data[merged_data['sample'].isin(selected_samples)]
-    print(filtered_df.head())
 
-    # Considerar apenas KOs únicos por amostra
+    # Drop duplicate entries for 'sample' and 'ko' pairs.
     unique_ko_df = filtered_df.drop_duplicates(subset=['sample', 'ko'])
 
+    # Return the filtered DataFrame.
     return unique_ko_df
 
+# -------------------------------
+# P17: Function: prepare_gene_compound_network_data
+# -------------------------------
 
-#P17
-# my_dash_app/utils/data_processing.py
-# my_dash_app/utils/data_processing.py
 import pandas as pd
 from utils.data_processing import merge_input_with_database
 
 def prepare_gene_compound_network_data(stored_data):
     """
-    Prepara os dados para o gráfico de rede Gene-Compound.
+    Prepares data for creating a Gene-Compound network graph.
 
-    :param stored_data: Dados armazenados no formato dicionário.
-    :return: DataFrame contendo as relações gene-composto.
+    Parameters:
+    - stored_data (dict): The stored data in dictionary format.
+
+    Returns:
+    - pd.DataFrame: A DataFrame containing gene-compound relationships.
+
+    Raises:
+    - ValueError: If the stored data is empty.
+    - KeyError: If required columns ('genesymbol', 'cpd') are missing.
     """
     input_df = pd.DataFrame(stored_data)
 
-    # Garantir que os dados estão no formato esperado
+    # Ensure the data is not empty.
     if input_df.empty:
-        raise ValueError("O stored-data está vazio.")
+        raise ValueError("The stored-data is empty.")
 
-    # Realizar o merge com o banco de dados
+    # Merge the input data with the database.
     merged_data = merge_input_with_database(input_df)
 
-
-    # Verificar se as colunas necessárias existem
+    # Check for required columns.
     if 'genesymbol' not in merged_data.columns or 'cpd' not in merged_data.columns:
-        raise KeyError("As colunas 'genesymbol' e 'cpd' são necessárias para criar o gráfico de rede.")
+        raise KeyError("Columns 'genesymbol' and 'cpd' are required to create the network graph.")
 
-    # Filtrar apenas as colunas relevantes e remover duplicatas
+    # Filter relevant columns and remove duplicates.
     network_df = merged_data[['genesymbol', 'compoundname']].dropna().drop_duplicates()
 
-
+    # Return the processed DataFrame.
     return network_df
 
-
-#P18
-# utils/data_processing.py
-# utils/data_processing.py
+# -------------------------------
+# P18: Function: get_merged_toxcsm_data
+# -------------------------------
 
 def get_merged_toxcsm_data(input_data):
     """
-    Realiza o merge do input_data com o banco ToxCSM.
+    Merges input data with the ToxCSM database.
 
-    :param input_data: Dados brutos armazenados no `stored-data`.
-    :return: DataFrame processado com as colunas de `value_` e `label_`.
+    Parameters:
+    - input_data (list): Raw data stored in 'stored-data'.
+
+    Returns:
+    - pd.DataFrame: A processed DataFrame containing `value_` and `label_` columns.
     """
-    
-    # Verifica se os dados de entrada estão disponíveis
+    # Ensure input data is available.
     if not input_data:
-        return pd.DataFrame()  # Retorna um DataFrame vazio
+        return pd.DataFrame()  # Return an empty DataFrame.
 
-    # Converte para DataFrame
+    # Convert the input data to a DataFrame.
     input_df = pd.DataFrame(input_data)
 
-    # Primeiro merge com a base principal
+    # Perform the first merge with the main database.
     merged_df = merge_input_with_database(input_df)
     if merged_df.empty:
         return pd.DataFrame()
 
-    # Segundo merge com o ToxCSM
+    # Perform the second merge with the ToxCSM database.
     final_merged_df = merge_with_toxcsm(merged_df)
     if final_merged_df.empty:
         return pd.DataFrame()
 
+    # Return the final merged DataFrame.
     return final_merged_df
 
-
-# utils/data_processing.py
+# -------------------------------
+# Function: process_heatmap_data
+# -------------------------------
 
 def process_heatmap_data(df):
     """
-    Processa os dados para gerar o heatmap de toxicidade com facetas.
+    Processes data for generating a faceted toxicity heatmap.
 
-    :param df: DataFrame de entrada com colunas de 'value_' e 'label_'.
-    :return: DataFrame transformado com as categorias e valores necessários.
+    Parameters:
+    - df (pd.DataFrame): The input data containing 'value_' and 'label_' columns.
+
+    Returns:
+    - pd.DataFrame: A transformed DataFrame with categorized data for heatmap generation.
+
+    Raises:
+    - ValueError: If no valid columns are processed for the heatmap.
     """
-
-    # Remover colunas desnecessárias
+    # Drop unnecessary columns if they exist.
     columns_to_drop = ['SMILES', 'cpd', 'ChEBI']
     df = df.drop(columns=columns_to_drop, errors='ignore')
 
-    # Selecionar colunas de valores e labels
+    # Select columns for values and labels.
     value_columns = [col for col in df.columns if col.startswith('value_')]
     label_columns = [col for col in df.columns if col.startswith('label_')]
 
-    # Mapear as categorias principais
+    # Map main categories to subcategories.
     category_mapping = {
         'NR': 'Nuclear Response',
         'SR': 'Stress Response',
@@ -749,25 +752,29 @@ def process_heatmap_data(df):
         'Org': 'Organic',
     }
 
-    # Transformar os dados
+    # Transform the data for heatmap generation.
     heatmap_data = []
     for value_col, label_col in zip(value_columns, label_columns):
-        # Extrair a subcategoria
-        subcategoria = value_col.split('_', 1)[1]  # NR_AR, SR_ARE, etc.
-        category_prefix = subcategoria.split('_')[0]  # NR, SR, etc.
+        # Extract the subcategory and map it to a main category.
+        subcategoria = value_col.split('_', 1)[1]
+        category_prefix = subcategoria.split('_')[0]
         mapped_category = category_mapping.get(category_prefix, None)
 
         if mapped_category:
+            # Create a subset of data for the current category.
             df_subset = df[['compoundname', value_col, label_col]].rename(
                 columns={value_col: 'value', label_col: 'label'}
             )
             df_subset['category'] = mapped_category
-            df_subset['subcategoria'] = subcategoria  # Adicionar a subcategoria
+            df_subset['subcategoria'] = subcategoria
             heatmap_data.append(df_subset)
 
+    # Ensure at least one valid column was processed.
     if not heatmap_data:
-        raise ValueError("Nenhuma coluna válida foi processada para o heatmap.")
+        raise ValueError("No valid columns were processed for the heatmap.")
 
-    # Combinar os dados transformados
+    # Combine the transformed data into a single DataFrame.
     result_df = pd.concat(heatmap_data, ignore_index=True)
+
+    # Return the combined DataFrame.
     return result_df
