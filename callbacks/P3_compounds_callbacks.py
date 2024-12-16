@@ -37,7 +37,7 @@ def update_compound_scatter_plot(selected_class, stored_data):
     # Caso nenhuma classe ou dados estejam disponíveis, exibir mensagem padrão
     if not stored_data or not selected_class:
         return html.P(
-            "No graph available. Please select a compound class.",
+            "No graph available. Please select a compound class",
             style={"textAlign": "center", "color": "gray", "fontSize": "16px", "marginTop": "20px"}
         )
 

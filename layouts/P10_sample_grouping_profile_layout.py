@@ -20,7 +20,7 @@ def get_sample_groups_layout():
             id='sample-groups-container',
             children=[
                 html.P(
-                    "No data available. Please select a compound class.",
+                    "No data available. Please select a compound class",
                     id="no-sample-groups-message",
                     style={"textAlign": "center", "color": "gray"}
                 )

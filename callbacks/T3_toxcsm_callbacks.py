@@ -23,7 +23,7 @@ def render_toxcsm_table(n_clicks, stored_data):
         # Se a tabela resultante estiver vazia
         if final_merged_df.empty:
             return (
-                html.Div("No matches found with the TOXCSM database.", className="no-data-message"),
+                html.Div("No matches found with the TOXCSM database", className="no-data-message"),
                 {"display": "none"},  # Oculta o botão
                 {"display": "none"}  # Oculta a mensagem inicial
             )

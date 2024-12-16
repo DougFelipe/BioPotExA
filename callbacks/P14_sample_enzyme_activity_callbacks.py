@@ -35,7 +35,7 @@ def initialize_sample_dropdown(n_clicks, stored_data):
 def update_enzyme_activity_chart(selected_sample, stored_data):
     if not selected_sample or not stored_data:
         return html.P(
-            "No data available. Please select a sample.",
+            "No data available. Please select a sample",
             id="no-enzyme-bar-chart-message",
             style={"textAlign": "center", "color": "gray"}
         )
@@ -48,7 +48,7 @@ def update_enzyme_activity_chart(selected_sample, stored_data):
 
     if enzyme_count_df.empty:
         return html.P(
-            "No data found for the selected sample.",
+            "No data found for the selected sample",
             id="no-enzyme-bar-chart-message",
             style={"textAlign": "center", "color": "gray"}
         )

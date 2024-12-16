@@ -34,7 +34,7 @@ def initialize_sample_dropdown(n_clicks, stored_data):
 def update_pathway_heatmap(selected_sample, stored_data):
     if not selected_sample or not stored_data:
         return html.P(
-            "No data available. Please select a sample.",
+            "No data available. Please select a sample",
             id="placeholder-pathway-heatmap",
             style={"textAlign": "center", "color": "gray"}
         )
@@ -46,7 +46,7 @@ def update_pathway_heatmap(selected_sample, stored_data):
     grouped_df = process_pathway_data(merged_df)
     if grouped_df.empty or selected_sample not in grouped_df['sample'].unique():
         return html.P(
-            "No data available for the selected sample.",
+            "No data available for the selected sample",
             id="no-data-pathway-heatmap",
             style={"textAlign": "center", "color": "gray"}
         )

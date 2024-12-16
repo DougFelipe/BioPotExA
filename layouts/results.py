@@ -88,11 +88,11 @@ def get_results_layout():
         html.Div([
             html.H5("HADEG Results Table", className="analysis-title"),
             html.P(
-                "This table contains data merged with the HADEG database, enabling the exploration of additional annotations and insights.",
+                "This table contains data merged with the HADEG database, enabling the exploration of additional annotations and insights",
                 className="analysis-description"
             ),
             html.P(
-                "The table helps identify significant matches with HADEG, enhancing the understanding of potential functional and structural associations.",
+                "The table helps identify significant matches with HADEG, enhancing the understanding of potential functional and structural associations",
                 className="analysis-insights"
             ),
             hadeg_alert(),
@@ -116,11 +116,11 @@ def get_results_layout():
         html.Div([
             html.H5("ToxCSM Results Table", className="analysis-title"),
             html.P(
-                "This table shows data merged with the TOXCSM database, providing toxicity predictions and compound interactions.",
+                "This table shows data merged with the TOXCSM database, providing toxicity predictions and compound interactions",
                 className="analysis-description"
             ),
             html.P(
-                "By analyzing this table, you can assess the toxicity potential and prioritize compounds for further investigation.",
+                "By analyzing this table, you can assess the toxicity potential and prioritize compounds for further investigation",
                 className="analysis-insights"
             ),
             toxcsm_alert(),

@@ -35,7 +35,7 @@ def update_compound_ranking_plot(selected_class, stored_data):
     # Se nenhum dado ou classe de composto for selecionada, exibir a mensagem placeholder
     if not selected_class or not stored_data:
         return html.P(
-            "No data available. Please select a compound class.",
+            "No data available. Please select a compound class",
             id="p5-placeholder-message",
             style={"textAlign": "center", "color": "gray"}
         )
@@ -50,7 +50,7 @@ def update_compound_ranking_plot(selected_class, stored_data):
     # Caso não haja dados para a classe selecionada
     if filtered_df.empty:
         return html.P(
-            "No data available for the selected compound class.",
+            "No data available for the selected compound class",
             id="p5-no-data-message",
             style={"textAlign": "center", "color": "gray"}
         )

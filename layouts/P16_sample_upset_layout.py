@@ -22,7 +22,7 @@ def get_sample_upset_layout():
             id='upset-plot-container',
             children=[
                 html.P(
-                    "Nenhum gráfico disponível. Por favor, selecione as amostras.",
+                    "Nenhum gráfico disponível. Por favor, selecione as amostras",
                     id="no-upset-plot-message",
                     style={"textAlign": "center", "color": "gray"}
                 )

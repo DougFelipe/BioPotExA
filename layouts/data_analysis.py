@@ -47,7 +47,7 @@ def get_dataAnalysis_page():
                                             "Start by uploading ",
                                             input_format_tooltip(),
                                             ". Ensure the file is in the specified format to avoid processing issues. "
-                                            "This step allows the application to read and validate the structure of your data, ensuring it meets the requirements for analysis."
+                                            "This step allows the application to read and validate the structure of your data, ensuring it meets the requirements for analysis"
                                         ],
                                         className='step-text'
                                     ),
@@ -74,7 +74,7 @@ def get_dataAnalysis_page():
                                 [
                                     html.P(
                                         "Once your data is uploaded, click the button to process it. During this step, the system will validate the dataset, "
-                                        "checking for completeness, correct formatting, and potential errors. This ensures the data is ready for in-depth analysis.",
+                                        "checking for completeness, correct formatting, and potential errors. This ensures the data is ready for in-depth analysis",
                                         className='step-text'
                                     )
                                 ],
@@ -94,7 +94,7 @@ def get_dataAnalysis_page():
                             ),
                             html.P(
                                 "After processing, move on to analyzing your data. In this step, you can explore detailed results presented in tables and interactive visualizations. "
-                                "These insights are designed to help you understand trends, patterns, and key information within your dataset.",
+                                "These insights are designed to help you understand trends, patterns, and key information within your dataset",
                                 className='step-text'
                             )
                         ]
@@ -116,7 +116,7 @@ def get_dataAnalysis_page():
                         className='upload-explanatory-text',
                         children=[
                             html.P(
-                                "Submit your file or click the button to load the example dataset.",
+                                "Submit your file or click the button to load the example dataset",
                                 className='step-explanation'
                             )
                         ]
@@ -200,12 +200,12 @@ def get_dataAnalysis_page():
                         children=[
                             html.H4('Disclaimer for Citation', className='publication-subtitle'),
                             html.P(
-                                "If you use BioPExA in your research, please cite the following publication:",
+                                "If you use BioRemPP in your research, please cite the following publication:",
                                 className='publication-text'
                             ),
                             html.Blockquote(
                                 """
-                                Author(s). "BioPExA: A Bioinformatics Tool for Exploring Bioremediation Potential". 
+                                Author(s). "BioRemPP: A Bioinformatics Tool for Exploring Bioremediation Potential". 
                                 Journal of Environmental Research and Biotechnology, Year. DOI:xxxx/xxxxxx
                                 """,
                                 className='citation-text'

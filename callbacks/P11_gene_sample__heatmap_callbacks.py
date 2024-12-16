@@ -54,7 +54,7 @@ def initialize_pathway_dropdown(selected_compound_pathway, stored_data):
 def update_gene_sample_heatmap(selected_pathway, stored_data):
     if not selected_pathway or not stored_data:
         return html.P(
-            "No data available. Please select a compound pathway and pathway.",
+            "No data available. Please select a compound pathway and pathway",
             id="no-gene-sample-heatmap-message",
             style={"textAlign": "center", "color": "gray"}
         )
@@ -67,7 +67,7 @@ def update_gene_sample_heatmap(selected_pathway, stored_data):
 
     if filtered_df.empty:
         return html.P(
-            "No data available for the selected pathway.",
+            "No data available for the selected pathway",
             id="no-gene-sample-heatmap-message",
             style={"textAlign": "center", "color": "gray"}
         )

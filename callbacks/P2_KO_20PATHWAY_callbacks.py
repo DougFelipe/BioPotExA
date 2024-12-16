@@ -42,14 +42,14 @@ def initialize_pathway_sample_dropdown(n_clicks, stored_data):
 def update_pathway_ko_chart(selected_sample, stored_data):
     if not stored_data:
         return html.P(
-            "No chart available. Please select a sample.",
+            "No chart available. Please select a sample",
             id="no-pathway-ko-chart-message",
             style={"textAlign": "center", "color": "gray"}
         )
 
     if not selected_sample:
         return html.P(
-            "No sample selected. Please choose a sample.",
+            "No sample selected. Please choose a sample",
             id="no-pathway-ko-chart-message",
             style={"textAlign": "center", "color": "gray"}
         )
@@ -60,7 +60,7 @@ def update_pathway_ko_chart(selected_sample, stored_data):
 
     if merged_df.empty:
         return html.P(
-            "The processed data is empty. Please check the input data.",
+            "The processed data is empty. Please check the input data",
             id="empty-data-message",
             style={"textAlign": "center", "color": "gray"}
         )
@@ -69,7 +69,7 @@ def update_pathway_ko_chart(selected_sample, stored_data):
 
     if pathway_count_df.empty or selected_sample not in pathway_count_df['sample'].unique():
         return html.P(
-            f"No data available for sample '{selected_sample}'.",
+            f"No data available for sample '{selected_sample}'",
             id="no-data-for-sample-message",
             style={"textAlign": "center", "color": "gray"}
         )
@@ -110,14 +110,14 @@ def initialize_via_dropdown(n_clicks, stored_data):
 def update_via_ko_chart(selected_via, stored_data):
     if not stored_data:
         return html.P(
-            "No chart available. Please select a pathway.",
+            "No chart available. Please select a pathway",
             id="no-via-ko-chart-message",
             style={"textAlign": "center", "color": "gray"}
         )
 
     if not selected_via:
         return html.P(
-            "No pathway selected. Please choose a pathway.",
+            "No pathway selected. Please choose a pathway",
             id="no-via-ko-chart-message",
             style={"textAlign": "center", "color": "gray"}
         )
@@ -128,7 +128,7 @@ def update_via_ko_chart(selected_via, stored_data):
 
     if merged_df.empty:
         return html.P(
-            "The processed data is empty. Please check the input data.",
+            "The processed data is empty. Please check the input data",
             id="empty-data-message",
             style={"textAlign": "center", "color": "gray"}
         )
@@ -137,7 +137,7 @@ def update_via_ko_chart(selected_via, stored_data):
 
     if sample_count_df.empty:
         return html.P(
-            f"No data available for pathway '{selected_via}'.",
+            f"No data available for pathway '{selected_via}'",
             id="no-data-for-pathway-message",
             style={"textAlign": "center", "color": "gray"}
         )

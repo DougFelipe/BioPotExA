@@ -21,7 +21,7 @@ def get_sample_ko_scatter_layout():
             id='scatter-plot-container',  # Container para mensagens ou o gráfico
             children=[
                 html.P(
-                    "No data available. Please select a pathway.",  # Mensagem padrão
+                    "No data available. Please select a pathway",  # Mensagem padrão
                     id="no-data-message-p13",
                     style={"textAlign": "center", "color": "gray"}
                 )

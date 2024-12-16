@@ -15,7 +15,7 @@ def update_gene_compound_network(stored_data):
         # Retorna uma figura vazia com mensagem
         return go.Figure(
             layout=go.Layout(
-                title="No data available to display the network.",
+                title="No data available to display the network",
                 xaxis=dict(visible=False),
                 yaxis=dict(visible=False)
             )
@@ -27,7 +27,7 @@ def update_gene_compound_network(stored_data):
         # Retorna uma figura vazia com mensagem
         return go.Figure(
             layout=go.Layout(
-                title="No interactions found between genes and compounds.",
+                title="No interactions found between genes and compounds",
                 xaxis=dict(visible=False),
                 yaxis=dict(visible=False)
             )

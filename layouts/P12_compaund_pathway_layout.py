@@ -20,7 +20,7 @@ def get_pathway_heatmap_layout():
             id='pathway-heatmap-container',
             children=[
                 html.P(
-                    "No data available. Please select a sample.",
+                    "No data available. Please select a sample",
                     id="placeholder-pathway-heatmap",
                     style={"textAlign": "center", "color": "gray"}
                 )

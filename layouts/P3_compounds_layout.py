@@ -21,7 +21,7 @@ def get_compound_scatter_layout():
             id='compound-scatter-container',  # Container dinâmico para o gráfico ou mensagem
             children=[
                 html.P(
-                    "No graph available. Please select a compound class.",
+                    "No graph available. Please select a compound class",
                     style={"textAlign": "center", "color": "gray", "fontSize": "16px", "marginTop": "20px"}
                 )
             ],

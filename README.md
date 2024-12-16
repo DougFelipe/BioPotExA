@@ -1,9 +1,9 @@
-# Projeto de BioPExA
+# Projeto de BioRemPP
 
 ## Visão Geral
 Este projeto representa uma aplicação Dash Plotly, projetada para a exploração interativa e a análise de conjuntos de dados de identificadores do Kegg Orthology (KO) para investigação do potencial de biorremediação. Através de uma interface responsiva e interativa, os usuários podem carregar dados para analisar e explorar vias metabólicas, identificar genes-chave, elaborar consórcios de espécies para biorremediação, realizar análises de clusterização e executar análises detalhadas dos dados.
 
-BioPExA se destaca pela sua capacidade de permitir que os pesquisadores visualizem diversos parâmetros importantes em uma série de formatos interativos, incluindo gráficos dinâmicos, tabelas ajustáveis e diversas representações gráficas. 
+BioRemPP se destaca pela sua capacidade de permitir que os pesquisadores visualizem diversos parâmetros importantes em uma série de formatos interativos, incluindo gráficos dinâmicos, tabelas ajustáveis e diversas representações gráficas. 
 
 A aplicação foi desenhada para suportar a expansão e integração de novos módulos e recursos, o que permite a inclusão contínua de novas técnicas de análise de dados e visualizações personalizadas. Com uma arquitetura modular e extensível, a aplicação está preparada para adaptar junto com os avanços na pesquisa sobre biorremediação.
 

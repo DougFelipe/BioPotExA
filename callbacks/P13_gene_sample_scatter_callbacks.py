@@ -32,7 +32,7 @@ def initialize_pathway_dropdown(n_clicks, stored_data):
 def update_scatter_plot(selected_pathway, stored_data):
     if not selected_pathway or not stored_data:
         return html.P(
-            "No data available. Please select a pathway.",
+            "No data available. Please select a pathway",
             id="no-data-message-p13",
             style={"textAlign": "center", "color": "gray"}
         )
@@ -45,7 +45,7 @@ def update_scatter_plot(selected_pathway, stored_data):
 
     if scatter_data.empty:
         return html.P(
-            "No data found for the selected pathway.",
+            "No data found for the selected pathway",
             id="no-data-message-p13",
             style={"textAlign": "center", "color": "gray"}
         )

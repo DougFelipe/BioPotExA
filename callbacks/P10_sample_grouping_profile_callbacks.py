@@ -33,7 +33,7 @@ def initialize_compound_class_dropdown(n_clicks, stored_data):
 def update_sample_groups_plot(compound_class, stored_data):
     if not compound_class or not stored_data:
         return html.P(
-            "No data available. Please select a compound class.",
+            "No data available. Please select a compound class",
             id="no-sample-groups-message",
             style={"textAlign": "center", "color": "gray"}
         )
@@ -52,7 +52,7 @@ def update_sample_groups_plot(compound_class, stored_data):
     # Gera o gráfico apenas se houver dados processados
     if minimized_df.empty:
         return html.P(
-            "No data available for the selected compound class.",
+            "No data available for the selected compound class",
             id="no-sample-groups-message",
             style={"textAlign": "center", "color": "gray"}
         )

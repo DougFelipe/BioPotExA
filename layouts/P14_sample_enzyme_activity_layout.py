@@ -19,7 +19,7 @@ def get_sample_enzyme_activity_layout():
             id='enzyme-bar-chart-container',  # ID do container do gráfico
             children=[
                 html.P(
-                    "No data available. Please select a sample.",
+                    "No data available. Please select a sample",
                     id="no-enzyme-bar-chart-message",
                     style={"textAlign": "center", "color": "gray"}
                 )

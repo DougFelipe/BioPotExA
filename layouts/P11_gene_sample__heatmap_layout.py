@@ -26,7 +26,7 @@ def get_gene_sample_heatmap_layout():
             id='gene-sample-heatmap-container',
             children=[
                 html.P(
-                    "No data available. Please select a compound pathway and pathway.",
+                    "No data available. Please select a compound pathway and pathway",
                     id="no-gene-sample-heatmap-message",
                     style={"textAlign": "center", "color": "gray"}
                 )

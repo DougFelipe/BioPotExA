@@ -22,7 +22,7 @@ def get_rank_compounds_gene_layout():
             id='p6-compound-ranking-container',  # Container dinâmico para gráfico ou mensagem
             children=[
                 html.P(
-                    "No data available. Please select a compound class.",
+                    "No data available. Please select a compound class",
                     id="p6-placeholder-message",
                     style={"textAlign": "center", "color": "gray", "marginTop": "20px"}
                 )

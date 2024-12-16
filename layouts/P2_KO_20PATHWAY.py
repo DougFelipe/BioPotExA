@@ -17,7 +17,7 @@ def get_pathway_ko_bar_chart_layout():
             id='pathway-ko-chart-container',  # Chart container
             children=[
                 html.P(
-                    "No chart available. Please select a sample.",
+                    "No chart available. Please select a sample",
                     id="no-pathway-ko-chart-message",
                     style={"textAlign": "center", "color": "gray"}
                 )
@@ -43,7 +43,7 @@ def get_sample_ko_pathway_bar_chart_layout():
             id='via-ko-chart-container',  # Chart container
             children=[
                 html.P(
-                    "No chart available. Please select a pathway.",
+                    "No chart available. Please select a pathway",
                     id="no-via-ko-chart-message",
                     style={"textAlign": "center", "color": "gray"}
                 )

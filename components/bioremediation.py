@@ -12,7 +12,7 @@ def get_bioremediation_layout():
             html.H1("Bioremediation", className="features-title"),
             html.P(
                 "Bioremediation is a sustainable technology that uses biological organisms, such as bacteria, fungi, or plants, to remediate and restore polluted environments. "
-                "This page explores its applications, benefits, and other critical aspects, emphasizing how it aids in reducing contamination and promoting environmental health.",
+                "This page explores its applications, benefits, and other critical aspects, emphasizing how it aids in reducing contamination and promoting environmental health",
                 className="features-intro"
             ),
 
@@ -28,11 +28,11 @@ def get_bioremediation_layout():
                     html.Ul(
                         className="features-list",
                         children=[
-                            html.Li("Oil spill cleanup in marine environments and soil."),
-                            html.Li("Treatment of industrial effluents and chemical pollutants."),
-                            html.Li("Remediation of heavy metals in contaminated water or soil."),
-                            html.Li("Degradation of pesticides and agricultural runoffs."),
-                            html.Li("Restoration of ecosystems affected by mining activities."),
+                            html.Li("Oil spill cleanup in marine environments and soil"),
+                            html.Li("Treatment of industrial effluents and chemical pollutants"),
+                            html.Li("Remediation of heavy metals in contaminated water or soil"),
+                            html.Li("Degradation of pesticides and agricultural runoffs"),
+                            html.Li("Restoration of ecosystems affected by mining activities"),
                         ]
                     )
                 ]
@@ -50,11 +50,11 @@ def get_bioremediation_layout():
                     html.Ul(
                         className="features-list",
                         children=[
-                            html.Li("Cost-effectiveness compared to chemical or mechanical methods."),
-                            html.Li("Environmentally friendly as it leverages natural processes."),
-                            html.Li("Ability to target specific pollutants with precision."),
-                            html.Li("Minimal ecological disruption during remediation."),
-                            html.Li("Scalability to address small-scale or large-scale contamination."),
+                            html.Li("Cost-effectiveness compared to chemical or mechanical methods"),
+                            html.Li("Environmentally friendly as it leverages natural processes"),
+                            html.Li("Ability to target specific pollutants with precision"),
+                            html.Li("Minimal ecological disruption during remediation"),
+                            html.Li("Scalability to address small-scale or large-scale contamination"),
                         ]
                     ),
                 ]
@@ -72,9 +72,9 @@ def get_bioremediation_layout():
                     html.Ul(
                         className="features-list",
                         children=[
-                            html.Li("Bacteria: Known for their ability to degrade hydrocarbons, pesticides, and industrial chemicals."),
-                            html.Li("Fungi: Effective in breaking down complex organic pollutants like dyes and synthetic chemicals."),
-                            html.Li("Plants: Used in phytoremediation to absorb or stabilize heavy metals and toxins."),
+                            html.Li("Bacteria: Known for their ability to degrade hydrocarbons, pesticides, and industrial chemicals"),
+                            html.Li("Fungi: Effective in breaking down complex organic pollutants like dyes and synthetic chemicals"),
+                            html.Li("Plants: Used in phytoremediation to absorb or stabilize heavy metals and toxins"),
                         ]
                     ),
                 ]
@@ -87,7 +87,7 @@ def get_bioremediation_layout():
                     html.H2("Challenges and Future Directions", className="features-section-title"),
                     html.P(
                         "While bioremediation shows immense promise, challenges remain, including optimizing conditions for microbial activity, handling large-scale contamination, and ensuring long-term ecological balance. "
-                        "Future research is focused on enhancing microbial efficiency, developing robust monitoring systems, and exploring genetic engineering to improve pollutant degradation capabilities.",
+                        "Future research is focused on enhancing microbial efficiency, developing robust monitoring systems, and exploring genetic engineering to improve pollutant degradation capabilities",
                         className="features-text"
                     ),
                 ]
@@ -99,7 +99,7 @@ def get_bioremediation_layout():
                 children=[
                     html.H2("Additional Resources", className="features-section-title"),
                     html.P(
-                        "To learn more about bioremediation, visit these external resources or explore the references section of this application.",
+                        "To learn more about bioremediation, visit these external resources or explore the references section of this application",
                         className="features-text"
                     ),
                     html.A("Learn More About Bioremediation", href="https://en.wikipedia.org/wiki/Bioremediation", className="features-link"),

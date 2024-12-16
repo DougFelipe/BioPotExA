@@ -36,7 +36,7 @@ def update_compound_gene_ranking_plot(selected_class, stored_data):
     # Garantir que a mensagem de placeholder apareça quando nada for selecionado
     if not stored_data or not selected_class:
         return html.P(
-            "No data available. Please select a compound class.",
+            "No data available. Please select a compound class",
             id="p6-placeholder-message",
             style={"textAlign": "center", "color": "gray", "marginTop": "20px"}
         )
@@ -51,7 +51,7 @@ def update_compound_gene_ranking_plot(selected_class, stored_data):
     # Caso não haja dados para a classe selecionada
     if filtered_df.empty:
         return html.P(
-            "No data available for the selected compound class.",
+            "No data available for the selected compound class",
             id="p6-no-data-message",
             style={"textAlign": "center", "color": "gray", "marginTop": "20px"}
         )
