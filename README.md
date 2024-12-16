@@ -1,258 +1,187 @@
-# Projeto de BioRemPP
+# BioRemPP Project
 
-## Visão Geral
-Este projeto representa uma aplicação Dash Plotly, projetada para a exploração interativa e a análise de conjuntos de dados de identificadores do Kegg Orthology (KO) para investigação do potencial de biorremediação. Através de uma interface responsiva e interativa, os usuários podem carregar dados para analisar e explorar vias metabólicas, identificar genes-chave, elaborar consórcios de espécies para biorremediação, realizar análises de clusterização e executar análises detalhadas dos dados.
+## Overview
 
-BioRemPP se destaca pela sua capacidade de permitir que os pesquisadores visualizem diversos parâmetros importantes em uma série de formatos interativos, incluindo gráficos dinâmicos, tabelas ajustáveis e diversas representações gráficas. 
+BioRemPP is an interactive Dash Plotly application designed to analyze and explore functional genomic data related to bioremediation potential. By leveraging KEGG Orthology (KO) identifiers, the platform enables the investigation of metabolic pathways, identification of key genes, microbial consortia design, clustering analyses, and other detailed data examinations. Researchers can interactively visualize and manipulate their datasets through dynamic graphs, adjustable tables, and a variety of integrated visualization modules.
 
-A aplicação foi desenhada para suportar a expansão e integração de novos módulos e recursos, o que permite a inclusão contínua de novas técnicas de análise de dados e visualizações personalizadas. Com uma arquitetura modular e extensível, a aplicação está preparada para adaptar junto com os avanços na pesquisa sobre biorremediação.
+The application’s modular and extensible architecture supports the continuous integration of new data analysis techniques and custom visualizations, ensuring that BioRemPP can evolve alongside advances in bioremediation research. With responsive design and a rich set of features, BioRemPP facilitates an efficient, user-friendly workflow for environmental and biotech researchers focusing on pollutant degradation and sustainability.
 
-## Estrutura e Arquitetura do Projeto
-## Diretórios e Arquivos Principais
+## Key Features
 
-```plaintext
-├───assets
-│   ├───custom.js
-│   ├───style.css
-│   └───images
-│       ├───SDG06.png
-│       ├───SDG13.png
-│       ├───SDG14.png
-│       └───SDG15.png
-│
-├───callbacks
-│   ├───callbacks.py
-│   ├───P1_COUNT_KO_callbacks.py
-│   ├───P2_KO_20PATHWAY_callbacks.py
-│   ├───P3_compounds_callbacks.py
-│   └───P4_rank_compounds_callbacks.py
-│
-├───components
-│   ├───about_features_list.py
-│   ├───features_list.py
-│   ├───footer.py
-│   ├───header.py
-│   └───step_guide.py
-│
-├───data
-│   ├───database.xlsx
-│   ├───fasta_like_format.csv
-│   ├───genomasBD.txt
-│   ├───genomasBD_teste.txt
-│   ├───kegg_20degradation_pathways.xlsx
-│   ├───sample1.txt
-│   ├───sample2.txt
-│   ├───sample_teste.txt
-│   └───teste.txt
-│
-├───Documentation
-│   ├───callbacks.md
-│   ├───data_analysis.md
-│   ├───data_processing.md
-│   ├───data_validator.md
-│   ├───index.md
-│   └───style.md
-│
-├───layouts
-│   ├───about.py
-│   ├───data_analysis.py
-│   ├───LAYOUT_TEMPLATE.py
-│   ├───P1_KO_COUNT.py
-│   ├───P2_KO_20PATHWAY.py
-│   ├───P3_compounds_layout.py
-│   ├───P4_rank_compounds_layout.py
-│   ├───results.py
-│   ├───tempCodeRunnerFile.py
-│   └───__init__.py
-│
-├───models
-│   └───.gitkeep
-│
-├───services
-│   └───database_service.py
-│
-├───tests
-│   ├───test_callbacks.py
-│   └───test_data_loader.py
-│
-├───utils
-│   ├───backup_modificacoes.md
-│   ├───components.py
-│   ├───data_loader.py
-│   ├───data_processing.py
-│   ├───data_validator.py
-│   ├───filters.py
-│   ├───plot_processing.py
-│   └───table_utils.py
-│
-├───.env
-├───.gitignore
-├───app.py
-├───index.py
-├───README.md
-├───requirements.txt
-└───server.py
-```
+- **Data Upload and Processing**: Easily upload your datasets (formatted as specified) for immediate analysis.
+- **Interactive Visualizations**: Explore data through interactive graphs, heatmaps, scatter plots, bar charts, dendrograms, and more.
+- **Metabolic Pathway Analysis**: Investigate KO-based pathways, identify key enzymes, and understand microbial capabilities for bioremediation.
+- **Gene and Compound Associations**: Examine relationships between compounds, genes, and samples to pinpoint critical interactions.
+- **Clustering and Intersection Analyses**: Perform sample clustering, examine intersections of orthologous genes across samples (UpSet plots), and analyze enzyme activity profiles.
+- **Database Integration**: Seamlessly integrate with KEGG, HADEG, and TOXCSM databases to enrich your data, providing regulatory insights and toxicity predictions.
+- **Modular Architecture**: Extend and customize the platform to include new visualization modules, data processing methods, and analysis techniques.
+- **Continuous Expansion**: The platform is prepared to incorporate ongoing developments and integrate new functionalities as bioremediation research progresses.
 
-
-## Descrição dos Diretórios
-
-### assets
-Contém arquivos de recursos como JavaScript, CSS e imagens.
-- **custom.js**: Arquivo JavaScript personalizado.
-- **style.css**: Arquivo de estilo CSS.
-- **images**: Contém imagens utilizadas no projeto.
-
-### callbacks
-Inclui todos os callbacks do Dash, separados por funcionalidade.
-- **callbacks.py**: Callback principal do Dash.
-- **P1_COUNT_KO_callbacks.py**: Callbacks para contagem de KOs.
-- **P2_KO_20PATHWAY_callbacks.py**: Callbacks para análise de vias de KO.
-- **P3_compounds_callbacks.py**: Callbacks para visualização de compostos.
-- **P4_rank_compounds_callbacks.py**: Callbacks para ranking de compostos.
-
-### components
-Contém componentes reutilizáveis do Dash.
-- **about_features_list.py**: Lista de recursos da seção "About".
-- **features_list.py**: Lista de recursos.
-- **footer.py**: Rodapé do aplicativo.
-- **header.py**: Cabeçalho do aplicativo.
-- **step_guide.py**: Guia de passos para o usuário.
-
-### data
-Armazena arquivos de dados para processamento e análise.
-- **database.xlsx**: Banco de dados principal.
-- **fasta_like_format.csv**: Arquivo de dados em formato FASTA-like.
-- **genomasBD.txt**: Dados de genomas.
-- **genomasBD_teste.txt**: Dados de genomas para teste.
-- **kegg_20degradation_pathways.xlsx**: Dados de vias de degradação do KEGG.
-- **sample1.txt**: Dados da amostra 1.
-- **sample2.txt**: Dados da amostra 2.
-- **sample_teste.txt**: Dados de amostra para teste.
-- **teste.txt**: Arquivo de teste.
-
-### Documentation
-Documentação detalhada do projeto.
-- **callbacks.md**: Documentação dos callbacks.
-- **data_analysis.md**: Documentação da análise de dados.
-- **data_processing.md**: Documentação do processamento de dados.
-- **data_validator.md**: Documentação do validador de dados.
-- **index.md**: Documentação do arquivo index.
-- **style.md**: Documentação de estilos.
-
-### layouts
-Define a estrutura e o layout das diferentes seções do aplicativo.
-- **about.py**: Layout da seção "About".
-- **data_analysis.py**: Layout da análise de dados.
-- **LAYOUT_TEMPLATE.py**: Template de layout.
-- **P1_KO_COUNT.py**: Layout para contagem de KOs.
-- **P2_KO_20PATHWAY.py**: Layout para análise de vias de KO.
-- **P3_compounds_layout.py**: Layout para visualização de compostos.
-- **P4_rank_compounds_layout.py**: Layout para ranking de compostos.
-- **results.py**: Layout de resultados.
-- **tempCodeRunnerFile.py**: Arquivo temporário.
-- **__init__.py**: Inicializador do pacote.
-
-### models
-Contém modelos utilizados no projeto.
-- **.gitkeep**: Arquivo para manter o diretório no controle de versão.
-
-### services
-Inclui serviços para operações como banco de dados.
-- **database_service.py**: Serviço para operações de banco de dados.
-
-### tests
-Armazena scripts de testes para validar o funcionamento do projeto.
-- **test_callbacks.py**: Testes para os callbacks.
-- **test_data_loader.py**: Testes para o carregador de dados.
-
-### utils
-Utilitários e funções auxiliares para o projeto.
-- **backup_modificacoes.md**: Backup das modificações.
-- **components.py**: Componentes utilitários.
-- **data_loader.py**: Carregador de dados.
-- **data_processing.py**: Processamento de dados.
-- **data_validator.py**: Validador de dados.
-- **filters.py**: Filtros de dados.
-- **plot_processing.py**: Processamento de plots.
-- **table_utils.py**: Utilitários para tabelas.
-
-### Raiz do Projeto
-Arquivos principais e de configuração do projeto.
-- **.env**: Arquivo de configuração do ambiente.
-- **.gitignore**: Arquivo para ignorar arquivos no controle de versão.
-- **app.py**: Arquivo principal do aplicativo Dash.
-- **index.py**: Arquivo de indexação do projeto.
-- **README.md**: Documentação principal do projeto.
-- **requirements.txt**: Dependências do projeto.
-- **server.py**: Arquivo de inicialização do servidor.
-
-## Diagrama de Estrutura de Dados
+## Project Structure
 
 ```plaintext
-[Input Data]
-    |
-    v
-[Data Processing] 
-    |
-    v
-[Database]
-    |
-    v
-[Dash Callbacks] 
-    |
-    v
-[Dash Layouts] 
-    |
-    v
-[Dash Application]
+├── .gitignore
+├── .vscode
+│   └── extensions.json
+├── README.md
+├── app.py
+├── assets
+│   ├── biorempp_sample_data.txt
+│   ├── exemple1.jpg
+│   ├── images
+│   │   ├── CHEBI_LOGO.png
+│   │   ├── HADEG_LOGO.png
+│   │   ├── KEGG_LOGO.gif
+│   │   ├── NCBI_LOGO.png
+│   │   ├── PUBCHEM_LOGO.png
+│   │   └── TOXCSM_LOGO.png
+│   ├── scroll.js
+│   └── style.css
+├── callbacks
+│   ├── P1_COUNT_KO_callbacks.py
+│   ├── P2_KO_20PATHWAY_callbacks.py
+│   ├── P3_compounds_callbacks.py
+│   ├── P4_rank_compounds_callbacks.py
+│   ├── P5_rank_compounds_callbacks.py
+│   ├── P6_rank_compounds_callbacks.py
+│   ├── P7_compound_x_genesymbol_callbacks.py
+│   ├── P8_sample_x_genesymbol_callbacks.py
+│   ├── P9_sample_x_referenceAG_callbacks.py
+│   ├── P10_sample_grouping_profile_callbacks.py
+│   ├── P11_gene_sample__heatmap_callbacks.py
+│   ├── P12_compaund_pathway_callbacks.py
+│   ├── P13_gene_sample_scatter_callbacks.py
+│   ├── P14_sample_enzyme_activity_callbacks.py
+│   ├── P15_sample_clustering_callbacks.py
+│   ├── P16_sample_upset_callbacks.py
+│   ├── P17_gene_compound_network_callbacks.py
+│   ├── T1_biorempp_callbacks.py
+│   ├── T2_hadeg_callbacks.py
+│   ├── T3_toxcsm_callbacks.py
+│   ├── callbacks.py
+│   └── p18_heatmap_faceted_callbacks.py
+├── components
+│   ├── alerts.py
+│   ├── bioremediation.py
+│   ├── download_button.py
+│   ├── features.py
+│   ├── footer.py
+│   ├── header.py
+│   ├── navbar.py
+│   ├── regulatory_agencies.py
+│   ├── step_guide.py
+│   └── tooltip_sample.py
+├── index.py
+├── layouts
+│   ├── P1_KO_COUNT.py
+│   ├── P2_KO_20PATHWAY.py
+│   ├── P3_compounds_layout.py
+│   ├── P4_rank_compounds_layout.py
+│   ├── P5_rank_compounds_layout.py
+│   ├── P6_rank_compounds_layout.py
+│   ├── P7_compound_x_genesymbol_layoyt.py
+│   ├── P8_sample_x_genesymbol_layout.py
+│   ├── P9_sample_x_referenceAG_layout.py
+│   ├── P10_sample_grouping_profile_layout.py
+│   ├── P11_gene_sample__heatmap_layout.py
+│   ├── P12_compaund_pathway_layout.py
+│   ├── P13_gene_sample_scatter_layout.py
+│   ├── P14_sample_enzyme_activity_layout.py
+│   ├── P15_sample_clustering_layout.py
+│   ├── P16_sample_upset_layout.py
+│   ├── P17_gene_compound_network_layout.py
+│   ├── p18_heatmap_faceted_layout.py
+│   ├── T1_biorempp.py
+│   ├── T2_hadeg.py
+│   ├── T3_toxcsm.py
+│   ├── about.py
+│   ├── data_analysis.py
+│   ├── help.py
+│   ├── results.py
+│   └── __init__.py
+├── requirements.txt
+└── utils
+    ├── components.py
+    ├── data_loader.py
+    ├── data_processing.py
+    ├── data_validator.py
+    ├── filters.py
+    ├── plot_processing.py
+    └── table_utils.py
 ```
 
-## Descrição dos Principais Arquivos
+### Directory Descriptions
 
-### .env
-Arquivo de configuração do ambiente contendo variáveis de configuração sensíveis.
+**assets**: Static files including custom JavaScript, CSS, and images.
 
-### .gitignore
-Arquivo para ignorar arquivos no controle de versão, como arquivos de configuração sensíveis e diretórios de build.
+**callbacks**: Contains all Dash callbacks organized by feature. Each file corresponds to a specific functionality or dataset visualization, ensuring modular and maintainable code.
 
-### app.py
-Arquivo principal do aplicativo Dash, onde o servidor é inicializado e configurado.
+**components**: Reusable Dash components (e.g., headers, footers, navigation bars, alerts, tooltips) that provide UI building blocks.
 
-### index.py
-Arquivo de indexação do projeto, configurando o layout principal e incluindo os callbacks.
+**layouts**: Defines the layouts and structures of various pages and analytical sections (e.g., KO counts, pathways, compound-scatter views, clustering dendrograms, and advanced toxicity heatmaps).
 
-### README.md
-Documentação principal do projeto, fornecendo uma visão geral, instruções de instalação e uso.
+**utils**: Utility scripts and helpers for data loading, validation, processing, filtering, plotting, and table generation.
 
-### requirements.txt
-Lista de dependências do projeto, necessárias para instalar todas as bibliotecas e pacotes Python utilizados.
+**index.py**: Defines the main layout and integrates callbacks, serving as the central point of the application.
 
-### server.py
-Arquivo de inicialização do servidor, configurando e executando o servidor Flask para o aplicativo Dash.
+**app.py**: The core entry point for running the Dash application, initializing the server, and configuring settings.
 
+**requirements.txt**: Lists the Python dependencies and packages required to run BioRemPP.
 
-## Uso da Ferramenta
+**README.md**: This documentation, providing an overview, usage instructions, and details about the project’s structure and features.
 
-A aplicação oferece um ambiente para análise de dados com as seguintes funcionalidades:
+## Data Flow Diagram
 
-- **Carregamento de Dados**: Os usuários podem facilmente carregar seus conjuntos de dados para análise imediata.
-- **Visualização Interativa**: Dados podem ser explorados através de gráficos interativos e tabelas dinâmicas.
-- **Análise de Consórcios**: Avalie e projete consórcios microbianos para aplicações específicas de biorremediação.
-- **Contagem de Genes e Clusterização**: Realize análises para compreender a distribuição e a correlação entre diferentes genes e amostras.
-- **Expansão Contínua**: A plataforma está pronta para incorporar novas funcionalidades e módulos de análise conforme eles são desenvolvidos.
+```plaintext
+[User Input Data]
+       |
+       v
+[Data Validation & Processing] 
+       |
+       v
+[Integrated Databases (KEGG, HADEG, TOXCSM)]
+       |
+       v
+[Dash Callbacks & Processing Logic] 
+       |
+       v
+[Layouts & Visual Components] 
+       |
+       v
+[Interactive Dash Application]
+```
 
-A interatividade da aplicação permite aos usuários não apenas visualizar dados complexos de forma intuitiva, mas também manipulá-los e analisá-los em tempo real, proporcionando um ambiente para a exploração de dados.
+## Usage Instructions
 
+1. **Install Dependencies**:  
+   Ensure you have Python 3.x and run:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-## Contribuições
+2. **Run the Application**:  
+   Start the Dash server:
+   ```bash
+   python app.py
+   ```
+   Access the application at `http://127.0.0.1:8050`.
 
-Contribuições são bem-vindas! Por favor, leia o `CONTRIBUTING.md` para saber como você pode contribuir para o desenvolvimento deste projeto.
+3. **Upload Data & Analysis**:
+   - Upload your dataset (in the specified format) via the provided UI.
+   - Click “Submit” to process the data.
+   - Once processing completes, navigate through interactive charts, heatmaps, and tables.
+   - Explore gene distributions, compound rankings, clustering analyses, and toxicity predictions.
 
-## Licença
+## Contributing
 
-Este projeto está sob a licença All Rights Reserved . Veja o arquivo `LICENSE` para mais detalhes.
+Contributions are welcome! Please see `CONTRIBUTING.md` for guidance on how to propose enhancements, report issues, or submit pull requests.
 
-## Contato
+## License
 
-Para suporte ou para entrar em contato com os desenvolvedores, envie um e-mail para [email](dougbiomed@gmail.com).
+This project is currently under an "All Rights Reserved" license. For more details, see `LICENSE`.
+
+## Contact
+
+For support or inquiries, please contact us via [email](mailto:dougbiomed@gmail.com).
+
+We hope BioRemPP enhances your research experience, facilitating deeper insights into bioremediation potential and guiding data-driven decisions towards sustainable environmental solutions.
