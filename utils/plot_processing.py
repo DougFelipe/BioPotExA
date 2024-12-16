@@ -484,64 +484,53 @@ def plot_gene_compound_scatter(df):
 
     return fig
 
-# ----------------------------------------
-# P8_gene_sample_association
-# ----------------------------------------
+# -------------------------------
+# Function: plot_sample_gene_scatter (P8_gene_sample_association)
+# -------------------------------
 
 def plot_sample_gene_scatter(df):
     """
-    Cria um scatter plot para visualizar a relação entre samples e genes, garantindo que todos os rótulos nos eixos X e Y 
-    estejam visíveis e que a ordenação seja feita com os samples mais frequentes na parte superior.
+    Creates a scatter plot to visualize the relationship between samples and genes. 
+    Dynamically adjusts chart dimensions to ensure all axis labels are visible and prioritizes 
+    the most frequent samples.
 
-    :param df: DataFrame filtrado contendo as colunas 'sample' e 'genesymbol'.
-    :return: Objeto Figure com o scatter plot.
+    Parameters:
+    - df (pd.DataFrame): A filtered DataFrame containing gene and sample associations.
+                         Expected columns: 'sample', 'genesymbol'.
+
+    Returns:
+    - plotly.graph_objects.Figure: A Plotly scatter plot object.
     """
-    # Define a altura base do gráfico e a altura adicional por rótulo excedente para o eixo Y
-    base_height = 400  # Altura base do gráfico
-    extra_height_per_label_y = 25  # Altura adicional por cada rótulo excedente no eixo Y
+    # Base dimensions for the chart
+    base_height = 400  # Default chart height
+    extra_height_per_label_y = 25  # Additional height for each excess label on the y-axis
+    base_width = 800  # Default chart width
+    extra_width_per_label_x = 10  # Additional width for each excess label on the x-axis
 
-    # Define a largura base do gráfico e a largura adicional por rótulo excedente para o eixo X
-    base_width = 800  # Largura base do gráfico
-    extra_width_per_label_x = 10  # Largura adicional por cada rótulo excedente no eixo X
-
-    # Calcula o número de rótulos no eixo Y
+    # Calculate the total height based on unique samples
     num_labels_y = df['sample'].nunique()
+    label_limit_y = 1  # Minimum threshold for height adjustment
+    height = base_height + (num_labels_y - label_limit_y) * extra_height_per_label_y if num_labels_y > label_limit_y else base_height
 
-    # Define um limite para quando adicionar altura extra
-    label_limit_y = 1  # Garante que a altura será ajustada mesmo com poucos rótulos
-
-    # Calcula a altura total do gráfico
-    if num_labels_y > label_limit_y:
-        height = base_height + (num_labels_y - label_limit_y) * extra_height_per_label_y
-    else:
-        height = base_height
-
-    # Calcula o número de rótulos no eixo X
+    # Calculate the total width based on unique genes
     num_labels_x = df['genesymbol'].nunique()
+    label_limit_x = 10  # Minimum threshold for width adjustment
+    width = base_width + (num_labels_x - label_limit_x) * extra_width_per_label_x if num_labels_x > label_limit_x else base_width
 
-    # Define um limite para quando adicionar largura extra
-    label_limit_x = 10  # Número de rótulos que cabem na largura base
-
-    # Calcula a largura total do gráfico
-    if num_labels_x > label_limit_x:
-        width = base_width + (num_labels_x - label_limit_x) * extra_width_per_label_x
-    else:
-        width = base_width
-
-    # Ordena os samples pela frequência de ocorrência para priorizar os mais comuns no topo
+    # Order samples by frequency of occurrence
     sample_order = df['sample'].value_counts().index.tolist()
 
-    # Cria o scatter plot
+    # Create the scatter plot
     fig = px.scatter(
         df,
         x='genesymbol',
         y='sample',
         title='Scatter Plot of Genes vs Samples',
         template='simple_white',
-        category_orders={'sample': sample_order}  # Define a ordem do eixo Y
+        category_orders={'sample': sample_order}  # Prioritize the most frequent samples
     )
 
-    # Ajusta o layout do gráfico
+    # Update chart layout
     fig.update_layout(
         height=height,
         width=width,
@@ -549,51 +538,53 @@ def plot_sample_gene_scatter(df):
             tickmode='array',
             tickvals=df['sample'].unique(),
             ticktext=df['sample'].unique(),
-            automargin=True,  # Garante margens automáticas para rótulos longos
-            tickfont=dict(size=10),  # Ajusta o tamanho da fonte dos rótulos
+            automargin=True,
+            tickfont=dict(size=10)  # Adjust font size for readability
         ),
         xaxis=dict(
-            tickangle=45,  # Rotaciona os rótulos do eixo X
+            tickangle=45,  # Rotate x-axis labels
             tickmode='array',
             tickvals=df['genesymbol'].unique(),
             ticktext=df['genesymbol'].unique(),
-            automargin=True,  # Garante margens automáticas para rótulos longos
-            tickfont=dict(size=10),  # Ajusta o tamanho da fonte dos rótulos do eixo X
+            automargin=True,
+            tickfont=dict(size=10)
         ),
         xaxis_title='Gene Symbol',
         yaxis_title='Sample',
-        margin=dict(l=200, b=100)  # Adiciona margens extras para os eixos X e Y
+        margin=dict(l=200, b=100)  # Add margins for long labels
     )
 
     return fig
 
-
-# ----------------------------------------
-# P9_sample_reference_heatmap
-# ----------------------------------------
+# -------------------------------
+# Function: plot_sample_reference_heatmap (P9_sample_reference_heatmap)
+# -------------------------------
 
 def plot_sample_reference_heatmap(df):
     """
-    Cria um heatmap para visualizar a contagem de compoundname para cada combinação de samples e referenceAG.
+    Creates a heatmap to visualize the count of 'compoundname' for each combination of samples and reference AG.
 
-    :param df: DataFrame pivotado contendo as contagens.
-    :return: Objeto Figure com o heatmap.
+    Parameters:
+    - df (pd.DataFrame): A pivoted DataFrame containing counts of compounds for combinations 
+                         of 'sample' and 'referenceAG'. The index should represent 'referenceAG' 
+                         and columns should represent 'sample'.
+
+    Returns:
+    - plotly.graph_objects.Figure: A Plotly heatmap object.
     """
-    # Calcula o número de rótulos nos eixos X e Y
-    num_labels_x = len(df.columns)  # Número de rótulos no eixo X (Samples)
-    num_labels_y = len(df.index)    # Número de rótulos no eixo Y (Reference AG)
+    # Base dimensions for the heatmap
+    base_height = 400
+    base_width = 400
+    extra_height_per_label = 20  # Additional height per label on the y-axis
+    extra_width_per_label = 20   # Additional width per label on the x-axis
 
-    # Define parâmetros para o tamanho do gráfico
-    base_height = 400  # Altura base do gráfico
-    base_width = 400   # Largura base do gráfico
-    extra_height_per_label = 20  # Altura adicional por rótulo no eixo Y
-    extra_width_per_label = 20   # Largura adicional por rótulo no eixo X
-
-    # Calcula altura e largura finais com base no número de rótulos
+    # Calculate dynamic chart dimensions based on the number of labels
+    num_labels_x = len(df.columns)  # Number of labels on the x-axis
+    num_labels_y = len(df.index)    # Number of labels on the y-axis
     height = base_height + (num_labels_y * extra_height_per_label)
     width = base_width + (num_labels_x * extra_width_per_label)
 
-    # Cria o heatmap
+    # Create the heatmap
     fig = px.imshow(
         df,
         labels=dict(x="Sample", y="Reference AG", color="Compound Count"),
@@ -603,60 +594,56 @@ def plot_sample_reference_heatmap(df):
         title="Heatmap of Samples vs Reference AG"
     )
 
-    # Ajusta o layout para exibir todos os rótulos
+    # Update chart layout to ensure visibility of all labels
     fig.update_layout(
         xaxis=dict(
-            title=dict(
-                text="Sample",
-                standoff=50  # Distância entre os rótulos e o eixo X
-            ),
+            title=dict(text="Sample", standoff=50),  # Add spacing for x-axis title
             tickangle=45,
             tickfont=dict(size=10),
             automargin=True
         ),
         yaxis=dict(
-            title=dict(
-                text="Reference AG",
-                standoff=50  # Distância entre os rótulos e o eixo Y
-            ),
+            title=dict(text="Reference AG", standoff=50),  # Add spacing for y-axis title
             tickfont=dict(size=10),
             automargin=True
         ),
-        margin=dict(l=200, b=200)  # Ajusta as margens gerais do gráfico
+        margin=dict(l=200, b=200)  # Adjust margins for long labels
     )
 
     return fig
 
+# -------------------------------
+# Function: plot_sample_groups (P10_group_by_class)
+# -------------------------------
 
-
-# ----------------------------------------
-# P10_group_by_class Agrupa amostras por perfil de genes para cada classe de compostos
-# ----------------------------------------
 def plot_sample_groups(df):
     """
-    Cria um scatter plot para visualizar os grupos de samples baseados na relação com compoundname utilizando subplots.
-    
-    :param df: DataFrame contendo os grupos de samples.
-    :return: Objeto Figure com os subplots.
+    Creates a scatter plot with subplots to visualize sample groups based on compound interactions.
+
+    Parameters:
+    - df (pd.DataFrame): A DataFrame containing sample groups. Expected columns include 'sample', 
+                         'compoundname', and 'grupo' (group identifier).
+
+    Returns:
+    - plotly.graph_objects.Figure: A Plotly figure with subplots for each group.
     """
+    # Extract unique groups from the DataFrame
     unique_groups = df['grupo'].unique()
 
+    # Create subplots for each group
     fig = make_subplots(
         rows=1,
         cols=len(unique_groups),
-        shared_yaxes=True,  # Compartilha o eixo y para evitar duplicação
+        shared_yaxes=True,  # Share the y-axis across subplots
         subplot_titles=unique_groups,
-        horizontal_spacing=0.1  # Ajustar espaçamento entre as facetas
+        horizontal_spacing=0.1
     )
 
-    # Iterar sobre cada grupo e criar subplots
+    # Add scatter plots for each group
     for i, group in enumerate(unique_groups):
         group_df = df[df['grupo'] == group]
+        group_df = group_df.dropna(subset=['sample', 'compoundname'])  # Drop rows with missing values
 
-        # Remover NaNs e garantir dados limpos
-        group_df = group_df.dropna(subset=['sample', 'compoundname'])
-
-        # Adicionar trace ao subplot
         fig.add_trace(
             go.Scatter(
                 x=group_df['sample'],
@@ -668,26 +655,27 @@ def plot_sample_groups(df):
             row=1,
             col=i+1
         )
-    
-    # Configurar layout
+
+    # Update the layout for the entire figure
     fig.update_layout(
         title_text='Sample Groups by Compound Interaction',
         template='simple_white',
         showlegend=False,
-        height=600,  # Altura total do gráfico
-        width=300 * len(unique_groups),  # Largura proporcional ao número de facetas
+        height=600,
+        width=300 * len(unique_groups),  # Dynamically adjust width based on group count
     )
 
-    # Configurar eixos
+    # Configure axes
     fig.update_yaxes(
-        tickangle=0,  # Rótulos verticais
-        tickfont=dict(size=10),  # Reduzir o tamanho da fonte
+        tickangle=0,
+        tickfont=dict(size=10)
     )
 
     for i in range(1, len(unique_groups) + 1):
         fig.update_xaxes(row=1, col=i, tickangle=45, title_text=None)
-    
+
     return fig
+
 
 # ----------------------------------------
 # P11 HADEG HEATMAP ORTHOLOGS BY SAMPLE
