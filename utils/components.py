@@ -1,18 +1,40 @@
-# my_dash_app/components/components.py
+"""
+components.py
+-------------
+This script provides reusable UI components for a Dash application. 
+It includes a utility function to create HTML cards with a title and description.
+"""
 
-# Importa os componentes HTML e DCC do Dash.
+# -------------------------------
+# Imports
+# -------------------------------
+
+# Import Dash HTML and Core Components for building UI elements.
 from dash import html, dcc
 
-# Função para criar um card com título e descrição.
-def create_card(title, content):
-    """
-    Cria e retorna um card HTML com um título e uma descrição.
+# -------------------------------
+# Function: create_card
+# -------------------------------
 
-    :param title: O título a ser exibido no card.
-    :param content: A descrição ou conteúdo a ser exibido no card.
-    :return: Um componente html.Div contendo o título e a descrição.
+def create_card(title: str, content: str) -> html.Div:
     """
-    return html.Div([
-        html.H3(title, className='analysis-title'),  # Título do card com classe CSS personalizada.
-        html.P(content, className='analysis-description')  # Descrição do card com classe CSS personalizada.
-    ], className='analysis-card')  # Div principal com classe CSS personalizada.
+    Creates and returns an HTML card component with a title and a description.
+
+    Parameters:
+    - title (str): The title to be displayed on the card.
+    - content (str): The description or content to be displayed on the card.
+
+    Returns:
+    - html.Div: A Dash HTML component representing the card, styled with CSS classes.
+    """
+    return html.Div(
+        children=[
+            # Title of the card, styled with a custom CSS class.
+            html.H3(title, className='analysis-title'),
+
+            # Description or content of the card, styled with a custom CSS class.
+            html.P(content, className='analysis-description')
+        ],
+        # Main container for the card, styled with a custom CSS class.
+        className='analysis-card'
+    )
