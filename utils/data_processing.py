@@ -317,106 +317,185 @@ def process_compound_gene_ranking(merged_df):
     return compound_gene_ranking
 
 
-# ----------------------------------------
-# P7_gene_compound_association
-# ----------------------------------------
+"""
+P7_gene_compound_association, P8_gene_sample_association, P9_sample_reference_heatmap, P10_group_by_class
+---------------------------------------------------------------------------------------------------------
+This script contains utility functions for processing and grouping data related to genes, compounds, 
+and samples. The functionalities include:
+- Ranking genes by the number of unique compounds or samples.
+- Preparing data for a heatmap of sample and reference associations.
+- Grouping samples by gene profiles for specific compound classes.
+- Minimizing group redundancy for compound classifications.
+"""
+
+# -------------------------------
+# P7: Function: process_gene_compound_association
+# -------------------------------
+
 def process_gene_compound_association(merged_df):
     """
-    Processa os dados para calcular a quantidade de compostos únicos associados a cada gene.
+    Processes the data to calculate the number of unique compounds associated with each gene.
 
-    :param merged_df: DataFrame resultante da mesclagem com o banco de dados.
-    :return: DataFrame com os genes e a quantidade de compostos únicos associados.
+    Parameters:
+    - merged_df (pd.DataFrame): The DataFrame resulting from merging with the database.
+
+    Returns:
+    - pd.DataFrame: A DataFrame containing the genes and the count of unique compounds, 
+                    sorted in descending order of compound count.
     """
+    # Group by 'genesymbol' and calculate the number of unique 'compoundname' entries.
     gene_compound_association = merged_df.groupby('genesymbol')['compoundname'].nunique().reset_index(name='num_compounds')
+    
+    # Sort the results by the number of unique compounds in descending order.
     gene_compound_association = gene_compound_association.sort_values(by='num_compounds', ascending=False)
+    
+    # Return the resulting ranked DataFrame.
     return gene_compound_association
 
-
-# ----------------------------------------
-# P8_gene_sample_association
-# ----------------------------------------
+# -------------------------------
+# P8: Function: process_gene_sample_association
+# -------------------------------
 
 def process_gene_sample_association(merged_df):
     """
-    Processa os dados para calcular a quantidade de compostos únicos associados a cada gene.
+    Processes the data to calculate the number of unique compounds associated with each gene.
 
-    :param merged_df: DataFrame resultante da mesclagem com o banco de dados.
-    :return: DataFrame com os genes e a quantidade de compostos únicos associados.
+    Parameters:
+    - merged_df (pd.DataFrame): The DataFrame resulting from merging with the database.
+
+    Returns:
+    - pd.DataFrame: A DataFrame containing the genes and the count of unique compounds, 
+                    sorted in descending order of compound count.
     """
+    # Group by 'genesymbol' and calculate the number of unique 'compoundname' entries.
     gene_sample_association = merged_df.groupby('genesymbol')['compoundname'].nunique().reset_index(name='num_compounds')
+    
+    # Sort the results by the number of unique compounds in descending order.
     gene_sample_association = gene_sample_association.sort_values(by='num_compounds', ascending=False)
+    
+    # Return the resulting ranked DataFrame.
     return gene_sample_association
 
-
-# ----------------------------------------
-# P9_sample_reference_heatmap
-# ----------------------------------------
+# -------------------------------
+# P9: Function: process_sample_reference_heatmap
+# -------------------------------
 
 def process_sample_reference_heatmap(merged_df):
     """
-    Processa os dados para calcular a contagem de compoundname para cada combinação de samples e referenceAG.
+    Processes the data to calculate the count of 'compoundname' for each combination of 'sample' and 'referenceAG'.
 
-    :param merged_df: DataFrame resultante da mesclagem com o banco de dados.
-    :return: DataFrame pivotado para o heatmap.
+    Parameters:
+    - merged_df (pd.DataFrame): The DataFrame resulting from merging with the database.
+
+    Returns:
+    - pd.DataFrame: A pivoted DataFrame suitable for creating a heatmap.
     """
+    # Group by 'sample' and 'referenceAG', counting unique 'compoundname' entries.
     heatmap_df = merged_df.groupby(['sample', 'referenceAG'])['compoundname'].nunique().reset_index()
+    
+    # Pivot the grouped DataFrame to create a matrix with 'referenceAG' as rows and 'sample' as columns.
     heatmap_pivot = heatmap_df.pivot(index='referenceAG', columns='sample', values='compoundname').fillna(0)
+    
+    # Return the pivoted DataFrame.
     return heatmap_pivot
 
-# ----------------------------------------
-# P10_group_by_class Agrupa amostras por perfil de genes para cada classe de compostos
-# ----------------------------------------
+# -------------------------------
+# P10: Function: group_by_class
+# -------------------------------
 
 def group_by_class(compoundclass_choice, tabela):
+    """
+    Groups samples by their gene profiles for a specific class of compounds.
+
+    Parameters:
+    - compoundclass_choice (str): The selected compound class to filter the data.
+    - tabela (pd.DataFrame): The input DataFrame containing compound, sample, and class information.
+
+    Returns:
+    - pd.DataFrame: A DataFrame with an additional 'grupo' column indicating group membership.
+    """
+    # Filter the table to include only rows matching the selected compound class.
     dados_selecionados = tabela[tabela['compoundclass'] == compoundclass_choice]
     
-    grupos = []
+    grupos = []  # List to store groups of samples and compounds.
+    
+    # Iterate over unique samples in the filtered table.
     for sample in dados_selecionados['sample'].unique():
+        # Get the list of unique compounds for the current sample.
         compostos = dados_selecionados.loc[dados_selecionados['sample'] == sample, 'compoundname'].unique().tolist()
+        
         if len(compostos) > 0:
             grupo_existente = False
+            # Check if the current compounds match any existing group.
             for grupo in grupos:
                 if set(compostos) == set(grupo['compostos']):
                     grupo_existente = True
                     grupo['samples'].append(sample)
                     break
+            
+            # If no matching group exists, create a new group.
             if not grupo_existente:
                 novo_grupo = {'compostos': compostos, 'samples': [sample]}
                 grupos.append(novo_grupo)
     
+    # Add a 'grupo' column to the table and assign group labels.
     tabela_grupos = tabela.copy()
     tabela_grupos['grupo'] = None
+    
     for i, grupo in enumerate(grupos):
         grupo_samples = grupo['samples']
         grupo_compostos = grupo['compostos']
         tabela_grupos.loc[(tabela_grupos['sample'].isin(grupo_samples)) & 
-                          (tabela_grupos['compoundname'].isin(grupo_compostos)), 'grupo'] = f"{compoundclass_choice} - Group {i+1}"
+                          (tabela_grupos['compoundname'].isin(grupo_compostos)), 
+                          'grupo'] = f"{compoundclass_choice} - Group {i+1}"
     
+    # Return the filtered table with group assignments.
     tabela_grupos = tabela_grupos[tabela_grupos['compoundclass'] == compoundclass_choice]
-    
     return tabela_grupos
 
+# -------------------------------
+# Function: minimize_groups
+# -------------------------------
+
 def minimize_groups(df):
+    """
+    Reduces the number of groups to cover all compounds with minimal redundancy.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame containing group and compound information.
+
+    Returns:
+    - list: A list of selected groups that minimally cover all compounds.
+    """
+    # Group compounds by 'grupo' and convert to lists of unique compounds.
     group_compounds = df.groupby('grupo')['compoundname'].apply(lambda x: list(set(x))).reset_index()
     
-    all_compounds = df['compoundname'].unique().tolist()
-    selected_groups = []
+    all_compounds = df['compoundname'].unique().tolist()  # List of all unique compounds.
+    selected_groups = []  # List to store selected groups.
     
+    # Iteratively select groups to cover all compounds.
     while len(all_compounds) > 0:
         max_cover = 0
         best_group = None
+        
+        # Find the group that covers the most remaining compounds.
         for i in range(len(group_compounds)):
             group = group_compounds.iloc[i]['grupo']
             compounds = group_compounds.iloc[i]['compoundname']
             cover = len(set(all_compounds) & set(compounds))
+            
             if cover > max_cover:
                 max_cover = cover
                 best_group = group
         
+        # Remove the compounds covered by the selected group from the remaining list.
         all_compounds = list(set(all_compounds) - set(group_compounds.loc[group_compounds['grupo'] == best_group, 'compoundname'].values[0]))
+        
+        # Add the selected group to the list and remove it from consideration.
         selected_groups.append(best_group)
         group_compounds = group_compounds[group_compounds['grupo'] != best_group]
     
+    # Return the list of selected groups.
     return selected_groups
 
 # ----------------------------------------
