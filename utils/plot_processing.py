@@ -678,37 +678,42 @@ def plot_sample_groups(df):
 
 
 # ----------------------------------------
-# P11 HADEG HEATMAP ORTHOLOGS BY SAMPLE
+# Function: plot_sample_gene_heatmap (P11)
 # ----------------------------------------
+
 def plot_sample_gene_heatmap(grouped_df):
     """
-    Cria um heatmap para visualizar a relação entre genes e samples com a contagem de KOs únicos, 
-    lidando corretamente com células vazias para evitar fundo indesejado.
+    Creates a heatmap to visualize the relationship between genes and samples with KO counts.
+    Handles empty cells by replacing them with a default value to ensure consistent visuals.
 
-    :param grouped_df: DataFrame agrupado por gene e sample com a contagem de KOs únicos.
-    :return: Objeto Figure com o heatmap.
+    Parameters:
+    - grouped_df (pd.DataFrame): A DataFrame grouped by 'Gene' and 'sample', containing the KO count. 
+                                 Expected columns: 'Gene', 'sample', 'ko_count'.
+
+    Returns:
+    - plotly.graph_objects.Figure: A Plotly heatmap object.
     """
-    # Criação do DataFrame pivotado
+    # Pivot the DataFrame to create a matrix with 'Gene' as rows and 'sample' as columns
     pivot_df = grouped_df.pivot(index='Gene', columns='sample', values='ko_count')
 
-    # Substituir valores nulos por um indicador (opcional: 0 ou '')
-    pivot_df = pivot_df.fillna(0)  # Substituir NaN por 0 (ou escolha um valor adequado para células vazias)
-    
-    # Criação do heatmap
+    # Replace NaN values with 0 to handle empty cells
+    pivot_df = pivot_df.fillna(0)
+
+    # Create the heatmap
     fig = px.imshow(
         pivot_df,
-        color_continuous_scale='Oranges',  # Escala de cor para valores inteiros
+        color_continuous_scale='Oranges',  # Use an orange color scale
         labels=dict(x="Sample", y="Gene", color="KO Count"),
         title="Heatmap of Ortholog Counts by Sample",
-        zmin=0,  # Define o mínimo da escala para garantir valores consistentes
-        zmax=pivot_df.max().max(),  # Define o máximo da escala com base nos dados
+        zmin=0,  # Set minimum value for the color scale
+        zmax=pivot_df.max().max()  # Set maximum value for the color scale
     )
 
-    # Ajuste do layout para melhorar visualização
+    # Update layout for better visualization
     fig.update_layout(
         xaxis=dict(
             title='Sample',
-            tickangle=45,  # Rotaciona os labels no eixo X
+            tickangle=45,  # Rotate x-axis labels
             automargin=True
         ),
         yaxis=dict(
@@ -720,197 +725,110 @@ def plot_sample_gene_heatmap(grouped_df):
             tickvals=list(range(int(grouped_df['ko_count'].min()), int(grouped_df['ko_count'].max()) + 1)),
             ticktext=list(range(int(grouped_df['ko_count'].min()), int(grouped_df['ko_count'].max()) + 1))
         ),
-        plot_bgcolor='white',  # Define o fundo branco
-        paper_bgcolor='white'  # Define o fundo branco para o layout
+        plot_bgcolor='white',  # Set background color to white
+        paper_bgcolor='white'  # Set layout background color to white
     )
 
-    # Removendo as linhas da grade
+    # Remove grid lines for a cleaner look
     fig.update_xaxes(showgrid=False)
     fig.update_yaxes(showgrid=False)
 
     return fig
 
 # ----------------------------------------
-# P12 HADEG HEATMAP ORTHOLOGS BY SAMPLE (Horizontal Facets)
+# Function: plot_pathway_heatmap (P12)
 # ----------------------------------------
+
 def plot_pathway_heatmap(df, selected_sample):
     """
-    Cria um heatmap para visualizar a relação entre Pathways e compound_pathways com a contagem de KOs únicos,
-    exibindo as facetas em formato horizontal com suporte à rolagem lateral.
+    Creates a heatmap to visualize the relationship between pathways and compound pathways with KO counts.
+    The heatmaps are displayed as horizontal facets with fixed spacing.
 
-    :param df: DataFrame agrupado por Pathway, compound_pathway e sample com a contagem de KOs únicos.
-    :param selected_sample: Amostra selecionada para o filtro.
-    :return: Objeto Figure com o heatmap.
+    Parameters:
+    - df (pd.DataFrame): A DataFrame grouped by 'Pathway', 'compound_pathway', and 'sample', containing KO counts.
+                         Expected columns: 'Pathway', 'compound_pathway', 'sample', 'ko_count'.
+    - selected_sample (str): The selected sample to filter the data.
+
+    Returns:
+    - plotly.graph_objects.Figure: A Plotly heatmap object with facets for each compound pathway.
     """
     from plotly.subplots import make_subplots
     import plotly.graph_objects as go
 
-    # Filtrar o DataFrame pela amostra selecionada
+    # Filter the DataFrame for the selected sample
     df = df[df['sample'] == selected_sample]
 
-    # Obter as categorias únicas de compound_pathway
+    # Get unique compound pathways
     compound_pathways = df['compound_pathway'].unique()
-    n_cols = len(compound_pathways)  # Número de colunas será baseado no número de facetas
+    n_cols = len(compound_pathways)  # Number of facets based on unique pathways
 
-    # Configurar subplots com uma linha e múltiplas colunas
-    fig = make_subplots(
-        rows=1, cols=n_cols,
-        shared_yaxes=False,  # Cada faceta terá um eixo Y independente
-        horizontal_spacing=0.05,  # Espaçamento horizontal entre os gráficos
-        subplot_titles=[f'Compound Pathway: {cp}' for cp in compound_pathways]  # Títulos das facetas
-    )
-
-    # Adicionar heatmap para cada compound_pathway
-    for i, compound_pathway in enumerate(compound_pathways, start=1):
-        # Filtrar o DataFrame para o pathway atual
-        df_filtered = df[df['compound_pathway'] == compound_pathway]
-
-        # Criar a matriz do heatmap
-        heatmap_data = df_filtered.pivot_table(
-            index='Pathway', columns='compound_pathway', values='ko_count', aggfunc='sum', fill_value=0
-        )
-
-        # Remover linhas/colunas vazias
-        heatmap_data = heatmap_data.loc[(heatmap_data != 0).any(axis=1), (heatmap_data != 0).any(axis=0)]
-
-        # Apenas adicionar se houver dados
-        if not heatmap_data.empty:
-            heatmap = go.Heatmap(
-                z=heatmap_data.values,
-                x=heatmap_data.columns,
-                y=heatmap_data.index,
-                colorscale='Oranges',
-                colorbar=dict(
-                    title='KO Count',
-                    titleside='right',
-                    x=1.02 + (i - 1) * 0.1,  # Ajustar posição horizontalmente para cada faceta
-                    xanchor='left',
-                    y=0.5,  # Centralizar verticalmente
-                    lenmode='fraction',
-                    len=0.6  # Tamanho da barra de cor
-                )
-            )
-            fig.add_trace(heatmap, row=1, col=i)
-
-        # Atualizar o eixo X para a coluna atual
-        fig.update_xaxes(
-            tickangle=45,  # Rotação dos rótulos no eixo X
-            automargin=True,
-            row=1, col=i
-        )
-
-    # Atualizar layout global
-    fig.update_layout(
-        height=600,  # Altura fixa para o gráfico (sem rolagem vertical)
-        width=300 * n_cols,  # Largura proporcional ao número de colunas
-        title=f'Heatmap of Pathway vs Compound Pathway for Sample {selected_sample}',
-        template='simple_white',
-        margin=dict(l=100, r=50, t=80, b=50),  # Ajustar margens globais
-        xaxis_title='Compound Pathway',  # Título global para o eixo X
-        yaxis_title='Pathway'  # Título global para o eixo Y
-    )
-
-    # Adicionar rolagem lateral para heatmaps grandes
-    fig.update_layout(
-        xaxis=dict(
-            fixedrange=False  # Permitir rolagem lateral no eixo X
-        )
-    )
-
-    return fig
-
-
-# ----------------------------------------
-# P12 HADEG HEATMAP ORTHOLOGS BY SAMPLE
-# ----------------------------------------
-def plot_pathway_heatmap(df, selected_sample):
-    """
-    Cria um heatmap para visualizar a relação entre Pathways e compound_pathways com a contagem de KOs únicos,
-    exibindo as facetas em formato horizontal com um espaçamento fixo de 100 pixels.
-
-    :param df: DataFrame agrupado por Pathway, compound_pathway e sample com a contagem de KOs únicos.
-    :param selected_sample: Amostra selecionada para o filtro.
-    :return: Objeto Figure com o heatmap.
-    """
-    from plotly.subplots import make_subplots
-    import plotly.graph_objects as go
-
-    # Filtrar o DataFrame pela amostra selecionada
-    df = df[df['sample'] == selected_sample]
-
-    # Obter as categorias únicas de compound_pathway
-    compound_pathways = df['compound_pathway'].unique()
-    n_cols = len(compound_pathways)  # Número de colunas será baseado no número de facetas
-
-    # Configuração do espaço total com espaçamento fixo de 100px entre facetas
-    subplot_width = 100  # Largura padrão de cada faceta
-    spacing = 500  # Espaço fixo entre as facetas
+    # Configure total width with fixed spacing of 100px between facets
+    subplot_width = 100  # Standard width for each facet
+    spacing = 500  # Fixed space between facets
     total_width = n_cols * subplot_width + (n_cols - 1) * spacing
 
-    # Configurar subplots com uma linha e múltiplas colunas
+    # Create subplots with one row and multiple columns
     fig = make_subplots(
         rows=1, cols=n_cols,
-        shared_yaxes=False,  # Cada faceta terá um eixo Y independente
-        horizontal_spacing=spacing / total_width  # Converter espaço fixo para valor proporcional
+        shared_yaxes=False,  # Independent y-axes for each facet
+        horizontal_spacing=spacing / total_width  # Convert fixed spacing to a proportional value
     )
 
-    # Adicionar heatmap para cada compound_pathway
+    # Add heatmap for each compound pathway
     for i, compound_pathway in enumerate(compound_pathways, start=1):
-        # Filtrar o DataFrame para o pathway atual
+        # Filter DataFrame for the current pathway
         df_filtered = df[df['compound_pathway'] == compound_pathway]
 
-        # Criar a matriz do heatmap
+        # Create the heatmap matrix
         heatmap_data = df_filtered.pivot_table(
             index='Pathway', columns='compound_pathway', values='ko_count', aggfunc='sum', fill_value=0
         )
 
-        # Remover linhas/colunas vazias
+        # Remove empty rows and columns
         heatmap_data = heatmap_data.loc[(heatmap_data != 0).any(axis=1), (heatmap_data != 0).any(axis=0)]
 
-        # Apenas adicionar se houver dados
+        # Only add the heatmap if data exists
         if not heatmap_data.empty:
             heatmap = go.Heatmap(
                 z=heatmap_data.values,
                 x=heatmap_data.columns,
                 y=heatmap_data.index,
                 colorscale='Oranges',
-                showscale=True,  # Exibe a barra de cores
+                showscale=True,  # Display the color bar
                 colorbar=dict(
                     title='KO Count',
                     titleside='right',
-                    x=(subplot_width * (i - 1) + (i - 1) * spacing + subplot_width) / total_width,  # Ajusta a posição horizontal
+                    x=(subplot_width * (i - 1) + (i - 1) * spacing + subplot_width) / total_width,  # Position horizontally
                     xanchor='left',
                     y=0.5,
                     yanchor='middle',
                     lenmode='fraction',
-                    len=0.6  # Tamanho da barra de cor
+                    len=0.6  # Set color bar height
                 )
             )
             fig.add_trace(heatmap, row=1, col=i)
 
-        # Atualizar o eixo X para a coluna atual
+        # Update the x-axis for the current column
         fig.update_xaxes(
             automargin=True,
             row=1, col=i
         )
 
-    # Ajustar o layout global
+    # Update global layout
     fig.update_layout(
-        height=600,  # Altura total fixa
-        width=total_width,  # Largura total com base no número de facetas e espaçamento
-        title=f'Heatmap of Pathway vs Compound Pathway for Sample {selected_sample}',  # Título global removido
-        yaxis_title='Pathway',  # Título global do eixo Y mantido
+        height=600,  # Fixed total height
+        width=total_width,  # Total width based on the number of facets and spacing
+        title=f'Heatmap of Pathway vs Compound Pathway for Sample {selected_sample}',  # Global title
+        yaxis_title='Pathway',  # Global y-axis title
         template='simple_white',
-        showlegend=False,  # Remove legendas redundantes
+        showlegend=False  # Remove redundant legends
     )
 
-    # Remover os títulos das facetas
+    # Remove facet titles
     for annotation in fig['layout']['annotations']:
         annotation['text'] = ''
 
     return fig
-
-
 
 
 
