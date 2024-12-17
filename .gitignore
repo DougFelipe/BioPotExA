@@ -2,8 +2,6 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=python
 
 
-##evitar versionamento da base de dados
-data/
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
