@@ -9,6 +9,26 @@ This script contains functions for creating various plots using Plotly
 # Imports
 # -------------------------------
 
+# my_dash_app/utils/plot_processing.py
+from dash import html
+import matplotlib
+matplotlib.use('Agg')  # Define o backend não interativo
+import matplotlib.pyplot as plt
+from scipy.cluster.hierarchy import dendrogram
+import base64
+import io
+
+#P15
+# my_dash_app/utils/plot_processing.py
+from dash import html  # Importa o módulo html para criar componentes HTML
+import matplotlib
+matplotlib.use('Agg')  # Define o backend não interativo
+import matplotlib.pyplot as plt
+from scipy.cluster.hierarchy import dendrogram
+import base64
+import io
+
+from dash import html,dcc,Input,Output,State
 # Import Plotly modules for visualization.
 import plotly.express as px
 import plotly.graph_objects as go
@@ -831,46 +851,43 @@ def plot_pathway_heatmap(df, selected_sample):
     return fig
 
 
+# ----------------------------------------
+# Function: plot_sample_ko_scatter (P13)
+# ----------------------------------------
 
-##P13
 def plot_sample_ko_scatter(scatter_data, selected_pathway):
     """
-    Cria um scatter plot para mostrar os KOs associados a cada sample para uma via metabólica.
+    Creates a scatter plot to display the KOs (KEGG Orthology) associated with each sample for a selected pathway.
 
-    :param scatter_data: DataFrame com sample e genesymbol.
-    :param selected_pathway: A via metabólica selecionada (usada no título do gráfico).
-    :return: Objeto Figure com o scatter plot.
+    Parameters:
+    - scatter_data (pd.DataFrame): A DataFrame containing 'sample' and 'genesymbol'.
+    - selected_pathway (str): The selected metabolic pathway (used in the plot title).
+
+    Returns:
+    - plotly.graph_objects.Figure: A Plotly scatter plot object.
     """
-    # Define parâmetros base
-    base_height = 400  # Altura base do gráfico
-    base_width = 800   # Largura base do gráfico
-    extra_width_per_label = 10  # Largura extra por rótulo adicional no eixo X
-    label_limit_x = 20  # Limite de rótulos no eixo X antes de ajustar a largura
+    # Define base dimensions for the chart
+    base_height = 400
+    base_width = 800
+    extra_width_per_label = 10  # Extra width per additional x-axis label
+    label_limit_x = 20  # Maximum number of labels on the x-axis before adjusting width
 
-    # Calcula o número de rótulos únicos no eixo X (samples)
+    # Calculate the number of unique labels on the x-axis (samples)
     num_labels_x = scatter_data['sample'].nunique()
 
-    # Ajusta a largura do gráfico dinamicamente
-    if num_labels_x > label_limit_x:
-        width = base_width + (num_labels_x - label_limit_x) * extra_width_per_label
-    else:
-        width = base_width
+    # Dynamically adjust chart width based on the number of x-axis labels
+    width = base_width + (num_labels_x - label_limit_x) * extra_width_per_label if num_labels_x > label_limit_x else base_width
 
-    # Calcula a altura do gráfico com base nos rótulos do eixo Y (genesymbol)
-    base_height = 400
+    # Dynamically adjust chart height based on the number of y-axis labels (genesymbol)
     extra_height_per_label = 15
     num_labels_y = scatter_data['genesymbol'].nunique()
     label_limit_y = 1
+    height = base_height + (num_labels_y - label_limit_y) * extra_height_per_label if num_labels_y > label_limit_y else base_height
 
-    if num_labels_y > label_limit_y:
-        height = base_height + (num_labels_y - label_limit_y) * extra_height_per_label
-    else:
-        height = base_height
+    # Dynamic tick spacing for the x-axis
+    tick_spacing_x = max(1, num_labels_x // 20)  # Limit to displaying 20 labels on the x-axis
 
-    # Define espaçamento dinâmico para rótulos no eixo X
-    tick_spacing_x = max(1, num_labels_x // 20)  # Exibe no máximo 20 rótulos no eixo X
-
-    # Cria o scatter plot
+    # Create the scatter plot
     fig = px.scatter(
         scatter_data,
         x='sample',
@@ -879,13 +896,13 @@ def plot_sample_ko_scatter(scatter_data, selected_pathway):
         template='simple_white'
     )
 
-    # Ajusta o layout do gráfico
+    # Update chart layout
     fig.update_layout(
         height=height,
         width=width,
         yaxis=dict(
             categoryorder='total ascending',
-            title='Genesymbol',  # Rótulo do eixo Y
+            title='Genesymbol',
             tickmode='array',
             tickvals=scatter_data['genesymbol'].unique(),
             ticktext=scatter_data['genesymbol'].unique(),
@@ -893,103 +910,99 @@ def plot_sample_ko_scatter(scatter_data, selected_pathway):
             tickfont=dict(size=10),
         ),
         xaxis=dict(
-            title='Sample',  # Rótulo do eixo X
-            tickangle=45,  # Rotaciona rótulos no eixo X em 45 graus
+            title='Sample',
+            tickangle=45,  # Rotate x-axis labels
             tickmode='linear',
             tickvals=scatter_data['sample'].unique()[::tick_spacing_x],
             ticktext=scatter_data['sample'].unique()[::tick_spacing_x],
             automargin=True,
         ),
-        margin=dict(l=200, b=150)  # Margens para rótulos longos
+        margin=dict(l=200, b=150)  # Margins for long labels
     )
 
     return fig
 
-
-# my_dash_app/utils/plot_processing.py
-
+# ----------------------------------------
+# Function: plot_enzyme_activity_counts
+# ----------------------------------------
 
 def plot_enzyme_activity_counts(enzyme_count_df, sample):
     """
-    Plota um gráfico de barras das atividades enzimáticas únicas por amostra.
+    Creates a bar chart to display the unique enzyme activities for a selected sample.
 
-    :param enzyme_count_df: DataFrame com a contagem de atividades enzimáticas únicas.
-    :param sample: Nome da amostra selecionada.
-    :return: Objeto Figure com o gráfico de barras.
+    Parameters:
+    - enzyme_count_df (pd.DataFrame): A DataFrame containing enzyme activities and their unique KO counts.
+                                      Expected columns: 'enzyme_activity', 'unique_ko_count'.
+    - sample (str): The name of the selected sample.
+
+    Returns:
+    - plotly.graph_objects.Figure: A Plotly bar chart object.
     """
     if enzyme_count_df.empty:
-        raise ValueError("O DataFrame de contagem de atividades enzimáticas está vazio.")
+        raise ValueError("The enzyme activity count DataFrame is empty.")
 
+    # Create the bar chart
     fig = px.bar(
         enzyme_count_df,
         x='enzyme_activity',
         y='unique_ko_count',
         title=f'Unique Enzyme Activities for {sample}',
-        text='unique_ko_count',
+        text='unique_ko_count',  # Display unique KO counts on the bars
         template="simple_white"
     )
+
+    # Update chart layout
     fig.update_layout(
         xaxis_title='Enzyme Activity',
         yaxis_title='Unique Gene Count',
-        xaxis_tickangle=45
+        xaxis_tickangle=45  # Rotate x-axis labels
     )
+
     return fig
 
-#P15
-# my_dash_app/utils/plot_processing.py
-from dash import html  # Importa o módulo html para criar componentes HTML
-import matplotlib
-matplotlib.use('Agg')  # Define o backend não interativo
-import matplotlib.pyplot as plt
-from scipy.cluster.hierarchy import dendrogram
-import base64
-import io
-
-
-# my_dash_app/utils/plot_processing.py
-from dash import html
-import matplotlib
-matplotlib.use('Agg')  # Define o backend não interativo
-import matplotlib.pyplot as plt
-from scipy.cluster.hierarchy import dendrogram
-import base64
-import io
-
+# ----------------------------------------
+# Function: plot_dendrogram (P15)
+# ----------------------------------------
 
 def plot_dendrogram(clustering_matrix, sample_labels, distance_metric, method):
     """
-    Plota o dendrograma com os nomes das amostras como rótulos no eixo X.
+    Creates a dendrogram to visualize hierarchical clustering, using sample names as x-axis labels.
 
-    :param clustering_matrix: Matriz de clustering gerada pela função `calculate_sample_clustering`.
-    :param sample_labels: Lista de nomes das amostras para usar como rótulos no eixo X.
-    :param distance_metric: Métrica de distância utilizada no clustering.
-    :param method: Método de clustering utilizado.
-    :return: Gráfico do dendrograma no formato Dash HTML.
+    Parameters:
+    - clustering_matrix: The clustering matrix generated by a hierarchical clustering function.
+    - sample_labels (list): A list of sample names to use as x-axis labels.
+    - distance_metric (str): The distance metric used for clustering.
+    - method (str): The clustering method used (e.g., 'average', 'single').
+
+    Returns:
+    - dash.html.Img: An HTML image object containing the dendrogram as a PNG.
     """
-    # Criar o dendrograma em uma figura
-    plt.figure(figsize=(10, 6))
-    dendrogram(clustering_matrix, labels=sample_labels)  # Passa os nomes das amostras como labels
 
-    # Adicionar o título dinâmico
+    # Create the dendrogram as a Matplotlib figure
+    plt.figure(figsize=(10, 6))
+    dendrogram(clustering_matrix, labels=sample_labels)
+
+    # Add a dynamic title
     plt.title(f'Sample Clustering Dendrogram\nDistance: {distance_metric.capitalize()}, Method: {method.capitalize()}')
     plt.xlabel('Samples')
     plt.ylabel('Distance')
 
-    # Ajustar o ângulo dos rótulos no eixo X
-    plt.xticks(rotation=-45, ha='left')  # Gira os rótulos para -45 graus e alinha à esquerda
+    # Rotate x-axis labels for better readability
+    plt.xticks(rotation=-45, ha='left')
 
-    # Converter a figura para base64
+    # Convert the Matplotlib figure to a base64-encoded PNG
     buf = io.BytesIO()
     plt.savefig(buf, format='png', bbox_inches='tight')
     buf.seek(0)
     encoded_image = base64.b64encode(buf.read()).decode('utf-8')
     buf.close()
 
-    # Fechar a figura para evitar conflitos com o Matplotlib
+    # Close the figure to avoid Matplotlib conflicts
     plt.close()
 
-    # Retornar apenas a imagem como Dash HTML
+    # Return the image as an HTML component for Dash
     return html.Img(src=f'data:image/png;base64,{encoded_image}', style={"width": "100%"})
+
 
 #P16
 # my_dash_app/utils/plot_processing.py
