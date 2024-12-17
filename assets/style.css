@@ -572,14 +572,14 @@ body, html {
     border-radius: 5px;
     color: #007bff;
     padding: 10px;
-    width: 100%;
+    width: 400px;
     text-align: center;
     cursor: pointer;
     transition: border-color 0.3s ease;
 }
 
 .upload-button-style:hover {
-    border-color: #6b98c8;
+    border-color: #a31d1b;
 }
 
 /* Estilo para o botão de processamento */

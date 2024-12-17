@@ -5,44 +5,38 @@ This script contains functions for creating various plots using Plotly
 
 """
 
-# -------------------------------
+# ----------------------------------------
 # Imports
-# -------------------------------
+# ----------------------------------------
 
-# my_dash_app/utils/plot_processing.py
-from dash import html
-import matplotlib
-matplotlib.use('Agg')  # Define o backend não interativo
-import matplotlib.pyplot as plt
-from scipy.cluster.hierarchy import dendrogram
+# Standard Library Imports
 import base64
 import io
+import math
 
-#P15
-# my_dash_app/utils/plot_processing.py
-from dash import html  # Importa o módulo html para criar componentes HTML
-import matplotlib
-matplotlib.use('Agg')  # Define o backend não interativo
-import matplotlib.pyplot as plt
-from scipy.cluster.hierarchy import dendrogram
-import base64
-import io
+# Third-Party Libraries
+import pandas as pd  # Data manipulation
+import matplotlib.pyplot as plt  # Visualization with Matplotlib
+from matplotlib import use as set_matplotlib_backend  # Backend configuration for Matplotlib
+from scipy.cluster.hierarchy import dendrogram  # For hierarchical clustering
+import networkx as nx  # For creating and visualizing networks
 
-from dash import html,dcc,Input,Output,State
-# Import Plotly modules for visualization.
+# Plotly for Interactive Visualizations
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
-# Import pandas for data manipulation.
-import pandas as pd
+# Dash for Web Components and Interactivity
+from dash import html, dcc, Input, Output, State
 
-# Import math for mathematical operations (if needed).
-import math
+# UpSetPlot for specialized visualizations
+from upsetplot import from_memberships, plot
 
-# Import data processing utilities.
-from utils.data_processing import prepare_upsetplot_data
-from utils.data_processing import merge_input_with_database
+# Project-Specific Utilities
+from utils.data_processing import prepare_upsetplot_data, merge_input_with_database
+
+# Matplotlib Backend Configuration
+set_matplotlib_backend('Agg')  # Set the backend to 'Agg' for non-interactive rendering
 
 # -------------------------------
 # Function: plot_ko_count
@@ -1014,56 +1008,53 @@ import io
 from sklearn.preprocessing import LabelEncoder
 
 
+# ----------------------------------------
+# Function: render_upsetplot (P16)
+# ----------------------------------------
 
 def render_upsetplot(stored_data, selected_samples):
     """
-    Renderiza o gráfico UpSet Plot baseado nas amostras e KOs selecionados após merge com o database.
+    Renders an UpSet Plot based on selected samples and their associated KOs after merging with the database.
 
-    :param stored_data: Dados armazenados no formato dicionário (stored-data).
-    :param selected_samples: Lista de amostras selecionadas.
-    :return: Imagem do gráfico UpSet Plot em formato base64.
+    Parameters:
+    - stored_data (dict): Stored data in dictionary format, typically from Dash callbacks.
+    - selected_samples (list): List of selected samples to include in the plot.
+
+    Returns:
+    - str: Base64-encoded PNG image of the UpSet Plot.
     """
-    # Verificar se há pelo menos 2 amostras selecionadas
+    # Ensure at least two samples are selected
     if len(selected_samples) < 2:
-        raise ValueError("É necessário selecionar pelo menos duas amostras para renderizar o gráfico.")
+        raise ValueError("At least two samples must be selected to render the UpSet Plot.")
 
-    # Converter stored_data para DataFrame
+    # Convert stored data to a DataFrame
     input_df = pd.DataFrame(stored_data)
 
-    # Mesclar os dados do input com o banco de dados
+    # Merge input data with the database
     merged_data = merge_input_with_database(input_df)
 
-    # Filtrar pelas amostras selecionadas
+    # Filter data by selected samples
     filtered_df = merged_data[merged_data['sample'].isin(selected_samples)]
 
-    # Garantir apenas valores únicos de `ko` para cada `sample`
+    # Ensure unique KOs for each sample
     filtered_df = filtered_df[['sample', 'ko']].drop_duplicates()
 
-    # Preparar os memberships para o UpSet Plot
-    memberships = filtered_df.groupby('ko')['sample'].apply(list)
-    memberships = memberships.apply(lambda x: list(set(x)))  # Remover duplicatas
+    # Prepare memberships for the UpSet Plot
+    memberships = filtered_df.groupby('ko')['sample'].apply(list).apply(lambda x: list(set(x)))
 
-    # Converter os memberships em dados do UpSet Plot
-    upset_data = from_memberships(memberships)
+    # Convert memberships to UpSet Plot data format
+    upset_data = from_memberships(memberships).groupby(from_memberships(memberships).index).sum()
 
-    # Resolver duplicatas no índice
-    upset_data = upset_data.groupby(upset_data.index).sum()
-
-    # Validar e ajustar o índice dinamicamente usando os nomes originais das amostras
+    # Validate and adjust index dynamically for proper labeling
     try:
-        # Determinar o número de níveis do índice
         num_levels = len(upset_data.index[0]) if isinstance(upset_data.index[0], tuple) else 1
-
-        # Mapear nomes das amostras originais para os níveis
-        index_names = selected_samples[:num_levels]  # Usar os nomes originais das amostras selecionadas
-
-        # Ajustar o índice para usar os nomes das amostras
+        index_names = selected_samples[:num_levels]
         new_index = pd.MultiIndex.from_tuples(upset_data.index, names=index_names)
         upset_data.index = new_index
     except Exception as e:
-        raise ValueError("Falha ao criar MultiIndex: dados malformados ou inconsistentes.")
+        raise ValueError("Failed to create MultiIndex. Data may be malformed or inconsistent.")
 
-    # Gerar o gráfico
+    # Generate the plot
     plt.figure(figsize=(10, 6))
     plot(upset_data, orientation='horizontal')
     buffer = io.BytesIO()
@@ -1071,57 +1062,54 @@ def render_upsetplot(stored_data, selected_samples):
     plt.close()
     buffer.seek(0)
 
-    # Converter gráfico para base64
+    # Encode the plot as a Base64 string
     image_data = base64.b64encode(buffer.read()).decode('utf-8')
     return f"data:image/png;base64,{image_data}"
 
-#P17
-# my_dash_app/utils/plot_processing.py
-import networkx as nx
-import plotly.graph_objects as go
+# ----------------------------------------
+# Function: generate_gene_compound_network (P17)
+# ----------------------------------------
 
 def generate_gene_compound_network(network_data):
     """
-    Gera um gráfico de rede Gene-Compound usando Plotly e NetworkX.
+    Generates a Gene-Compound network graph using Plotly and NetworkX.
 
-    :param network_data: DataFrame com colunas 'genesymbol' e 'cpd'.
-    :return: Figura Plotly com a rede.
+    Parameters:
+    - network_data (pd.DataFrame): A DataFrame containing 'genesymbol' and 'compoundname' columns.
+
+    Returns:
+    - plotly.graph_objects.Figure: A Plotly figure object representing the network.
     """
-    # Criar o grafo usando NetworkX
+
+
+    # Create a NetworkX graph
     G = nx.Graph()
 
-    # Adicionar nós e arestas
+    # Add nodes and edges
     for _, row in network_data.iterrows():
         G.add_node(row['genesymbol'], type='gene')
         G.add_node(row['compoundname'], type='compound')
         G.add_edge(row['genesymbol'], row['compoundname'])
 
-
-    # Posição dos nós (usando spring layout para distribuição)
+    # Calculate positions using spring layout
     pos = nx.spring_layout(G, seed=42)
 
-    # Extrair informações para plotly
-    node_x = []
-    node_y = []
-    node_text = []
-    node_color = []
-
+    # Extract node and edge positions
+    node_x, node_y, node_text, node_color = [], [], [], []
     for node, position in pos.items():
         node_x.append(position[0])
         node_y.append(position[1])
         node_text.append(node)
-        # Definir cor diferente para genes e compostos
         node_color.append('blue' if G.nodes[node]['type'] == 'gene' else 'green')
 
-    edge_x = []
-    edge_y = []
+    edge_x, edge_y = [], []
     for edge in G.edges():
         x0, y0 = pos[edge[0]]
         x1, y1 = pos[edge[1]]
         edge_x.extend([x0, x1, None])
         edge_y.extend([y0, y1, None])
 
-    # Criar as arestas
+    # Create edge traces
     edge_trace = go.Scatter(
         x=edge_x, y=edge_y,
         line=dict(width=1, color='#888'),
@@ -1129,20 +1117,16 @@ def generate_gene_compound_network(network_data):
         mode='lines'
     )
 
-    # Criar os nós
+    # Create node traces
     node_trace = go.Scatter(
         x=node_x, y=node_y,
         mode='markers',
         hoverinfo='text',
-        marker=dict(
-            size=10,
-            color=node_color,
-            line=dict(width=2)
-        ),
+        marker=dict(size=10, color=node_color, line=dict(width=2)),
         text=node_text
     )
 
-    # Criar o layout do gráfico
+    # Build the Plotly figure
     fig = go.Figure(
         data=[edge_trace, node_trace],
         layout=go.Layout(
@@ -1157,57 +1141,55 @@ def generate_gene_compound_network(network_data):
 
     return fig
 
-
-#P18
+# ----------------------------------------
+# Function: plot_heatmap_faceted (P18)
+# ----------------------------------------
 
 def plot_heatmap_faceted(df):
     """
-    Gera um heatmap faceted para as categorias de toxicidade com uma única legenda compartilhada e hover personalizado.
+    Creates a faceted heatmap for toxicity categories with shared legends and customized hover text.
 
-    :param df: DataFrame com 'compoundname', 'value', 'label', 'category' e 'subcategoria'.
-    :return: Figura Plotly com facetas.
+    Parameters:
+    - df (pd.DataFrame): A DataFrame containing 'compoundname', 'value', 'label', 'category', and 'subcategoria' columns.
+
+    Returns:
+    - plotly.graph_objects.Figure: A Plotly figure object with faceted heatmaps.
     """
-    from plotly.subplots import make_subplots
-    import plotly.graph_objects as go
-
-
-    # Obter categorias únicas
+  
+    # Get unique categories
     categories = df['category'].unique()
-
     n_cols = len(categories)
     if n_cols == 0:
-        raise ValueError("Nenhuma categoria disponível para plotagem.")
+        raise ValueError("No categories available for plotting.")
 
-    # Configurar subplots com eixos Y compartilhados e uma única legenda
+    # Configure subplots with shared Y-axes and a single legend
     fig = make_subplots(
         rows=1, cols=n_cols,
-        shared_yaxes=True,  # Compartilhar o eixo Y entre as facetas
+        shared_yaxes=True,
         horizontal_spacing=0.05,
         subplot_titles=categories
     )
 
-    # Adicionar heatmaps
+    # Add heatmaps to the subplots
     for i, category in enumerate(categories, start=1):
         subset = df[df['category'] == category]
 
-        # Resolver duplicatas agrupando por 'compoundname', 'subcategoria', e 'label'
+        # Group by necessary columns and calculate mean values
         subset_grouped = subset.groupby(['compoundname', 'subcategoria', 'label'], as_index=False)['value'].mean()
 
-        # Criar pivot table para o heatmap
+        # Create pivot table for heatmap data
         heatmap_data = subset_grouped.pivot(index='compoundname', columns='subcategoria', values='value')
-
         if heatmap_data.empty:
             continue
 
-        # Criar matriz para o hover personalizado
         hover_text = subset_grouped.pivot(index='compoundname', columns='subcategoria', values='label')
 
-        # Adicionar o heatmap ao subplot
+        # Add heatmap trace
         heatmap = go.Heatmap(
             z=heatmap_data.values,
             x=heatmap_data.columns,
             y=heatmap_data.index,
-            text=hover_text.values,  # Adicionar os labels no hover
+            text=hover_text.values,
             hovertemplate=(
                 "<b>Compound:</b> %{y}<br>"
                 "<b>Subcategory:</b> %{x}<br>"
@@ -1215,30 +1197,30 @@ def plot_heatmap_faceted(df):
                 "<b>Toxicity Score:</b> %{z}<extra></extra>"
             ),
             colorscale="reds",
-            showscale=(i == 1),  # Mostra a escala de cores apenas na primeira faceta
+            showscale=(i == 1),
             colorbar=dict(
-                title='Toxicity Score',  # Título global da escala
-                len=0.8,  # Altura da legenda
-                x=1.02  # Posição no lado direito
-            ) if i == 1 else None  # Configura a legenda apenas para a primeira faceta
+                title='Toxicity Score',
+                len=0.8,
+                x=1.02
+            ) if i == 1 else None
         )
         fig.add_trace(heatmap, row=1, col=i)
 
-        # Atualizar os eixos X
+        # Update x-axis for the current subplot
         fig.update_xaxes(
-            tickangle=45,  # Rotação de 45 graus nos rótulos
-            automargin=True,  # Ajustar margens para evitar sobreposição
+            tickangle=45,
+            automargin=True,
             row=1, col=i
         )
 
-    # Layout global
+    # Global layout settings
     fig.update_layout(
         height=600,
-        width=300 * n_cols,  # Largura proporcional ao número de facetas
+        width=300 * n_cols,
         title="Toxicity Predictions",
         template="simple_white",
-        yaxis_title="Compound Names",  # Define o título global do eixo Y
-        margin=dict(l=100, r=50, t=80, b=100)  # Ajusta as margens
+        yaxis_title="Compound Names",
+        margin=dict(l=100, r=50, t=80, b=100)
     )
 
     return fig

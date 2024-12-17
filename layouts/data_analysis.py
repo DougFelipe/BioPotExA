@@ -131,7 +131,7 @@ def get_dataAnalysis_page():
                             ),
                             html.Span('Or', className='upload-or-text'),
                             html.Button(
-                                'Click to Automatically Upload Sample Data"',
+                                'Click to Automatically Upload Exemple Data',
                                 id='see-example-data',
                                 n_clicks=0,
                                 className='process-sample-button-style'
