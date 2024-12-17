@@ -20,10 +20,10 @@ def get_about_layout():
                 html.Div(
                     [
                         html.H3('BioRemPP', className='about-BioRemPP-title'),  # Título principal
-                        html.H3('Biorremediation Potential Profile', className='about-BioRemPP-subtitle'),  # Subtítulo
+                        html.H3('Bioremediation Potential Profile', className='about-BioRemPP-subtitle'),  # Subtítulo
                         html.Hr(className="my-2"),  # Linha horizontal para separação
                         html.P([
-                            "Aimed at identifying the biotechnological potential for bioremediation, the Biorremediation Potential Profile (BioRemPP) was developed to enable the analysis of functional genome annotation data of bacteria, fungi, and plants, allowing the characterization of organisms with potential for pollutant degradation and providing a user interface and interactive data analysis",
+                            "Aimed at identifying the biotechnological potential for bioremediation, the Bioremediation Potential Profile (BioRemPP) was developed to enable the analysis of functional genome annotation data of bacteria, fungi, and plants, allowing the characterization of organisms with potential for pollutant degradation and providing a user interface and interactive data analysis",
                             html.Br(), html.Br(),
                             "The BioRemPP database integrates data on priority pollutants for bioremediation reported by regulatory agencies, PubChem and KEGG databases",
                             html.Br(), html.Br(),

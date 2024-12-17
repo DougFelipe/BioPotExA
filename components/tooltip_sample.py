@@ -1,33 +1,66 @@
-from dash import html
-import dash_bootstrap_components as dbc
+"""
+tooltip_sample.py
+-----------------
+This script defines a tooltip component for a Dash web application. The tooltip provides users 
+with an example of the expected input data format for sample data and includes explanatory text.
+
+The component uses Dash HTML elements and Bootstrap components to ensure clear and visually 
+appealing formatting of the tooltip.
+"""
+
+# ----------------------------------------
+# Imports
+# ----------------------------------------
+
+from dash import html  # Dash HTML components
+import dash_bootstrap_components as dbc  # Dash Bootstrap components for styling and alerts
+
+# ----------------------------------------
+# Function: input_format_tooltip
+# ----------------------------------------
 
 def input_format_tooltip():
     """
-    Tooltip component to show the expected input format for sample data.
+    Creates a tooltip component that displays the expected input format for sample data.
+
+    This component includes:
+    - A descriptive header.
+    - A preformatted example showing the correct data structure.
+    - A warning alert to clarify the example's purpose.
+
+    Returns:
+    - dash.html.Div: A Dash HTML Div component containing the formatted tooltip.
     """
     return html.Div(
-        className="tooltip-container",
+        className="tooltip-container",  # Custom CSS class for styling the tooltip container
         children=[
-            # Texto do Tooltip
-            html.Span("your dataset in this format", className="tooltip-text"),
+            # Text displayed as part of the tooltip prompt
+            html.Span(
+                "your dataset in this format", 
+                className="tooltip-text"  # Custom CSS class for tooltip text
+            ),
             html.Div(
-                className="tooltip-content",
+                className="tooltip-content",  # CSS class for the tooltip content block
                 children=[
-                    html.P("Input data must be formatted as below", className="tooltip-header"),
+                    # Header text to explain the purpose of the tooltip
+                    html.P(
+                        "Input data must be formatted as below", 
+                        className="tooltip-header"  # CSS class for header text
+                    ),
                     
-                    # Exemplo de formato esperado
+                    # Preformatted example of the expected input format
                     html.Pre(
                         ">Sample1\nK00031\nK00032\nK00090\nK00042\nK00052\n"
                         ">Sample2\nK00031\nK00032\nK00090\nK00042\nK00052\n"
                         ">Sample3\nK00031\nK00032\nK00090\nK00042\nK00052",
-                        className="tooltip-example"
+                        className="tooltip-example"  # CSS class for displaying preformatted code
                     ),
                     
-                    # Alerta ajustado com texto claro
+                    # Alert box to clarify that the example is illustrative
                     dbc.Alert(
                         "Note: This is just an example. Your actual dataset should contain all KO IDs from the real sample",
-                        color="danger",
-                        className="tooltip-alert"
+                        color="danger",  # Bootstrap alert color (red for warning)
+                        className="tooltip-alert"  # CSS class for the alert box
                     ),
                 ]
             )

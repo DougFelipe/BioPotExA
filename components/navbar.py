@@ -1,41 +1,62 @@
-from dash import html
-import dash_bootstrap_components as dbc
+"""
+navbar.py
+---------
+This script defines the navigation bar for a Dash web application using Dash HTML components and 
+Dash Bootstrap Components (DBC). The navigation bar organizes links into collapsible card sections 
+for clear and structured navigation through the application.
 
-# Navbar ajustado com todas as sessões como dbc.Cards
+The navbar includes:
+- A title and subtitle.
+- Seven sections, each containing relevant navigation links as `dbc.Card` components.
+"""
+
+# ----------------------------------------
+# Imports
+# ----------------------------------------
+
+from dash import html  # Dash HTML components for building UI
+import dash_bootstrap_components as dbc  # Bootstrap components for styling and cards
+
+# ----------------------------------------
+# Navbar Component
+# ----------------------------------------
+
+# Main navigation bar containing all sections and links
 navbar = html.Div(
     [
-        # Título da aplicação
+        # Application Title
         html.A(
-            "BioRemPP",
-            href="/",
-            className="navbar-title",  # Classe CSS para o título
+            "BioRemPP",  # Main application title
+            href="/",  # Link to the homepage
+            className="navbar-title"  # CSS class for styling the title
         ),
-        # Contêiner para subtítulo e links
+        
+        # Subtitle and Navigation Menu Container
         html.Div(
             [
-                # Subtítulo da aplicação
+                # Subtitle for the navigation bar
                 html.P(
                     "Navigation Menu",
-                    className="navbar-subtitle",  # Classe CSS para o subtítulo
+                    className="navbar-subtitle"  # CSS class for styling the subtitle
                 ),
 
-                # Links organizados em dbc.Cards para 7 sessões
+                # Container for navigation links organized into cards
                 html.Div(
                     [
-                        # Sessão 1: Data Tables and Database Integration
+                        # Section 1: Data Tables and Database Integration
                         dbc.Card(
                             dbc.CardBody(
                                 [
-                                    html.H5("Data Tables and Database Integration", className="card-title"),
-                                    html.A("BioRemPP Results Table", href="#main-results-table", className="nav-link"),
-                                    html.A("HADEG Results Table", href="#hadeg-results-table", className="nav-link"),
-                                    html.A("ToxCSM Results Table", href="#toxcsm-results-table", className="nav-link"),
+                                    html.H5("Data Tables and Database Integration", className="card-title"),  # Section title
+                                    html.A("BioRemPP Results Table", href="#main-results-table", className="nav-link"),  # Link 1
+                                    html.A("HADEG Results Table", href="#hadeg-results-table", className="nav-link"),  # Link 2
+                                    html.A("ToxCSM Results Table", href="#toxcsm-results-table", className="nav-link"),  # Link 3
                                 ]
                             ),
-                            className="nav-card",
+                            className="nav-card"  # CSS class for styling the card
                         ),
 
-                        # Sessão 2: Gene and Metabolic Pathway Analysis
+                        # Section 2: Gene and Metabolic Pathway Analysis
                         dbc.Card(
                             dbc.CardBody(
                                 [
@@ -47,10 +68,10 @@ navbar = html.Div(
                                     html.A("Scatter Plot of KOs by Sample", href="#sample-ko-scatter", className="nav-link"),
                                 ]
                             ),
-                            className="nav-card",
+                            className="nav-card"
                         ),
 
-                        # Sessão 3: Interactions Between Entities
+                        # Section 3: Interactions Between Entities
                         dbc.Card(
                             dbc.CardBody(
                                 [
@@ -62,10 +83,10 @@ navbar = html.Div(
                                     html.A("Gene-Compound Network", href="#gene-compound-network", className="nav-link"),
                                 ]
                             ),
-                            className="nav-card",
+                            className="nav-card"
                         ),
 
-                        # Sessão 4: Ranking and Prioritization
+                        # Section 4: Ranking and Prioritization
                         dbc.Card(
                             dbc.CardBody(
                                 [
@@ -75,10 +96,10 @@ navbar = html.Div(
                                     html.A("Ranking of Compounds by Gene Interaction", href="#compound-rank-gene-chart", className="nav-link"),
                                 ]
                             ),
-                            className="nav-card",
+                            className="nav-card"
                         ),
 
-                        # Sessão 5: Patterns and Interactions with Heatmaps
+                        # Section 5: Patterns and Interactions with Heatmaps
                         dbc.Card(
                             dbc.CardBody(
                                 [
@@ -88,10 +109,10 @@ navbar = html.Div(
                                     html.A("Pathway-Compound Interaction Map", href="#pathway-heatmap", className="nav-link"),
                                 ]
                             ),
-                            className="nav-card",
+                            className="nav-card"
                         ),
 
-                        # Sessão 6: Intersection and Group Exploration
+                        # Section 6: Intersection and Group Exploration
                         dbc.Card(
                             dbc.CardBody(
                                 [
@@ -101,10 +122,10 @@ navbar = html.Div(
                                     html.A("Clustering Dendrogram", href="#sample-clustering-dendrogram", className="nav-link"),
                                 ]
                             ),
-                            className="nav-card",
+                            className="nav-card"
                         ),
 
-                        # Sessão 7: Toxicity Predictions
+                        # Section 7: Toxicity Predictions
                         dbc.Card(
                             dbc.CardBody(
                                 [
@@ -112,14 +133,14 @@ navbar = html.Div(
                                     html.A("Comprehensive Toxicity Prediction Heatmap", href="#toxicity-heatmap-faceted", className="nav-link"),
                                 ]
                             ),
-                            className="nav-card",
+                            className="nav-card"
                         ),
                     ],
-                    className="nav-links",  # Contêiner geral com todos os cards
+                    className="nav-links"  # CSS class for the overall container of all cards
                 ),
             ],
-            className="navbar-menu-container",  # Contêiner geral do menu
+            className="navbar-menu-container"  # CSS class for the menu container
         ),
     ],
-    className="navbar-container",  # Classe principal para o navbar
+    className="navbar-container"  # CSS class for the overall navbar container
 )
