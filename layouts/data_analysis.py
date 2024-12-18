@@ -1,19 +1,41 @@
-# Importações necessárias para a aplicação Dash e manipulação de dados
-from dash import Input, Output, callback, dash,dcc, html
+"""
+data_analysis.py
+-----------------
+This script defines the "Data Analysis" page of the Dash web application, including:
+- Step-by-step instructions for users on how to upload, process, and analyze their data.
+- Components for uploading files, downloading sample data, and displaying results.
+- Links to related publications and citation guidelines.
+
+Functions:
+- `get_dataAnalysis_page`: Generates the main layout for the data analysis page, including all steps and instructions.
+- `get_dataAnalysis_layout`: Compiles the data analysis layout into a reusable format.
+"""
+
+# ----------------------------------------
+# Imports
+# ----------------------------------------
+
+# Core Dash components for interactivity and layout design
+from dash import Input, Output, callback, dcc, html
 from dash.dependencies import Input, Output, State
+
+# Bootstrap components for styling
 import dash_bootstrap_components as dbc
-import pandas as pd  # Importar para carregar o sample_data.txt
 
-# Importações de utilitários e layouts específicos da aplicação
-from components.step_guide import create_step_card  # Importa a função do componente de passo a passo
-from components.tooltip_sample import input_format_tooltip
-from components.download_button import get_sample_data_button
-from layouts.results import get_results_layout  # Importa o novo layout de resultados
+# Pandas for data manipulation
+import pandas as pd
 
+# Import reusable components
+from components.step_guide import create_step_card  # Step-by-step cards
+from components.tooltip_sample import input_format_tooltip  # Tooltip for input format
+from components.download_button import get_sample_data_button  # Button for downloading sample data
 
+# Import layouts for results display
+from layouts.results import get_results_layout
 
-# Função para criar a página de Análise de Dados
-# Função para criar a página de Análise de Dados
+# ----------------------------------------
+# Function: get_dataAnalysis_page
+# ----------------------------------------
 def get_dataAnalysis_page():
     return html.Div([
         dcc.Store(id='page-state', data='initial'),  # Armazena o estado da página
@@ -38,15 +60,19 @@ def get_dataAnalysis_page():
                             create_step_card(
                                 step_number="Step 1",
                                 title="Upload",
-                                description="Upload your data files in the specified format for analysis"
+                                description="Upload your data file in the specified .txt format for analysis"
                             ),
                             html.Div(
                                 [
                                     html.P(
                                         [
-                                            "Start by uploading ",
+                                            "Start by ",
                                             input_format_tooltip(),
-                                            ". Ensure the file is in the specified format to avoid processing issues. "
+                                            html.Br(),
+                                            html.Br(),
+                                            "Ensure the file and input data are in the specified format to avoid processing issues",
+                                            html.Br(),
+                                            html.Br(),
                                             "This step allows the application to read and validate the structure of your data, ensuring it meets the requirements for analysis"
                                         ],
                                         className='step-text'
@@ -73,10 +99,15 @@ def get_dataAnalysis_page():
                             html.Div(
                                 [
                                     html.P(
-                                        "Once your data is uploaded, click the button to process it. During this step, the system will validate the dataset, "
-                                        "checking for completeness, correct formatting, and potential errors. This ensures the data is ready for in-depth analysis",
+                                        [
+                                            "Once your data or exemple data is uploaded, click the 'Submit' button and await to see the results",
+                                            html.Br(),
+                                            html.Br(),
+                                            "This is where the provided data is merged with the BioRemPP databases to render the results tables and graphs"
+                                        ],
                                         className='step-text'
                                     )
+
                                 ],
                                 className="card-content"  # Classe para estilizar o conteúdo do card
                             )
@@ -93,10 +124,18 @@ def get_dataAnalysis_page():
                                 description="Analyze results and visualize insights"
                             ),
                             html.P(
-                                "After processing, move on to analyzing your data. In this step, you can explore detailed results presented in tables and interactive visualizations. "
-                                "These insights are designed to help you understand trends, patterns, and key information within your dataset",
+                                [
+                                    "After processing, move on to analyzing your data",
+                                    html.Br(),
+                                    html.Br(),
+                                    "In this step, you can explore detailed results presented in tables and interactive visualizations",
+                                    html.Br(),
+                                    html.Br(),
+                                    "These insights are designed to help you understand trends, patterns, and key information within your dataset"
+                                ],
                                 className='step-text'
                             )
+
                         ]
                     )
                 ]
@@ -150,7 +189,7 @@ def get_dataAnalysis_page():
                         children=[
                             # Botão "Click to Submit"
                             html.Button(
-                                'Click to Submit',
+                                'Submit',
                                 id='process-data',
                                 n_clicks=0,
                                 className='process-button-style'
@@ -200,7 +239,7 @@ def get_dataAnalysis_page():
 
                # Card "Disclaimer for Citation" - Novo Card
             html.Div([
-                html.H2('Disclaimer for Citation', className='how-to-use'),
+                html.H2('How to Cite', className='how-to-use'),
                 html.Hr(className="my-2"),
             ], className='title-container'),
 
@@ -211,14 +250,15 @@ def get_dataAnalysis_page():
                     html.Div(
                         className='citation-disclaimer-container',
                         children=[
-                            html.P(
-                                "If you use BioRemPP in your research, please cite the following publication:",
-                                className='publication-text'
-                            ),
+                            html.P([
+                                html.Strong("The BioRemPP server is free and open to all users, and there is no login requirement")
+                            ], className='citation-info-text'),
+                            html.P([
+                                html.Strong("Your citation is really important to us. Please cite this paper if you publish or present results using BioRemPP analysis")
+                            ], className='citation-request-text'),
                             html.Blockquote(
                                 """
-                                Author(s). "BioRemPP: A Bioinformatics Tool for Exploring Bioremediation Potential". 
-                                Journal of Environmental Research and Biotechnology, Year. DOI:xxxx/xxxxxx
+                                'Placeholder for Citation'
                                 """,
                                 className='citation-text'
                             )
@@ -226,6 +266,7 @@ def get_dataAnalysis_page():
                     )
                 ]
             ),
+
 
 
 
@@ -340,8 +381,19 @@ html.Div(
     ], className='pages-content')
 
 
+# ----------------------------------------
+# Function: get_dataAnalysis_layout
+# ----------------------------------------
+
 # Função para compilar múltiplas páginas de Análise de Dados
 def get_dataAnalysis_layout():
+    """
+    Compiles the data analysis page into a reusable layout.
+
+    Returns:
+    - dash.html.Div: A Dash HTML Div containing the compiled layout.
+    """
+        
     return html.Div([
         get_dataAnalysis_page()
     ])

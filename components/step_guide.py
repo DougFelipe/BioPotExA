@@ -16,17 +16,6 @@ and viewing results.
 from dash import html  # Dash HTML components for creating the UI structure
 
 # ----------------------------------------
-# Step Guide Configuration
-# ----------------------------------------
-
-# List of steps for the guide
-step_guide_list = [
-    {"step_number": "Step 1", "title": "Upload", "description": "Upload your data files in the specified format for analysis"},
-    {"step_number": "Step 2", "title": "Submit", "description": "Submit your data for processing and validation"},
-    {"step_number": "Step 3", "title": "View Results", "description": "View the analysis results and download reports"}
-]
-
-# ----------------------------------------
 # Function: create_step_card
 # ----------------------------------------
 

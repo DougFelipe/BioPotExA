@@ -25,9 +25,7 @@ def get_about_layout():
                         html.P([
                             "Aimed at identifying the biotechnological potential for bioremediation, the Bioremediation Potential Profile (BioRemPP) was developed to enable the analysis of functional genome annotation data of bacteria, fungi, and plants, allowing the characterization of organisms with potential for pollutant degradation and providing a user interface and interactive data analysis",
                             html.Br(), html.Br(),
-                            "The BioRemPP database integrates data on priority pollutants for bioremediation reported by regulatory agencies, PubChem and KEGG databases",
-                            html.Br(), html.Br(),
-                            "Seeking to contribute to sustainable development goals, BioRemPP emerges as an innovation in this field by automating the genomic analysis process used in identifying genes, enzymes, metabolic pathways, and biological processes with biotechnological potential to mitigate the environmental impacts associated with these pollutants"
+                            "BioRemPP emerges as an innovative data analysis tool in the field of bioremediation by automating the genomic analysis process used in identifying genes, enzymes, metabolic pathways, and biological processes with biotechnological potential to mitigate the environmental impacts associated with these pollutants"
                         ], className='about-content'),
                         
                         # **Adiciona o conteúdo de Data Analysis aqui**

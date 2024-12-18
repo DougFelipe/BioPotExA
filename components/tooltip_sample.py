@@ -36,7 +36,7 @@ def input_format_tooltip():
         children=[
             # Text displayed as part of the tooltip prompt
             html.Span(
-                "your dataset in this format", 
+                "providing your dataset in a .txt file in this format", 
                 className="tooltip-text"  # Custom CSS class for tooltip text
             ),
             html.Div(

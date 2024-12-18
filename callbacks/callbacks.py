@@ -63,7 +63,7 @@ def handle_upload_or_example(contents, n_clicks_example, filename):
                     [
                         "Example dataset loaded successfully",
                         html.Br(),
-                        'Click "Click to Submit" to process the data',
+                        'Click "Submit" to process the data',
                         html.Br(),
                         "Please wait until the progress is complete to view the results"
                     ],
@@ -100,7 +100,7 @@ def handle_upload_or_example(contents, n_clicks_example, filename):
                     [
                         "File uploaded and validated successfully",
                         html.Br(),
-                        'Click "Click to Submit" to process the data',
+                        'Click "Submit" to process the data',
                         html.Br(),
                         "Please wait until the progress is complete to view the results"
                     ],
@@ -256,8 +256,3 @@ def process_and_toggle_elements(n_clicks, stored_data, current_state):
         {'display': 'inline-block'},  # Mostra "Click to Submit"
         current_state
     )
-
-
-
-
-

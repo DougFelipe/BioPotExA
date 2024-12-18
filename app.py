@@ -1,17 +1,28 @@
-# my_dash_app/app.py
+"""
+app.py
+------
+This script initializes the main Dash application instance. It sets up the application with:
+- An external Bootstrap theme for consistent and responsive styling.
+- Additional configurations to handle advanced Dash features like callbacks and custom scripts.
 
-# Importa a classe Dash do pacote dash.
-from dash import Dash
+The application instance (`app`) is the central object used throughout the project to define layouts, callbacks, and other app-level settings.
+"""
 
-# Importa os componentes de bootstrap do pacote dash_bootstrap_components.
-import dash_bootstrap_components as dbc
+# ----------------------------------------
+# Imports
+# ----------------------------------------
 
+from dash import Dash  # Core Dash class for creating the application
+import dash_bootstrap_components as dbc  # Bootstrap components for enhanced UI styling
 
-# Cria a instância principal da aplicação Dash, aplicando um tema externo do Bootstrap
-# e configurando opções adicionais.
+# ----------------------------------------
+# Dash Application Instance
+# ----------------------------------------
+
+# Create the main Dash application instance
 app = Dash(
-    __name__,  # Define o nome do módulo da aplicação.
-    external_stylesheets=[dbc.themes.MINTY],  # Aplica o tema Minty do Bootstrap.
-    suppress_callback_exceptions=True,  # Configuração para suprimir exceções de callbacks.
-    external_scripts=["/assets/scroll.js"]  # Inclua o script para scroll
+    __name__,  # Defines the name of the module for internal app reference
+    external_stylesheets=[dbc.themes.MINTY],  # Applies the Minty theme from Bootstrap for consistent styling
+    suppress_callback_exceptions=True,  # Allows the use of callbacks for components not immediately in the layout
+    external_scripts=["/assets/scroll.js"]  # Includes a custom JavaScript file for scroll functionality
 )
