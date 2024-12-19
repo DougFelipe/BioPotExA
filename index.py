@@ -14,7 +14,7 @@ from dash import Dash, dcc, html, Input, Output
 
 # Import custom header component
 from components.header import Header
-from components.features import get_features_layout  
+from components.expected_results import get_features_layout  
 from components.bioremediation import get_bioremediation_layout  
 from components.regulatory_agencies import get_regulatory_agencies_layout  
 

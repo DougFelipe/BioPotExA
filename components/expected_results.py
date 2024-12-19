@@ -13,7 +13,7 @@ def get_features_layout():
             # Page Title
             html.H1("BioRemPP Features", className="features-title"),
             html.P(
-                "Welcome to the BioRemPP Features page! Here, you will find an overview of the platform's functionalities, "
+                "Here, you will find an overview of the platform's functionalities, "
                 "tools, and insights into how it can assist in data-driven decision-making for bioremediation studies",
                 className="features-intro"
             ),
