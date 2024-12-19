@@ -17,6 +17,7 @@ from components.header import Header
 from components.features import get_features_layout  
 from components.bioremediation import get_bioremediation_layout  
 from components.regulatory_agencies import get_regulatory_agencies_layout  
+from components.contact import get_contact_page
 
 # Import layout functions for different pages
 from layouts.about import get_about_layout  
@@ -78,10 +79,6 @@ app.layout = html.Div(
     ]
 )
 
-# ----------------------------------------
-# Callback: Page Navigation
-# ----------------------------------------
-
 @app.callback(
     Output('page-content', 'children'),  # Updates the page content dynamically
     Input('url', 'pathname')  # Listens for changes in the URL path
@@ -108,6 +105,8 @@ def display_page(pathname):
         return get_bioremediation_layout()
     elif pathname == '/regulatory':  # Route for the Regulatory Agencies page
         return get_regulatory_agencies_layout()
+    elif pathname == '/contact':  # Route for the Contact page
+        return get_contact_page()
     else:  # Default route (e.g., Home or About page)
         return get_about_layout()
 

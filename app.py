@@ -22,7 +22,11 @@ import dash_bootstrap_components as dbc  # Bootstrap components for enhanced UI 
 # Create the main Dash application instance
 app = Dash(
     __name__,  # Defines the name of the module for internal app reference
-    external_stylesheets=[dbc.themes.MINTY],  # Applies the Minty theme from Bootstrap for consistent styling
+    external_stylesheets=[
+        dbc.themes.MINTY,  # Applies the Minty theme from Bootstrap for consistent styling
+        "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css",  # Font Awesome Icons
+        "https://www.w3schools.com/w3css/4/w3.css"  # W3.CSS for simple styling
+    ],
     suppress_callback_exceptions=True,  # Allows the use of callbacks for components not immediately in the layout
     external_scripts=["/assets/scroll.js"]  # Includes a custom JavaScript file for scroll functionality
 )

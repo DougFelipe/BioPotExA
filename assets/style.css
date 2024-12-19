@@ -1273,3 +1273,116 @@ body, html {
     border: 0.5px solid #ccc;
     margin: 10px 0;
 }
+
+/*INFORMAÇÕES DE CONTATO*/
+.contact-page {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.contact-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #2a9d8f;
+    margin-bottom: 20px;
+}
+
+.profile-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.profile-picture {
+    border-radius: 10%;
+    width: 350px;
+    height: 500px;
+    margin-right: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.text-section {
+    text-align: left;
+}
+
+.developer-name {
+    font-size: 1.8rem;
+    margin: 0;
+    color: #264653;
+}
+
+.academic-title {
+    font-size: 1.2rem;
+    margin: 5px 0;
+    color: #2a9d8f;
+    font-style: italic;
+}
+
+.developer-title {
+    font-size: 1rem;
+    margin: 5px 0;
+    color: #2a9d8f;
+    font-weight: bold;
+}
+
+.description-section {
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.developer-description {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.contact-methods {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.contact-header {
+    font-size: 1.5rem;
+    color: #2a9d8f;
+    margin-bottom: 10px;
+}
+
+.contact-text {
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.contact-email {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #e76f51;
+    text-decoration: none;
+}
+
+.contact-email:hover {
+    text-decoration: underline;
+}
+
+.social-media {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.social-icon {
+    color: #264653;
+    text-decoration: none;
+}
+
+.social-icon i {
+    font-size: 2rem;
+    color: #264653;
+    transition: color 0.3s ease;
+}
+
+.social-icon i:hover {
+    color: #2a9d8f;
+}
