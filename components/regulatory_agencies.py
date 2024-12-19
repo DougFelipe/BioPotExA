@@ -16,7 +16,7 @@ def get_regulatory_agencies_layout():
             # Introduction Section
             html.P(
                 "BioRemPP provides a comprehensive database that includes compounds identified as priority environmental pollutants. "
-                "These compounds are recognized by global regulatory agencies due to their environmental and human health impacts",
+                "These compounds are recognized by global regulatory agencies or entities due to their environmental and human health impacts",
                 className="regulatory-intro"
             ),
             
@@ -131,18 +131,5 @@ def get_regulatory_agencies_layout():
                 ]
             ),
             
-            # Section: Collaboration and Future Directions
-            html.Div(
-                className="regulatory-section",
-                children=[
-                    html.H2("Collaboration and Future Directions", className="regulatory-section-title"),
-                    html.P(
-                        "BioRemPP aligns its database and tools with the standards set by these regulatory agencies. "
-                        "By leveraging global frameworks and bioremediation strategies, it aims to contribute to cleaner environments "
-                        "and enhanced public health",
-                        className="regulatory-text"
-                    ),
-                ]
-            ),
         ]
     )

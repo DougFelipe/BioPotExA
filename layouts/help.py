@@ -148,9 +148,9 @@ def get_help_layout():
                     ]),
                     html.Br(),
                     html.Li([
-                        html.Strong("4. Large File Uploads: "),
-                        "If you encounter issues uploading large files, ensure the file size does not exceed the allowed limit (50MB). ",
-                        "You can compress your dataset or split it into smaller files for processing"
+                        html.Strong("4. Multiple Samples Uploads: "),
+                        "If you encounter issues uploading multiple samples, ensure the file does not exceed the allowed limit of 50 samples"
+                        
                     ]),
                     html.Br(),
                     html.Li([

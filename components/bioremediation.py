@@ -11,8 +11,9 @@ def get_bioremediation_layout():
             # Title Section
             html.H1("Bioremediation", className="features-title"),
             html.P(
-                "Bioremediation is a sustainable technology that uses biological organisms, such as bacteria, fungi, or plants, to remediate and restore polluted environments. "
-                "This page explores its applications, benefits, and other critical aspects, emphasizing how it aids in reducing contamination and promoting environmental health",
+                "Bioremediation represents a promising and sustainable approach to mitigating environmental contamination. "
+                "Using living organisms like bacteria, fungi, or plants, this method promotes the degradation or neutralization of harmful pollutants, "
+                "restoring ecosystems and protecting public health. This page highlights the applications, benefits, challenges, and future opportunities in the field of bioremediation",
                 className="features-intro"
             ),
 
@@ -22,18 +23,26 @@ def get_bioremediation_layout():
                 children=[
                     html.H2("Applications of Bioremediation", className="features-section-title"),
                     html.P(
-                        "Bioremediation is applied across various fields to address contamination issues. Key areas of application include:",
+                        "Bioremediation has broad applications across various industries and ecosystems, addressing contamination in soil, water, and air. "
+                        "Here are some notable areas where bioremediation is actively employed:",
                         className="features-text"
                     ),
-                    html.Ul(
-                        className="features-list",
-                        children=[
-                            html.Li("Oil spill cleanup in marine environments and soil"),
-                            html.Li("Treatment of industrial effluents and chemical pollutants"),
-                            html.Li("Remediation of heavy metals in contaminated water or soil"),
-                            html.Li("Degradation of pesticides and agricultural runoffs"),
-                            html.Li("Restoration of ecosystems affected by mining activities"),
-                        ]
+            html.Ul(
+                className="features-list",
+                children=[
+                    html.Li("Oil Spill Cleanup: Removing hydrocarbons from marine and terrestrial environments after oil spills"),
+                    html.Li("Industrial Effluent Treatment: Addressing pollutants in wastewater from industries such as textiles, chemicals, and pharmaceuticals"),
+                    html.Li("Heavy Metal Remediation: Stabilizing or extracting toxic metals like arsenic, cadmium, and lead from soil and water"),
+                    html.Li("Pesticide Degradation: Breaking down harmful agrochemicals that accumulate in agricultural runoff"),
+                    html.Li("Ecosystem Restoration: Rehabilitating areas impacted by mining, deforestation, or urbanization"),
+                    html.Li("Landfill Leachate Management: Treating contaminated water that seeps from landfills to prevent groundwater pollution"),
+                    html.Li("Groundwater Decontamination: Cleaning up contaminated aquifers by using microorganisms to degrade pollutants"),
+                    html.Li("Air Pollution Control: Using biofilters and bioreactors to remove volatile organic compounds (VOCs) and odors from industrial emissions"),
+                    html.Li("Plastic Biodegradation: Breaking down synthetic plastics and microplastics using enzymes and microorganisms"),
+                    html.Li("Radioactive Waste Management: Stabilizing or reducing radioactive contaminants in soil and water through biological means"),
+                    html.Li("Pharmaceutical Waste Treatment: Degrading active pharmaceutical compounds in wastewater to prevent ecological harm"),
+                    html.Li("Agricultural Waste Management: Managing organic waste like animal manure or crop residues by converting them into biogas or compost"),
+                ]
                     )
                 ]
             ),
@@ -44,17 +53,18 @@ def get_bioremediation_layout():
                 children=[
                     html.H2("Benefits of Bioremediation", className="features-section-title"),
                     html.P(
-                        "Bioremediation offers numerous advantages over conventional remediation methods, including:",
+                        "Bioremediation offers several advantages over traditional remediation methods, making it a preferred choice in many scenarios. These benefits include:",
                         className="features-text"
                     ),
                     html.Ul(
                         className="features-list",
                         children=[
-                            html.Li("Cost-effectiveness compared to chemical or mechanical methods"),
-                            html.Li("Environmentally friendly as it leverages natural processes"),
-                            html.Li("Ability to target specific pollutants with precision"),
-                            html.Li("Minimal ecological disruption during remediation"),
-                            html.Li("Scalability to address small-scale or large-scale contamination"),
+                            html.Li("Cost-Effectiveness: Often more economical than chemical or mechanical cleanup methods"),
+                            html.Li("Environmental Compatibility: Leverages natural processes without introducing additional pollutants"),
+                            html.Li("Targeted Pollutant Degradation: Specific organisms can be tailored to degrade particular pollutants"),
+                            html.Li("Minimal Ecological Impact: Avoids the large-scale disruption caused by excavation or chemical treatments"),
+                            html.Li("Scalability: Effective for both localized contamination and large-scale environmental disasters"),
+                            html.Li("Long-Term Sustainability: Promotes natural recovery processes, ensuring ecological balance over time"),
                         ]
                     ),
                 ]
@@ -66,15 +76,16 @@ def get_bioremediation_layout():
                 children=[
                     html.H2("Key Organisms in Bioremediation", className="features-section-title"),
                     html.P(
-                        "The success of bioremediation relies on the use of specific biological organisms with unique metabolic capabilities, such as:",
+                        "Bioremediation relies on the metabolic capabilities of specific organisms to break down or neutralize pollutants. Each group of organisms brings unique strengths to the process:",
                         className="features-text"
                     ),
                     html.Ul(
                         className="features-list",
                         children=[
-                            html.Li("Bacteria: Known for their ability to degrade hydrocarbons, pesticides, and industrial chemicals"),
-                            html.Li("Fungi: Effective in breaking down complex organic pollutants like dyes and synthetic chemicals"),
-                            html.Li("Plants: Used in phytoremediation to absorb or stabilize heavy metals and toxins"),
+                            html.Li("Bacteria: Specialists in degrading hydrocarbons, pesticides, and toxic chemicals. Examples include _Pseudomonas_ and _Bacillus_"),
+                            html.Li("Fungi: Effective in breaking down complex pollutants such as dyes, synthetic chemicals, and lignin-based compounds"),
+                            html.Li("Plants (Phytoremediation): Capable of absorbing heavy metals and stabilizing toxins in soil and water. Common examples are _Poplar trees_ and _Sunflowers_"),
+                            html.Li("Algae: Emerging as a powerful tool for remediating wastewater and capturing carbon emissions"),
                         ]
                     ),
                 ]
@@ -86,23 +97,45 @@ def get_bioremediation_layout():
                 children=[
                     html.H2("Challenges and Future Directions", className="features-section-title"),
                     html.P(
-                        "While bioremediation shows immense promise, challenges remain, including optimizing conditions for microbial activity, handling large-scale contamination, and ensuring long-term ecological balance. "
-                        "Future research is focused on enhancing microbial efficiency, developing robust monitoring systems, and exploring genetic engineering to improve pollutant degradation capabilities",
+                        "While bioremediation holds immense promise, it is not without challenges. Overcoming these hurdles requires innovative approaches and continuous research. Key challenges include:",
                         className="features-text"
+                    ),
+                    html.Ul(
+                        className="features-list",
+                        children=[
+                            html.Li("Environmental Variables: Factors such as pH, temperature, and oxygen levels can significantly impact the efficiency of bioremediation"),
+                            html.Li("Scaling Up: Laboratory successes often face challenges when applied to large-scale, real-world scenarios"),
+                            html.Li("Complex Pollutants: Some contaminants, like heavy metals or mixed waste, are difficult to degrade or neutralize completely"),
+                            html.Li("Monitoring and Control: Ensuring the activity of the organisms remains targeted and effective over time"),
+                        ]
+                    ),
+                    html.P(
+                        "Future directions in bioremediation aim to address these challenges through advancements such as:",
+                        className="features-text"
+                    ),
+                    html.Ul(
+                        className="features-list",
+                        children=[
+                            html.Li("Genetic Engineering: Developing engineered microbes with enhanced pollutant degradation capabilities"),
+                            html.Li("Bioreactor Systems: Creating controlled environments to optimize microbial activity"),
+                            html.Li("Omics Technologies: Leveraging genomics, proteomics, and metabolomics to understand and enhance bioremediation processes"),
+                            html.Li("Artificial Intelligence: Using AI and machine learning to predict pollutant behavior and optimize remediation strategies"),
+                        ]
                     ),
                 ]
             ),
 
-            # Additional Resources Section
+            # Additional Insights Section
             html.Div(
                 className="features-section",
                 children=[
-                    html.H2("Additional Resources", className="features-section-title"),
+                    html.H2("Why BioRemPP for Bioremediation?", className="features-section-title"),
                     html.P(
-                        "To learn more about bioremediation, visit these external resources or explore the references section of this application",
+                        "BioRemPP complements the field of bioremediation by offering a robust, data-driven platform to analyze genomic potential for pollutant degradation. "
+                        "With features for data preprocessing, pathway exploration, and detailed visualizations, the platform bridges the gap between raw genomic data and actionable insights, "
+                        "enabling researchers to identify optimal candidates for biotechnological applications in remediation",
                         className="features-text"
                     ),
-                    html.A("Learn More About Bioremediation", href="https://en.wikipedia.org/wiki/Bioremediation", className="features-link"),
                 ]
             ),
         ]
