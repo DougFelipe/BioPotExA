@@ -28,5 +28,6 @@ app = Dash(
         "https://www.w3schools.com/w3css/4/w3.css"  # W3.CSS for simple styling
     ],
     suppress_callback_exceptions=True,  # Allows the use of callbacks for components not immediately in the layout
-    external_scripts=["/assets/scroll.js"]  # Includes a custom JavaScript file for scroll functionality
+    external_scripts=["/assets/scroll.js"],  # Includes a custom JavaScript file for scroll functionality
+    title="BioRemPP"  # Sets the title of the application in the browser tab
 )

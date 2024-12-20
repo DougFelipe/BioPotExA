@@ -54,7 +54,7 @@ def get_contact_page():
                 children=[
                     html.H4("Get in Touch", className="contact-header"),
                     html.P(
-                        "Feel free to reach out via email for collaboration or inquiries:",
+                        "Feel free to reach out via email for collaboration or inquiries",
                         className="contact-text"
                     ),
                     html.A("biorempp@gmail.com", href="mailto:biorempp@gmail.com", className="contact-email"),
@@ -67,19 +67,19 @@ def get_contact_page():
                 children=[
                     html.A(
                         html.I(className="w3-xlarge w3-hover-opacity fa fa-github"),
-                        href="https://github.com/your-profile",
+                        href="https://github.com/DougFelipe",
                         target="_blank",
                         className="social-icon"
                     ),
                     html.A(
                         html.I(className="w3-xlarge w3-hover-opacity fa fa-linkedin"),
-                        href="https://linkedin.com/in/your-profile",
+                        href="https://www.linkedin.com/in/douglas-feliipe/",
                         target="_blank",
                         className="social-icon"
                     ),
                     html.A(
                         html.I(className="w3-xlarge w3-hover-opacity fa fa-instagram"),
-                        href="https://instagram.com/your-profile",
+                        href="https://www.instagram.com/pesquisadoug/",
                         target="_blank",
                         className="social-icon"
                     ),
