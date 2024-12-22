@@ -1386,3 +1386,33 @@ body, html {
 .social-icon i:hover {
     color: #2a9d8f;
 }
+
+
+.help-message-container {
+    text-align: auto;
+    margin-top: 30px;
+}
+
+.help-message {
+    font-size: 1.2em;
+    font-weight: 500;
+    color: #333; /* Ajuste conforme a paleta de cores da aplicação */
+}
+
+.help-link {
+    color: #007bff; /* Azul padrão para links */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.help-link2 {
+    color: #87bc47; /* Azul padrão para links */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+
+.help-link:hover {
+    text-decoration: underline;
+    color: #0056b3; /* Azul mais escuro ao passar o mouse */
+}

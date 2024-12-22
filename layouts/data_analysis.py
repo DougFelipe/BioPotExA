@@ -100,14 +100,13 @@ def get_dataAnalysis_page():
                                 [
                                     html.P(
                                         [
-                                            "Once your data or exemple data is uploaded, click the 'Submit' button and await to see the results",
+                                            "Once your data or example data is uploaded, click the 'Submit' button and await to see the results",
                                             html.Br(),
                                             html.Br(),
                                             "This is where the provided data is merged with the BioRemPP databases to render the results tables and graphs"
                                         ],
                                         className='step-text'
                                     )
-
                                 ],
                                 className="card-content"  # Classe para estilizar o conteúdo do card
                             )
@@ -135,11 +134,28 @@ def get_dataAnalysis_page():
                                 ],
                                 className='step-text'
                             )
-
                         ]
+                    ),
+
+                    html.Div(
+                        [
+                            html.P(
+                                [
+                                    "If you are encountering difficulties with any of these steps, please refer to the ",
+                                    html.A("Help page", href="/help", className="help-link", target="_self"),
+                                    ", particularly the ",
+                                    html.A("Common Issues",className="help-link2", target="_self"),
+                                    " section, for detailed instructions and troubleshooting tips"
+                                ],
+                                className="help-message"
+                            )
+                        ],
+                        className="help-message-container"  # Classe para estilização
                     )
+
                 ]
             ),
+
 
             # Título "Upload and Analyze Your Data"
             html.Div([

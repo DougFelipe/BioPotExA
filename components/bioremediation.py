@@ -17,6 +17,23 @@ def get_bioremediation_layout():
                 className="features-intro"
             ),
 
+                        # BioRemPPInsights Section
+            html.Div(
+                className="features-section",
+                children=[
+                html.Hr(className="my-2"),
+                html.H2("Why BioRemPP for Bioremediation?", className="features-section-title", style={"text-align": "center","font-size": "3rem", "color": "#87bc47"}),
+                html.P(
+                        "BioRemPP complements the field of bioremediation by offering a robust, data-driven platform to analyze genomic potential for pollutant degradation. "
+                        "With features for data preprocessing, pathway exploration, and detailed visualizations, the platform bridges the gap between raw genomic data and actionable insights, "
+                        "enabling researchers to identify optimal candidates for biotechnological applications in remediation",
+                        className="features-text", style={"text-align": "center"}
+                    ),
+                html.Hr(className="my-2"),
+
+                ]
+            ),
+
             # Applications Section
             html.Div(
                 className="features-section",
@@ -82,9 +99,9 @@ def get_bioremediation_layout():
                     html.Ul(
                         className="features-list",
                         children=[
-                            html.Li("Bacteria: Specialists in degrading hydrocarbons, pesticides, and toxic chemicals. Examples include _Pseudomonas_ and _Bacillus_"),
+                            html.Li("Bacteria: Specialists in degrading hydrocarbons, pesticides, and toxic chemicals. Examples include Pseudomonas and Bacillus"),
                             html.Li("Fungi: Effective in breaking down complex pollutants such as dyes, synthetic chemicals, and lignin-based compounds"),
-                            html.Li("Plants (Phytoremediation): Capable of absorbing heavy metals and stabilizing toxins in soil and water. Common examples are _Poplar trees_ and _Sunflowers_"),
+                            html.Li("Plants (Phytoremediation): Capable of absorbing heavy metals and stabilizing toxins in soil and water. Common examples are Poplar trees and Sunflowers"),
                             html.Li("Algae: Emerging as a powerful tool for remediating wastewater and capturing carbon emissions"),
                         ]
                     ),
@@ -121,20 +138,6 @@ def get_bioremediation_layout():
                             html.Li("Omics Technologies: Leveraging genomics, proteomics, and metabolomics to understand and enhance bioremediation processes"),
                             html.Li("Artificial Intelligence: Using AI and machine learning to predict pollutant behavior and optimize remediation strategies"),
                         ]
-                    ),
-                ]
-            ),
-
-            # Additional Insights Section
-            html.Div(
-                className="features-section",
-                children=[
-                    html.H2("Why BioRemPP for Bioremediation?", className="features-section-title"),
-                    html.P(
-                        "BioRemPP complements the field of bioremediation by offering a robust, data-driven platform to analyze genomic potential for pollutant degradation. "
-                        "With features for data preprocessing, pathway exploration, and detailed visualizations, the platform bridges the gap between raw genomic data and actionable insights, "
-                        "enabling researchers to identify optimal candidates for biotechnological applications in remediation",
-                        className="features-text"
                     ),
                 ]
             ),
