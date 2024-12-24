@@ -1,11 +1,50 @@
-from dash import html, dcc
-import dash_bootstrap_components as dbc
-from components.alerts import hadeg_alert, toxcsm_alert
+"""
+features.py
+-----------
+This script defines the layout for the "Features" page of the BioRemPP platform. 
+
+The Features page provides an overview of the platform's capabilities, including:
+- Platform Overview
+- Key Features and Expected Results
+- Data Table Integration
+- Gene and Pathway Analysis
+- Interactions Between Samples, Compounds, and Genes
+- Advanced Analytical Tools
+- Toxicity Predictions
+- Support Section
+
+The layout utilizes Dash components to organize and display information interactively.
+"""
+
+# ----------------------------------------
+# Imports
+# ----------------------------------------
+
+from dash import html, dcc  # Dash components for creating the UI
+import dash_bootstrap_components as dbc  # Bootstrap components for styling
+from components.alerts import hadeg_alert, toxcsm_alert  # Alerts for HADEG and ToxCSM integrations
+
+# ----------------------------------------
+# Function: get_features_layout
+# ----------------------------------------
 
 
 def get_features_layout():
     """
     Returns the layout for the BioRemPP Features page.
+
+    The layout is structured into multiple sections:
+    - Platform Overview
+    - Key Features and Expected Results
+    - Toxicity Predictions
+    - Advanced Tools
+    - Support Section
+    
+    Each section provides an overview of specific functionalities, interactive data visualizations, 
+    or support-related links.
+
+    Returns:
+    - dash.html.Div: A Div containing the entire layout for the Features page.
     """
     return html.Div(
         className="features-page",

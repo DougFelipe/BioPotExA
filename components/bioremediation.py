@@ -1,6 +1,25 @@
-# components/bioremediation.py
-from dash import html
+"""
+bioremediation.py
+------------------
+This script defines the layout for the Bioremediation page in a Dash web application. The page provides 
+comprehensive information about bioremediation, including its applications, benefits, challenges, and future directions.
 
+The layout is organized into multiple sections with headers, paragraphs, and lists to ensure clear and 
+accessible presentation of content.
+
+Functions:
+- `get_bioremediation_layout`: Returns the HTML structure for the Bioremediation page.
+"""
+
+# ----------------------------------------
+# Imports
+# ----------------------------------------
+
+from dash import html  # Dash HTML components for structuring the UI
+
+# ----------------------------------------
+# Function: get_bioremediation_layout
+# ----------------------------------------
 def get_bioremediation_layout():
     """
     Returns the layout of the Bioremediation page.

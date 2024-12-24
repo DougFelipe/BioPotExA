@@ -1,4 +1,24 @@
-from dash import html
+"""
+contact.py
+----------
+This script defines the layout for the "Contact" page of a Dash web application.
+The page provides:
+- Developer information and a profile picture.
+- A brief description of the developer's expertise and research focus.
+- Contact methods, including email and social media links.
+
+The layout is structured into sections for a clean and organized presentation.
+"""
+
+# ----------------------------------------
+# Imports
+# ----------------------------------------
+
+from dash import html  # Dash HTML components for building the UI structure
+
+# ----------------------------------------
+# Function: get_contact_page
+# ----------------------------------------
 
 def get_contact_page():
     """

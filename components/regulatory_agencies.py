@@ -1,4 +1,26 @@
-from dash import html
+"""
+regulatory_agencies.py
+----------------------
+This script defines the layout for the Regulatory Agencies page in a Dash web application. 
+
+The page provides:
+- An overview of priority environmental pollutants.
+- Descriptions of global regulatory agencies and their roles in identifying and managing hazardous substances.
+- Structured content with headings, sections, and descriptive text.
+
+The layout is constructed using Dash HTML components, styled with custom CSS classes.
+"""
+
+# ----------------------------------------
+# Imports
+# ----------------------------------------
+
+from dash import html  # Dash HTML components for building the UI
+
+# ----------------------------------------
+# Function: get_regulatory_agencies_layout
+# ----------------------------------------
+
 
 def get_regulatory_agencies_layout():
     """
