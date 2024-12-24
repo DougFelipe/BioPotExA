@@ -1,32 +1,74 @@
-from dash import html, dcc
+"""
+P13_gene_sample_scatter_layout.py
+---------------------------------
+This script defines the layout for a scatter plot visualization in a Dash web application. 
+The scatter plot shows the relationship between KOs (KEGG Orthologs) and samples for a selected pathway. 
+
+The layout includes:
+- A dropdown menu for filtering data by pathway.
+- A container to display the scatter plot or a default message when no data is available.
+"""
+
+# ----------------------------------------
+# Imports
+# ----------------------------------------
+
+from dash import html, dcc  # Dash components for building the UI
+
+# ----------------------------------------
+# Function: get_sample_ko_scatter_layout
+# ----------------------------------------
 
 def get_sample_ko_scatter_layout():
     """
-    Constrói o layout para o scatter plot de KOs em samples para a via selecionada.
+    Constructs the layout for the scatter plot of KOs in samples for the selected pathway.
+
+    The layout contains:
+    - A navigation menu with a dropdown filter for selecting a pathway.
+    - A container to display the scatter plot or a placeholder message if no data is available.
 
     Returns:
-        Uma `html.Div` contendo o scatter plot e o filtro.
+        html.Div: A Dash HTML Div component containing the scatter plot and the filter.
     """
-    return html.Div([
-        html.Div([
-            html.Div('Filter by Pathway', className='menu-text'),  # Título do menu de navegação
-            dcc.Dropdown(
-                id='pathway-dropdown-p13',  # ID do dropdown para o filtro por pathway
-                multi=False,
-                placeholder='Select a Pathway',  # Mensagem de placeholder
-                style={'margin-bottom': '20px'}  # Espaçamento inferior
+    return html.Div(
+        [
+            # Navigation menu with dropdown filter
+            html.Div(
+                [
+                    # Title for the navigation menu
+                    html.Div('Filter by Pathway', className='menu-text'),
+
+                    # Dropdown menu for pathway selection
+                    dcc.Dropdown(
+                        id='pathway-dropdown-p13',  # ID for the dropdown filter
+                        multi=False,  # Single selection allowed
+                        placeholder='Select a Pathway',  # Placeholder text for the dropdown
+                        style={'margin-bottom': '20px'}  # Bottom margin for spacing
+                    )
+                ],
+                className='navigation-menu'  # CSS class for styling the menu
+            ),
+
+            # Container for the scatter plot or default message
+            html.Div(
+                id='scatter-plot-container',  # ID for the scatter plot container
+                children=[
+                    # Default message displayed when no data is available
+                    html.P(
+                        "No data available. Please select a pathway",  # Default message text
+                        id="no-data-message-p13",  # ID for the message
+                        style={
+                            "textAlign": "center",  # Center align the text
+                            "color": "gray"  # Gray color for the message text
+                        }
+                    )
+                ],
+                className='graph-container',  # CSS class for styling the container
+                style={
+                    'height': 'auto',  # Automatically adjusts height
+                    'overflowY': 'auto'  # Enables vertical scrolling if needed
+                }
             )
-        ], className='navigation-menu'),
-        html.Div(
-            id='scatter-plot-container',  # Container para mensagens ou o gráfico
-            children=[
-                html.P(
-                    "No data available. Please select a pathway",  # Mensagem padrão
-                    id="no-data-message-p13",
-                    style={"textAlign": "center", "color": "gray"}
-                )
-            ],
-            className='graph-container',
-            style={'height': 'auto', 'overflowY': 'auto'}
-        )
-    ], className='graph-card')
+        ],
+        className='graph-card'  # CSS class for styling the overall layout card
+    )

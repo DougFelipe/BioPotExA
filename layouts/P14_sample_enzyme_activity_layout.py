@@ -1,29 +1,63 @@
-from dash import html, dcc
+"""
+P14_sample_enzyme_activity_layout.py
+------------------------------------
+This script defines the layout for the sample enzyme activity bar chart in a Dash web application.
+The layout includes a dropdown menu for sample selection and a container for the bar chart display.
+
+The layout is designed to allow users to filter and view enzyme activity data based on the selected sample.
+"""
+
+# ----------------------------------------
+# Imports
+# ----------------------------------------
+
+from dash import html, dcc  # Dash HTML and core components for building UI
+
+# ----------------------------------------
+# Function: get_sample_enzyme_activity_layout
+# ----------------------------------------
 
 def get_sample_enzyme_activity_layout():
     """
-    Constrói o layout para o gráfico de barras da contagem de atividades enzimáticas por amostra.
+    Constructs the layout for the bar chart of enzyme activity counts per sample.
+
+    The layout includes:
+    - A dropdown menu for filtering by sample.
+    - A container for the bar chart with a placeholder message when no data is available.
 
     Returns:
-        Uma `html.Div` contendo o gráfico de barras e o dropdown para seleção de amostras.
+    - dash.html.Div: A Dash HTML Div component containing the dropdown and the bar chart container.
     """
-    return html.Div([
-        html.Div([
-            html.Div('Filter by Sample', className='menu-text'),  # Título do dropdown
-            dcc.Dropdown(
-                id='sample-enzyme-dropdown',  # ID associado ao dropdown
-                placeholder="Select a Sample",  # Placeholder para instruir o usuário
+    return html.Div(
+        [
+            # Dropdown menu for sample filtering
+            html.Div(
+                [
+                    html.Div(
+                        'Filter by Sample',  # Title for the dropdown menu
+                        className='menu-text'  # CSS class for styling the title
+                    ),
+                    dcc.Dropdown(
+                        id='sample-enzyme-dropdown',  # ID for the dropdown menu
+                        placeholder="Select a Sample",  # Placeholder text for user instruction
+                    ),
+                ],
+                className='navigation-menu'  # CSS class for styling the navigation menu
             ),
-        ], className='navigation-menu'),  # Estilização do menu de navegação
-        html.Div(
-            id='enzyme-bar-chart-container',  # ID do container do gráfico
-            children=[
-                html.P(
-                    "No data available. Please select a sample",
-                    id="no-enzyme-bar-chart-message",
-                    style={"textAlign": "center", "color": "gray"}
-                )
-            ],
-            className='graph-container',  # Classe de estilização do container
-        )
-    ], className='graph-card')
+            
+            # Container for the enzyme activity bar chart
+            html.Div(
+                id='enzyme-bar-chart-container',  # ID for the bar chart container
+                children=[
+                    # Placeholder message when no data is available
+                    html.P(
+                        "No data available. Please select a sample",  # Informational message
+                        id="no-enzyme-bar-chart-message",  # ID for the message element
+                        style={"textAlign": "center", "color": "gray"}  # Centered, gray text style
+                    )
+                ],
+                className='graph-container'  # CSS class for styling the graph container
+            )
+        ],
+        className='graph-card'  # CSS class for styling the overall card container
+    )

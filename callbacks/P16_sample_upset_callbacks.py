@@ -35,7 +35,7 @@ def initialize_upsetplot_dropdown(n_clicks, merged_data):
 def update_upsetplot(selected_samples, stored_data):
     if not selected_samples or not stored_data:
         return html.P(
-            "Nenhum gráfico disponível. Por favor, selecione as amostras",
+            "No data available. Please select a sample",
             id="no-upset-plot-message",
             style={"textAlign": "center", "color": "gray"}
         )

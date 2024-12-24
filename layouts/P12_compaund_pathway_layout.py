@@ -1,31 +1,73 @@
-from dash import html, dcc
+"""
+P12_compound_pathway_layout.py
+------------------------------
+This script defines the layout for the Pathway and Compound Pathway heatmap. 
+The layout includes a dropdown filter for selecting a sample and a placeholder message displayed when no data is available.
+
+Functionality:
+- Allows users to filter the heatmap by sample using a dropdown.
+- Displays a placeholder message when no sample is selected or data is unavailable.
+"""
+
+# ----------------------------------------
+# Imports
+# ----------------------------------------
+
+from dash import html, dcc  # Dash components for layout and interactivity
+
+# ----------------------------------------
+# Function: get_pathway_heatmap_layout
+# ----------------------------------------
 
 def get_pathway_heatmap_layout():
     """
-    Constrói o layout para o heatmap de Pathways e compound_pathways com mensagem inicial de placeholder.
+    Constructs the layout for the Pathway and Compound Pathway heatmap.
+
+    The layout contains:
+    - A dropdown for filtering by sample.
+    - A placeholder message displayed when no data is available.
 
     Returns:
-        Uma `html.Div` contendo o heatmap e os filtros.
+        dash.html.Div: A container with the heatmap and filter components.
     """
-    return html.Div([
-        html.Div([
-            html.Div('Filter by Sample', className='menu-text'),
-            dcc.Dropdown(
-                id='sample-dropdown-p12',
-                multi=False,
-                placeholder='Select a Sample'  # Placeholder para guiar o usuário
+    return html.Div(
+        [
+            # Dropdown filter section
+            html.Div(
+                [
+                    # Filter label
+                    html.Div('Filter by Sample', className='menu-text'),
+                    
+                    # Dropdown for sample selection
+                    dcc.Dropdown(
+                        id='sample-dropdown-p12',  # Unique ID for callback identification
+                        multi=False,  # Allows single selection only
+                        placeholder='Select a Sample'  # Placeholder to guide the user
+                    )
+                ],
+                className='navigation-menu'  # CSS class for styling the menu
+            ),
+
+            # Heatmap container
+            html.Div(
+                id='pathway-heatmap-container',  # Container for the heatmap
+                children=[
+                    # Placeholder message for when no data is available
+                    html.P(
+                        "No data available. Please select a sample",  # Message text
+                        id="placeholder-pathway-heatmap",  # ID for dynamic updates
+                        style={
+                            "textAlign": "center",  # Center-align the text
+                            "color": "gray"  # Gray color for the placeholder text
+                        }
+                    )
+                ],
+                className='graph-container',  # CSS class for the graph container
+                style={
+                    'height': 'auto',  # Automatically adjust height based on content
+                    'overflowY': 'auto'  # Enable vertical scrolling if needed
+                }
             )
-        ], className='navigation-menu'),
-        html.Div(
-            id='pathway-heatmap-container',
-            children=[
-                html.P(
-                    "No data available. Please select a sample",
-                    id="placeholder-pathway-heatmap",
-                    style={"textAlign": "center", "color": "gray"}
-                )
-            ],
-            className='graph-container',
-            style={'height': 'auto', 'overflowY': 'auto'}
-        )
-    ], className='graph-card')
+        ],
+        className='graph-card'  # CSS class for the overall card container
+    )
