@@ -1,1242 +1,1165 @@
-/* style.css - Documentação atualizada */
+/* style.css - Updated Documentation */
 
-/* ------------------------------- */
-/* Reset e Configurações Básicas */
-/* ------------------------------- */
+/* ------------------------------------ */
+/* Reset and Basic Configurations */
+/* ------------------------------------ */
 
-/* Reset básico para remover as margens, paddings e definir box-sizing para todos os elementos */
+/* Global reset to remove default margins and paddings, and set box-sizing for all elements */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Estilos globais para body e html, incluindo fonte padrão e cor de fundo */
+/* Global styles for body and html, including default font and background color */
 body, html {
-    font-family: 'Arial', sans-serif;
-    background: #f4f4f4;
-    overflow-x: hidden; /* Previne rolagem horizontal */
-    height: 100%; /* Garante que ocupem 100% da altura da tela */
+    font-family: 'Arial', sans-serif; /* Sets the default font */
+    background: #f4f4f4; /* Light gray background for the application */
+    overflow-x: hidden; /* Prevents horizontal scrolling */
+    height: 100%; /* Ensures the body and html take up full screen height */
     display: flex;
-    flex-direction: column;
-    scroll-padding-top: 180px; /* Altura do navbar + espaçamento extra */
+    flex-direction: column; /* Ensures content is arranged vertically */
+    scroll-padding-top: 180px; /* Adjusts for navbar height plus extra spacing */
 }
 
-/* Garante que o container principal ocupe a altura completa */
+/* Ensures the main container occupies the full height of the viewport */
 #root, #app {
     flex: 1;
     display: flex;
     flex-direction: column;
 }
 
-/* ------------------------------- */
-/* Cabeçalho */
-/* ------------------------------- */
+/* ------------------------------------ */
+/* Header Styles */
+/* ------------------------------------ */
 
-/* Estilos para o cabeçalho principal da página */
+/* Styles for the main page header */
 .main-header {
     display: flex;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #b6e9be;
-    padding: 2px 10px;
-    width: 100%;
+    justify-content: space-between; /* Aligns items to opposite ends */
+    align-items: center; /* Centers items vertically */
+    background-color: #b6e9be; /* Light green background for the header */
+    padding: 2px 10px; /* Adds padding inside the header */
+    width: 100%; /* Ensures the header spans the full width */
+    border-top-left-radius: 8px; /* Rounds the top-left corner */
+    border-top-right-radius: 8px; /* Rounds the top-right corner */
 }
 
-/* Estilos para a área esquerda do cabeçalho */
+/* Styles for the left section of the header */
 .header-left {
     display: flex;
     align-items: center;
 }
 
-/* Estilos para a área direita do cabeçalho */
+/* Styles for the right section of the header */
 .header-right {
     display: flex;
     align-items: center;
 }
 
-/* Estilos para o título principal dentro do cabeçalho */
+/* Styles for the main title within the header */
 .main-title {
-    color: #0f5f16;
-    font-size: 40px;
-    text-decoration: none; /* Remove underline */
-    font-weight:bold;
+    color: #0f5f16; /* Dark green text color */
+    font-size: 40px; /* Large font size for the title */
+    text-decoration: none; /* Removes underline from the title */
+    font-weight: bold; /* Makes the title bold */
 }
 
-/* Estilos para os links no cabeçalho */
+/* Styles for links in the header */
 .header-link {
-    color: #0f941a;
-    font-size: 18px;
-    margin-left: 20px;
-    text-decoration: none; /* Remove underline */
-    transition: color 0.3s ease; /* Transição suave para a cor */
-    font-weight:bold;
-    font-style: italic;
+    color: #0f941a; /* Green color for links */
+    font-size: 18px; /* Slightly larger font size for visibility */
+    margin-left: 20px; /* Adds spacing between links */
+    text-decoration: none; /* Removes underline */
+    font-weight: bold; /* Makes the link text bold */
+    font-style: italic; /* Adds an italic style to the links */
+    transition: color 0.3s ease; /* Smooth transition effect for hover state */
 }
 
-/* Hover effect para os links no cabeçalho */
+/* Hover effect for header links */
 .header-link:hover {
-    color: #007bff; /* Cor ao passar o mouse */
+    color: #007bff; /* Changes the color to blue on hover */
 }
 
-/* ------------------------------- */
-/* Conteúdo Principal e Abas */
-/* ------------------------------- */
+/* ------------------------------------ */
+/* Main Content and Tabs */
+/* ------------------------------------ */
 
-/* Estilos para o container principal que engloba o conteúdo da página */
+/* Styles for the main content container wrapping the page content */
 .main-content {
     flex: 1;
-    width: 100%;
-    padding: 20px;
+    width: 100%; /* Ensures content spans full width */
+    padding: 20px; /* Adds spacing inside the content container */
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Aligns child elements vertically */
 }
 
-/* Estilos para o conteúdo dentro das abas, incluindo bordas, sombra e fundo */
+/* Styles for the content inside the tabs, including borders, shadow, and background */
 .tabs-content {
     flex: 1;
-    border: 3px solid #b6e9be;
-    border-radius: 8px;
-    background: #fff;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    margin: 5px 0;
-    padding: 20px;
-    overflow-y: auto; /* Adiciona rolagem vertical se o conteúdo for maior que a altura disponível */
+    border: 3px solid #b6e9be; /* Green border matching the header */
+    border-radius: 8px; /* Rounds corners */
+    background: #fff; /* White background for readability */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    margin: 5px 0; /* Adds vertical spacing */
+    padding: 20px; /* Internal spacing inside the content area */
+    overflow-y: auto; /* Adds vertical scrolling if content overflows */
 }
 
-/* Estilos para o conteúdo dentro das páginas, incluindo bordas, sombra e fundo */
+/* Styles for the general pages content, similar to tabs but with thinner borders */
 .pages-content {
     flex: 1;
-    border: 1px solid #b6e9be;
-    border-radius: 8px;
-    background: #fff;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    margin: 2px;
-    padding: 10px;
-    overflow-y: auto; /* Adiciona rolagem vertical se o conteúdo for maior que a altura disponível */
+    border: 1px solid #b6e9be; /* Thinner green border */
+    border-radius: 8px; /* Rounds corners */
+    background: #fff; /* White background for readability */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    margin: 2px; /* Adds minimal spacing */
+    padding: 10px; /* Internal spacing inside the content area */
+    overflow-y: auto; /* Adds vertical scrolling if content overflows */
 }
 
-/* Estilos específicos para a impressão do conteúdo das abas */
+/* ------------------------------------ */
+/* Print Styles */
+/* ------------------------------------ */
+
+/* Styles specific to printing the tab content */
 @media print {
     .tabs-content {
-        box-shadow: none;
-        page-break-after: always;
+        box-shadow: none; /* Removes shadow for cleaner print output */
+        page-break-after: always; /* Inserts a page break after each tab content */
     }
 }
 
 /* ------------------------------- */
-/* Estilo para o Título "How to Use" */
+/* Styles for the "How to Use" Title */
 /* ------------------------------- */
 .how-to-use {
-    font-size: 30px; /* Define o tamanho da fonte para 25px */
-    text-align: center; /* Centraliza o texto horizontalmente */
-    font-weight: bold; /* Adiciona negrito ao texto */
-    margin: 20px 0; /* Adiciona margens superior e inferior */
-    color: #0f941a; /* Define a cor do texto */
+    font-size: 30px; /* Sets the font size for the title */
+    text-align: center; /* Horizontally centers the text */
+    font-weight: bold; /* Makes the text bold */
+    margin: 20px 0; /* Adds vertical spacing above and below the title */
+    color: #0f941a; /* Defines the text color */
 }
 
+/* Mobile Adjustment */
+/* Consider reducing the font size for smaller screens to maintain readability */
+@media (max-width: 768px) {
+    .how-to-use {
+        font-size: 24px;
+    }
+}
 
 /* ------------------------------- */
-/* Estilo dos containers de conteudo das páginas */
+/* Page Content Containers */
 /* ------------------------------- */
-/* Novo estilo para containers */
 .content-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    flex: 1;
+    display: flex; /* Enables a flexbox layout */
+    flex-direction: row; /* Arranges children in a horizontal row */
+    justify-content: space-between; /* Distributes space evenly between children */
+    flex: 1; /* Ensures the container fills available space */
 }
 
 .text-container {
-    flex: 3;
-    padding-right: 20px;
-    overflow-y: auto;
+    flex: 3; /* Allocates three parts of the space to this container */
+    padding-right: 20px; /* Adds spacing to the right */
+    overflow-y: auto; /* Enables vertical scrolling if content overflows */
 }
 
 .list-container {
-    flex: 1;
-    overflow-y: auto;
+    flex: 1; /* Allocates one part of the space to this container */
+    overflow-y: auto; /* Enables vertical scrolling if content overflows */
+}
+
+/* Mobile Adjustment */
+/* Stack the containers vertically on smaller screens */
+@media (max-width: 768px) {
+    .content-container {
+        flex-direction: column;
+    }
+    .text-container {
+        padding-right: 0;
+    }
 }
 
 /* ------------------------------- */
-/* Sobre e Conteúdo Relacionado */
+/* About Page and Related Content */
 /* ------------------------------- */
-
-/* Estilos para o container da página Sobre */
 .about-container {
-    padding: 20px;
-    margin: 10px;
-    text-align: center; /* Centraliza o título e conteúdo */
+    padding: 20px; /* Adds padding inside the container */
+    margin: 10px; /* Adds spacing around the container */
+    text-align: center; /* Centers the text */
 }
 
 .about-BioRemPP-title {
-    font-size: 40px;
-    padding: 2px;
-    margin: 1px;
-    text-align: center; /* Centraliza o título e conteúdo */
+    font-size: 40px; /* Sets the font size for the title */
+    padding: 2px; /* Adds padding inside the title */
+    margin: 1px; /* Adds spacing around the title */
+    text-align: center; /* Centers the title */
 }
 
-
 .about-BioRemPP-subtitle {
-    padding: 1px;
-    margin: 1px;
-    text-align: center; /* Centraliza o título e conteúdo */
+    padding: 1px; /* Adds padding inside the subtitle */
+    margin: 1px; /* Adds spacing around the subtitle */
+    text-align: center; /* Centers the subtitle */
 }
 
 .about-content-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    flex: 1;
+    display: flex; /* Enables a flexbox layout */
+    justify-content: space-between; /* Distributes space evenly between children */
+    align-items: flex-start; /* Aligns items to the top */
+    flex: 1; /* Ensures the container fills available space */
 }
 
 .about-text-container {
-    flex: 3;
-    padding-right: 20px;
-    overflow-y: auto; /* Adiciona rolagem vertical se necessário */
+    flex: 3; /* Allocates three parts of the space to this container */
+    padding-right: 20px; /* Adds spacing to the right */
+    overflow-y: auto; /* Enables vertical scrolling if content overflows */
 }
 
 .about-content {
-    text-align: center;
-    margin: 10px;
-    overflow-wrap: break-word;
+    text-align: center; /* Centers the text */
+    margin: 10px; /* Adds spacing around the content */
+    overflow-wrap: break-word; /* Prevents text overflow by breaking words */
+}
+
+/* Mobile Adjustment */
+/* Adjust font sizes and stack content vertically on smaller screens */
+@media (max-width: 768px) {
+    .about-BioRemPP-title {
+        font-size: 30px;
+    }
+    .about-content-container {
+        flex-direction: column;
+    }
 }
 
 /* ------------------------------- */
-/* Estilização das Abas */
+/* Tabs Styling */
 /* ------------------------------- */
-
-/* Estilos para o container das abas */
 .main-tabs {
-    display: flex;
-    justify-content: flex-start; /* Alinha as abas à esquerda */
-    background: #b6e9be; /* Cor de fundo padrão */
-    padding: 10px 20px; /* Espaçamento interno */
-    border: 0px; /* Remove borda */
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
+    display: flex; /* Enables a flexbox layout */
+    justify-content: flex-start; /* Aligns tabs to the left */
+    background: #b6e9be; /* Sets the background color */
+    padding: 10px 20px; /* Adds padding inside the tabs container */
+    border: 0px; /* Removes the border */
+    border-bottom-left-radius: 8px; /* Rounds the bottom-left corner */
+    border-bottom-right-radius: 8px; /* Rounds the bottom-right corner */
 }
 
-/* Estilos para cada aba individual */
 .tab {
-    background: #86f196 !important; /* Cor de fundo padrão */
-    color: #0f5f16 !important; /* Cor do texto padrão */
-    font-size: 30px; /* Tamanho da fonte */
-    font-weight: bold; /* Negrito */
-    padding: 10px 20px; /* Espaçamento interno */
-    border: 1px solid #0f941a; /* Borda */
-    border-radius: 8px; /* Bordas arredondadas */
-    margin-right: 10px; /* Margem à direita */
-    cursor: pointer; /* Cursor de ponteiro */
-    transition: background 0.3s ease, color 0.3s ease; /* Transição suave para cor e fundo */
+    background: #86f196 !important; /* Default background color */
+    color: #0f5f16 !important; /* Default text color */
+    font-size: 30px; /* Sets the font size */
+    font-weight: bold; /* Makes the text bold */
+    padding: 10px 20px; /* Adds padding inside the tab */
+    border: 1px solid #0f941a; /* Defines the border */
+    border-radius: 8px; /* Rounds the corners */
+    margin-right: 10px; /* Adds spacing between tabs */
+    cursor: pointer; /* Changes the cursor to a pointer */
+    transition: background 0.3s ease, color 0.3s ease; /* Smooth transitions for color and background changes */
 }
 
-/* Estilos para a aba selecionada */
 .tab--selected {
-    background: #0f941a !important; /* Cor de fundo para a aba selecionada */
-    color: #fff !important; /* Cor do texto para a aba selecionada */
-    border-bottom: none; /* Remove a borda inferior da aba selecionada */
+    background: #0f941a !important; /* Background color for the selected tab */
+    color: #fff !important; /* Text color for the selected tab */
+    border-bottom: none; /* Removes the bottom border */
 }
 
-/* Hover effect para as abas não selecionadas */
 .tab:hover:not(.tab--selected) {
-    background: #0f941a !important; /* Cor ao passar o mouse */
-    color: #fff !important; /* Cor do texto ao passar o mouse */
+    background: #0f941a !important; /* Hover background color */
+    color: #fff !important; /* Hover text color */
 }
 
-/* Estilos para as abas não selecionadas */
 .tab--not-selected {
-    background: #b6e9be !important; /* Cor de fundo padrão */
-    color: #0f941a !important; /* Cor do texto padrão */
+    background: #b6e9be !important; /* Default background color for non-selected tabs */
+    color: #0f941a !important; /* Default text color for non-selected tabs */
 }
 
-/* ------------------------------- */
-/* Conteúdo da lista about*/
-/* ------------------------------- */
-.scrollable-list-container {
-    flex: 1;
-    max-height: 35rem; /* Ajusta a altura máxima do container */
-    overflow-y: auto; /* Adiciona rolagem vertical */
-}
-
-.gradient-list {
-    counter-reset: gradient-counter;
-    list-style: none;
-    margin: 1.75rem 0;
-    padding-left: 1rem;
-}
-
-.gradient-list > li {
-    background: white;
-    border-radius: 0 0.5rem 0.5rem 0.5rem;
-    box-shadow: 0.25rem 0.25rem 0.6rem rgba(195, 223, 194, 0.342), 0 0.5rem 1.125rem rgba(7, 245, 67, 0.158);
-    counter-increment: gradient-counter;
-    margin-top: 1rem;
-    min-height: 3rem;
-    padding: 1rem 1rem 1rem 3rem;
-    position: relative;
-}
-
-.gradient-list > li::before,
-.gradient-list > li::after {
-    background: linear-gradient(135deg, #83e4e2 10%, #1cf100 100%);
-    border-radius: 1rem 1rem 0 1rem;
-    content: '';
-    height: 3rem;
-    left: -1rem;
-    overflow: hidden;
-    position: absolute;
-    top: -1rem;
-    width: 3rem;
-}
-
-.gradient-list > li::before {
-    align-items: flex-end;
-    box-shadow: 0.25rem 0.25rem 0.6rem rgba(195, 223, 194, 0.342), 0 0.5rem 1.125rem rgba(7, 245, 67, 0.158);
-    content:'';
-    color: #1d1f20;
-    display: flex;
-    font: 900 1.5em/1 'Montserrat';
-    justify-content: flex-end;
-    padding: 0.125em 0.25em;
-    z-index: 1;
-}
-
-@for $i from 1 through 5 {
-    .gradient-list > li:nth-child(10n+#{$i}):before {
-        background: linear-gradient(135deg, rgba(162,237,86,$i * 0.2) 0%, rgba(253,220,50,$i * 0.2) 100%);
+/* Mobile Adjustment */
+/* Reduce font sizes and padding for better fit on smaller screens */
+@media (max-width: 768px) {
+    .tab {
+        font-size: 24px;
+        padding: 8px 15px;
     }
 }
 
-@for $i from 6 through 10 {
-    .gradient-list > li:nth-child(10n+#{$i}):before {
-        background: linear-gradient(135deg, rgba(162,237,86,1 - (($i - 5) * 0.2)) 0%, rgba(253,220,50,1 - (($i - 5) * 0.2)) 100%);
-    }
-}
 
-.gradient-list > li + li {
-    margin-top: 2rem;
-}
 
-/* ------------------------------- */
-/* Passo a Passo dos Cards */
-/* ------------------------------- */
-
-/* Container que mantém todos os cards alinhados centralmente */
+/* Container for aligning all step cards centrally */
 .step-cards-container {
-    display: flex; /* Define o layout dos elementos internos como flexível */
-    justify-content: center; /* Centraliza os cards horizontalmente */
-    align-items: center; /* Alinha os cards verticalmente no centro */
-    flex-wrap: wrap; /* Permite que os cards ocupem várias linhas se necessário */
-    max-width: 1200px; /* Define a largura máxima do container */
-    margin: 40px auto; /* Adiciona margens verticais e centraliza horizontalmente */
+    display: flex; /* Flexbox layout for consistent alignment */
+    justify-content: center; /* Horizontally centers the cards */
+    align-items: center; /* Vertically centers the cards */
+    flex-wrap: wrap; /* Allows cards to wrap onto multiple lines if needed */
+    max-width: 1200px; /* Restricts the container's width */
+    margin: 40px auto; /* Centers container and adds vertical spacing */
 }
 
-/* Estilo para cada card individual */
+/* Individual step card style */
 .step-card {
-    position: relative; /* Define o posicionamento relativo para uso interno */
-    min-width: 300px; /* Define a largura mínima do card */
-    height: 300px; /* Define a altura do card */
+    position: relative; /* Enables positioning of child elements */
+    min-width: 300px; /* Ensures a minimum width for cards */
+    height: 300px; /* Fixed height for uniform card sizes */
     box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.2),
                 inset -5px -5px 15px rgba(255, 255, 255, 0.1),
-                5px 5px 15px rgba(128, 224, 136, 0.3), -5px -5px 15px rgba(8, 197, 33, 0.37); /* Define sombras */
-    border-radius: 15px; /* Define cantos arredondados */
-    margin: 10px; /* Adiciona margem ao redor dos cards */
-    background: #a1f082; /* Define a cor de fundo do card */
+                5px 5px 15px rgba(128, 224, 136, 0.3),
+                -5px -5px 15px rgba(8, 197, 33, 0.37); /* Adds multiple-layer shadows */
+    border-radius: 15px; /* Rounded corners for softer appearance */
+    margin: 10px; /* Spacing around each card */
+    background: #a1f082; /* Light green background color */
 }
 
-/* Estilo para a caixa interna do card */
+/* Internal box within each card */
 .step-card .box {
-    position: absolute; /* Posicionamento absoluto dentro do card */
-    top: 20px; /* Espaçamento do topo */
-    left: 20px; /* Espaçamento da esquerda */
-    right: 20px; /* Espaçamento da direita */
-    bottom: 20px; /* Espaçamento da base */
-    background: #62a562; /* Cor de fundo da caixa */
-    border-radius: 15px; /* Cantos arredondados */
-    display: flex; /* Define o layout dos elementos internos como flexível */
-    justify-content: center; /* Centraliza o conteúdo horizontalmente */
-    align-items: center; /* Centraliza o conteúdo verticalmente */
-    overflow: hidden; /* Esconde conteúdo que ultrapassar a caixa */
+    position: absolute; /* Positioned within the card */
+    top: 20px; left: 20px; right: 20px; bottom: 20px; /* Creates internal padding */
+    background: #62a562; /* Green background for the box */
+    border-radius: 15px; /* Rounded corners for consistency */
+    display: flex; /* Flex layout for content alignment */
+    justify-content: center; /* Centers content horizontally */
+    align-items: center; /* Centers content vertically */
+    overflow: hidden; /* Hides overflow content */
 }
 
-/* Estilo para o pseudo-elemento antes da caixa */
+/* Decorative pseudo-element for the card */
 .step-card .box:before {
-    content: ""; /* Adiciona um conteúdo vazio */
-    position: absolute; /* Posicionamento absoluto dentro da caixa */
-    top: 0; /* Posiciona no topo */
-    left: 0; /* Posiciona na esquerda */
-    width: 50%; /* Define largura */
-    height: 100%; /* Define altura */
-    background: rgba(255, 255, 255, 0.03); /* Define cor de fundo com transparência */
+    content: ""; /* Empty content for styling */
+    position: absolute; /* Positioned inside the box */
+    top: 0; left: 0; /* Anchored to the top-left */
+    width: 50%; height: 100%; /* Covers half the width and full height */
+    background: rgba(255, 255, 255, 0.03); /* Transparent white overlay */
 }
 
-/* Estilo para o conteúdo do card */
+/* Content inside each card */
 .step-card .box .content {
-    padding: 20px; /* Adiciona padding ao redor do conteúdo */
-    text-align: center; /* Centraliza o texto */
-    display: flex; /* Define o layout dos elementos internos como flexível */
-    flex-direction: column; /* Define a direção do layout flexível como coluna */
-    justify-content: flex-end; /* Alinha o conteúdo na parte inferior */
-    width: 100%; /* Largura total do container */
-    height: 100%; /* Altura total do container */
+    padding: 20px; /* Padding for spacing */
+    text-align: center; /* Centers text */
+    display: flex; /* Flex layout for vertical stacking */
+    flex-direction: column; /* Content flows vertically */
+    justify-content: flex-end; /* Aligns content at the bottom */
+    width: 100%; height: 100%; /* Ensures full usage of container space */
 }
 
-/* Estilo para a caixa verde */
+/* Green box for step information */
 .step-card .box .content .step-info {
-    background: #66bb6a; /* Cor de fundo da caixa verde */
-    padding: 20px; /* Adiciona padding ao redor do conteúdo */
-    border-radius: 15px; /* Cantos arredondados */
-    text-align: center; /* Centraliza o texto */
-    width: 100%; /* Largura total do container */
-    margin-top: auto; /* Empurra o conteúdo para a parte inferior */
+    background: #66bb6a; /* Green background for the info box */
+    padding: 20px; /* Spacing inside the box */
+    border-radius: 15px; /* Rounded corners */
+    text-align: center; /* Centers the text */
+    margin-top: auto; /* Pushes the info box to the bottom */
 }
 
-/* Estilo para o número do step */
+/* Styling for step number */
 .step-card .box .content .step-number {
-    font-size: 50px; /* Define o tamanho da fonte */
-    text-align: center;
-    color: rgba(41, 107, 15, 0.623); /* Define cor com transparência */
-    margin: 0; /* Remove margens */
-    padding-left: 10px; /* Adiciona padding à esquerda */
+    font-size: 50px; /* Large font size for prominence */
+    color: rgba(41, 107, 15, 0.623); /* Semi-transparent green text */
+    margin: 0; /* Removes default margins */
+    padding-left: 10px; /* Adds spacing to the left */
 }
 
-/* Estilo para o título do card (h3) */
+/* Title within the step info box */
 .step-card .box .content .step-info h3 {
-    font-size: 28px; /* Define o tamanho da fonte */
-    color: #fff; /* Define a cor do texto */
-    margin-bottom: 15px; /* Adiciona margem inferior */
+    font-size: 28px; /* Bold, large text for the title */
+    color: #fff; /* White text for contrast */
+    margin-bottom: 15px; /* Adds spacing below the title */
 }
 
-/* Estilo para o parágrafo do card (p) */
+/* Paragraph text within the step info box */
 .step-card .box .content .step-info p {
-    font-size: 16px; /* Define o tamanho da fonte */
-    font-weight: 300; /* Define a espessura da fonte */
-    color: rgba(255, 255, 255, 0.9); /* Define a cor do texto com transparência */
+    font-size: 16px; /* Standard font size */
+    font-weight: 300; /* Light font weight */
+    color: rgba(255, 255, 255, 0.9); /* Semi-transparent white text */
 }
 
-/* ------------------------------- */
-/* Listas e Cards */
-/* ------------------------------- */
+/* ---------------------------------------- */
+/* Lists and Cards */
+/* ---------------------------------------- */
 
-/* Container para listas, com display flex para alinhar os itens horizontalmente */
+/* Container for lists, using flex layout for horizontal alignment */
 .list-container {
     display: flex;
-    justify-content: space-around;
-    margin-top: 20px;
+    justify-content: space-around; /* Even spacing between items */
+    margin-top: 20px; /* Adds top spacing */
 }
 
-/* Estilos para os cards de listas, incluindo fundo, bordas e sombra */
+/* Individual list cards with borders, shadows, and padding */
 .list-card {
-    background-color: #fff;
-    border: 1px solid #26e20db7;
-    border-radius: 5px;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff; /* White background */
+    border: 1px solid #26e20db7; /* Light green border */
+    border-radius: 5px; /* Slightly rounded corners */
+    padding: 20px; /* Internal spacing */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
-/* Título para os cards de listas, centralizado */
+/* Title inside list cards */
 .list-title {
-    text-align: center;
-    margin-bottom: 10px;
+    text-align: center; /* Centers the title */
+    margin-bottom: 10px; /* Adds spacing below the title */
 }
 
-/* Estilos para os itens de lista dentro dos cards, incluindo a remoção de marcadores e bordas entre itens */
+/* Unordered list inside list cards */
 .list-group {
-    list-style-type: none;
-    padding: 0;
+    list-style-type: none; /* Removes default bullet points */
+    padding: 0; /* Removes padding */
 }
 
 .list-group li {
-    padding: 8px 0;
-    border-bottom: 1px solid #eee;
+    padding: 8px 0; /* Vertical padding for spacing */
+    border-bottom: 1px solid #eee; /* Light gray border between items */
 }
 
 .list-group li:last-child {
-    border-bottom: none; /* Remove a borda do último item */
+    border-bottom: none; /* Removes border for the last item */
 }
 
-/* ------------------------------- */
-/* Estilo para o container de imagens */
-/* ------------------------------- */
+/* ---------------------------------------- */
+/* About Page Image Container */
+/* ---------------------------------------- */
 
+/* Container for images, ensuring central alignment and responsive wrapping */
 .about-image-container {
-    display: flex;
-    justify-content: center; /* Centraliza o container de imagens horizontalmente */
-    flex-wrap: wrap; /* Permite que as imagens quebrem para a próxima linha, caso necessário */
-    gap: 30px; /* Espaçamento horizontal entre as imagens */
-    margin-top: 20px;
-    width: 100%; /* Garante que o container ocupe toda a largura disponível */
+    display: flex; /* Flex layout for alignment */
+    justify-content: center; /* Centers the container horizontally */
+    flex-wrap: wrap; /* Allows images to wrap to the next line */
+    gap: 30px; /* Spacing between images */
+    margin-top: 20px; /* Adds top spacing */
+    width: 100%; /* Full-width container */
 }
 
+/* Individual image styling */
 .about-image {
-    flex: 1 1 calc(33.33% - 40px); /* As imagens ocupam um terço do espaço, mantendo espaçamento */
-    max-width: 150px; /* Define um tamanho máximo para as imagens */
-    height: auto; /* Mantém a proporção das imagens */
-    margin: 5px; /* Adiciona espaçamento ao redor de cada imagem */
+    flex: 1 1 calc(33.33% - 40px); /* Occupies one-third of the space */
+    max-width: 150px; /* Limits image width */
+    height: auto; /* Maintains aspect ratio */
+    margin: 5px; /* Adds spacing around each image */
 }
 
+/* Title for the integration section */
 .integration-title {
-    text-align: center; /* Centraliza o texto "Integration of Databases" */
-    margin-top: 30px;
+    text-align: center; /* Centers the text */
+    margin-top: 30px; /* Adds top spacing */
 }
+/* ---------------------------------------- */
+/* General Styles for Analysis Cards */
+/* ---------------------------------------- */
 
-
-/* ------------------------------- */
-/* Análise e Gráficos */
-/* ------------------------------- */
-
-/* Container para os cards de análise, com bordas, raio de borda e fundo */
+/* Styling for analysis cards container, including borders, rounded corners, and background color */
 .analysis-card {
-    border: 1px solid #d2c0c0;
-    border-radius: 8px;
-    padding: 16px;
-    margin-bottom: 20px;
-    background-color: #0deb322f;
+    border: 1px solid #d2c0c0; /* Light gray border for separation */
+    border-radius: 8px; /* Rounded corners */
+    padding: 16px; /* Inner spacing */
+    margin-bottom: 20px; /* Space below each card */
+    background-color: #0deb322f; /* Light green background */
 }
 
-/* Título e descrição para os cards de análise, com estilos específicos para alinhamento e tamanho de fonte */
+/* Title and description styling for analysis cards */
 .analysis-title,
-.analysis-description{
-    text-align: left;
-    font-size: 1.5em; /* Título */
-    margin-bottom: 8px;
-}
-
 .analysis-description {
-    font-size: 1em; /* Descrição */
-    color: #000000;
+    text-align: left; /* Left-align text for readability */
+    font-size: 1.5em; /* Larger font size for titles */
+    margin-bottom: 8px; /* Space below the title */
 }
 
+/* Specific styling for descriptions */
+.analysis-description {
+    font-size: 1em; /* Standard font size for descriptions */
+    color: #000000; /* Black text for contrast */
+}
+
+/* Additional styling for insights text */
 .analysis-insights {
     text-align: left;
-    font-size: 1em; /* Título */
-    margin-bottom: 8px;
+    font-size: 1em; /* Standard font size */
+    margin-bottom: 8px; /* Space below insights text */
 }
 
-/* ------------------------------- */
-/* Botão de Upload */
-/* ------------------------------- */
-/* Estilo para o container dos botões de upload */
+/* ---------------------------------------- */
+/* Upload Buttons and Process Section */
+/* ---------------------------------------- */
+
+/* Container for upload buttons with spacing and alignment */
 .upload-buttons-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px; /* Espaçamento entre os elementos */
+    display: flex; /* Flex layout for alignment */
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
+    gap: 10px; /* Space between buttons */
 }
 
-/* Texto "Or" entre os botões */
+/* Styling for "Or" text displayed between buttons */
 .upload-or-text {
-    font-size: 30px;
-    font-weight: bold;
-    color: #555; /* Cor do texto */
+    font-size: 30px; /* Large font size for emphasis */
+    font-weight: bold; /* Bold for visibility */
+    color: #555; /* Gray text color */
 }
 
-/* Estilo para os textos explicativos dos passos */
+/* Explanation text for each step */
 .step-explanation {
-    font-size: 20px;
-    font-weight: 500;
-    color: #277325;
-    margin-bottom: 10px;
-    text-align: center;
+    font-size: 20px; /* Medium font size */
+    font-weight: 500; /* Semi-bold for readability */
+    color: #277325; /* Green color for emphasis */
+    margin-bottom: 10px; /* Space below the text */
+    text-align: center; /* Center-align text */
 }
 
-/* Ajuste no container dos textos explicativos */
+/* Additional styling for explanatory text containers */
 .upload-explanatory-text,
 .process-explanatory-text {
-    margin-bottom: 15px;
+    margin-bottom: 15px; /* Space below text blocks */
 }
 
-
-/* Estilo para o card de upload e processamento */
+/* Styling for the upload and process card */
 .upload-process-card-style {
-    background-color: rgb(209, 223, 199);
-    box-shadow: 2px 4px 6px rgba(148, 219, 130, 0.726);
-    border-radius: 8px;
-    padding: 20px;
-    margin: 20px auto;
-    width: fit-content;
-    width: 1200px;
-    height: fit-content;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    align-items: center;
+    background-color: rgb(209, 223, 199); /* Light green background */
+    box-shadow: 2px 4px 6px rgba(148, 219, 130, 0.726); /* Subtle shadow */
+    border-radius: 8px; /* Rounded corners */
+    padding: 20px; /* Inner spacing */
+    margin: 20px auto; /* Center-align with top/bottom spacing */
+    width: 1200px; /* Fixed width */
+    height: fit-content; /* Adjust height dynamically */
+    display: flex; /* Flex layout */
+    flex-direction: column; /* Vertical stacking */
+    gap: 10px; /* Space between elements */
+    align-items: center; /* Center-align content */
 }
 
-/* Estilo para o botão de upload */
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+    .upload-process-card-style {
+        width: 90%; /* Adjust width for smaller screens */
+    }
+}
+
+/* Styling for upload button */
 .upload-button-style {
-    border: 2px dashed #007bff;
-    border-radius: 5px;
-    color: #007bff;
-    padding: 10px;
-    width: 400px;
-    text-align: center;
-    cursor: pointer;
-    transition: border-color 0.3s ease;
+    border: 2px dashed #007bff; /* Dashed blue border */
+    border-radius: 5px; /* Rounded corners */
+    color: #007bff; /* Blue text */
+    padding: 10px; /* Inner spacing */
+    width: 400px; /* Fixed width */
+    text-align: center; /* Center-align text */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: border-color 0.3s ease; /* Smooth border color change */
 }
 
+/* Hover effect for upload button */
 .upload-button-style:hover {
-    border-color: #a31d1b;
+    border-color: #a31d1b; /* Red border on hover */
 }
 
-/* Estilo para o botão de processamento */
+/* Styling for process button */
 .process-button-style {
-    background-color: #28a745;
-    color: white;
-    border-radius: 5px;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    background-color: #28a745; /* Green background */
+    color: white; /* White text */
+    border-radius: 5px; /* Rounded corners */
+    border: none; /* No border */
+    padding: 10px 20px; /* Inner spacing */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth background color change */
 }
 
+/* Hover effect for process button */
 .process-button-style:hover {
-    background-color: #218838;
+    background-color: #218838; /* Darker green background */
 }
 
-/* Estilo para o botão de Sample */
+/* Additional styling for sample button */
 .process-sample-button-style {
-    background-color: #2848a7;
-    color: white;
-    border-radius: 5px;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    background-color: #2848a7; /* Blue background */
+    color: white; /* White text */
+    border-radius: 5px; /* Rounded corners */
+    border: none; /* No border */
+    padding: 10px 20px; /* Inner spacing */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth background color change */
 }
 
+/* Hover effect for sample button */
 .process-sample-button-style:hover {
-    background-color: #3a5fbb;
+    background-color: #3a5fbb; /* Lighter blue background */
 }
-/* ------------------------------- */
-/* Estilo para o botão "View Results" */
+
+/* ---------------------------------------- */
+/* Styling for View Results Button */
+/* ---------------------------------------- */
+
+/* Main styling for "View Results" button */
 .view-results-style {
-    background-color: #28a745;
-    color: white;
-    border-radius: 5px;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 10px;
+    background-color: #28a745; /* Green background */
+    color: white; /* White text */
+    border-radius: 5px; /* Rounded corners */
+    border: none; /* No border */
+    padding: 10px 20px; /* Inner spacing */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth background color change */
+    margin-top: 10px; /* Space above the button */
 }
 
+/* Hover effect for "View Results" button */
 .view-results-style:hover {
-    background-color: #218838;
+    background-color: #218838; /* Darker green background */
 }
 
-/* Estilo para o título e subtítulo dos resultados */
-.results-title {
-    text-align: center;
-    font-size: 50px;
-    margin-top: 20px;
-}
+/* ---------------------------------------- */
+/* Styling for Graph and Navigation Menu */
+/* ---------------------------------------- */
 
-.results-subtitle {
-    text-align: center;
-    font-size: 30px;
-    margin-top: 10px;
-}
-
-
-
-/* ------------------------------- */
-/* Estilização do container do gráfico e menu de navegação */
-/* ------------------------------- */
-
+/* Card styling for graph display */
 .graph-card {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    padding: 20px;
-    margin: 20px 0;
-    transition: box-shadow 0.3s ease-in-out;
+    background-color: #fff; /* White background */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    padding: 20px; /* Inner spacing */
+    margin: 20px 0; /* Vertical spacing */
+    transition: box-shadow 0.3s ease-in-out; /* Smooth shadow transition */
 }
 
+/* Hover effect for graph cards */
 .graph-card:hover {
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Larger shadow on hover */
 }
 
+/* Container for cards with top padding */
 .card-container {
     position: relative;
-    padding-top: 50px; /* Espaço para o menu de filtros */
+    padding-top: 50px; /* Space for filter menu */
 }
 
-/* Menu de filtros no gráfico */
+/* Navigation menu styling */
 .navigation-menu {
-    padding: 10px;
-    background-color: #a5c6aa2f;
-    border-bottom: 2px solid #ccc;
-    text-align: center;
-    border-radius: 8px;
-    padding: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    z-index: 100;
+    padding: 10px; /* Inner spacing */
+    background-color: #a5c6aa2f; /* Light green background */
+    border-bottom: 2px solid #ccc; /* Light gray border */
+    text-align: center; /* Center-align text */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    z-index: 100; /* Ensures menu stays on top */
 }
+/* --------------------------------------- */
+/* General Alignment for Cards and Text    */
+/* --------------------------------------- */
 
-
-/* ------------------------------- */
-/* Alinhamento dos Cards e Texto   */
-/* ------------------------------- */
-
-/* Organiza os cards em coluna, alinhados à esquerda */
+/* Organizes cards in a vertical column aligned to the left */
 .step-cards-column {
-    display: flex;
-    flex-direction: column; /* Empilha os itens verticalmente */
-    gap: 30px; /* Espaçamento entre os cards */
-    margin: 20px 0; /* Espaçamento vertical */
-    align-items: flex-start; /* Alinha os itens à esquerda */
-    max-width: 100%; /* Permite que os elementos ocupem toda a largura disponível */
+    display: flex; /* Enables flexible layout */
+    flex-direction: column; /* Stacks items vertically */
+    gap: 30px; /* Adds spacing between cards */
+    margin: 20px 0; /* Vertical spacing around the container */
+    align-items: flex-start; /* Aligns items to the left */
+    max-width: 100%; /* Ensures the container uses the full width */
 }
 
-/* Alinha o card e o texto lado a lado */
+/* Aligns the card and text side by side */
 .step-row {
-    display: flex;
-    flex-direction: row; /* Coloca o card e o texto na mesma linha */
-    gap: 20px; /* Espaçamento entre o card e o texto */
-    align-items: center; /* Centraliza verticalmente */
-    width: 100%; /* Garante que ocupem toda a largura */
+    display: flex; /* Enables flexible layout */
+    flex-direction: row; /* Arranges items horizontally */
+    gap: 20px; /* Adds spacing between the card and the text */
+    align-items: center; /* Vertically centers the content */
+    width: 100%; /* Occupies the full width */
 }
 
-/* Ajusta o card */
+/* Styles for individual cards */
 .step-card {
-    flex: 0 0 50%; /* Limita a largura do card para 30% do container */
-    max-width: 500px; /* Garante que o card não ultrapasse 300px */
+    flex: 0 0 50%; /* Sets the card width to 50% of the container */
+    max-width: 500px; /* Limits the card's width */
 }
 
-/* Ajusta o texto ao lado do card */
+/* Styles for the text next to the card */
 .step-text {
-    padding: 10px;
-    flex: 1; /* Faz o texto ocupar o espaço restante */
-    font-size: 16px; /* Tamanho da fonte do texto */
-    color: #333; /* Cor do texto */
-    line-height: 1.5; /* Espaçamento entre as linhas */
-    text-align: justify; /* Alinha o texto dos dois lados */
+    padding: 10px; /* Adds inner spacing */
+    flex: 1; /* Allows the text to take the remaining space */
+    font-size: 16px; /* Sets font size */
+    color: #333; /* Text color */
+    line-height: 1.5; /* Increases line spacing for readability */
+    text-align: justify; /* Aligns text evenly on both sides */
 }
 
+/* --------------------------------------- */
+/* Navbar Styling                          */
+/* --------------------------------------- */
 
-/* Estilo para centralizar o título e menu */
+/* Container for the navbar, including title and menu */
 .navbar-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 0; /* Altura do navbar ajustada */
-    background-color: #F8F9FA;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    border-bottom: 1px solid #ddd;
-    position: fixed;
+    display: flex; /* Enables flexible layout */
+    flex-direction: column; /* Stacks items vertically */
+    align-items: center; /* Centers content horizontally */
+    justify-content: center; /* Centers content vertically */
+    padding: 10px 0; /* Adjusts navbar height */
+    background-color: #F8F9FA; /* Light gray background */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+    border-bottom: 1px solid #ddd; /* Adds a bottom border */
+    position: fixed; /* Fixes the navbar at the top */
     top: 0;
     left: 0;
     right: 0;
-    width: 100%;
-    z-index: 1000;
+    width: 100%; /* Full-width navbar */
+    z-index: 1000; /* Ensures it stays above other elements */
 }
 
-/* Contêiner para título, subtítulo e links */
+/* Container for title, subtitle, and links */
 .navbar-menu-container {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%; /* Garante que o contêiner ocupe toda a largura */
+    position: relative; /* Enables relative positioning for child elements */
+    display: flex; /* Enables flexible layout */
+    flex-direction: column; /* Stacks items vertically */
+    align-items: center; /* Centers content horizontally */
+    width: 100%; /* Full-width container */
 }
 
-/* Estilo para o título */
+/* Styles for the navbar title */
 .navbar-title {
-    font-size: 20px;
-    font-weight: bold;
-    color: #007BFF;
-    text-decoration: none;
-    margin-bottom: 5px;
-    text-align: center;
+    font-size: 20px; /* Font size */
+    font-weight: bold; /* Bold text */
+    color: #007BFF; /* Primary blue color */
+    text-decoration: none; /* Removes underline from links */
+    margin-bottom: 5px; /* Spacing below the title */
+    text-align: center; /* Centers the text */
     width: 100%;
 }
 
-/* Subtítulo */
+/* Subtitle below the title */
 .navbar-subtitle {
-    font-size: 14px;
-    font-weight: normal;
-    color: #6c757d;
-    margin-bottom: 8px;
-    text-align: center;
-    width: 100%;
-    cursor: pointer; /* Indica interatividade */
+    font-size: 14px; /* Font size */
+    font-weight: normal; /* Normal font weight */
+    color: #6c757d; /* Gray color */
+    margin-bottom: 8px; /* Spacing below the subtitle */
+    text-align: center; /* Centers the text */
+    cursor: pointer; /* Indicates interactivity */
 }
 
-/* Links inicialmente ocultos */
+/* Initially hides the links */
 .nav-links {
-    display: none; /* Oculta os links inicialmente */
-    flex-wrap: nowrap; /* Impede a quebra para a próxima linha */
-    justify-content: space-between; /* Espaça os cards uniformemente */
-    align-items: stretch; /* Alinha verticalmente os cards */
-    gap: 16px; /* Espaçamento horizontal entre os cards */
-    width: 100%; /* Garante que ocupe toda a largura do contêiner */
-    background-color: #F8F9FA;
-    padding: 10px 20px; /* Adiciona espaço interno */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
-    border-top: 1px solid #ddd;
+    display: none; /* Hides the links initially */
+    flex-wrap: nowrap; /* Prevents wrapping to the next line */
+    justify-content: space-between; /* Evenly spaces the links */
+    align-items: stretch; /* Aligns links vertically */
+    gap: 16px; /* Spacing between links */
+    width: 100%; /* Full-width container */
+    background-color: #F8F9FA; /* Light gray background */
+    padding: 10px 20px; /* Adds inner spacing */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+    border-top: 1px solid #ddd; /* Adds a top border */
 }
 
-/* Exibe os links ao passar o mouse no contêiner */
+/* Displays the links when hovering over the menu container */
 .navbar-menu-container:hover .nav-links {
-    display: flex; /* Exibe os links */
+    display: flex; /* Displays the links */
 }
 
-/* Links individuais */
+/* Individual link styles */
 .nav-link {
-    font-size: 12px;
-    color: #007BFF;
-    text-decoration: none;
-    padding: 3px 8px;
-    transition: color 0.3s ease;
-    text-align: center; /* Centraliza o texto do título */
-
+    font-size: 12px; /* Font size */
+    color: #007BFF; /* Primary blue color */
+    text-decoration: none; /* Removes underline */
+    padding: 3px 8px; /* Adds inner spacing */
+    transition: color 0.3s ease; /* Smooth color transition */
+    text-align: center; /* Centers text inside the link */
 }
 
+/* Changes the link style on hover */
 .nav-link:hover {
-    text-decoration: underline;
-    color: #0056b3;
+    text-decoration: underline; /* Adds underline */
+    color: #0056b3; /* Darker blue color */
 }
 
-/* Coluna individual */
-.nav-column {
-    display: flex;
-    flex-direction: column; /* Itens empilhados verticalmente */
-    align-items: flex-start; /* Alinha os links à esquerda dentro da coluna */
-    width: 14%; /* Cada coluna ocupa aproximadamente 14% da largura */
-    min-width: 250px; /* Define uma largura mínima */
-    max-width: 180px; /* Define uma largura máxima */
+/* --------------------------------------- */
+/* Responsive Adjustments for Mobile       */
+/* --------------------------------------- */
+
+@media (max-width: 768px) {
+    /* Adjusts card layout for smaller screens */
+    .step-row {
+        flex-direction: column; /* Stacks cards vertically */
+        align-items: center; /* Centers content horizontally */
+    }
+
+    /* Ensures text wraps properly */
+    .step-text {
+        font-size: 14px; /* Reduces font size */
+    }
+
+    /* Navbar adjustments */
+    .navbar-container {
+        padding: 5px 0; /* Reduces padding for smaller screens */
+    }
+
+    .nav-links {
+        gap: 8px; /* Reduces spacing between links */
+        flex-direction: column; /* Stacks links vertically */
+    }
 }
 
-/* Column Title (Session Titles) */
-.navbar-section-title {
-    font-size: 14px;
-    font-weight: bold;
-    color: #6c757d;
-    margin-bottom: 8px;
-    text-align: center; /* Centraliza o texto do título */
-}
+/* ---------------------------------------- */
+/* Styles for the Regulatory Agencies Page */
+/* ---------------------------------------- */
 
-/* Ajustes para os cards */
-.nav-card {
-    flex: 1; /* Faz os cards ocuparem larguras iguais */
-    max-width: 30%; /* Define o máximo de espaço por card */
-    min-width: 100px; /* Define uma largura mínima para evitar que fique pequeno demais */
-    display: flex;
-    flex-direction: column; /* Organiza o título e links dentro do card */
-    align-items: center;
-    justify-content: flex-start; /* Deixa o conteúdo no topo */
-    padding: 2px; /* Espaçamento interno */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
-    border: 1px solid #ddd; /* Bordas discretas */
-    border-radius: 10px; /* Bordas arredondadas */
-    background-color: #ffffff; /* Fundo branco */
-    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Animação suave */
-}
-
-
-.nav-card:hover {
-    transform: scale(1.05); /* Efeito de hover nos cards */
-}
-
-/* Ajustes para o título dos cards */
-.card-title {
-    font-size: 16px;
-    font-weight: bold;
-    color: #007BFF;
-    margin-bottom: 10px;
-    text-align: center;
-}
-
-
-
-
-/* Estilo da página de ajuda */
-.help-page {
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-}
-
-.help-title {
-    font-size: 32px;
-    font-weight: bold;
-    color: #007BFF;
-    margin-bottom: 20px;
-}
-
-.help-section-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-top: 20px;
-    color: #343a40;
-}
-
-.help-text {
-    font-size: 16px;
-    color: #6c757d;
-}
-
-.help-list {
-    font-size: 16px;
-    color: #6c757d;
-    padding-left: 20px;
-}
-
-
-/* Standardized Styles for Features Page */
-.features-page {
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-}
-
-.features-title {
-    font-size: 32px;
-    font-weight: bold;
-    color: #007BFF;
-    margin-bottom: 20px;
-}
-
-.features-section-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-top: 20px;
-    color: #343a40;
-}
-
-.features-intro, .features-text {
-    font-size: 16px;
-    color: #6c757d;
-    margin-bottom: 15px;
-}
-
-.features-link {
-    font-size: 16px;
-    color: #007BFF;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.features-link:hover {
-    text-decoration: underline;
-    color: #0056b3;
-}
-
-.features-section {
-    margin-bottom: 30px;
-}
-
-
-/* Standardized Styles for Regulatory Agencies Page */
+/* Styles for the entire page layout, ensuring consistency */
 .regulatory-agencies-page {
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
+    padding: 20px; /* Adds spacing around the page content */
+    font-family: Arial, sans-serif; /* Ensures readability */
+    line-height: 1.6; /* Improves text spacing */
 }
 
+/* Main title of the Regulatory Agencies page */
 .regulatory-title {
-    font-size: 32px;
-    font-weight: bold;
-    color: #007BFF;
-    margin-bottom: 20px;
+    font-size: 32px; /* Large font for emphasis */
+    font-weight: bold; /* Highlights the title */
+    color: #007BFF; /* Blue color aligns with the theme */
+    margin-bottom: 20px; /* Adds spacing below the title */
 }
 
+/* Section titles for different parts of the page */
 .regulatory-section-title {
     font-size: 24px;
     font-weight: bold;
     margin-top: 20px;
-    color: #343a40;
+    color: #343a40; /* Darker color for better contrast */
 }
 
+/* Styles for paragraph and introductory text */
 .regulatory-text, .regulatory-intro {
     font-size: 16px;
-    color: #6c757d;
-    margin-bottom: 15px;
+    color: #6c757d; /* Neutral color for body text */
+    margin-bottom: 15px; /* Adds spacing below paragraphs */
 }
 
+/* Title for individual regulatory agencies */
 .regulatory-agency-title {
     font-size: 20px;
     font-weight: bold;
     margin-top: 10px;
-    color: #0056b3;
+    color: #0056b3; /* Slightly darker blue for differentiation */
 }
 
+/* Responsive Adjustment for Mobile Devices */
+@media (max-width: 768px) {
+    .regulatory-title {
+        font-size: 28px; /* Slightly smaller for better fit */
+    }
+    .regulatory-section-title {
+        font-size: 20px;
+    }
+}
 
+/* ---------------------------------------- */
+/* Related Articles Section */
+/* ---------------------------------------- */
 
+/* Styles for the unordered list of articles */
 .related-articles-list {
-    list-style-type: none; /* Remove o ponto */
+    list-style-type: none; /* Removes bullets from the list */
     font-size: 16px;
-    color: #6c757d;
+    color: #6c757d; /* Neutral tone for article descriptions */
     padding-left: 20px;
-    line-height: 1.8;
+    line-height: 1.8; /* Improves spacing between list items */
 }
 
+/* Individual list items in the related articles section */
 .related-articles-list li {
-    margin-bottom: 1.5em; /* Espaçamento entre os itens da lista */
+    margin-bottom: 1.5em; /* Adds spacing between articles */
 }
 
+/* Title style for related articles */
 .article-title {
-    font-weight: bold; /* Makes the title bold */
-    color: #343a40; /* Slightly darker color for emphasis */
+    font-weight: bold; /* Highlights the article title */
+    color: #343a40; /* Darker color for emphasis */
 }
 
+/* Links to related articles */
 .related-article-link {
-    color: #007BFF;
-    text-decoration: none;
-    font-weight: bold;
+    color: #007BFF; /* Blue color for links */
+    text-decoration: none; /* Removes underline */
+    font-weight: bold; /* Adds emphasis */
 }
 
+/* Hover effect for article links */
 .related-article-link:hover {
-    text-decoration: underline;
-    color: #0056b3;
+    text-decoration: underline; /* Adds underline on hover */
+    color: #0056b3; /* Darker blue for hover effect */
 }
 
+/* ---------------------------------------- */
+/* Section Header and Title Styles */
+/* ---------------------------------------- */
 
 .section-header {
     margin-bottom: 20px;
-    text-align: left;
-
+    text-align: left; /* Aligns text to the left */
 }
 
 .section-title {
     font-size: 24px;
     font-weight: bold;
-    color: #007BFF;
+    color: #007BFF; /* Blue for thematic consistency */
     margin-bottom: 10px;
     margin-top: 50px;
     text-align: left;
-
 }
 
 .section-objective {
     font-size: 16px;
     color: #6c757d;
     margin-bottom: 15px;
-    font-style: italic;
+    font-style: italic; /* Adds emphasis */
     text-align: left;
 }
 
+/* ---------------------------------------- */
+/* Tooltip Styles */
+/* ---------------------------------------- */
 
-/* Tooltip Container */
+/* Wrapper for tooltips */
 .tooltip-container {
     display: inline-block;
     position: relative;
-    cursor: pointer;
+    cursor: pointer; /* Changes cursor to pointer */
     font-weight: bold;
-    color: #007BFF;
+    color: #007BFF; /* Matches theme color */
 }
 
-/* Tooltip Text */
+/* Tooltip text with underline */
 .tooltip-text {
     text-decoration: underline;
 }
 
-/* Tooltip Content */
+/* Tooltip content box */
 .tooltip-container .tooltip-content {
-    visibility: hidden;
-    width: 300px;
-    background-color: #f8f9fa;
-    color: #212529;
+    visibility: hidden; /* Hidden by default */
+    width: 300px; /* Fixed width for consistency */
+    background-color: #f8f9fa; /* Light background */
+    color: #212529; /* Neutral text color */
     text-align: left;
-    border: 1px solid #d6d8db;
-    border-radius: 4px;
+    border: 1px solid #d6d8db; /* Subtle border */
+    border-radius: 4px; /* Rounded corners */
     padding: 10px;
     position: absolute;
-    z-index: 1;
-    top: 120%; /* Posicionar abaixo do elemento */
+    z-index: 1; /* Ensures visibility */
+    top: 120%; /* Positioned below the trigger element */
     left: 50%;
     transform: translateX(-50%);
     font-size: 14px;
     line-height: 1.4;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
-/* Tooltip Header */
+/* Tooltip header for emphasis */
 .tooltip-header {
     font-weight: bold;
     margin-bottom: 5px;
     color: #343a40;
 }
 
-/* Tooltip Example Text */
+/* Example text inside the tooltip */
 .tooltip-example {
     font-family: monospace;
-    background-color: #e9ecef;
+    background-color: #e9ecef; /* Light gray background */
     padding: 5px;
     border-radius: 4px;
     margin: 0;
-    white-space: pre-wrap;
+    white-space: pre-wrap; /* Preserves formatting */
 }
 
-/* Show Tooltip Content on Hover */
+/* Show tooltip on hover */
 .tooltip-container:hover .tooltip-content {
     visibility: visible;
 }
 
+/* ---------------------------------------- */
+/* Button Styles */
+/* ---------------------------------------- */
 
-/* Botão de download */
+/* Styles for the download button */
 .download-button {
     display: inline-block;
-    background-color: #62a562; /* Cor de fundo azul */
-    color: white; /* Cor do texto */
+    background-color: #62a562; /* Green background */
+    color: white;
     font-size: 20px;
     font-weight: bold;
     padding: 10px 20px;
     text-align: center;
     text-decoration: none;
     border-radius: 5px;
-    border: 1px solid #a1f082; /* Borda mais escura */
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    margin-top: 20px; /* Espaçamento do botão */
+    border: 1px solid #a1f082; /* Darker green border */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effects */
+    margin-top: 20px;
 }
 
-/* Efeito hover no botão */
+/* Hover effect for the download button */
 .download-button:hover {
-    background-color: #a1f082; /* Cor de fundo ao passar o mouse */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Sombra ao passar o mouse */
+    background-color: #a1f082; /* Lighter green on hover */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Adds shadow on hover */
 }
 
-/* Centralização do botão no card */
+/* Container for button alignment */
 .button-container {
     text-align: center;
     margin-top: 20px;
 }
 
-
+/* ---------------------------------------- */
+/* Alert Styles */
+/* ---------------------------------------- */
 
 .alert-container {
-    margin-top: 15px; /* Espaço entre o alerta e o botão */
-    text-align: center; /* Centraliza o texto do alerta */
+    margin-top: 15px; /* Adds spacing above the alert */
+    text-align: center; /* Centers alert text */
 }
 
 .process-button-style + .alert-container {
-    margin-top: 10px; /* Adiciona espaço específico abaixo do botão "Click to Submit" */
+    margin-top: 10px; /* Adjusts spacing below specific buttons */
+}
+
+/* ---------------------------------------- */
+/* Mobile Adjustments */
+/* ---------------------------------------- */
+
+@media (max-width: 768px) {
+    .download-button {
+        font-size: 16px; /* Smaller font for mobile */
+        padding: 8px 16px;
+    }
+    .tooltip-content {
+        width: 250px; /* Reduced width for smaller screens */
+    }
 }
 
 
-/*SESSÃO DE IMAGEM DA PAGINA DE AJUDA*/
 
+/* Center-aligns images within a container with added margins */
 .image-container {
     text-align: center;
     margin: 20px 0;
 }
 
+/* Styles example images with width constraints, borders, and rounded corners */
 .example-image {
-    width: 80%;
-    max-width: 800px;
+    width: 80%; /* Relative width for responsiveness */
+    max-width: 800px; /* Maximum width to prevent oversized images */
     border: 1px solid #ccc;
     border-radius: 8px;
     margin-bottom: 20px;
 }
 
+/* Styles for numbered descriptions, emphasizing titles and improving readability */
 .numbered-descriptions h4 {
     font-weight: bold;
-    color: #0056b3;
+    color: #0056b3; /* Dark blue for visibility */
     margin-top: 20px;
 }
 
+/* Text and list items under numbered descriptions */
 .numbered-descriptions p,
 .numbered-descriptions .help-list {
     font-size: 16px;
-    text-align: left;
+    text-align: left; /* Align text to the left for readability */
     margin: 10px 0;
-    padding-left: 20px;
+    padding-left: 20px; /* Indent for better structure */
 }
 
+/* Individual list items with consistent spacing */
 .help-list li {
     margin-bottom: 10px;
 }
 
+/* Styles titles in the help section for visibility and emphasis */
 .help-section-title-right {
-    text-align: left; /* Alinha o texto à direita */
-    font-weight: bold; /* Destaca os títulos */
-    color: #0056b3; /* Azul escuro para destaque */
-    margin-top: 20px; /* Espaçamento acima do título */
-    margin-bottom: 10px; /* Espaçamento abaixo do título */
+    text-align: left; /* Aligns titles to the left */
+    font-weight: bold;
+    color: #0056b3; /* Dark blue for emphasis */
+    margin-top: 20px;
+    margin-bottom: 10px;
 }
 
-/* Container para alinhar e organizar os elementos: barra de progresso, botão e alerta */
-/* Corrige o alinhamento geral no contêiner */
-/* Contêiner principal para os botões e barra */
+/*
+=========================================================================================
+Button and Progress Bar Container
+=========================================================================================
+*/
+
+/* Central container for buttons and progress bars */
 .button-progress-container {
-    display: flex;
-    flex-direction: column; /* Empilha verticalmente */
-    align-items: center; /* Centraliza os itens no contêiner */
-    gap: 15px; /* Espaçamento consistente entre os elementos */
-    width: 100%; /* Largura total */
+    display: flex; /* Flexible box for layout */
+    flex-direction: column; /* Stacks elements vertically */
+    align-items: center; /* Centers elements */
+    gap: 15px; /* Adds spacing between child elements */
+    width: 100%; /* Full width for consistent alignment */
 }
 
-/* Barra de progresso */
+/* Progress bar styling with width constraints for responsiveness */
 #progress-bar {
-    width: 80%; /* Largura relativa para responsividade */
-    max-width: 600px; /* Largura máxima */
-    margin: 0 auto; /* Centraliza horizontalmente */
+    width: 80%; /* Relative width */
+    max-width: 600px; /* Limit maximum width */
+    margin: 0 auto; /* Center horizontally */
 }
 
-/* Contêiner da barra */
+/* Centralized container for the progress bar */
 #progress-container {
-    width: 100%; /* Largura total */
-    text-align: center; /* Centraliza conteúdo */
-    margin-top: 10px; /* Espaço entre a barra e o botão */
+    width: 100%;
+    text-align: center;
+    margin-top: 10px; /* Space between bar and other elements */
 }
 
-
-/* Classe para adicionar margem superior consistente */
+/* Utility class for consistent top margins */
 .mt-3 {
     margin-top: 10px;
 }
 
-/* Estilização do contêiner do alerta */
+/* Styles alert containers with centered text and a defined width */
 .alert-container {
-    width: 50%; /* Alinhamento consistente */
+    width: 50%; /* Half-width for balanced layout */
     text-align: center;
 }
 
+/*
+=========================================================================================
+Responsive Adjustments
+=========================================================================================
+*/
 
-/* Ajustes adicionais para responsividade */
 @media (max-width: 768px) {
+    /* Centers buttons and adjusts spacing on smaller screens */
     .button-progress-container {
-        align-items: center; /* Centraliza os elementos em telas menores */
+        align-items: center;
     }
 
+    /* Increases progress bar width for better visibility on smaller screens */
     #progress-bar {
-        width: 90%; /* Ajusta a largura em telas menores */
+        width: 90%;
     }
 
+    /* Adjusts alert container width for smaller screens */
     .alert-container {
-        width: 90%; /* Reduz a largura para melhor adaptação */
+        width: 90%;
     }
 }
 
+/*
+=========================================================================================
+Related Articles Section
+=========================================================================================
+*/
 
-
-/* Lista de artigos relacionados */
+/* Removes default list styling for related articles */
 .related-articles-list {
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
-/* Cada item da lista (artigo) */
+/* Adds spacing between article items */
 .related-articles-list li {
     margin-bottom: 15px;
 }
 
-/* Linha de autores */
+/* Styles author lines with italic text and muted color */
 .authors-line {
     display: block;
     font-size: 0.95rem;
     font-style: italic;
-    color: #555;
+    color: #555; /* Muted gray for secondary information */
     margin-bottom: 5px;
 }
 
-/* Título do artigo */
+/* Emphasizes article titles */
 .article-title {
     display: block;
     font-size: 1rem;
@@ -1245,7 +1168,7 @@ body, html {
     margin-bottom: 5px;
 }
 
-/* Informações do jornal, volume e páginas */
+/* Styles journal information for articles */
 .journal-info {
     display: block;
     font-size: 0.9rem;
@@ -1253,7 +1176,7 @@ body, html {
     margin-bottom: 5px;
 }
 
-/* Link para o DOI */
+/* Configures DOI links with hover effects for visibility */
 .related-article-link {
     display: block;
     font-size: 0.9rem;
@@ -1268,27 +1191,35 @@ body, html {
     text-decoration: underline;
 }
 
-/* Linha horizontal */
+/* Defines consistent spacing with horizontal lines */
 .my-2 {
     border: 0.5px solid #ccc;
     margin: 10px 0;
 }
 
-/*INFORMAÇÕES DE CONTATO*/
+/*
+=========================================================================================
+Contact Information Section
+=========================================================================================
+*/
+
+/* Styles the contact page layout */
 .contact-page {
     font-family: Arial, sans-serif;
     padding: 20px;
-    max-width: 800px;
+    max-width: 800px; /* Restrict maximum width */
     margin: 0 auto;
 }
 
+/* Emphasizes the contact title */
 .contact-title {
     text-align: center;
     font-size: 2.5rem;
-    color: #2a9d8f;
+    color: #2a9d8f; /* Teal for emphasis */
     margin-bottom: 20px;
 }
 
+/* Aligns profile section elements horizontally */
 .profile-section {
     display: flex;
     align-items: center;
@@ -1296,6 +1227,7 @@ body, html {
     margin-bottom: 30px;
 }
 
+/* Styles profile pictures with rounded corners and shadows */
 .profile-picture {
     border-radius: 10%;
     width: 350px;
@@ -1304,16 +1236,19 @@ body, html {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Left-aligned text for developer descriptions */
 .text-section {
     text-align: left;
 }
 
+/* Emphasizes developer names */
 .developer-name {
     font-size: 1.8rem;
     margin: 0;
-    color: #264653;
+    color: #264653; /* Dark teal */
 }
 
+/* Italic text for academic titles */
 .academic-title {
     font-size: 1.2rem;
     margin: 5px 0;
@@ -1321,6 +1256,7 @@ body, html {
     font-style: italic;
 }
 
+/* Bold text for developer titles */
 .developer-title {
     font-size: 1rem;
     margin: 5px 0;
@@ -1328,37 +1264,37 @@ body, html {
     font-weight: bold;
 }
 
+/* Line-height for better readability */
 .description-section {
     margin-bottom: 20px;
     line-height: 1.6;
 }
 
+/* Developer descriptions with muted text */
 .developer-description {
     font-size: 1rem;
     color: #333;
     margin-bottom: 15px;
 }
 
+/* Central alignment for contact methods */
 .contact-methods {
     text-align: center;
     margin-bottom: 30px;
 }
 
+/* Header for contact section */
 .contact-header {
     font-size: 1.5rem;
     color: #2a9d8f;
     margin-bottom: 10px;
 }
 
-.contact-text {
-    font-size: 1rem;
-    margin-bottom: 10px;
-}
-
+/* Bold and visible email links */
 .contact-email {
     font-size: 1.1rem;
     font-weight: bold;
-    color: #e76f51;
+    color: #e76f51; /* Orange for visibility */
     text-decoration: none;
 }
 
@@ -1366,6 +1302,7 @@ body, html {
     text-decoration: underline;
 }
 
+/* Styles for social media icons */
 .social-media {
     display: flex;
     justify-content: center;
@@ -1387,32 +1324,33 @@ body, html {
     color: #2a9d8f;
 }
 
+/*
+=========================================================================================
+Help Message Section
+=========================================================================================
+*/
 
+/* Aligns and spaces help messages */
 .help-message-container {
     text-align: auto;
     margin-top: 30px;
 }
 
+/* Styles help message text */
 .help-message {
     font-size: 1.2em;
     font-weight: 500;
-    color: #333; /* Ajuste conforme a paleta de cores da aplicação */
+    color: #333; /* Matches the application palette */
 }
 
+/* Configures help links with hover effects */
 .help-link {
-    color: #007bff; /* Azul padrão para links */
+    color: #007bff; /* Blue for links */
     text-decoration: none;
     font-weight: bold;
 }
-
-.help-link2 {
-    color: #87bc47; /* Azul padrão para links */
-    text-decoration: none;
-    font-weight: bold;
-}
-
 
 .help-link:hover {
     text-decoration: underline;
-    color: #0056b3; /* Azul mais escuro ao passar o mouse */
+    color: #0056b3; /* Darker blue on hover */
 }
