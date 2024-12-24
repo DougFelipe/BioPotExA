@@ -1354,3 +1354,52 @@ Help Message Section
     text-decoration: underline;
     color: #0056b3; /* Darker blue on hover */
 }
+
+.help-link2 {
+    color: #87bc47; /* Azul padrão para links */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+
+.features-section-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+    color: #343a40;
+}
+
+.features-link {
+    font-size: 16px;
+    color: #007BFF;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.help-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #007BFF;
+    margin-bottom: 20px;
+}
+
+.features-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #007BFF;
+    margin-bottom: 20px;
+}
+
+.help-section-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+    color: #343a40;
+}
+
+.features-section-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+    color: #343a40;
+}
