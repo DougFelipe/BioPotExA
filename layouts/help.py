@@ -1,9 +1,41 @@
-from dash import html, dcc
-import dash_bootstrap_components as dbc
+"""
+help.py
+-------
+This script defines the layout of the "Help & Support" page in a Dash web application. 
+The page provides detailed instructions, descriptions of the application's key features, 
+step-by-step guidance for uploading data, and troubleshooting common issues.
+
+The "Help & Support" page includes:
+- Instructions for data upload, processing, and analysis.
+- Common issues and their solutions.
+- Details on result visualization features.
+- A navigation guide explaining the application's main components.
+"""
+
+# ----------------------------------------
+# Imports
+# ----------------------------------------
+
+from dash import html, dcc  # Dash HTML and DCC components for creating the UI
+import dash_bootstrap_components as dbc  # Bootstrap components for styled alerts and buttons
+
+# ----------------------------------------
+# Function: get_help_layout
+# ----------------------------------------
 
 def get_help_layout():
     """
-    Returns the layout of the Help & Support page with the detailed descriptions of the numbered components.
+    Returns the layout for the "Help & Support" page.
+
+    The layout includes:
+    - A title and introduction.
+    - Step-by-step instructions for data upload and analysis.
+    - A troubleshooting guide for common issues.
+    - Descriptions of result visualization tools.
+    - A navigation guide to the application's interface.
+
+    Returns:
+    - dash.html.Div: The full layout of the "Help & Support" page as a Dash HTML component.
     """
     return html.Div(
         className="help-page",
