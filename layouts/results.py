@@ -112,10 +112,29 @@ def get_results_layout():
 
 
 
-        # Seção 2: HADEG Results Table
-        html.Div(id="hadeg-results-table", className="section"),  # ID para ancoragem no navbar
-        html.Div([
-            html.H5("HADEG Results Table", className="analysis-title"),
+ # Section 2: HADEG Results Table
+    html.Div(id="hadeg-results-table", className="section"),
+    html.Div(
+        [
+            dbc.Row(
+                [
+                    dbc.Col(
+                        html.H5("HADEG Results Table", className="analysis-title"),
+                        width="auto"
+                    ),
+                    dbc.Col(
+                        html.Button(
+                            "Download CSV",
+                            id="download-hadeg-csv-btn",
+                            n_clicks=0,
+                            className="btn btn-primary"
+                        ),
+                        width="auto"
+                    ),
+                ],
+                align="center",
+                justify="between"
+            ),
             html.P(
                 "This table contains data merged with the HADEG database, enabling the exploration of additional annotations and insights",
                 className="analysis-description"
@@ -135,15 +154,37 @@ def get_results_layout():
                 start_collapsed=True,
                 always_open=False
             ),
-        ], className="analysis-header"),
-        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size = "xs"),]),
 
+            # The dcc.Download component for returning the HADEG CSV
+            dcc.Download(id="download-hadeg-csv"),
+        ],
+        className="analysis-header"
+    ),
+    html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
 
-
-        # Seção 3: TOXCSM Results Table
-        html.Div(id="toxcsm-results-table", className="section"),  # ID para ancoragem no navbar
-        html.Div([
-            html.H5("ToxCSM Results Table", className="analysis-title"),
+    # Section 3: TOXCSM Results Table
+    html.Div(id="toxcsm-results-table", className="section"),
+    html.Div(
+        [
+            dbc.Row(
+                [
+                    dbc.Col(
+                        html.H5("ToxCSM Results Table", className="analysis-title"),
+                        width="auto"
+                    ),
+                    dbc.Col(
+                        html.Button(
+                            "Download CSV",
+                            id="download-toxcsm-csv-btn",
+                            n_clicks=0,
+                            className="btn btn-primary"
+                        ),
+                        width="auto"
+                    ),
+                ],
+                align="center",
+                justify="between"
+            ),
             html.P(
                 "This table shows data merged with the TOXCSM database, providing toxicity predictions and compound interactions",
                 className="analysis-description"
@@ -163,8 +204,13 @@ def get_results_layout():
                 start_collapsed=True,
                 always_open=False
             ),
-        ], className="analysis-header"),
-        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
+
+            # The dcc.Download component for returning the TOXCSM CSV
+            dcc.Download(id="download-toxcsm-csv"),
+        ],
+        className="analysis-header"
+    ),
+    html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
 
 
       
