@@ -43,118 +43,38 @@ def get_dataAnalysis_page():
         # Conteúdo Inicial
         html.Div(id='initial-content', children=[
 
-            # Título "How to Use"
-            html.Div([
-                html.H2('How to Use', className='how-to-use'),
-                html.Hr(className="my-2"),
-            ], className='title-container'),
 
-            # Cards de Passo a Passo
-            html.Div(
-                className='step-cards-column',  # Classe para os cards alinhados verticalmente
-                children=[
-                    # Step 1: Upload
-                    html.Div(
-                        className='step-row',  # Linha que contém o card e o texto
-                        children=[
-                            create_step_card(
-                                step_number="Step 1",
-                                title="Upload",
-                                description="Upload your data file in the specified .txt format for analysis"
+                            # Graphical Abstract Image 
+                            html.Img(
+                                src='/assets/images/graphical_abstract.png',
+                                alt='Graphical Abstract',
+                                className='graphical-abstract-image'
                             ),
-                            html.Div(
-                                [
-                                    html.P(
-                                        [
-                                            "Start by ",
-                                            input_format_tooltip(),
-                                            html.Br(),
-                                            html.Br(),
-                                            "Ensure the file and input data are in the specified format to avoid processing issues",
-                                            html.Br(),
-                                            html.Br(),
-                                            "This step allows the application to read and validate the structure of your data, ensuring it meets the requirements for analysis"
-                                        ],
-                                        className='step-text'
-                                    ),
                                     html.Div(
                                         get_sample_data_button(),  # Botão de download incluído no Step 1
                                         className="button-container"  # Classe para centralizar o botão
-                                    )
-                                ],
-                                className="card-content"  # Classe para estilizar o conteúdo do card
-                            )
-                        ]
-                    ),
+                                    ),
+                    
 
-                    # Step 2: Process
-                    html.Div(
-                        className='step-row',
-                        children=[
-                            create_step_card(
-                                step_number="Step 2",
-                                title="Process",
-                                description="Submit your data for processing and analysis"
-                            ),
-                            html.Div(
-                                [
-                                    html.P(
-                                        [
-                                            "Once your data or example data is uploaded, click the 'Submit' button and await to see the results",
-                                            html.Br(),
-                                            html.Br(),
-                                            "This is where the provided data is merged with the BioRemPP databases to render the results tables and graphs"
-                                        ],
-                                        className='step-text'
-                                    )
-                                ],
-                                className="card-content"  # Classe para estilizar o conteúdo do card
-                            )
-                        ]
-                    ),
 
-                    # Step 3: Analyze
-                    html.Div(
-                        className='step-row',
-                        children=[
-                            create_step_card(
-                                step_number="Step 3",
-                                title="Analyze",
-                                description="Analyze results and visualize insights"
-                            ),
-                            html.P(
-                                [
-                                    "After processing, move on to analyzing your data",
-                                    html.Br(),
-                                    html.Br(),
-                                    "In this step, you can explore detailed results presented in tables and interactive visualizations",
-                                    html.Br(),
-                                    html.Br(),
-                                    "These insights are designed to help you understand trends, patterns, and key information within your dataset"
-                                ],
-                                className='step-text'
-                            )
-                        ]
-                    ),
-
+                                
                     html.Div(
                         [
                             html.P(
                                 [
                                     "If you are encountering difficulties with any of these steps, please refer to the ",
                                     html.A("Help page", href="/help", className="help-link", target="_self"),
-                                    ", particularly the ",
-                                    html.A("Common Issues",className="help-link2", target="_self"),
+                                    " and the ",
+                                    html.A("Documentation", href="/documentation", className="help-link", target="_self"),
                                     " section, for detailed instructions and troubleshooting tips"
                                 ],
                                 className="help-message"
-                            )
+                            ),
                         ],
                         className="help-message-container"  # Classe para estilização
-                    )
+                    ),
+                    
 
-                ]
-            ),
 
 
             # Título "Upload and Analyze Your Data"
@@ -257,7 +177,7 @@ def get_dataAnalysis_page():
 
 # Título "Related Publications"
 html.Div([
-    html.H2('Related Publications', className='how-to-use'),
+    html.H2('Previous Publications', className='how-to-use'),
     html.Hr(className="my-2"),
 ], className='title-container'),
 
