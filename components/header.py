@@ -48,7 +48,7 @@ def Header():
                 className='header-right',  # CSS class for styling the right section
                 children=[
                     html.A("Help", href="/help", className="header-link"),  # Link to Help page
-                    html.A('Expected Results', href='/features', className='header-link'),  # Link to Expected Results page
+                    html.A('Documentation', href='/documentation', className='header-link'),  # Link to Expected Results page
                     html.A('Regulatory Agencies', href='/regulatory', className='header-link'),  # Link to Regulatory Agencies page
                     html.A('Bioremediation', href='/bioremediation', className='header-link'),  # Link to Bioremediation page
                     # html.A('Changelog', href='/changelog', className='header-link'),  # (Commented out) Link to Changelog page

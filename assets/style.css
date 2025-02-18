@@ -1403,3 +1403,116 @@ Help Message Section
     margin-top: 20px;
     color: #343a40;
 }
+
+
+/* features.css */
+
+/* Container geral para a página Features */
+.features-container {
+    margin: 0 auto;    /* Centraliza o container */
+    padding: 20px;
+}
+
+/* Estilização do título da página */
+.features-title {
+    margin-bottom: 20px;
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+/* Estilização do texto introdutório */
+.features-intro {
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    text-align: justify;
+}
+
+/* Estilização dos títulos das seções */
+.help-section-title,
+.features-section-title,
+.section-title {
+    font-size: 2rem;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+/* Estilização dos parágrafos */
+.features-text,
+.analysis-description,
+.analysis-insights,
+.section-objective {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    text-align: justify;
+}
+
+/* Estilização da sidebar */
+.sidebar {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-right: 1px solid #dee2e6;
+}
+
+/* Tornando a sidebar sticky */
+.sticky-sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+/* Estilização dos links da sidebar */
+.sidebar-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.sidebar-link {
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+    color: #007bff;
+}
+
+.sidebar-link-highlight {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #0056b3;
+}
+
+.sidebar-link:hover {
+    text-decoration: underline;
+}
+
+/* Placeholder adjustments */
+.me-1 {
+    margin-right: 0.25rem;
+}
+.mt-1 {
+    margin-top: 0.25rem;
+}
+.w-100 {
+    width: 100%;
+}
+
+
+.doc-image {
+    max-width: 100%;  /* Limita a largura ao tamanho máximo do contêiner */
+    height: auto;     /* Mantém a proporção da imagem ao redimensionar */
+    display: block;   /* Remove possíveis espaços extras ao redor da imagem */
+    margin: 0 auto;   /* (Opcional) Centraliza a imagem horizontalmente */
+}
+
+.doc-legend {
+    margin-top: 1rem;
+    font-size: 0.95rem; /* Ajuste conforme necessidade */
+}
+
+.doc-legend p {
+    margin-bottom: 0.5rem;
+}
+
+.doc-legend strong {
+    color: #333;
+    font-weight: 600;
+}

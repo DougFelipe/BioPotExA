@@ -14,7 +14,7 @@ from dash import Dash, dcc, html, Input, Output
 
 # Import custom header component
 from components.header import Header
-from components.features import get_features_layout  
+from components.documentation import get_features_layout  
 from components.bioremediation import get_bioremediation_layout  
 from components.regulatory_agencies import get_regulatory_agencies_layout  
 from components.contact import get_contact_page
@@ -99,7 +99,7 @@ def display_page(pathname):
         return get_results_layout()
     elif pathname == '/help':  # Route for the Help page
         return get_help_layout()
-    elif pathname == '/features':  # Route for the Features page
+    elif pathname == '/documentation':  # Route for the Features page
         return get_features_layout()
     elif pathname == '/bioremediation':  # Route for the Bioremediation page
         return get_bioremediation_layout()
