@@ -1516,3 +1516,11 @@ Help Message Section
     color: #333;
     font-weight: 600;
 }
+
+.graphical-abstract-image {
+    max-width: 100%;  /* Limita a largura ao tamanho máximo do contêiner */
+    height: auto;     /* Mantém a proporção da imagem ao redimensionar */
+    display: block;   /* Remove possíveis espaços extras ao redor da imagem */
+    margin: 0 auto;   /* (Opcional) Centraliza a imagem horizontalmente */
+    border-radius: 10px;
+}
