@@ -59,7 +59,9 @@ def get_features_layout():
                 [
                     dbc.NavLink("Platform Overview", href="#platform-overview", className="sidebar-link-highlight", external_link=True),
                     dbc.NavLink("BioRemPP Database", href="#biorempp-database", className="sidebar-link-highlight", external_link=True),
-                    dbc.NavLink("Uploading Your Data", href="#upload-data-section", className="sidebar-link-highlight", external_link=True),                  
+                    dbc.NavLink("Uploading Your Data", href="#upload-data-section", className="sidebar-link-highlight", external_link=True), 
+                    dbc.NavLink("Visualizing Results", href="#visualizing-results", className="sidebar-link-highlight", external_link=True), 
+                    dbc.NavLink("Navigation", href="#navigation-section", className="sidebar-link-highlight", external_link=True),                
                     dbc.NavLink("Expected Results", href="#expected-results-section", className="sidebar-link-highlight", external_link=True),
                     dbc.NavLink("1 - Data Tables & Database Integration", href="#main-results-table", className="sidebar-link", external_link=True),
                     dbc.NavLink("2 - Gene & Metabolic Pathway Analysis", href="#gene-metabolic-analysis", className="sidebar-link", external_link=True),
@@ -251,20 +253,25 @@ def get_features_layout():
                 "If needed, you can also load an example dataset to test the analysis functionality. This allows you to familiarize yourself with the tool before uploading your own data",
                 className="help-text"
             ),
-            # Visualizing Results Section
-            html.H2("Visualizing Results", className="help-section-title"),
-            html.P(
-                "The 'Results' section provides a comprehensive suite of interactive tools and visualizations to help you analyze your data effectively. "
-                "You can explore key features, such as pathways, gene activity, compound interactions, and clustering patterns. "
-                "Each result is presented in an intuitive format, including interactive charts, heatmaps, scatter plots, and hierarchical dendrograms. "
-                "These visualizations allow you to identify trends, correlations, and insights across your dataset, facilitating a deeper understanding of biological relationships",
-                className="help-text"
+            html.Div(
+                id="visualizing-results",
+                children=[
+                    html.H2("Visualizing Results", className="help-section-title"),
+                    html.P(
+                        "The 'Results' section provides a comprehensive suite of interactive tools and visualizations to help you analyze your data effectively. "
+                        "You can explore key features, such as pathways, gene activity, compound interactions, and clustering patterns. "
+                        "Each result is presented in an intuitive format, including interactive charts, heatmaps, scatter plots, and hierarchical dendrograms. "
+                        "These visualizations allow you to identify trends, correlations, and insights across your dataset, facilitating a deeper understanding of biological relationships",
+                        className="help-text"
+                    ),
+                    html.P(
+                        "Use filters and dropdowns to focus on specific data points, customize views, and prioritize the most relevant results. "
+                        "The visual outputs are designed to be user-friendly, enabling you to navigate complex data",
+                        className="help-text"
+                    ),
+                ]
             ),
-            html.P(
-                "Use filters and dropdowns to focus on specific data points, customize views, and prioritize the most relevant results. "
-                "The visual outputs are designed to be user-friendly, enabling you to navigate complex data",
-                className="help-text"
-            ),
+
             # Navigation Section
             html.H2("Navigation", className="help-section-title"),
             html.P(
@@ -272,6 +279,7 @@ def get_features_layout():
                 className="help-text"
             ),
             html.Div(
+                id="navigation-section",
                 className="image-container",
                 children=[
                     html.Img(
@@ -996,11 +1004,32 @@ html.Div(
                                 "By examining this chart, you can identify samples with the most interactions, providing valuable insights into their significance in the analysis",
                                 className="analysis-insights"
                             ),
+                            # Image illustrating the Sample-Compound Interaction Rankings
+                            html.Img(
+                                src="./assets/images/documentation/sample-rank-compounds-chart.png",
+                                alt="Ranking of Samples by Compound Interaction",
+                                className="doc-image"
+                            ),
+                            # Legend explaining the numbered elements in the image
+                            html.Div(
+                                className="doc-legend",
+                                children=[
+                                    html.P([
+                                        html.Strong("1 - Compound Count Range Filter: "),
+                                        "Allows adjusting the range of compound interactions considered in the ranking, focusing the chart on a subset of samples with either higher or lower interaction counts."
+                                    ]),
+                                    html.P([
+                                        html.Strong("2 - Bar Chart of Sample Rankings: "),
+                                        "Displays each sample on the x-axis, with the height of each bar indicating how many compounds interact with that sample."
+                                    ]),
+                                ]
+                            ),
                         ]
                     ),
                     html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
                 ]
             ),
+
 
             # Section 10: Ranking of Compounds by Sample Interaction
             html.Div(
@@ -1019,11 +1048,32 @@ html.Div(
                                 "Use this chart to focus on compounds with the most interactions, which can help prioritize targets for further investigation",
                                 className="analysis-insights"
                             ),
+                            # Image illustrating the Compound-Sample Interaction Rankings
+                            html.Img(
+                                src="./assets/images/documentation/compound-rank-chart.png",
+                                alt="Ranking of Compounds by Sample Interaction",
+                                className="doc-image"
+                            ),
+                            # Legend explaining the numbered elements in the image
+                            html.Div(
+                                className="doc-legend",
+                                children=[
+                                    html.P([
+                                        html.Strong("1 - Compound Class Filter: "),
+                                        "Allows you to select a specific compound class (e.g., 'Aromatic'), narrowing the chart to only those compounds belonging to that category."
+                                    ]),
+                                    html.P([
+                                        html.Strong("2 - Bar Chart of Compound Rankings: "),
+                                        "Displays each compound on the x-axis, ordered by the number of samples it interacts with, helping to identify the most impactful compounds."
+                                    ]),
+                                ]
+                            ),
                         ]
                     ),
                     html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
                 ]
             ),
+
 
             # Section 11: Ranking of Compounds by Gene Interaction
             html.Div(
@@ -1035,18 +1085,39 @@ html.Div(
                         children=[
                             html.H5("Compound-Gene Interaction Rankings", className="analysis-title"),
                             html.P(
-                                "This ranking chart identifies compounds with associations with genes, revealing key genetic activity",
+                                "This ranking chart identifies compounds with associations to genes, revealing key genetic activity",
                                 className="analysis-description"
                             ),
                             html.P(
                                 "This visualization is useful to prioritize compounds with significant genetic interactions, aiding in targeted research and analysis",
                                 className="analysis-insights"
                             ),
+                            # Image illustrating the Compound-Gene Interaction Rankings
+                            html.Img(
+                                src="./assets/images/documentation/compound-rank-gene-chart.png",
+                                alt="Ranking of Compounds by Gene Interaction",
+                                className="doc-image"
+                            ),
+                            # Legend explaining the numbered elements in the image
+                            html.Div(
+                                className="doc-legend",
+                                children=[
+                                    html.P([
+                                        html.Strong("1 - Compound Class Filter: "),
+                                        "Allows you to select specific compound class of interest, narrowing the chart to genes that interact with those compounds."
+                                    ]),
+                                    html.P([
+                                        html.Strong("2 - Bar Chart of Compound Rankings: "),
+                                        "Displays each compound on the x-axis, ordered by how many gene interactions it has, highlighting compounds most frequently associated with genetic activity."
+                                    ]),
+                                ]
+                            ),
                         ]
                     ),
                     html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
                 ]
             ),
+
 
             # Section 5: Patterns and Interactions with Heatmaps
             html.Div(
@@ -1075,11 +1146,32 @@ html.Div(
                                 "Analyze this heatmap to discover hotspots of compound activity linked to reference agencies",
                                 className="analysis-insights"
                             ),
+                            # Image illustrating the Heatmap of Samples vs Reference AG
+                            html.Img(
+                                src="./assets/images/documentation/sample-reference-heatmap.png",
+                                alt="Sample-Reference Agency Heatmap",
+                                className="doc-image"
+                            ),
+                            # Legend explaining the numbered elements in the image
+                            html.Div(
+                                className="doc-legend",
+                                children=[
+                                    html.P([
+                                        html.Strong("1 - Reference Agencies: "),
+                                        "Listed along the vertical axis (e.g., ATSDR, CONAMA, EPA, etc.), indicating the regulatory bodies or guidelines referenced."
+                                    ]),
+                                    html.P([
+                                        html.Strong("2 - Color Scale (Compound Count): "),
+                                        "Represents the number of compounds associated with each sample-agency pair. Darker or more intense colors typically indicate higher counts."
+                                    ]),
+                                ]
+                            ),
                         ]
                     ),
                     html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
                 ]
             ),
+
 
             # Section 16: Heatmap of Genes vs Samples
             html.Div(
@@ -1091,7 +1183,7 @@ html.Div(
                         children=[
                             html.H5("Gene-Sample Association Heatmap", className="analysis-title"),
                             html.P(
-                                "This heatmap illustrates the relationship between genes, pathways and samples, providing insights into unique relationships",
+                                "This heatmap illustrates the relationship between genes, pathways, and samples, providing insights into unique relationships",
                                 className="analysis-description"
                             ),
                             html.P(
@@ -1099,11 +1191,40 @@ html.Div(
                                 className="analysis-insights"
                             ),
                             hadeg_alert(),  # Alert maintained as requested
+                            # Image illustrating the Gene-Sample Heatmap
+                            html.Img(
+                                src="./assets/images/documentation/gene-sample-heatmap.png",
+                                alt="Gene-Sample Heatmap",
+                                className="doc-image"
+                            ),
+                            # Legend explaining the numbered elements in the image
+                            html.Div(
+                                className="doc-legend",
+                                children=[
+                                    html.P([
+                                        html.Strong("1 - Filter by Compound Pathway: "),
+                                        "Allows you to select one or more compound pathways (e.g., 'Alkanes'), refining the heatmap to focus on specific metabolic routes."
+                                    ]),
+                                    html.P([
+                                        html.Strong("2 - Filter by Pathway: "),
+                                        "Lets you narrow down the visualization to particular pathways (e.g., 'F_firmicutes_pathway'), further customizing the heatmap content."
+                                    ]),
+                                    html.P([
+                                        html.Strong("3 - Heatmap of Ortholog Counts by Sample: "),
+                                        "Each cell represents the gene or ortholog count in a given sample, enabling you to spot patterns or hotspots of gene presence."
+                                    ]),
+                                    html.P([
+                                        html.Strong("4 - Color Scale (KO Count): "),
+                                        "Indicates the magnitude of ortholog counts. Darker or more intense colors typically higher counts of genes or orthologs."
+                                    ]),
+                                ]
+                            ),
                         ]
                     ),
                     html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
                 ]
             ),
+
 
             # Section 17: Heatmap of Pathways vs Compound Pathways
             html.Div(
@@ -1122,12 +1243,37 @@ html.Div(
                                 "Use this heatmap to explore how pathways and compound pathways are interconnected for each sample",
                                 className="analysis-insights"
                             ),
-                            hadeg_alert(),  # Alert maintained as requested
+                            hadeg_alert(),  # Maintains the HADEG alert
+                            # Image illustrating the Pathway-Compound Heatmap
+                            html.Img(
+                                src="./assets/images/documentation/pathway-heatmap.png",
+                                alt="Pathway vs Compound Pathway Heatmap",
+                                className="doc-image"
+                            ),
+                            # Legend explaining the numbered elements in the image
+                            html.Div(
+                                className="doc-legend",
+                                children=[
+                                    html.P([
+                                        html.Strong("1 - Sample Filter: "),
+                                        "Allows you to choose which sample to display, focusing the heatmap on a specific organism or dataset (e.g., Acinetobacter Baumannii - acb)."
+                                    ]),
+                                    html.P([
+                                        html.Strong("2 - Metabolic Pathways: "),
+                                        "Each row or cluster in the heatmap corresponds to a different metabolic pathway, illustrating how it intersects with various compound pathways."
+                                    ]),
+                                    html.P([
+                                        html.Strong("3 - Compound Pathways: "),
+                                        "Displayed as columns (e.g., Alkanes, Aromatics), showing how each metabolic subpathway relates to a specific compound pathway. The color intensity indicates the degree of gene activity or ortholog presence."
+                                    ]),
+                                ]
+                            ),
                         ]
                     ),
                     html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
                 ]
             ),
+
 
             # Section 6: Intersection and Group Exploration
             html.Div(
@@ -1156,11 +1302,36 @@ html.Div(
                                 "Use this visualization to detect clusters of samples with similar compound profiles, supporting targeted compound or sample research",
                                 className="analysis-insights"
                             ),
+                            # Image illustrating the Sample Groups by Compound Class
+                            html.Img(
+                                src="./assets/images/documentation/sample-groups-chart.png",
+                                alt="Sample Grouping by Compound Class Pattern",
+                                className="doc-image"
+                            ),
+                            # Legend explaining the numbered elements in the image
+                            html.Div(
+                                className="doc-legend",
+                                children=[
+                                    html.P([
+                                        html.Strong("1 - Compound Class Filter: "),
+                                        "Enables the selection of a specific compound class (e.g., 'Aliphatic'), focusing the visualization on that category."
+                                    ]),
+                                    html.P([
+                                        html.Strong("2 - Subgroups per Compound Class: "),
+                                        "Divides the selected compound class into distinct subgroups (e.g., 'Aliphatic - Group 1', 'Aliphatic - Group 2'), ensuring all compounds within that class are represented."
+                                    ]),
+                                    html.P([
+                                        html.Strong("3 - Compound Distribution by Group: "),
+                                        "Displays the individual compounds or samples within each subgroup, revealing how they cluster according to their chemical composition or interaction patterns."
+                                    ]),
+                                ]
+                            ),
                         ]
                     ),
                     html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
                 ]
             ),
+
 
             # Section 21: Sample UpSet Plot
             html.Div(
@@ -1179,11 +1350,36 @@ html.Div(
                                 "By analyzing this plot, you can identify shared and unique orthologs between samples, highlighting potential relationships and prioritize samples with shared or unique genes for further exploration",
                                 className="analysis-insights"
                             ),
+                            # Image illustrating the Sample UpSet Plot
+                            html.Img(
+                                src="./assets/images/documentation/sample-upset-plot.png",
+                                alt="Sample UpSet Plot",
+                                className="doc-image"
+                            ),
+                            # Legend explaining the numbered elements in the image
+                            html.Div(
+                                className="doc-legend",
+                                children=[
+                                    html.P([
+                                        html.Strong("1 - Selected Samples: "),
+                                        "Indicates which samples are included in the intersection analysis (e.g., Aspergillus nidulans - ani, Cryptococcus gattii - cgi, etc.)."
+                                    ]),
+                                    html.P([
+                                        html.Strong("2 - Intersection Size Bar Chart: "),
+                                        "Displays the number of orthologs (KOs) present in each intersection or combination of samples. Taller bars represent larger overlaps."
+                                    ]),
+                                    html.P([
+                                        html.Strong("3 - Intersection Matrix: "),
+                                        "Each row corresponds to a sample, and each column of dots shows which samples participate in a particular intersection. Filled (black) dots represent membership in that intersection set."
+                                    ]),
+                                ]
+                            ),
                         ]
                     ),
                     html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
                 ]
             ),
+
 
             # Section 20: Sample Clustering Dendrogram
             html.Div(
@@ -1202,13 +1398,34 @@ html.Div(
                                 "By analyzing this clustering, you can identify patterns of similarity or divergence between samples",
                                 className="analysis-insights"
                             ),
+                            # Image illustrating the Clustering Dendrogram configuration
+                            html.Img(
+                                src="./assets/images/documentation/sample-clustering-dendrogram.png",
+                                alt="Sample Clustering Dendrogram Configuration",
+                                className="doc-image"
+                            ),
+                            # Legend explaining the numbered elements in the image
+                            html.Div(
+                                className="doc-legend",
+                                children=[
+                                    html.P([
+                                        html.Strong("1 - Select Distance Metric: "),
+                                        "Enables you to choose the distance measure (e.g., Euclidean, Manhattan) used to compute similarities between samples."
+                                    ]),
+                                    html.P([
+                                        html.Strong("2 - Select Clustering Method: "),
+                                        "Lets you specify the linkage criterion (e.g., Average, Complete) applied in the hierarchical clustering process."
+                                    ]),
+                                ]
+                            ),
                         ]
                     ),
                     html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
                 ]
             ),
 
-                            html.Div([
+
+            html.Div([
             html.H3("7 - Toxicity Predictions", className="section-title"),
             html.P(
                 "Visualize and understand toxicity predictions",
@@ -1230,15 +1447,45 @@ html.Div(
                                 className="analysis-description"
                             ),
                             html.P(
-                                "Explore toxicity predictions to identify high-risk compounds or category, supporting risk assessment and decision-making",
+                                "Explore toxicity predictions to identify high-risk compounds or categories, supporting risk assessment and decision-making",
                                 className="analysis-insights"
                             ),
-                            toxcsm_alert(),  # Alert maintained as requested
+                            toxcsm_alert(),  # Maintains the ToxCSM alert
+                            # Image illustrating the Toxicity Prediction Heatmap
+                            html.Img(
+                                src="./assets/images/documentation/toxicity-heatmap-faceted.png",
+                                alt="Toxicity Prediction Heatmap",
+                                className="doc-image"
+                            ),
+                            # Legend explaining the newly numbered elements in the image
+                            html.Div(
+                                className="doc-legend",
+                                children=[
+                                    html.P([
+                                        html.Strong("1 - Toxicity Categories: "),
+                                        "Represent the main columns (e.g., Nuclear Response, Stress Response, Genomic, Environmental, Organic), each focusing on a specific toxicity dimension."
+                                    ]),
+                                    html.P([
+                                        html.Strong("2 - Compound Names: "),
+                                        "Listed along the left axis, indicating which compounds correspond to each row in the heatmap."
+                                    ]),
+                                    html.P([
+                                        html.Strong("3 - Color Scale (Toxicity Score): "),
+                                        "Indicates the intensity of toxicity for each compound-category pair. Darker or more saturated colors imply higher toxicity risk."
+                                    ]),
+                                    html.P([
+                                        html.Strong("4 - Subcategories: "),
+                                        "Each main category may be further divided into sub-categories, offering a more detailed view of toxicity predictions."
+                                    ]),
+                                ]
+                            ),
                         ]
                     ),
                     html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
                 ]
             ),
+
+
         ],
         width=9
     )
@@ -1250,10 +1497,3 @@ html.Div(
         className="features-container"
     )
     return layout
-
-# For local testing
-if __name__ == "__main__":
-    import dash
-    app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
-    app.layout = get_features_layout()
-    app.run_server(debug=True)
