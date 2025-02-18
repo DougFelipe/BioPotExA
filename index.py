@@ -48,6 +48,7 @@ import callbacks.P15_sample_clustering_callbacks
 import callbacks.P16_sample_upset_callbacks
 import callbacks.P17_gene_compound_network_callbacks
 import callbacks.p18_heatmap_faceted_callbacks
+from callbacks.download_tables import download_merged_csv  # Callback for downloading merged data
 
 from callbacks.callbacks import handle_progress  # Callback for progress handling
 

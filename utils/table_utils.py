@@ -1,17 +1,24 @@
+# Import the pandas library for handling tabular data.
+import pandas as pd
+
+# Import the Dash AG Grid component for rendering interactive tables in Dash applications.
 import dash_ag_grid as dag
 
+# -------------------------------
+# Function: create_table_from_dataframe
+# -------------------------------
+import dash_bootstrap_components as dbc
+import dash_ag_grid as dag
 def create_table_from_dataframe(df, table_id, hidden_columns=None):
-    # Define column definitions
-    column_defs = [{'field': col} for col in df.columns]
+    column_defs = [{"field": col} for col in df.columns]
 
-    # Hide specific columns if requested
+    # Hide columns if needed
     if hidden_columns:
-        for col_def in column_defs:
-            if col_def['field'] in hidden_columns:
-                col_def['hide'] = True
+        for c in column_defs:
+            if c["field"] in hidden_columns:
+                c["hide"] = True
 
-    # Create and configure the AG Grid component
-    table = dag.AgGrid(
+    return dag.AgGrid(
         id=table_id,
         rowData=df.to_dict("records"),
         columnDefs=column_defs,
@@ -21,18 +28,13 @@ def create_table_from_dataframe(df, table_id, hidden_columns=None):
             "filter": True,
             "floatingFilter": True
         },
-        # Instead of gridOptions, use dashGridOptions
         dashGridOptions={
-            "pagination": True,         # Enables pagination
-            "paginationPageSize": 10,   # Number of rows per page
-            "enableRangeSelection": True,  # Allows cell-range selection
+            "pagination": True,
+            "paginationPageSize": 10,
+            "enableRangeSelection": True
         },
-        # To enable CSV export, you can define csvExportParams
         csvExportParams={
-            "fileName": "exported_data.csv"  # The default filename for downloaded CSV
+            "fileName": "biorempp_export.csv"
         },
-        # Optional: enterprise features
-        enableEnterpriseModules=False,  # or True if you have a license/enterprise usage
+        style={"height": "400px", "width": "100%"}
     )
-
-    return table

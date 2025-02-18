@@ -1,7 +1,7 @@
 from components.alerts import hadeg_alert, toxcsm_alert
 
 from components.navbar import navbar  # Importe o navbar definido acima
-from dash import html
+from dash import html, dcc
 import dash_bootstrap_components as dbc
 
 from layouts.T1_biorempp import get_biorempp_results_table_layout
@@ -55,31 +55,60 @@ def get_results_layout():
 
 
         # Seção 1: Main Results Table
-        html.Div(id="main-results-table", className="section"),  # ID para ancoragem no navbar
-        html.Div([
-            html.H5("BioRemPP Results Table", className="analysis-title"),
+ html.Div(id="main-results-table", className="section"),
+
+    html.Div(
+        className="analysis-header",
+        children=[
+            dbc.Row(
+                [
+                    dbc.Col(
+                        html.H5("BioRemPP Results Table", className="analysis-title"),
+                        width="auto"
+                    ),
+                    dbc.Col(
+                        html.Button(
+                            "Download CSV",
+                            id="download-csv-btn",
+                            n_clicks=0,
+                            className="btn btn-primary"
+                        ),
+                        width="auto"
+                    ),
+                ],
+                align="center",
+                justify="between"
+            ),
             html.P(
-                "This table presents the processed data merged with the BioRemPP database, offering a comprehensive overview of the input data and its matched records",
+                "This table presents the processed data merged with the BioRemPP database, "
+                "offering a comprehensive overview of the input data and its matched records",
                 className="analysis-description"
             ),
             html.P(
-                "The merged table reveals how well the input data aligns with the main database, providing insights into the completeness and relevance of the data",
+                "The merged table reveals how well the input data aligns with the main database, "
+                "providing insights into the completeness and relevance of the data",
                 className="analysis-insights"
             ),
             dbc.Accordion(
                 [
                     dbc.AccordionItem(
-                        html.Div(get_biorempp_results_table_layout(), className="chart-container"),
+                        html.Div(
+                            get_biorempp_results_table_layout(),
+                            className="chart-container"
+                        ),
                         title="Results Table"
                     )
                 ],
                 start_collapsed=True,
                 always_open=False
             ),
-        ], className="analysis-header"),
-        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
 
+            # The dcc.Download component for returning CSV to user
+            dcc.Download(id="download-merged-csv"),
+        ]
+    ),
 
+    html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
 
 
 
