@@ -122,6 +122,116 @@ def get_features_layout():
                 className="features-section"
             ),
 
+            html.Div(
+        className="help-page",
+        children=[
+            # Title and Introduction Section
+            html.P(
+                "Here, you will find detailed instructions on how to use this application, "
+                "as well as descriptions of the key sections and tables within the interface",
+                className="help-intro"
+            ),
+            # Uploading Your Data Section
+            html.H2("Uploading Your Data", className="help-section-title"),
+            html.P(
+                "To analyze your data effectively, follow the step-by-step guide below to upload, process, and explore your results",
+                className="help-text"
+            ),
+            html.Ul(
+                children=[
+                    html.Li([
+                        html.Strong("Step 1 - Upload: "),
+                        "Upload your data file in the specified format (.txt) by dragging and dropping the file, or selecting it directly. ",
+                        "Make sure the file follows the expected format to avoid processing issues.",
+                        html.Br(),
+                        html.P("Note: Several tools are available to obtain K.O. identifiers from various types of data, such as genomic, DNA, or amino acid sequences. Some of these tools include:"),
+                        html.Ul([
+                            html.Li(html.A("BLASTKOALA", href="https://www.kegg.jp/blastkoala/", target="_blank", title="Visit BLASTKOALA tool")),
+                            html.Li(html.A("GhostKOALA", href="https://www.kegg.jp/ghostkoala/", target="_blank", title="Visit GhostKOALA tool")),
+                            html.Li(html.A("Prokka", href="https://github.com/tseemann/prokka", target="_blank", title="Visit Prokka on GitHub")),
+                            html.Li(html.A("eggNOG-mapper", href="http://eggnog-mapper.embl.de/", target="_blank", title="Visit eggNOG-mapper tool")),
+                            html.Li(html.A("KAAS", href="https://www.genome.jp/tools/kaas/", target="_blank", title="Visit KAAS tool")),
+                            html.Li(html.A("DRAM", href="https://github.com/WrightonLabCSU/DRAM", target="_blank", title="Visit DRAM tool")),
+                            html.Li(html.A("MEGAN", href="https://ab.inf.uni-tuebingen.de/software/megan6/", target="_blank", title="Visit MEGAN tool")),
+                            html.Li(html.A("DIAMOND", href="https://github.com/bbuchfink/diamond", target="_blank", title="Visit DIAMOND on GitHub")),
+                            html.Li(html.A("KEGG Mapper", href="https://www.genome.jp/kegg/mapper/", target="_blank", title="Visit KEGG Mapper tool")),
+                            html.Li(html.A("PanPhlAn", href="https://github.com/SegataLab/panphlan", target="_blank", title="Visit PanPhlAn on GitHub"))
+                        ])
+                    ]),
+                    html.Br(),
+                    html.Li([
+                        html.Strong("Step 2 - Process: "),
+                        "Once the file is uploaded, click the 'Submit' button to process your data. ",
+                        "During this step, your input data is merged with the BioRemPP databases to generate results tables and graphs"
+                    ]),
+                    html.Br(),
+                    html.Li([
+                        html.Strong("Step 3 - Analyze: "),
+                        "After processing, results will be available for analysis. ",
+                        "Explore the tables and visualizations to identify patterns, trends, and insights within your dataset"
+                    ]),
+                ],
+                className="step-list"
+            ),
+            html.P(
+                "If needed, you can also load an example dataset to test the analysis functionality. This allows you to familiarize yourself with the tool before uploading your own data",
+                className="help-text"
+            ),
+            # Visualizing Results Section
+            html.H2("Visualizing Results", className="help-section-title"),
+            html.P(
+                "The 'Results' section provides a comprehensive suite of interactive tools and visualizations to help you analyze your data effectively. "
+                "You can explore key features, such as pathways, gene activity, compound interactions, and clustering patterns. "
+                "Each result is presented in an intuitive format, including interactive charts, heatmaps, scatter plots, and hierarchical dendrograms. "
+                "These visualizations allow you to identify trends, correlations, and insights across your dataset, facilitating a deeper understanding of biological relationships",
+                className="help-text"
+            ),
+            html.P(
+                "Use filters and dropdowns to focus on specific data points, customize views, and prioritize the most relevant results. "
+                "The visual outputs are designed to be user-friendly, enabling you to navigate complex data",
+                className="help-text"
+            ),
+            # Navigation Section
+            html.H2("Navigation", className="help-section-title"),
+            html.P(
+                "Below is a detailed explanation of the main components of the application, corresponding to the numbered areas in the image below",
+                className="help-text"
+            ),
+            html.Div(
+                className="image-container",
+                children=[
+                    html.Img(
+                        src="./assets/exemple1.png",
+                        alt="Example Layout of Data Analysis Page",
+                        className="example-image"
+                    ),
+                    html.Div(
+                        className="doc-legend",  # Classe para manter o padrão das legendas recentes
+                        children=[
+                            html.P([
+                                html.Strong("1 - Navigation Menu: "),
+                                "This section displays the navigation menu. It allows users to access different sections quickly."
+                            ]),
+                            html.P([
+                                html.Strong("2 - Results Section: "),
+                                "This section serves as the starting point for presenting results. It displays various analyses and visualizations generated by the application."
+                            ]),
+                            html.P([
+                                html.Strong("3 - Analysis Details: "),
+                                "Each analysis includes three main parts: the title of the analysis, a brief description of the result, and an explanation of what is expected from that result."
+                            ]),
+                            html.P([
+                                html.Strong("4 - Dropdown Component: "),
+                                "Detailed results are displayed within a dropdown component. Clicking it will reveal specific content for viewing."
+                            ]),
+                        ]
+                    ),
+
+                ]
+            ),
+        ]
+    ),
+
             # Expected Results Section
             html.Div(                
                 children=[
