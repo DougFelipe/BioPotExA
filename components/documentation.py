@@ -189,8 +189,8 @@ def get_features_layout():
                             className="doc-legend",
                             children=[
                                 html.P([
-                                    html.Strong("1 - Drag & Drop: "),
-                                    "Allows you to quickly select the file from your local machine by dragging and dropping."
+                                    html.Strong("1 - Drag & Drop or Select a File: "),
+                                    "Allows you to quickly upload the file from your local machine by dragging and dropping."
                                 ]),
                                 html.P([
                                     html.Strong("2 - Load Example Data: "),
@@ -337,47 +337,45 @@ html.Div(
                                     html.P("Provide an overview of the data integrated into the databases", className="section-objective"),
                                 ]
                             ),
-html.Div(
-    className="analysis-header",
-    children=[
-        html.H5("BioRemPP Results Table", className="analysis-title"),
-        html.P(
-            "This table presents the processed data merged with the BioRemPP database, offering a comprehensive overview of the input data and its matched records",
-            className="analysis-description"
-        ),
-        html.P(
-            "The merged table reveals how well the input data aligns with the main database, providing insights into the completeness and relevance of the data",
-            className="analysis-insights"
-        ),
-        # Image of the Results Table
-        html.Img(
-            src="./assets/images/documentation/main-results-table.png",
-            alt="Main Results Table",
-            className="doc-image"
-        ),
-        # Short legend explaining numbered elements in the image (title + description)
-        html.Div(
-            className="doc-legend",
-            children=[
-                html.P([
-                    html.Strong("1 - Table Result: "),
-                    "Represents the result displayed upon clicking a row or expanding a specific record."
-                ]),
-                html.P([
-                    html.Strong("2 - Database Features: "),
-                    "Highlights the features (columns) retrieved from the BioRemPP database."
-                ]),
-                html.P([
-                    html.Strong("3 - Advanced Filtering: "),
-                    "Indicates advanced filtering options for narrowing down table results."
-                ]),
-            ]
-        ),
-        html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
-    ]
-),
-
-
+                    html.Div(
+                        className="analysis-header",
+                        children=[
+                            html.H5("BioRemPP Results Table", className="analysis-title"),
+                            html.P(
+                                "This table presents the processed data merged with the BioRemPP database, offering a comprehensive overview of the input data and its matched records",
+                                className="analysis-description"
+                            ),
+                            html.P(
+                                "The merged table reveals how well the input data aligns with the main database, providing insights into the completeness and relevance of the data",
+                                className="analysis-insights"
+                            ),
+                            # Image of the Results Table
+                            html.Img(
+                                src="./assets/images/documentation/main-results-table.png",
+                                alt="Main Results Table",
+                                className="doc-image"
+                            ),
+                            # Short legend explaining numbered elements in the image (title + description)
+                            html.Div(
+                                className="doc-legend",
+                                children=[
+                                    html.P([
+                                        html.Strong("1 - Table Result: "),
+                                        "Represents the result displayed upon clicking a row or expanding a specific record."
+                                    ]),
+                                    html.P([
+                                        html.Strong("2 - Database Features: "),
+                                        "Highlights the features (columns) retrieved from the BioRemPP database."
+                                    ]),
+                                    html.P([
+                                        html.Strong("3 - Advanced Filtering: "),
+                                        "Indicates advanced filtering options for narrowing down table results."
+                                    ]),
+                                ]
+                            ),
+                            html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
+                        ]
+                    ),
                         ]
                     ),
 
@@ -398,7 +396,32 @@ html.Div(
                                         "The table helps identify significant matches with HADEG, enhancing the understanding of potential functional and structural associations",
                                         className="analysis-insights"
                                     ),
+                                    # Alerta específico (permanece como já definido)
                                     hadeg_alert(),
+                                    # Nova imagem do HADEG Results Table
+                                    html.Img(
+                                        src="./assets/images/documentation/hadeg-results-table.png",
+                                        alt="HADEG Results Table",
+                                        className="doc-image"
+                                    ),
+                                    # Mesma legenda utilizada no Main Results Table
+                                    html.Div(
+                                        className="doc-legend",
+                                        children=[
+                                            html.P([
+                                                html.Strong("1 - Table Result: "),
+                                                "Represents the result displayed upon clicking a row or expanding a specific record."
+                                            ]),
+                                            html.P([
+                                                html.Strong("2 - Database Features: "),
+                                                "Highlights the features (columns) retrieved from the HADEG database."
+                                            ]),
+                                            html.P([
+                                                html.Strong("3 - Advanced Filtering: "),
+                                                "Indicates advanced filtering options for narrowing down table results."
+                                            ]),
+                                        ]
+                                    ),
                                     html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
                                 ]
                             ),
@@ -422,7 +445,32 @@ html.Div(
                                         "By analyzing this table, you can assess the toxicity potential and prioritize compounds for further investigation",
                                         className="analysis-insights"
                                     ),
+                                    # Alerta específico (permanece como já definido)
                                     toxcsm_alert(),
+                                    # Nova imagem do ToxCSM Results Table
+                                    html.Img(
+                                        src="./assets/images/documentation/toxcsm-results-table.png",
+                                        alt="ToxCSM Results Table",
+                                        className="doc-image"
+                                    ),
+                                    # Mesma legenda utilizada no Main Results Table
+                                    html.Div(
+                                        className="doc-legend",
+                                        children=[
+                                            html.P([
+                                                html.Strong("1 - Table Result: "),
+                                                "Represents the result displayed upon clicking a row or expanding a specific record."
+                                            ]),
+                                            html.P([
+                                                html.Strong("2 - Database Features: "),
+                                                "Highlights the features (columns) retrieved from the ToxCSM database."
+                                            ]),
+                                            html.P([
+                                                html.Strong("3 - Advanced Filtering: "),
+                                                "Indicates advanced filtering options for narrowing down table results."
+                                            ]),
+                                        ]
+                                    ),
                                     html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
                                 ]
                             ),
@@ -458,11 +506,40 @@ html.Div(
                                 "By analyzing this chart, you can identify which samples have a higher number of unique gene associations, offering insights into potential hotspots of genetic activity",
                                 className="analysis-insights"
                             ),
+                            # Image illustrating the chart
+                            html.Img(
+                                src="./assets/images/documentation/gene-count-chart.png",
+                                alt="Gene Count Chart",
+                                className="doc-image"
+                            ),
+                            # Legend explaining the numbered elements in the image
+                            html.Div(
+                                className="doc-legend",
+                                children=[
+                                    html.P([
+                                        html.Strong("1 - Chart Header: "),
+                                        "Displays the title and a concise overview of the chart’s purpose."
+                                    ]),
+                                    html.P([
+                                        html.Strong("2 - Range Filter: "),
+                                        "Allows filtering of the samples by gene count, focusing the analysis on a specific range."
+                                    ]),
+                                    html.P([
+                                        html.Strong("3 - Interactive Chart Tools: "),
+                                        "Provide functionalities for downloading the chart, zooming in/out, resetting axes, and selecting specific data regions."
+                                    ]),
+                                    html.P([
+                                        html.Strong("4 - X-Axis: "),
+                                        "Indicates the unique gene counts associated with each sample, facilitating quick comparisons across different samples."
+                                    ]),
+                                ]
+                            ),
                         ]
                     ),
                     html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
                 ]
             ),
+
 
             # Section 5: Violin Boxplot (Gene Distribution)
             html.Div(
@@ -481,11 +558,32 @@ html.Div(
                                 "Identifies trends and outliers in gene distribution, providing a comprehensive view of genetic activity",
                                 className="analysis-insights"
                             ),
+                            # Image illustrating the Violin Boxplot
+                            html.Img(
+                                src="./assets/images/documentation/violin-boxplot.png",
+                                alt="Violin Boxplot for Gene Distribution",
+                                className="doc-image"
+                            ),
+                            # Legend explaining the numbered elements in the image
+                            html.Div(
+                                className="doc-legend",
+                                children=[
+                                    html.P([
+                                        html.Strong("1 - Sample Filter: "),
+                                        "Enables selection or filtering of specific samples, adjusting which data are displayed in the violin boxplot."
+                                    ]),
+                                    html.P([
+                                        html.Strong("2 - Distribution Statistics: "),
+                                        "Represents the violin and boxplot overlay, showing the spread of gene counts, including min, max, median, quartiles, and potential outliers"
+                                    ]),
+                                ]
+                            ),
                         ]
                     ),
                     html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
                 ]
             ),
+
 
             # Section 6: Pathway KO Bar Chart
             html.Div(
@@ -504,11 +602,32 @@ html.Div(
                                 "By analyzing this chart, you can gain insights into the functional diversity of pathways and identify dominant or underrepresented pathways in the dataset",
                                 className="analysis-insights"
                             ),
+                            # Image illustrating the Pathway KO Bar Chart
+                            html.Img(
+                                src="./assets/images/documentation/pathway-ko-bar-chart.png",
+                                alt="Pathway KO Bar Chart",
+                                className="doc-image"
+                            ),
+                            # Legend explaining the numbered elements in the image
+                            html.Div(
+                                className="doc-legend",
+                                children=[
+                                    html.P([
+                                        html.Strong("1 - Sample Filter: "),
+                                        "Allows you to select a specific sample (e.g., Acinetobacter Baumannii - acb), refining the chart to show only that sample’s pathway gene counts."
+                                    ]),
+                                    html.P([
+                                        html.Strong("2 - Pathway Gene Counts: "),
+                                        "Displays the number of unique genes associated with each degradation pathway for the selected sample, helping to identify the most represented pathways."
+                                    ]),
+                                ]
+                            ),
                         ]
                     ),
                     html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
                 ]
             ),
+
 
             # Section 7: Sample KO Pathway Chart
             html.Div(
@@ -527,6 +646,30 @@ html.Div(
                                 "This visualization allows you to understand how different pathways are represented within each sample, helping to identify pathway-specific trends",
                                 className="analysis-insights"
                             ),
+                            # Image illustrating the Sample KO Pathway Chart
+                            html.Img(
+                                src="./assets/images/documentation/sample-ko-pathway-chart.png",
+                                alt="Sample KO Pathway Chart",
+                                className="doc-image"
+                            ),
+                            # Legend explaining the numbered elements in the image
+                            html.Div(
+                                className="doc-legend",
+                                children=[
+                                    html.P([
+                                        html.Strong("1 - Pathway Filter: "),
+                                        "Allows the user to select a specific pathway from a dropdown, focusing the analysis on the chosen pathway."
+                                    ]),
+                                    html.P([
+                                        html.Strong("2 - Selected Pathway: "),
+                                        "Displays the pathway currently in focus (e.g., Aminobenzoate), indicating which data is shown."
+                                    ]),
+                                    html.P([
+                                        html.Strong("3 - Sample-Specific Gene Counts: "),
+                                        "Shows how many unique genes are present in each sample for the selected pathway."
+                                    ]),
+                                ]
+                            ),
                         ]
                     ),
                     html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
@@ -541,20 +684,45 @@ html.Div(
                     html.Div(
                         className="analysis-header",
                         children=[
-                            html.H5("Sample-Compound Interactions in Xenobiotics Biodegradation Pathways", className="analysis-title"),
-                            html.P(
-                                "This scatter plot shows the distribution of genes across different samples for a specific pathway",
-                                className="analysis-description"
-                            ),
-                            html.P(
-                                "By analyzing this scatter plot, you can identify patterns of genes across samples, helping to pinpoint critical samples for specific pathways",
-                                className="analysis-insights"
-                            ),
-                        ]
+                        html.H5("Sample-Compound Interactions in Xenobiotics Biodegradation Pathways", className="analysis-title"),
+                        html.P(
+                            "This scatter plot shows the distribution of genes across different samples for a specific pathway",
+                            className="analysis-description"
+                        ),
+                        html.P(
+                            "By analyzing this scatter plot, you can identify patterns of genes across samples, helping to pinpoint critical samples for specific pathways",
+                            className="analysis-insights"
+                        ),
+                        # Image illustrating the scatter plot
+                        html.Img(
+                            src="./assets/images/documentation/sample-ko-scatter.png",
+                            alt="Scatter Plot of KOs by Sample",
+                            className="doc-image"
+                        ),
+                        # Legend explaining the numbered elements in the image
+                        html.Div(
+                            className="doc-legend",
+                            children=[
+                                html.P([
+                                    html.Strong("1 - Chart Title: "),
+                                    "Provides a concise description of the scatter plot and what it represents."
+                                ]),
+                                html.P([
+                                    html.Strong("2 - Pathway Filter: "),
+                                    "Allows the user to select a specific pathway (e.g., Fluorobenzoate), focusing the plot on the KOs associated with that pathway."
+                                ]),
+                                html.P([
+                                    html.Strong("3 - Genes Distribution by Sample: "),
+                                    "Displays individual gene points across different samples, helping to identify which samples harbor genes relevant to the chosen pathway."
+                                ]),
+                            ]
+                        ),
+                    ]
                     ),
                     html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
                 ]
             ),
+
 
             # Section 3: Interactions Between Entities (Samples, Compounds, and Genes)
             html.Div(
@@ -583,11 +751,36 @@ html.Div(
                                 "Use this visualization to detect key sample-compound interactions and prioritize samples or compounds of interest",
                                 className="analysis-insights"
                             ),
+                            # Image illustrating the Sample-Compound Interaction Plot
+                            html.Img(
+                                src="./assets/images/documentation/compound-scatter-chart.png",
+                                alt="Sample-Compound Interaction Plot",
+                                className="doc-image"
+                            ),
+                            # Legend explaining the numbered elements in the image
+                            html.Div(
+                                className="doc-legend",
+                                children=[
+                                    html.P([
+                                        html.Strong("1 - Plot Title: "),
+                                        "Displays the overall name of the chart (e.g., 'Sample-Compound Interaction Plot')."
+                                    ]),
+                                    html.P([
+                                        html.Strong("2 - Compound Class Filter: "),
+                                        "Allows selection of a specific compound class (e.g., 'Metal'), focusing the scatter plot on compounds within that category."
+                                    ]),
+                                    html.P([
+                                        html.Strong("3 - Scatter Plot of Samples vs Compounds: "),
+                                        "Shows each compound’s presence or interaction across different samples, highlighting potential key relationships or high-priority samples."
+                                    ]),
+                                ]
+                            ),
                         ]
                     ),
                     html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
                 ]
             ),
+
 
             # Section 12: Scatter Plot of Genes vs Compounds
             html.Div(
