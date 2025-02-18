@@ -59,6 +59,7 @@ def get_features_layout():
                 [
                     dbc.NavLink("Platform Overview", href="#platform-overview", className="sidebar-link-highlight", external_link=True),
                     dbc.NavLink("BioRemPP Database", href="#biorempp-database", className="sidebar-link-highlight", external_link=True),
+                    dbc.NavLink("Uploading Your Data", href="#upload-data-section", className="sidebar-link-highlight", external_link=True),                  
                     dbc.NavLink("Expected Results", href="#expected-results-section", className="sidebar-link-highlight", external_link=True),
                     dbc.NavLink("1 - Data Tables & Database Integration", href="#main-results-table", className="sidebar-link", external_link=True),
                     dbc.NavLink("2 - Gene & Metabolic Pathway Analysis", href="#gene-metabolic-analysis", className="sidebar-link", external_link=True),
@@ -79,14 +80,6 @@ def get_features_layout():
     # Define the main content area with all sections and corresponding anchor IDs for the sidebar links
     content = dbc.Col(
         [
-            # Page Title and Introduction Section
-            html.H1("BioRemPP Features", className="features-title"),
-            html.P(
-                "Here, you will find an overview of the platform's functionalities, "
-                "tools, and insights into how it can assist in data-driven decision-making for bioremediation studies",
-                className="features-intro"
-            ),
-
             # Overview Section
             html.Div(
                 id="platform-overview",
@@ -122,7 +115,47 @@ def get_features_layout():
                 className="features-section"
             ),
 
+                    html.Div(
+                        id="biorempp-database",
+                        children=[
+                            html.H1("BioRemPP Database", className="section-title"),
+                            html.P(
+                                "The BioRemPP database encompasses comprehensive annotations across a diverse set of variables, offering detailed insights into the relationships between genes, compounds, and their roles in bioremediation processes"
+                            ),
+                            html.P("The following outlines the key database fields. A summary of the database's main components is presented below:"),
+                            html.Ul([
+                                html.Li("Variables: 8"),
+                                html.Li("KO Identifiers: 986"),
+                                html.Li("Gene Symbols: 978"),
+                                html.Li("Gene Names: 912"),
+                                html.Li("Compounds (cpd): 324"),
+                                html.Li("Compound Classes: 12"),
+                                html.Ul([
+                                    html.Li("Aliphatic, Aromatic, Chlorinated, Halogenated, Inorganic,Organometallic, Organophosphorus, Organosulfur, Polyaromatic, Sulfur-containing"),
+                                ]),
+                                html.Li([
+                                    "Reference Categories (referenceAG):",
+                                    html.Ul([
+                                        html.Li("ATSDR"),
+                                        html.Li("CONAMA"),
+                                        html.Li("EPA"),
+                                        html.Li("EPC"),
+                                        html.Li("IARC1"),
+                                        html.Li("IARC2A"),
+                                        html.Li("IARC2B"),
+                                        html.Li("PSL"),
+                                        html.Li("WFD")
+                                    ])
+                                ]),
+                                html.Li("Compound Names: 324"),
+                                html.Li("Enzyme Activities: 149"),
+                            ])
+                        ]
+                    ),
+
+
             html.Div(
+                id="upload-data-section",
         className="help-page",
         children=[
             # Title and Introduction Section
@@ -137,13 +170,53 @@ def get_features_layout():
                 "To analyze your data effectively, follow the step-by-step guide below to upload, process, and explore your results",
                 className="help-text"
             ),
-            html.Ul(
-                children=[
-                    html.Li([
+                                html.Ul(
+                                    children=[
+                                    html.Li([
                         html.Strong("Step 1 - Upload: "),
                         "Upload your data file in the specified format (.txt) by dragging and dropping the file, or selecting it directly. ",
                         "Make sure the file follows the expected format to avoid processing issues.",
+
+                        # Imagem que mostra o passo a passo de upload
+                        html.Img(
+                            src="./assets/images/documentation/upload.png",
+                            alt="Upload Steps",
+                            className="doc-image"
+                        ),
+
+                        # Legenda explicando os elementos numerados na imagem
+                        html.Div(
+                            className="doc-legend",
+                            children=[
+                                html.P([
+                                    html.Strong("1 - Drag & Drop: "),
+                                    "Allows you to quickly select the file from your local machine by dragging and dropping."
+                                ]),
+                                html.P([
+                                    html.Strong("2 - Load Example Data: "),
+                                    "Lets you automatically load a pre-formatted example dataset for testing or demonstration."
+                                ]),
+                                html.P([
+                                    html.Strong("3 - Submit: "),
+                                    "Triggers the data processing and integration with the BioRemPP database."
+                                ]),
+                                html.P([
+                                    html.Strong("4 - Feedback Message: "),
+                                    "Indicates the example dataset was successfully loaded. You can now proceed."
+                                ]),
+                                html.P([
+                                    html.Strong("5 - Progress Feedback: "),
+                                    "Indicates that the example dataset was successfully loaded. You can now proceed to the next step."
+                                ]),
+                                html.P([
+                                    html.Strong("6 - View Results: "),
+                                    "After processing, click here to explore and analyze the resulting data."
+                                ]),
+                            ]
+                        ),
+
                         html.Br(),
+
                         html.P("Note: Several tools are available to obtain K.O. identifiers from various types of data, such as genomic, DNA, or amino acid sequences. Some of these tools include:"),
                         html.Ul([
                             html.Li(html.A("BLASTKOALA", href="https://www.kegg.jp/blastkoala/", target="_blank", title="Visit BLASTKOALA tool")),
@@ -158,6 +231,7 @@ def get_features_layout():
                             html.Li(html.A("PanPhlAn", href="https://github.com/SegataLab/panphlan", target="_blank", title="Visit PanPhlAn on GitHub"))
                         ])
                     ]),
+
                     html.Br(),
                     html.Li([
                         html.Strong("Step 2 - Process: "),
@@ -236,43 +310,6 @@ def get_features_layout():
             html.Div(                
                 children=[
                     # BioRemPP Database Subsection
-                    html.Div(
-                        id="biorempp-database",
-                        children=[
-                            html.H1("BioRemPP Database", className="section-title"),
-                            html.P(
-                                "The BioRemPP database encompasses comprehensive annotations across a diverse set of variables, offering detailed insights into the relationships between genes, compounds, and their roles in bioremediation processes"
-                            ),
-                            html.P("The following outlines the key database fields. A summary of the database's main components is presented below:"),
-                            html.Ul([
-                                html.Li("Variables: 8"),
-                                html.Li("KO Identifiers: 986"),
-                                html.Li("Gene Symbols: 978"),
-                                html.Li("Gene Names: 912"),
-                                html.Li("Compounds (cpd): 324"),
-                                html.Li("Compound Classes: 12"),
-                                html.Ul([
-                                    html.Li("Aliphatic, Aromatic, Chlorinated, Halogenated, Inorganic,Organometallic, Organophosphorus, Organosulfur, Polyaromatic, Sulfur-containing"),
-                                ]),
-                                html.Li([
-                                    "Reference Categories (referenceAG):",
-                                    html.Ul([
-                                        html.Li("ATSDR"),
-                                        html.Li("CONAMA"),
-                                        html.Li("EPA"),
-                                        html.Li("EPC"),
-                                        html.Li("IARC1"),
-                                        html.Li("IARC2A"),
-                                        html.Li("IARC2B"),
-                                        html.Li("PSL"),
-                                        html.Li("WFD")
-                                    ])
-                                ]),
-                                html.Li("Compound Names: 324"),
-                                html.Li("Enzyme Activities: 149"),
-                            ])
-                        ]
-                    ),
 
 html.Div(
     id="expected-results-section",

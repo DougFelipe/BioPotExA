@@ -61,6 +61,37 @@ def get_about_layout():
                                 ],
                                 className='about-content'
                             ),
+
+                             # Card "Disclaimer for Citation" - Novo Card
+            html.Div([
+                html.H2('How to Cite', className='how-to-use'),
+                html.Hr(className="my-2"),
+            ], className='title-container'),
+
+            html.Div(
+                id='citation-disclaimer-card',
+                className='upload-process-card-style',  # Mesmo estilo do card de upload
+                children=[
+                    html.Div(
+                        className='citation-disclaimer-container',
+                        children=[
+                            html.P([
+                                html.Strong("The BioRemPP server is free and open to all users, and there is no login requirement")
+                            ], className='citation-info-text'),
+                            html.P([
+                                html.Strong("Your citation is really important to us. Please cite this paper if you publish or present results using BioRemPP analysis")
+                            ], className='citation-request-text'),
+                            html.Blockquote(
+                                """
+                                'Placeholder for Citation'
+                                """,
+                                className='citation-text'
+                            )
+                        ]
+                    )
+                ]
+            ),
+
                             
                             # Include content from Data Analysis layout
                             html.Div(
