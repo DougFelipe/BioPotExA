@@ -53,7 +53,7 @@ def get_features_layout():
     # Define the left sidebar menu with navigation links for each topic or subtopic
     sidebar = dbc.Col(
         [
-            html.H2("Navigation Menu", className="sidebar-title"),
+            html.H2("Documentation", className="sidebar-title"),
             html.Hr(),
             dbc.Nav(
                 [
@@ -792,12 +792,36 @@ html.Div(
                         children=[
                             html.H5("Gene-Compound Interactions", className="analysis-title"),
                             html.P(
-                                "This scatter plot highlights the relationships between genes and compounds, highlighting associations that may indicate important interactions",
+                                "This scatter plot highlights the relationships between genes and compounds, indicating associations that may reveal important interactions",
                                 className="analysis-description"
                             ),
                             html.P(
                                 "By analyzing this chart, you can identify gene-compound pairs with potential biological or chemical significance",
                                 className="analysis-insights"
+                            ),
+                            # Image illustrating the Gene-Compound Interaction Plot
+                            html.Img(
+                                src="./assets/images/documentation/gene-compound-scatter-chart.png",
+                                alt="Gene-Compound Interaction Plot",
+                                className="doc-image"
+                            ),
+                            # Legend explaining the numbered elements in the image
+                            html.Div(
+                                className="doc-legend",
+                                children=[
+                                    html.P([
+                                        html.Strong("1 - Filter by Compound Name: "),
+                                        "Allows you to select one or more compounds of interest, narrowing the plot to specific chemical entities."
+                                    ]),
+                                    html.P([
+                                        html.Strong("2 - Filter by Gene Symbol: "),
+                                        "Lets you choose particular genes, focusing on their potential interactions with the selected compounds."
+                                    ]),
+                                    html.P([
+                                        html.Strong("3 - Scatter Plot of Genes vs Compounds: "),
+                                        "Displays each selected compound on the x-axis and each chosen gene on the y-axis, highlighting potential interactions or correlations."
+                                    ]),
+                                ]
                             ),
                         ]
                     ),
@@ -822,11 +846,36 @@ html.Div(
                                 "By analyzing this plot, you can identify significant gene associations across different samples, aiding in the discovery of genetic hotspots",
                                 className="analysis-insights"
                             ),
+                            # Image illustrating the Sample-Gene Associations Plot
+                            html.Img(
+                                src="./assets/images/documentation/sample-gene-scatter-chart.png",
+                                alt="Sample-Gene Associations Plot",
+                                className="doc-image"
+                            ),
+                            # Legend explaining the numbered elements in the image
+                            html.Div(
+                                className="doc-legend",
+                                children=[
+                                    html.P([
+                                        html.Strong("1 - Filter by Sample: "),
+                                        "Allows you to select one or more samples of interest, narrowing the scatter plot to specific samples."
+                                    ]),
+                                    html.P([
+                                        html.Strong("2 - Filter by Gene: "),
+                                        "Lets you choose particular genes, focusing the visualization on their distribution across the selected samples."
+                                    ]),
+                                    html.P([
+                                        html.Strong("3 - Scatter Plot of Genes vs Samples: "),
+                                        "Each point represents a gene in a given sample, revealing potential genetic hotspots or patterns when comparing multiple samples."
+                                    ]),
+                                ]
+                            ),
                         ]
                     ),
                     html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
                 ]
             ),
+
 
             # Section 19: Enzyme Activity Counts per Sample
             html.Div(
@@ -845,11 +894,32 @@ html.Div(
                                 "Analyzing enzyme activity counts helps identify variations in enzymatic activity across samples, providing insights into metabolic activity",
                                 className="analysis-insights"
                             ),
+                            # Image illustrating the Enzyme Activity Counts per Sample
+                            html.Img(
+                                src="./assets/images/documentation/sample-enzyme-activity.png",
+                                alt="Enzyme Activity Counts per Sample",
+                                className="doc-image"
+                            ),
+                            # Legend explaining the numbered elements in the image
+                            html.Div(
+                                className="doc-legend",
+                                children=[
+                                    html.P([
+                                        html.Strong("1 - Sample Filter: "),
+                                        "Allows you to select which sample to analyze, focusing the chart on the chosen sample’s enzyme activities."
+                                    ]),
+                                    html.P([
+                                        html.Strong("2 - Enzyme Activity Distribution: "),
+                                        "Shows how many unique enzyme activities are present in the selected sample, helping to identify metabolic potential."
+                                    ]),
+                                ]
+                            ),
                         ]
                     ),
                     html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
                 ]
             ),
+
 
             # Section 22: Gene-Compound Interaction Network
             html.Div(
@@ -868,11 +938,36 @@ html.Div(
                                 "By analyzing this graph, you can explore the connectivity and association strength between genes and compounds, uncovering potential targets or key interactions",
                                 className="analysis-insights"
                             ),
+                            # Image illustrating the Gene-Compound Interaction Network
+                            html.Img(
+                                src="./assets/images/documentation/gene-compound-network.png",
+                                alt="Gene-Compound Network Graph",
+                                className="doc-image"
+                            ),
+                            # Legend explaining the color-coded nodes
+                            html.Div(
+                                className="doc-legend",
+                                children=[
+                                    html.P([
+                                        html.Strong([
+                                            html.Span("Blue Nodes (Genes): ", style={"color": "blue"})
+                                        ]),
+                                        "Represent the genes in the network, each potentially interacting with one or more compounds."
+                                    ]),
+                                    html.P([
+                                        html.Strong([
+                                            html.Span("Green Nodes (Compounds): ", style={"color": "green"})
+                                        ]),
+                                        "Indicate compounds that connect to genes, highlighting potential functional or structural relationships."
+                                    ]),
+                                ]
+                            ),
                         ]
                     ),
                     html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
                 ]
             ),
+
 
             # Section 4: Interaction-Based Rankings
             html.Div(
