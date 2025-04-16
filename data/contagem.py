@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Caminho do arquivo
-arquivo = r"D:\Doutorado\my_dash\my_dash_app\data\database.xlsx"
+arquivo = r"D:\Doutorado\my_dash\my_dash_app\data\database.csv"
 
 # Ler o arquivo Excel
 df = pd.read_excel(arquivo)

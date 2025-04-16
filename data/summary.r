@@ -1,7 +1,7 @@
 library(readxl)
 library(dplyr)
 library(tidyverse)
-database <- read_excel("database.xlsx")
+database <- read_excel("database.csv")
 database_hadegDB <- read_excel("database_hadegDB.xlsx")
 database_toxcsm <- read_excel("database_toxcsm.xlsx")
 
@@ -81,4 +81,3 @@ library(readr)
 write_tsv(new_dataframe, "suptable.tsv")
 
 # O arquivo será salvo no diretório de trabalho atual
-

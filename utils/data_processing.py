@@ -8,6 +8,8 @@ for integrating input data with various external databases such as KEGG, HADEG, 
 # -------------------------------
 # Imports
 # -------------------------------
+import scipy.spatial.distance as ssd
+import scipy.cluster.hierarchy as sch
 
 # Data manipulation and handling DataFrame structures.
 import pandas as pd
@@ -23,26 +25,46 @@ import scipy.cluster.hierarchy as sch
 # -------------------------------
 # Functions for Data Merging
 # -------------------------------
+import os
+import pandas as pd
 
-def merge_input_with_database(input_data: pd.DataFrame, database_filepath: str = 'data/database.xlsx') -> pd.DataFrame:
+def merge_input_with_database(input_data: pd.DataFrame, database_filepath: str = None) -> pd.DataFrame:
     """
-    Merges input data with the main database.
+    Merges input data with a database file (CSV or Excel), using default path if none provided.
 
     Parameters:
     - input_data (pd.DataFrame): The input data to be merged.
-    - database_filepath (str): Path to the Excel file containing the database. Default is 'data/database.xlsx'.
+    - database_filepath (str, optional): Path to the CSV or Excel file. Defaults to 'data/database.csv'.
 
     Returns:
     - pd.DataFrame: The merged DataFrame.
+
+    Raises:
+    - ValueError: If the file extension is unsupported or the file does not exist.
     """
-    # Load the database from the specified file.
-    database_df = pd.read_excel(database_filepath)
-    
-    # Merge the input data with the database on the 'ko' column using an inner join.
+    # Usa caminho padrão se nenhum for informado
+    if database_filepath is None:
+        database_filepath = os.path.join("data", "database.csv")
+
+    # Verifica se o arquivo existe
+    if not os.path.exists(database_filepath):
+        raise FileNotFoundError(f"Arquivo de base não encontrado em: {database_filepath}")
+
+    # Lê o arquivo dependendo da extensão
+    if database_filepath.endswith('.csv'):
+        database_df = pd.read_csv(database_filepath, encoding='utf-8', sep=';')
+    elif database_filepath.endswith('.xlsx'):
+        database_df = pd.read_excel(database_filepath, engine='openpyxl')
+    else:
+        raise ValueError("Formato de arquivo não suportado. Use arquivos .csv ou .xlsx")
+
+    # Merge com base na coluna 'ko'
+    if 'ko' not in input_data.columns or 'ko' not in database_df.columns:
+        raise KeyError("A coluna 'ko' é obrigatória em ambos os DataFrames para realizar o merge.")
+
     merged_df = pd.merge(input_data, database_df, on='ko', how='inner')
-    
-    # Return the resulting merged DataFrame.
     return merged_df
+
 
 def merge_with_kegg(input_df: pd.DataFrame, kegg_path: str = 'data/kegg_20degradation_pathways.xlsx') -> pd.DataFrame:
     """
@@ -106,7 +128,9 @@ def merge_with_toxcsm(merged_df: pd.DataFrame, toxcsm_filepath: str = 'data/data
     toxcsm_df = pd.read_excel(toxcsm_filepath)
     
     # Reduce the input DataFrame to retain only relevant columns and remove duplicates.
-    merged_df_reduced = merged_df[['compoundclass', 'cpd', 'ko']].drop_duplicates()
+    # Mantém também a coluna 'sample'
+    merged_df_reduced = merged_df[['sample', 'compoundclass', 'cpd', 'ko']].drop_duplicates()
+
     
     # Merge the reduced DataFrame with the ToxCSM database on the 'cpd' column using an inner join.
     final_merged_df = pd.merge(merged_df_reduced, toxcsm_df, on='cpd', how='inner')
