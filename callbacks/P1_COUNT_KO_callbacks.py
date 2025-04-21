@@ -1,7 +1,7 @@
 """
 P1_COUNT_KO_callbacks.py
 ------------------------
-This script defines callback functions for updating various components of a Dash web application related to KO (Keystone Organism) count analysis.
+This script defines callback functions for updating various components of a Dash web application related to KO (KEGG Orthologs) count analysis.
 
 The callbacks dynamically update:
 - A bar chart displaying KO counts.

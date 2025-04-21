@@ -197,7 +197,7 @@ def update_database_table(n_clicks):
     if n_clicks is None or n_clicks < 1:
         raise PreventUpdate
 
-    df_database = load_database('data/database.csv')  # Load database content
+    df_database = load_database('data/database.xlsx')  # Load database content
     table = create_table_from_dataframe(df_database, 'database-data-table')
     return html.Div(table)
 
