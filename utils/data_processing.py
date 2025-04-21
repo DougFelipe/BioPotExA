@@ -150,32 +150,57 @@ def merge_input_with_database_hadegDB(input_data: pd.DataFrame, database_filepat
     return merged_df
 
 
-def merge_with_toxcsm(merged_df: pd.DataFrame, toxcsm_filepath: str = 'data/database_toxcsm.xlsx') -> pd.DataFrame:
+import os
+import pandas as pd
+
+def merge_with_toxcsm(merged_df: pd.DataFrame, toxcsm_filepath: str = None) -> pd.DataFrame:
     """
-    Merges the result of a previous merge with the ToxCSM database, retaining only specific columns.
+    Merges the result of a previous merge with the ToxCSM database (CSV or Excel), retaining only relevant columns.
 
     Parameters:
     - merged_df (pd.DataFrame): The DataFrame resulting from a previous merge operation.
-    - toxcsm_filepath (str): Path to the Excel file containing the ToxCSM database. Default is 'data/database_toxcsm.xlsx'.
+    - toxcsm_filepath (str, optional): Path to the CSV or Excel file containing the ToxCSM database. 
+      Defaults to 'data/database_toxcsm.csv'.
 
     Returns:
-    - pd.DataFrame: The merged DataFrame.
+    - pd.DataFrame: The final merged DataFrame.
+
+    Raises:
+    - FileNotFoundError: If the file does not exist.
+    - ValueError: If the file extension is unsupported.
+    - KeyError: If the 'cpd' column is missing in one of the DataFrames.
     """
-    # Load the ToxCSM database from the specified file.
-    toxcsm_df = pd.read_excel(toxcsm_filepath)
-    
-    # Reduce the input DataFrame to retain only relevant columns and remove duplicates.
-    # Mantém também a coluna 'sample'
+    # Caminho padrão se nenhum for informado
+    if toxcsm_filepath is None:
+        toxcsm_filepath = os.path.join("data", "database_toxcsm.csv")
+
+    # Verifica existência do arquivo
+    if not os.path.exists(toxcsm_filepath):
+        raise FileNotFoundError(f"Arquivo da base ToxCSM não encontrado: {toxcsm_filepath}")
+
+    # Lê o arquivo dependendo da extensão
+    if toxcsm_filepath.endswith('.csv'):
+        toxcsm_df = pd.read_csv(toxcsm_filepath, encoding='utf-8', sep=';')
+    elif toxcsm_filepath.endswith('.xlsx'):
+        toxcsm_df = pd.read_excel(toxcsm_filepath, engine='openpyxl')
+    else:
+        raise ValueError("Formato de arquivo não suportado. Use arquivos .csv ou .xlsx")
+
+    # Verificação das colunas necessárias
+    for col in ['sample', 'compoundclass', 'cpd', 'ko']:
+        if col not in merged_df.columns:
+            raise KeyError(f"A coluna obrigatória '{col}' está ausente no DataFrame de entrada.")
+
+    if 'cpd' not in toxcsm_df.columns:
+        raise KeyError("A coluna 'cpd' é obrigatória na base ToxCSM.")
+
+    # Reduz o DataFrame de entrada para colunas relevantes e remove duplicatas
     merged_df_reduced = merged_df[['sample', 'compoundclass', 'cpd', 'ko']].drop_duplicates()
 
-    
-    # Merge the reduced DataFrame with the ToxCSM database on the 'cpd' column using an inner join.
+    # Realiza o merge final com base na coluna 'cpd'
     final_merged_df = pd.merge(merged_df_reduced, toxcsm_df, on='cpd', how='inner')
-    
-    # Return the resulting merged DataFrame.
+
     return final_merged_df
-
-
 
 """
 P1_COUNT_KO
