@@ -106,32 +106,49 @@ def merge_with_kegg(input_df: pd.DataFrame, kegg_filepath: str = None) -> pd.Dat
     merged_df = pd.merge(input_df, kegg_df, on='ko', how='inner')
     return merged_df
 
-def merge_input_with_database_hadegDB(input_data: pd.DataFrame, database_filepath: str = 'data/database_hadegDB.xlsx') -> pd.DataFrame:
+import os
+import pandas as pd
+
+def merge_input_with_database_hadegDB(input_data: pd.DataFrame, database_filepath: str = None) -> pd.DataFrame:
     """
-    Merges input data with the HADEG database.
+    Merges input data with the HADEG database (CSV or Excel), using a default path if none provided.
 
     Parameters:
     - input_data (pd.DataFrame): The input data to be merged.
-    - database_filepath (str): Path to the Excel file containing the HADEG database. Default is 'data/database_hadegDB.xlsx'.
+    - database_filepath (str, optional): Path to the CSV or Excel file. Defaults to 'data/database_hadegDB.csv'.
 
     Returns:
     - pd.DataFrame: The merged DataFrame.
 
     Raises:
-    - KeyError: If the 'ko' column is not present in the resulting DataFrame.
+    - FileNotFoundError: If the file does not exist.
+    - ValueError: If the file extension is unsupported.
+    - KeyError: If the 'ko' column is missing in either DataFrame.
     """
-    # Load the HADEG database from the specified file.
-    database_df = pd.read_excel(database_filepath)
-    
-    # Merge the input data with the HADEG database on the 'ko' column using an inner join.
+    # Caminho padrão se nenhum for fornecido
+    if database_filepath is None:
+        database_filepath = os.path.join("data", "database_hadegDB.csv")
+
+    # Verifica existência do arquivo
+    if not os.path.exists(database_filepath):
+        raise FileNotFoundError(f"Arquivo da base HADEG não encontrado: {database_filepath}")
+
+    # Lê o arquivo dependendo da extensão
+    if database_filepath.endswith('.csv'):
+        database_df = pd.read_csv(database_filepath, encoding='utf-8', sep=';')
+    elif database_filepath.endswith('.xlsx'):
+        database_df = pd.read_excel(database_filepath, engine='openpyxl')
+    else:
+        raise ValueError("Formato de arquivo não suportado. Use arquivos .csv ou .xlsx")
+
+    # Verifica a presença da coluna 'ko'
+    if 'ko' not in input_data.columns or 'ko' not in database_df.columns:
+        raise KeyError("A coluna 'ko' é obrigatória em ambos os DataFrames para realizar o merge.")
+
+    # Realiza o merge
     merged_df = pd.merge(input_data, database_df, on='ko', how='inner')
-    
-    # Verify that the 'ko' column exists in the merged DataFrame.
-    if 'ko' not in merged_df.columns:
-        raise KeyError("The 'ko' column is not present in the DataFrame after merging.")
-    
-    # Return the resulting merged DataFrame.
     return merged_df
+
 
 def merge_with_toxcsm(merged_df: pd.DataFrame, toxcsm_filepath: str = 'data/database_toxcsm.xlsx') -> pd.DataFrame:
     """
