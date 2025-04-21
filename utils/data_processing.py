@@ -66,24 +66,44 @@ def merge_input_with_database(input_data: pd.DataFrame, database_filepath: str =
     return merged_df
 
 
-def merge_with_kegg(input_df: pd.DataFrame, kegg_path: str = 'data/kegg_20degradation_pathways.xlsx') -> pd.DataFrame:
+def merge_with_kegg(input_df: pd.DataFrame, kegg_filepath: str = None) -> pd.DataFrame:
     """
-    Merges input data with KEGG pathway data.
+    Merges input data with KEGG pathway data from a CSV or Excel file.
 
     Parameters:
     - input_df (pd.DataFrame): The input data to be merged.
-    - kegg_path (str): Path to the Excel file containing KEGG data. Default is 'data/kegg_20degradation_pathways.xlsx'.
+    - kegg_filepath (str, optional): Path to the KEGG CSV or Excel file. Defaults to 'data/kegg_20degradation_pathways.csv'.
 
     Returns:
     - pd.DataFrame: The merged DataFrame.
+
+    Raises:
+    - FileNotFoundError: If the file does not exist.
+    - ValueError: If the file extension is unsupported.
+    - KeyError: If 'ko' column is missing in either DataFrame.
     """
-    # Load the KEGG pathway data from the specified file.
-    kegg_df = pd.read_excel(kegg_path)
-    
-    # Merge the input data with the KEGG data on the 'ko' column using an inner join.
+    # Caminho padrão se nenhum for fornecido
+    if kegg_filepath is None:
+        kegg_filepath = os.path.join("data", "kegg_20degradation_pathways.csv")
+
+    # Verifica existência do arquivo
+    if not os.path.exists(kegg_filepath):
+        raise FileNotFoundError(f"Arquivo KEGG não encontrado em: {kegg_filepath}")
+
+    # Lê o arquivo dependendo da extensão
+    if kegg_filepath.endswith('.csv'):
+        kegg_df = pd.read_csv(kegg_filepath, encoding='utf-8', sep=';')
+    elif kegg_filepath.endswith('.xlsx'):
+        kegg_df = pd.read_excel(kegg_filepath, engine='openpyxl')
+    else:
+        raise ValueError("Formato de arquivo não suportado. Use .csv ou .xlsx")
+
+    # Verifica a presença da coluna 'ko'
+    if 'ko' not in input_df.columns or 'ko' not in kegg_df.columns:
+        raise KeyError("A coluna 'ko' é obrigatória em ambos os DataFrames para realizar o merge.")
+
+    # Realiza o merge
     merged_df = pd.merge(input_df, kegg_df, on='ko', how='inner')
-    
-    # Return the resulting merged DataFrame.
     return merged_df
 
 def merge_input_with_database_hadegDB(input_data: pd.DataFrame, database_filepath: str = 'data/database_hadegDB.xlsx') -> pd.DataFrame:
