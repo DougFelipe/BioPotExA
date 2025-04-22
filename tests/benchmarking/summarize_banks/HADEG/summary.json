@@ -1,0 +1,1 @@
+{"n_rows":1168,"n_columns":4,"dtypes":{"Gene":"object","ko":"object","Pathway":"object","compound_pathway":"object"},"missing_values":{"Gene":0,"ko":0,"Pathway":0,"compound_pathway":0},"unique_counts":{"Gene":323,"ko":339,"Pathway":71,"compound_pathway":5},"category_suggestions":{"Pathway":71,"compound_pathway":5}}
