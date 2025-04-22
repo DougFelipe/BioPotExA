@@ -1,8 +1,54 @@
 """
 data_processing.py
 ------------------
-This script contains utility functions for processing and merging data, specifically tailored 
-for integrating input data with various external databases such as KEGG, HADEG, and ToxCSM.
+
+This module provides utility functions for data processing, specifically focused on merging 
+user-provided data with various biological and chemical reference databases. The supported 
+databases include KEGG, HADEG, and ToxCSM, each used to enrich the input data with contextual 
+information for further analysis or export.
+
+The functions are designed to handle common file formats such as CSV and Excel and perform
+validation checks on the presence of required columns for merging operations (e.g., 'ko', 'cpd').
+
+Intended Use:
+    This module is intended to be used in data-driven Dash applications or standalone data
+    preparation scripts where enrichment of input tables with biological pathway, enzymatic,
+    or toxicological metadata is required.
+
+Modules and Tools Used:
+    - pandas: for DataFrame operations and I/O
+    - os: for file path handling and existence checks
+    - scipy (optional): distance calculations and clustering (available for extensibility)
+    - plotly (optional): placeholder for future data visualization components
+
+Main Functions:
+    - merge_input_with_database: Merges input data with the main reference database (BioRemPP).
+    - merge_input_with_database_hadegDB: Merges with the HADEG enzyme database.
+    - merge_with_kegg: Integrates KEGG degradation pathway metadata.
+    - merge_with_toxcsm: Merges input with ToxCSM toxicity prediction data.
+
+Example Usage:
+    >>> import pandas as pd
+    >>> from data_processing import merge_input_with_database
+    >>> df_input = pd.DataFrame({"ko": ["K00001", "K00002"]})
+    >>> merged_df = merge_input_with_database(df_input)
+
+Author:
+    Your Name (Douglas Felipe)
+
+Version:
+    1.0.0
+
+Last Updated:
+    2025-04-22
+
+License:
+    MIT License
+
+Notes:
+    Ensure that all required input columns are present before using these functions.
+    File paths should point to valid CSV or Excel files.
+
 """
 
 # -------------------------------
@@ -30,37 +76,42 @@ import pandas as pd
 
 def merge_input_with_database(input_data: pd.DataFrame, database_filepath: str = None) -> pd.DataFrame:
     """
-    Merges input data with a database file (CSV or Excel), using default path if none provided.
+    Merges input data with a reference database file (CSV or Excel format), using a default path if none is provided.
 
     Parameters:
-    - input_data (pd.DataFrame): The input data to be merged.
-    - database_filepath (str, optional): Path to the CSV or Excel file. Defaults to 'data/database.csv'.
+        input_data (pd.DataFrame): The input DataFrame to be merged.
+        database_filepath (str, optional): Path to the database file. Defaults to 'data/database.csv'.
 
     Returns:
-    - pd.DataFrame: The merged DataFrame.
+        pd.DataFrame: The resulting merged DataFrame.
 
     Raises:
-    - ValueError: If the file extension is unsupported or the file does not exist.
+        FileNotFoundError: If the database file is not found at the specified path.
+        ValueError: If the file extension is unsupported.
+        KeyError: If the 'ko' column is missing from either DataFrame.
+
+    Example:
+        >>> df = pd.DataFrame({"ko": ["K00001"]})
+        >>> merge_input_with_database(df)
+
+    Notes:
+        The input and database DataFrames must both contain a column named 'ko' to perform the merge.
     """
-    # Usa caminho padrão se nenhum for informado
     if database_filepath is None:
         database_filepath = os.path.join("data", "database.csv")
 
-    # Verifica se o arquivo existe
     if not os.path.exists(database_filepath):
-        raise FileNotFoundError(f"Arquivo de base não encontrado em: {database_filepath}")
+        raise FileNotFoundError(f"Database file not found: {database_filepath}")
 
-    # Lê o arquivo dependendo da extensão
     if database_filepath.endswith('.csv'):
         database_df = pd.read_csv(database_filepath, encoding='utf-8', sep=';')
     elif database_filepath.endswith('.xlsx'):
         database_df = pd.read_excel(database_filepath, engine='openpyxl')
     else:
-        raise ValueError("Formato de arquivo não suportado. Use arquivos .csv ou .xlsx")
+        raise ValueError("Unsupported file format. Use .csv or .xlsx")
 
-    # Merge com base na coluna 'ko'
     if 'ko' not in input_data.columns or 'ko' not in database_df.columns:
-        raise KeyError("A coluna 'ko' é obrigatória em ambos os DataFrames para realizar o merge.")
+        raise KeyError("Column 'ko' must be present in both input and database DataFrames.")
 
     merged_df = pd.merge(input_data, database_df, on='ko', how='inner')
     return merged_df
@@ -68,139 +119,138 @@ def merge_input_with_database(input_data: pd.DataFrame, database_filepath: str =
 
 def merge_with_kegg(input_df: pd.DataFrame, kegg_filepath: str = None) -> pd.DataFrame:
     """
-    Merges input data with KEGG pathway data from a CSV or Excel file.
+    Merges input data with KEGG degradation pathway information from a CSV or Excel file.
 
     Parameters:
-    - input_df (pd.DataFrame): The input data to be merged.
-    - kegg_filepath (str, optional): Path to the KEGG CSV or Excel file. Defaults to 'data/kegg_20degradation_pathways.csv'.
+        input_df (pd.DataFrame): The input DataFrame to be merged.
+        kegg_filepath (str, optional): Path to the KEGG data file. Defaults to 'data/kegg_20degradation_pathways.csv'.
 
     Returns:
-    - pd.DataFrame: The merged DataFrame.
+        pd.DataFrame: The resulting merged DataFrame.
 
     Raises:
-    - FileNotFoundError: If the file does not exist.
-    - ValueError: If the file extension is unsupported.
-    - KeyError: If 'ko' column is missing in either DataFrame.
+        FileNotFoundError: If the KEGG file does not exist.
+        ValueError: If the file format is not supported.
+        KeyError: If 'ko' column is missing in either DataFrame.
+
+    Example:
+        >>> df = pd.DataFrame({"ko": ["K00123"]})
+        >>> merge_with_kegg(df)
+
+    Notes:
+        The 'ko' column must be present in both the input and KEGG pathway DataFrames.
     """
-    # Caminho padrão se nenhum for fornecido
     if kegg_filepath is None:
         kegg_filepath = os.path.join("data", "kegg_20degradation_pathways.csv")
 
-    # Verifica existência do arquivo
     if not os.path.exists(kegg_filepath):
-        raise FileNotFoundError(f"Arquivo KEGG não encontrado em: {kegg_filepath}")
+        raise FileNotFoundError(f"KEGG file not found: {kegg_filepath}")
 
-    # Lê o arquivo dependendo da extensão
     if kegg_filepath.endswith('.csv'):
         kegg_df = pd.read_csv(kegg_filepath, encoding='utf-8', sep=';')
     elif kegg_filepath.endswith('.xlsx'):
         kegg_df = pd.read_excel(kegg_filepath, engine='openpyxl')
     else:
-        raise ValueError("Formato de arquivo não suportado. Use .csv ou .xlsx")
+        raise ValueError("Unsupported file format. Use .csv or .xlsx")
 
-    # Verifica a presença da coluna 'ko'
     if 'ko' not in input_df.columns or 'ko' not in kegg_df.columns:
-        raise KeyError("A coluna 'ko' é obrigatória em ambos os DataFrames para realizar o merge.")
+        raise KeyError("Column 'ko' must be present in both input and KEGG DataFrames.")
 
-    # Realiza o merge
     merged_df = pd.merge(input_df, kegg_df, on='ko', how='inner')
     return merged_df
 
-import os
-import pandas as pd
 
 def merge_input_with_database_hadegDB(input_data: pd.DataFrame, database_filepath: str = None) -> pd.DataFrame:
     """
-    Merges input data with the HADEG database (CSV or Excel), using a default path if none provided.
+    Merges input data with the HADEG database (CSV or Excel), using a default path if none is provided.
 
     Parameters:
-    - input_data (pd.DataFrame): The input data to be merged.
-    - database_filepath (str, optional): Path to the CSV or Excel file. Defaults to 'data/database_hadegDB.csv'.
+        input_data (pd.DataFrame): The input DataFrame to be merged.
+        database_filepath (str, optional): Path to the HADEG database file. Defaults to 'data/database_hadegDB.csv'.
 
     Returns:
-    - pd.DataFrame: The merged DataFrame.
+        pd.DataFrame: The resulting merged DataFrame.
 
     Raises:
-    - FileNotFoundError: If the file does not exist.
-    - ValueError: If the file extension is unsupported.
-    - KeyError: If the 'ko' column is missing in either DataFrame.
+        FileNotFoundError: If the HADEG database file is not found.
+        ValueError: If the file format is not supported.
+        KeyError: If the 'ko' column is missing in either DataFrame.
+
+    Example:
+        >>> df = pd.DataFrame({"ko": ["K00002"]})
+        >>> merge_input_with_database_hadegDB(df)
+
+    Notes:
+        The merge is performed using the 'ko' column, which must exist in both input and HADEG database.
     """
-    # Caminho padrão se nenhum for fornecido
     if database_filepath is None:
         database_filepath = os.path.join("data", "database_hadegDB.csv")
 
-    # Verifica existência do arquivo
     if not os.path.exists(database_filepath):
-        raise FileNotFoundError(f"Arquivo da base HADEG não encontrado: {database_filepath}")
+        raise FileNotFoundError(f"HADEG database file not found: {database_filepath}")
 
-    # Lê o arquivo dependendo da extensão
     if database_filepath.endswith('.csv'):
         database_df = pd.read_csv(database_filepath, encoding='utf-8', sep=';')
     elif database_filepath.endswith('.xlsx'):
         database_df = pd.read_excel(database_filepath, engine='openpyxl')
     else:
-        raise ValueError("Formato de arquivo não suportado. Use arquivos .csv ou .xlsx")
+        raise ValueError("Unsupported file format. Use .csv or .xlsx")
 
-    # Verifica a presença da coluna 'ko'
     if 'ko' not in input_data.columns or 'ko' not in database_df.columns:
-        raise KeyError("A coluna 'ko' é obrigatória em ambos os DataFrames para realizar o merge.")
+        raise KeyError("Column 'ko' must be present in both input and HADEG database DataFrames.")
 
-    # Realiza o merge
     merged_df = pd.merge(input_data, database_df, on='ko', how='inner')
     return merged_df
 
 
-import os
-import pandas as pd
-
 def merge_with_toxcsm(merged_df: pd.DataFrame, toxcsm_filepath: str = None) -> pd.DataFrame:
     """
-    Merges the result of a previous merge with the ToxCSM database (CSV or Excel), retaining only relevant columns.
+    Merges a previously merged DataFrame with the ToxCSM database (CSV or Excel), based on the 'cpd' column.
 
     Parameters:
-    - merged_df (pd.DataFrame): The DataFrame resulting from a previous merge operation.
-    - toxcsm_filepath (str, optional): Path to the CSV or Excel file containing the ToxCSM database. 
-      Defaults to 'data/database_toxcsm.csv'.
+        merged_df (pd.DataFrame): DataFrame containing columns like 'sample', 'compoundclass', 'cpd', and 'ko'.
+        toxcsm_filepath (str, optional): Path to the ToxCSM database file. Defaults to 'data/database_toxcsm.csv'.
 
     Returns:
-    - pd.DataFrame: The final merged DataFrame.
+        pd.DataFrame: The final merged DataFrame including ToxCSM data.
 
     Raises:
-    - FileNotFoundError: If the file does not exist.
-    - ValueError: If the file extension is unsupported.
-    - KeyError: If the 'cpd' column is missing in one of the DataFrames.
+        FileNotFoundError: If the ToxCSM file does not exist.
+        ValueError: If the file format is not supported.
+        KeyError: If required columns ('cpd', etc.) are missing in the input DataFrame or ToxCSM database.
+
+    Example:
+        >>> df = pd.DataFrame({"sample": ["A"], "compoundclass": ["Aromatic"], "cpd": ["C00123"], "ko": ["K00003"]})
+        >>> merge_with_toxcsm(df)
+
+    Notes:
+        The function filters and merges only the necessary columns before merging with the ToxCSM database.
     """
-    # Caminho padrão se nenhum for informado
     if toxcsm_filepath is None:
         toxcsm_filepath = os.path.join("data", "database_toxcsm.csv")
 
-    # Verifica existência do arquivo
     if not os.path.exists(toxcsm_filepath):
-        raise FileNotFoundError(f"Arquivo da base ToxCSM não encontrado: {toxcsm_filepath}")
+        raise FileNotFoundError(f"ToxCSM database file not found: {toxcsm_filepath}")
 
-    # Lê o arquivo dependendo da extensão
     if toxcsm_filepath.endswith('.csv'):
         toxcsm_df = pd.read_csv(toxcsm_filepath, encoding='utf-8', sep=';')
     elif toxcsm_filepath.endswith('.xlsx'):
         toxcsm_df = pd.read_excel(toxcsm_filepath, engine='openpyxl')
     else:
-        raise ValueError("Formato de arquivo não suportado. Use arquivos .csv ou .xlsx")
+        raise ValueError("Unsupported file format. Use .csv or .xlsx")
 
-    # Verificação das colunas necessárias
     for col in ['sample', 'compoundclass', 'cpd', 'ko']:
         if col not in merged_df.columns:
-            raise KeyError(f"A coluna obrigatória '{col}' está ausente no DataFrame de entrada.")
+            raise KeyError(f"Required column '{col}' is missing in the input DataFrame.")
 
     if 'cpd' not in toxcsm_df.columns:
-        raise KeyError("A coluna 'cpd' é obrigatória na base ToxCSM.")
+        raise KeyError("Column 'cpd' is required in the ToxCSM database.")
 
-    # Reduz o DataFrame de entrada para colunas relevantes e remove duplicatas
     merged_df_reduced = merged_df[['sample', 'compoundclass', 'cpd', 'ko']].drop_duplicates()
-
-    # Realiza o merge final com base na coluna 'cpd'
     final_merged_df = pd.merge(merged_df_reduced, toxcsm_df, on='cpd', how='inner')
 
     return final_merged_df
+
 
 """
 P1_COUNT_KO
