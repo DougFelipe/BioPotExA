@@ -71,49 +71,6 @@ def get_about_layout():
                                 get_dataAnalysis_layout(),  # Content dynamically imported from Data Analysis
                                 className='data-analysis-content'
                             ),
-
-                            # Integration of Databases Section
-                            html.H4(
-                                "Integration of Databases",
-                                className='integration-title'  # CSS class for the title
-                            ),
-
-                            # Database Logos Container
-                            html.Div(
-                                [
-                                    # CHEBI Logo
-                                    html.Img(
-                                        src='/assets/images/CHEBI_LOGO.png',
-                                        className='about-image'
-                                    ),
-                                    # PUBCHEM Logo
-                                    html.Img(
-                                        src='/assets/images/PUBCHEM_LOGO.png',
-                                        className='about-image'
-                                    ),
-                                    # NCBI Logo
-                                    html.Img(
-                                        src='/assets/images/NCBI_LOGO.png',
-                                        className='about-image'
-                                    ),
-                                    # KEGG Logo
-                                    html.Img(
-                                        src='/assets/images/KEGG_LOGO.gif',
-                                        className='about-image'
-                                    ),
-                                    # HADEG Logo
-                                    html.Img(
-                                        src='/assets/images/HADEG_LOGO.png',
-                                        className='about-image'
-                                    ),
-                                    # TOXCSM Logo
-                                    html.Img(
-                                        src='/assets/images/TOXCSM_LOGO.png',
-                                        className='about-image'
-                                    ),
-                                ],
-                                className='about-image-container'  # CSS class for the image container
-                            )
                         ],
                         className='about-text-container'  # CSS class for the main text container
                     ),

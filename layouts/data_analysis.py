@@ -44,17 +44,14 @@ def get_dataAnalysis_page():
         html.Div(id='initial-content', children=[
 
 
-                            # Graphical Abstract Image 
-                            html.Img(
-                                src='/assets/images/graphical_abstract.png',
-                                alt='Graphical Abstract',
-                                className='graphical-abstract-image'
-                            ),
-                                    html.Div(
-                                        get_sample_data_button(),  # Botão de download incluído no Step 1
-                                        className="button-container"  # Classe para centralizar o botão
-                                    ),
-                    
+
+            
+            # Título "Upload and Analyze Your Data"
+            html.Div([
+                html.H2('Upload and Analyze Your Data', className='how-to-use'),
+                html.Hr(className="my-2"),
+            ], className='title-container'),
+
 
 
                                 
@@ -74,14 +71,14 @@ def get_dataAnalysis_page():
                         className="help-message-container"  # Classe para estilização
                     ),
                     
+                            
+                                    html.Div(
+                                        get_sample_data_button(),  # Botão de download incluído no Step 1
+                                        className="button-container"  # Classe para centralizar o botão
+                                    ),    
 
 
 
-            # Título "Upload and Analyze Your Data"
-            html.Div([
-                html.H2('Upload and Analyze Your Data', className='how-to-use'),
-                html.Hr(className="my-2"),
-            ], className='title-container'),
 
             html.Div(
                 id='upload-process-card',
