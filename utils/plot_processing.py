@@ -810,8 +810,10 @@ def plot_pathway_heatmap(df, selected_sample):
                 colorscale='Oranges',
                 showscale=True,  # Display the color bar
                 colorbar=dict(
-                    title='KO Count',
-                    titleside='right',
+                    title=dict(
+                        text='KO Count',
+                        side='right'
+                    ),
                     x=(subplot_width * (i - 1) + (i - 1) * spacing + subplot_width) / total_width,  # Position horizontally
                     xanchor='left',
                     y=0.5,
@@ -1129,9 +1131,13 @@ def generate_gene_compound_network(network_data):
     # Build the Plotly figure
     fig = go.Figure(
         data=[edge_trace, node_trace],
-        layout=go.Layout(
-            title="Gene-Compound Network",
-            titlefont_size=16,
+        layout = go.Layout(
+            title={
+                'text': "Gene-Compound Network",
+                'font': {
+                    'size': 16  # Aqui ajusta o tamanho da fonte do título
+                }
+            },
             showlegend=False,
             margin=dict(b=0, l=0, r=0, t=40),
             xaxis=dict(showgrid=False, zeroline=False),
