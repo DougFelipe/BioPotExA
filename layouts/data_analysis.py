@@ -26,7 +26,6 @@ import dash_bootstrap_components as dbc
 import pandas as pd
 
 # Import reusable components
-from components.step_guide import create_step_card  # Step-by-step cards
 from components.tooltip_sample import input_format_tooltip  # Tooltip for input format
 from components.download_button import get_sample_data_button  # Button for downloading sample data
 

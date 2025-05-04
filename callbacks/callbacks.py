@@ -35,6 +35,10 @@ from callbacks.core.upload_handlers import handle_upload_or_example as handle_up
 from callbacks.dashboard.display_tables import update_table as update_table_logic, update_database_table as update_database_table_logic, update_ko_count_table as update_ko_count_table_logic
 from callbacks.dashboard.toggle_visibility import toggle_additional_analysis_visibility as toggle_additional_analysis_visibility_logic, toggle_graph_visibility as toggle_graph_visibility_logic, display_results as display_results_logic, process_and_toggle_elements as process_and_toggle_elements_logic
 from callbacks.dashboard.progress_callbacks import handle_progress as handle_progress_logic
+from callbacks.core.merge_feedback_callbacks import handle_merge_and_feedback
+import callbacks.core.merge_feedback_callbacks
+
+
 
 # ----------------------------------------
 # Callbacks
@@ -44,7 +48,7 @@ from callbacks.dashboard.progress_callbacks import handle_progress as handle_pro
     [
         Output('stored-data', 'data'),
         Output('process-data', 'disabled'),
-        Output('alert-container', 'children'),
+        Output('alert-container', 'children', allow_duplicate=True),  # <- Adicione isto
         Output('page-state', 'data', allow_duplicate=True)
     ],
     [
@@ -140,8 +144,12 @@ def display_results(n_clicks, current_state):
         Output('page-state', 'data')
     ],
     [Input('process-data', 'n_clicks')],
-    [State('stored-data', 'data'), State('page-state', 'data')],
+    [
+        State('stored-data', 'data'),
+        State('page-state', 'data'),
+        State('merge-status', 'data')  # ← novo state
+    ],
     prevent_initial_call=True
 )
-def process_and_toggle_elements(n_clicks, stored_data, current_state):
-    return process_and_toggle_elements_logic(n_clicks, stored_data, current_state)
+def process_and_toggle_elements(n_clicks, stored_data, current_state, merge_status):
+    return process_and_toggle_elements_logic(n_clicks, stored_data, current_state, merge_status)

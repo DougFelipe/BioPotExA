@@ -1,77 +1,84 @@
 # callbacks/core/merge_feedback_callbacks.py
+"""
+Handles real-time merge operations with BioRemPP, HADEG, and ToxCSM databases,
+records execution time, and controls interface state update.
+"""
 
-import dash,html
-from dash import callback, Output, Input, State
-from dash.exceptions import PreventUpdate
+import time
 import pandas as pd
-
-# Importando o pipeline de merge e o gerador de alertas
-from callbacks.core.merge_pipeline import merge_and_time
+from dash import callback_context, html
+from dash.exceptions import PreventUpdate
+from dash.dependencies import Input, Output, State
+from app import app
+from utils.data_processing import (
+    merge_input_with_database,
+    merge_input_with_database_hadegDB,
+    merge_with_toxcsm
+)
 from callbacks.core.feedback_alerts import create_alert
 
-@callback(
+
+@app.callback(
     [
-        Output('stored-merged-results', 'data'),
-        Output('merge-timings', 'data'),
-        Output('alert-container', 'children'),
-        Output('process-data', 'disabled'),
-        Output('view-results', 'style'),
-        Output('process-data', 'style'),
-        Output('page-state', 'data', allow_duplicate=True)
+        Output('merge-status', 'data'),
+        Output('page-state', 'data', allow_duplicate=True),
+        Output('alert-container', 'children')
     ],
-    Input('process-data', 'n_clicks'),
-    State('stored-data', 'data'),
+    [Input('process-data', 'n_clicks')],
+    [State('stored-data', 'data')],
     prevent_initial_call=True
 )
 def handle_merge_and_feedback(n_clicks, stored_data):
-    """
-    Performs the merging steps, measures execution time, and gives user feedback.
-
-    Parameters:
-    - n_clicks (int): Number of times the "process-data" button was clicked.
-    - stored_data (dict): Data previously uploaded or loaded.
-
-    Returns:
-    - Merged results to be stored
-    - Execution times for each merge
-    - Alert message
-    - Button states and visibility
-    """
-    if n_clicks is None or stored_data is None:
+    if n_clicks is None or not stored_data:
         raise PreventUpdate
 
+    input_df = pd.DataFrame(stored_data)
+
+    merge_times = {}
+    errors = []
+
+    # MERGE 1: BioRemPP (main database)
     try:
-        input_df = pd.DataFrame(stored_data)
-
-        # Executar os merges e medir os tempos
-        merged_results, timings = merge_and_time(input_df)
-
-        # Construir mensagem de tempos
-        time_messages = [
-            html.P(f"Tempo de merge com Database: {timings['database_merge']:.2f} segundos"),
-            html.P(f"Tempo de merge com HADEG: {timings['hadeg_merge']:.2f} segundos"),
-            html.P(f"Tempo de merge com ToxCSM: {timings['toxcsm_merge']:.2f} segundos")
-        ]
-
-        alert = create_alert(
-            [
-                html.H5("Merge realizado com sucesso! 🚀"),
-                html.Hr(),
-                *time_messages
-            ],
-            color='success'
-        )
-
-        return (
-            {key: df.to_dict('records') for key, df in merged_results.items()},
-            timings,
-            alert,
-            True,  # Desabilita botão "Processar"
-            {'display': 'inline-block'},  # Mostra botão "Ver Resultados"
-            {'display': 'none'},  # Esconde botão "Processar"
-            'processed'
-        )
-
+        print("[DEBUG] Starting merge with BioRemPP...")
+        start = time.time()
+        merged_biorempp = merge_input_with_database(input_df.copy())
+        merge_times['BioRemPP'] = round(time.time() - start, 2)
+        print("[DEBUG] BioRemPP merged columns:", merged_biorempp.columns.tolist())
     except Exception as e:
-        alert = create_alert(f"Erro durante o processamento: {str(e)}", color='danger')
-        return dash.no_update, dash.no_update, alert, False, dash.no_update, dash.no_update, dash.no_update
+        errors.append(f"BioRemPP merge failed: {str(e)}")
+        merged_biorempp = None
+
+    # MERGE 2: HADEG (independent merge for other analysis)
+    try:
+        print("[DEBUG] Starting merge with HADEG...")
+        start = time.time()
+        _ = merge_input_with_database_hadegDB(input_df.copy())
+        merge_times['HADEG'] = round(time.time() - start, 2)
+        print("[DEBUG] HADEG merge completed.")
+    except Exception as e:
+        errors.append(f"HADEG merge failed: {str(e)}")
+
+    # MERGE 3: ToxCSM (must use BioRemPP as input)
+    if merged_biorempp is not None:
+        try:
+            print("[DEBUG] Starting merge with ToxCSM...")
+            print("[DEBUG] Columns available before ToxCSM merge:", merged_biorempp.columns.tolist())
+            start = time.time()
+            _ = merge_with_toxcsm(merged_biorempp.copy())
+            merge_times['ToxCSM'] = round(time.time() - start, 2)
+            print("[DEBUG] ToxCSM merge completed.")
+        except Exception as e:
+            errors.append(f"ToxCSM merge failed: {str(e)}")
+    else:
+        errors.append("ToxCSM merge skipped due to BioRemPP merge failure.")
+
+    # Feedback to UI
+    if errors:
+        alert = create_alert([
+            "One or more merges failed:", html.Ul([html.Li(err) for err in errors])
+        ], color='danger')
+        return {'status': 'failed', 'merge_times': merge_times}, 'initial', alert
+
+    alert_msg = f"All merges completed successfully. Times: {merge_times}"
+    alert = create_alert(alert_msg, color='success')
+    return {'status': 'done', 'merge_times': merge_times}, 'processed', alert

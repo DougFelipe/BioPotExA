@@ -3,28 +3,31 @@ document.addEventListener("DOMContentLoaded", function () {
     const toggleButton = document.getElementById("navbar-toggle");
     const linksContainer = document.getElementById("navbar-links");
 
-    // Adiciona evento de clique ao botão
-    if (toggleButton) {
+    if (toggleButton && linksContainer) {
         toggleButton.addEventListener("click", function () {
             linksContainer.classList.toggle("show"); // Alterna a classe "show"
         });
     }
 
-    // Configura scroll suave ao clicar nos links
+    // Links de navegação
     const links = document.querySelectorAll(".nav-link");
-    const navbarHeight = document.querySelector(".navbar-container").offsetHeight; // Calcula a altura do navbar
+    const navbar = document.querySelector(".navbar-container");
+    const navbarHeight = navbar ? navbar.offsetHeight : 0; // Evita erro se navbar não existir
 
-    links.forEach(link => {
-        link.addEventListener("click", function (event) {
-            event.preventDefault();
-            const targetId = this.getAttribute("href").substring(1);
-            const targetElement = document.getElementById(targetId);
-            if (targetElement) {
-                window.scrollTo({
-                    top: targetElement.offsetTop - navbarHeight - 10, // Compensa a altura do navbar
-                    behavior: "smooth",
-                });
-            }
+    if (links.length > 0) {
+        links.forEach(link => {
+            link.addEventListener("click", function (event) {
+                const targetId = this.getAttribute("href")?.substring(1);
+                const targetElement = document.getElementById(targetId);
+
+                if (targetElement) {
+                    event.preventDefault();
+                    window.scrollTo({
+                        top: targetElement.offsetTop - navbarHeight - 10,
+                        behavior: "smooth",
+                    });
+                }
+            });
         });
-    });
+    }
 });

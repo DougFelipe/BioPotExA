@@ -73,26 +73,19 @@ def display_results(n_clicks, current_state):
 
 from dash.exceptions import PreventUpdate
 
-def process_and_toggle_elements(n_clicks, stored_data, current_state):
+def process_and_toggle_elements(n_clicks, stored_data, current_state, merge_status):
     """
-    Toggles visibility of "View Results" and "Click to Submit" buttons based on the page state.
-
-    Parameters:
-    - n_clicks (int): Number of clicks on the "process-data" button.
-    - stored_data (dict): Data stored for processing.
-    - current_state (str): Current state of the page.
-
-    Returns:
-    - Tuple: CSS styles for button visibility and updated page state.
+    Só mostra o botão View Results se todos os merges forem concluídos com sucesso.
     """
     if n_clicks > 0 and stored_data and current_state == 'loaded':
-        return (
-            {'display': 'inline-block'},  # Show "View Results" button
-            {'display': 'none'},  # Hide "Click to Submit" button
-            'processed'  # Update state to 'processed'
-        )
+        if merge_status and merge_status.get('status') == 'done':
+            return (
+                {'display': 'inline-block'},  # Mostrar botão "View Results"
+                {'display': 'none'},          # Ocultar botão "Submit"
+                'processed'
+            )
     return (
-        {'display': 'none'},  # Hide "View Results" button
-        {'display': 'inline-block'},  # Show "Click to Submit" button
-        current_state  # Keep the current state
+        {'display': 'none'},
+        {'display': 'inline-block'},
+        current_state
     )

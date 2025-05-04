@@ -8,6 +8,8 @@ It serves as the central entry point for the app, integrating various components
 # ----------------------------------------
 # Imports
 # ----------------------------------------
+import logging
+logging.basicConfig(level=logging.INFO)
 
 # Import Dash core components for building the interface
 from dash import Dash, dcc, html, Input, Output
@@ -27,6 +29,7 @@ from layouts.help import get_help_layout
 
 # Import callbacks for application interactivity
 import callbacks.callbacks
+import callbacks.core.merge_feedback_callbacks
 import callbacks.T1_biorempp_callbacks
 import callbacks.T2_hadeg_callbacks
 import callbacks.T3_toxcsm_callbacks
@@ -63,58 +66,51 @@ from app import app
 app.layout = html.Div(
     className='main-content',  # CSS class for the main content container
     children=[
-        # URL location for page navigation
         dcc.Location(id='url', refresh=False),
-
-        # Application Header
         Header(),
-
-        # Dynamic content updated based on the URL
         html.Div(id='page-content'),
-
-        # Client-side data storage
         dcc.Store(id='stored-data'),
+        dcc.Store(id='merge-status'),
+        html.Div(id='output-graphs', style={'display': 'none'}),
+        html.Script("""
+    console.log("BioRemPP loaded at: " + window.location.pathname);
+""")
 
-        # Hidden container for graphs (initially not visible)
-        html.Div(id='output-graphs', style={'display': 'none'})
     ]
 )
 
 @app.callback(
-    Output('page-content', 'children'),  # Updates the page content dynamically
-    Input('url', 'pathname')  # Listens for changes in the URL path
+    Output('page-content', 'children'),
+    Input('url', 'pathname')
 )
 def display_page(pathname):
-    """
-    Determines which layout to display based on the URL path.
+    logging.info(f"[INFO] Rota acessada: {pathname}")
 
-    Parameters:
-    - pathname (str): The current URL path.
-
-    Returns:
-    - dash.html.Div: The layout corresponding to the URL path.
-    """
     if pathname == '/data-analysis':
-        return get_dataAnalysis_page()
+        layout = get_dataAnalysis_page()
     elif pathname == '/results':
-        return get_results_layout()
-    elif pathname == '/help':  # Route for the Help page
-        return get_help_layout()
-    elif pathname == '/documentation':  # Route for the Features page
-        return get_features_layout()
-    elif pathname == '/bioremediation':  # Route for the Bioremediation page
-        return get_bioremediation_layout()
-    elif pathname == '/regulatory':  # Route for the Regulatory Agencies page
-        return get_regulatory_agencies_layout()
-    elif pathname == '/contact':  # Route for the Contact page
-        return get_contact_page()
-    else:  # Default route (e.g., Home or About page)
-        return get_about_layout()
+        layout = get_results_layout()
+    elif pathname == '/help':
+        layout = get_help_layout()
+    elif pathname == '/documentation':
+        layout = get_features_layout()
+    elif pathname == '/bioremediation':
+        layout = get_bioremediation_layout()
+    elif pathname == '/regulatory':
+        layout = get_regulatory_agencies_layout()
+    elif pathname == '/contact':
+        layout = get_contact_page()
+    else:
+        layout = get_about_layout()
+
+    logging.info(f"[INFO] Layout retornado: {layout.__class__.__name__}")
+    return layout
 
 # ----------------------------------------
 # Server Initialization
 # ----------------------------------------
 
 if __name__ == '__main__':
+    print("Starting BioRemPP App...")  # <-- Debug print
     app.run(debug=False, host="0.0.0.0", port=8050)
     #app.run_server(debug=True)  # Development
