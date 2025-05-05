@@ -79,6 +79,14 @@ def handle_merge_and_feedback(n_clicks, stored_data):
         ], color='danger')
         return {'status': 'failed', 'merge_times': merge_times}, 'initial', alert
 
-    alert_msg = f"All merges completed successfully. Times: {merge_times}"
+    alert_msg = html.Div([
+    html.P("✅ All merges completed successfully.", style={'marginBottom': '5px'}),
+    html.Ul([
+        html.Li(f"BioRemPP: {merge_times.get('BioRemPP', '-')}s"),
+        html.Li(f"HADEG: {merge_times.get('HADEG', '-')}s"),
+        html.Li(f"ToxCSM: {merge_times.get('ToxCSM', '-')}s")
+    ], style={'paddingLeft': '20px', 'margin': 0})
+    ])
     alert = create_alert(alert_msg, color='success')
+
     return {'status': 'done', 'merge_times': merge_times}, 'processed', alert
