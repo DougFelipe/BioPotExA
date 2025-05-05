@@ -118,10 +118,12 @@ def toggle_graph_visibility(tab):
         Input('process-data', 'n_clicks'),
         Input('progress-interval', 'n_intervals')
     ],
+    [State('merge-status', 'data')],
     prevent_initial_call=True
 )
-def handle_progress(contents, n_clicks_example, n_clicks_submit, n_intervals):
-    return handle_progress_logic(contents, n_clicks_example, n_clicks_submit, n_intervals)
+def handle_progress(contents, n_clicks_example, n_clicks_submit, n_intervals, merge_status):
+    return handle_progress_logic(contents, n_clicks_example, n_clicks_submit, n_intervals, merge_status)
+
 
 
 @callback(

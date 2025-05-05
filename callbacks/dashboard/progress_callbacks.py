@@ -3,19 +3,7 @@
 from dash.exceptions import PreventUpdate
 import dash
 
-def handle_progress(contents, n_clicks_example, n_clicks_submit, n_intervals):
-    """
-    Handles progress bar updates during data upload, submission, and processing.
-
-    Parameters:
-    - contents (str): Uploaded data content in base64 format.
-    - n_clicks_example (int): Number of clicks on the "see-example-data" button.
-    - n_clicks_submit (int): Number of clicks on the "process-data" button.
-    - n_intervals (int): Number of interval updates.
-
-    Returns:
-    - Tuple: Updated values for progress bar percentage, label, interval state, and container style.
-    """
+def handle_progress(contents, n_clicks_example, n_clicks_submit, n_intervals, merge_status):
     ctx = dash.callback_context
     triggered_id = ctx.triggered_id
 
@@ -26,9 +14,16 @@ def handle_progress(contents, n_clicks_example, n_clicks_submit, n_intervals):
         return 0, "", False, {"display": "block", "textAlign": "center"}
 
     if triggered_id == 'progress-interval':
-        progress = min(n_intervals * 10, 100)
-        if progress == 100:
-            return progress, "Processing Complete!", True, {"display": "block", "textAlign": "center"}
-        return progress, f"{progress}%", False, {"display": "block", "textAlign": "center"}
+        if merge_status and merge_status.get('status') == 'done':
+            total_time = sum(merge_status.get('merge_times', {}).values())
+            total_time = max(total_time, 1.0)  # mínimo 1s
+            step = 100 / (total_time * 2)  # Simula duas atualizações por segundo
+
+            progress = min(round(n_intervals * step), 100)
+
+            if progress >= 100:
+                return 100, "Processing Complete!", True, {"display": "block", "textAlign": "center"}
+
+            return progress, f"{progress}%", False, {"display": "block", "textAlign": "center"}
 
     raise PreventUpdate
