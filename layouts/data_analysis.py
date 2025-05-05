@@ -41,49 +41,37 @@ def get_dataAnalysis_page():
 
         # Conteúdo Inicial
         html.Div(id='initial-content', children=[
-
-
-
-            
-            # Título "Upload and Analyze Your Data"
             html.Div([
                 html.H2('Upload and Analyze Your Data', className='how-to-use'),
                 html.Hr(className="my-2"),
             ], className='title-container'),
 
-
-
-                                
-                    html.Div(
+            html.Div(
+                [
+                    html.P(
                         [
-                            html.P(
-                                [
-                                    "If you are encountering difficulties with any of these steps, please refer to the ",
-                                    html.A("Help page", href="/help", className="help-link", target="_self"),
-                                    " and the ",
-                                    html.A("Documentation", href="/documentation", className="help-link", target="_self"),
-                                    " section, for detailed instructions and troubleshooting tips"
-                                ],
-                                className="help-message"
-                            ),
+                            "If you are encountering difficulties with any of these steps, please refer to the ",
+                            html.A("Help page", href="/help", className="help-link", target="_self"),
+                            " and the ",
+                            html.A("Documentation", href="/documentation", className="help-link", target="_self"),
+                            " section, for detailed instructions and troubleshooting tips"
                         ],
-                        className="help-message-container"  # Classe para estilização
+                        className="help-message"
                     ),
-                    
-                            
-                                    html.Div(
-                                        get_sample_data_button(),  # Botão de download incluído no Step 1
-                                        className="button-container"  # Classe para centralizar o botão
-                                    ),    
+                ],
+                className="help-message-container"
+            ),
 
-
-
+            html.Div(
+                get_sample_data_button(),
+                className="button-container"
+            ),
 
             html.Div(
                 id='upload-process-card',
                 className='upload-process-card-style',
                 children=[
-                    html.Div(  # Texto explicativo do passo 1
+                    html.Div(
                         className='upload-explanatory-text',
                         children=[
                             html.P(
@@ -92,7 +80,7 @@ def get_dataAnalysis_page():
                             )
                         ]
                     ),
-                    html.Div(  # Container para alinhar os botões lado a lado
+                    html.Div(
                         className='upload-buttons-container',
                         children=[
                             dcc.Upload(
@@ -109,42 +97,37 @@ def get_dataAnalysis_page():
                             )
                         ]
                     ),
-                    html.Div(  # Alerta para o botão "Upload"
+                    html.Div(
                         id='alert-container',
                         className='alert-container'
                     ),
-                    html.Div(  # Texto explicativo do passo 2
+                    html.Div(
                         html.Hr(className="my-2"),
                     ),
                     html.Div(
-                        className='button-progress-container',  # Classe que organiza os elementos
+                        className='button-progress-container',
                         children=[
-                            # Botão "Click to Submit"
                             html.Button(
                                 'Submit',
                                 id='process-data',
                                 n_clicks=0,
                                 className='process-button-style'
                             ),
-                            
-                            # Botão "View Results" (Inicialmente oculto)
                             html.Button(
                                 'View Results',
                                 id='view-results',
                                 n_clicks=0,
                                 className='view-results-style',
-                                style={'display': 'none'}  # Inicialmente oculto
+                                style={'display': 'none'}
                             ),
-
-                            # Barra de Progresso (Sempre abaixo dos botões)
                             html.Div(
                                 id="progress-container",
                                 children=[
                                     dcc.Interval(
                                         id="progress-interval",
                                         n_intervals=0,
-                                        interval=1000,  # Intervalo de 1 segundo
-                                        disabled=True  # Começa desabilitado
+                                        interval=1000,
+                                        disabled=True
                                     ),
                                     dbc.Progress(
                                         id="progress-bar",
@@ -153,32 +136,20 @@ def get_dataAnalysis_page():
                                         animated=True,
                                     )
                                 ],
-                                style={"display": "none"}  # Inicialmente oculto
+                                style={"display": "none"}
                             ),
                         ]
                     ),
-
-
-                    html.Button(
-                        'View Results',
-                        id='view-results',
-                        n_clicks=0,
-                        className='view-results-style',
-                        style={'display': 'none'}  # Inicialmente oculto
-                    ),
                 ]
             ),
-
-              
-
-
         ]),
 
-        # Conteúdo dos Resultados
+        # Resultados
         html.Div(id='results-content', style={'display': 'none'}, children=[
             get_results_layout()
         ])
     ], className='pages-content')
+
 
 
 # ----------------------------------------

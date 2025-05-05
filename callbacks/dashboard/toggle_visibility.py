@@ -77,8 +77,8 @@ def process_and_toggle_elements(n_clicks, stored_data, current_state, merge_stat
     """
     Só mostra o botão View Results se todos os merges forem concluídos com sucesso.
     """
-    if n_clicks > 0 and stored_data and current_state == 'loaded':
-        if merge_status and merge_status.get('status') == 'done':
+    if n_clicks > 0 and stored_data and merge_status:
+        if merge_status.get('status') == 'done':
             return (
                 {'display': 'inline-block'},  # Mostrar botão "View Results"
                 {'display': 'none'},          # Ocultar botão "Submit"
