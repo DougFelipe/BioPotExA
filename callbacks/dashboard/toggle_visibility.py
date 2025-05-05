@@ -71,19 +71,17 @@ def display_results(n_clicks, current_state):
 
 # callbacks/dashboard/toggle_visibility.py
 
-from dash.exceptions import PreventUpdate
 
-def process_and_toggle_elements(n_clicks, stored_data, current_state, merge_status):
+def process_and_toggle_elements(merge_status, stored_data, current_state):
     """
-    Só mostra o botão View Results se todos os merges forem concluídos com sucesso.
+    Mostra o botão "View Results" somente se os merges forem concluídos com sucesso.
     """
-    if n_clicks > 0 and stored_data and merge_status:
-        if merge_status.get('status') == 'done':
-            return (
-                {'display': 'inline-block'},  # Mostrar botão "View Results"
-                {'display': 'none'},          # Ocultar botão "Submit"
-                'processed'
-            )
+    if stored_data and merge_status and merge_status.get('status') == 'done':
+        return (
+            {'display': 'inline-block'},  # Mostrar botão
+            {'display': 'none'},          # Ocultar botão "Submit"
+            'processed'
+        )
     return (
         {'display': 'none'},
         {'display': 'inline-block'},

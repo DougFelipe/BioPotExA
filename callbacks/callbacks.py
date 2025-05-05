@@ -145,13 +145,12 @@ def display_results(n_clicks, current_state):
         Output('process-data', 'style'),
         Output('page-state', 'data')
     ],
-    [Input('process-data', 'n_clicks')],
+    Input('merge-status', 'data'),  # ← Novo gatilho confiável
     [
         State('stored-data', 'data'),
-        State('page-state', 'data'),
-        State('merge-status', 'data')  # ← novo state
+        State('page-state', 'data')
     ],
     prevent_initial_call=True
 )
-def process_and_toggle_elements(n_clicks, stored_data, current_state, merge_status):
-    return process_and_toggle_elements_logic(n_clicks, stored_data, current_state, merge_status)
+def process_and_toggle_elements(merge_status, stored_data, current_state):
+    return process_and_toggle_elements_logic(merge_status, stored_data, current_state)
