@@ -20,6 +20,8 @@ from components.documentation import get_features_layout
 from components.bioremediation import get_bioremediation_layout  
 from components.regulatory_agencies import get_regulatory_agencies_layout  
 from components.contact import get_contact_page
+from components.publications import get_publications_layout
+
 
 # Import layout functions for different pages
 from layouts.about import get_about_layout  
@@ -100,6 +102,8 @@ def display_page(pathname):
         layout = get_regulatory_agencies_layout()
     elif pathname == '/contact':
         layout = get_contact_page()
+    elif pathname == '/publications':  # Nova rota
+        layout = get_publications_layout()
     else:
         layout = get_about_layout()
 
