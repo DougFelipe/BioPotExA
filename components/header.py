@@ -51,6 +51,7 @@ def Header():
                     html.A("Help", href="/help", className="header-link"),  # Link to Help page
                     html.A('Regulatory Agencies', href='/regulatory', className='header-link'),  # Link to Regulatory Agencies page
                     html.A('Bioremediation', href='/bioremediation', className='header-link'),  # Link to Bioremediation page
+                    html.A("Publications", href="/publications", className="header-link"),
                     # html.A('Changelog', href='/changelog', className='header-link'),  # (Commented out) Link to Changelog page
                     html.A('Contact', href='/contact', className='header-link'),  # Link to Contact page
                 ]
