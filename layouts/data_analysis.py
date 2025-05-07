@@ -28,6 +28,7 @@ import pandas as pd
 # Import reusable components
 from components.tooltip_sample import input_format_tooltip  # Tooltip for input format
 from components.download_button import get_sample_data_button  # Button for downloading sample data
+from components.tooltip_sample import input_format_tooltip
 
 # Import layouts for results display
 from layouts.results import get_results_layout
@@ -37,114 +38,148 @@ from layouts.results import get_results_layout
 # ----------------------------------------
 def get_dataAnalysis_page():
     return html.Div([
-        dcc.Store(id='page-state', data='initial'),  # Armazena o estado da página
+        dcc.Store(id='page-state', data='initial'),
 
-        # Conteúdo Inicial
+         html.Div([
+                        html.H2('Upload and Analyze Your Data', className='how-to-use'),
+                        html.Hr(className="my-2")
+                    ], className='title-container'),
+
         html.Div(id='initial-content', children=[
-            html.Div([
-                html.H2('Upload and Analyze Your Data', className='how-to-use'),
-                html.Hr(className="my-2"),
-            ], className='title-container'),
+            dbc.Container([
 
-            html.Div(
-                [
-                    html.P(
-                        [
-                            "If you are encountering difficulties with any of these steps, please refer to the ",
-                            html.A("Help page", href="/help", className="help-link", target="_self"),
-                            " and the ",
-                            html.A("Documentation", href="/documentation", className="help-link", target="_self"),
-                            " section, for detailed instructions and troubleshooting tips"
-                        ],
-                        className="help-message"
-                    ),
-                ],
-                className="help-message-container"
-            ),
+                # Step 1
+                dbc.Row([
+                    dbc.Col([
+                        html.P('Step 1', className='text-success fw-bold text-center fs-4'),                                    
 
-            html.Div(
-                get_sample_data_button(),
-                className="button-container"
-            ),
+                        html.H3('Understand the Process', className='text-success text-center fs-3'),
+                        html.P(
+                            "Start your analysis by integrating your dataset with curated bioremediation databases, specifically designed for environmental priority pollutants, including BioRemPP, HADEG, and ToxCSM",
+                            className='help-message text-center small mt-2'
+                        ),
+                        html.P(
+                            "Simply upload a file or use the sample data provided",
+                            className='help-message text-center small mt-1'
+                        ),
+                        html.P(
+                            [
+                                "If you are encountering difficulties with any of these steps, refer to the ",
+                                html.A("Help page", href="/help", className="help-link", target="_self"),
+                                " and ",
+                                html.A("Documentation", href="/documentation", className="help-link", target="_self"),
+                                " for guidance."
+                            ],
+                            className="help-message text-center small mt-2"
+                        ),
+                        html.Hr()
+                    ])
+                ]),
 
-            html.Div(
-                id='upload-process-card',
-                className='upload-process-card-style',
-                children=[
-                    html.Div(
-                        className='upload-explanatory-text',
-                        children=[
-                            html.P(
-                                "Submit your file or click the button to load the example dataset",
-                                className='step-explanation'
-                            )
-                        ]
-                    ),
-                    html.Div(
-                        className='upload-buttons-container',
-                        children=[
-                            dcc.Upload(
-                                id='upload-data',
-                                children=html.Div(['Drag and Drop or ', html.A('Select a File')]),
-                                className='upload-button-style'
-                            ),
-                            html.Span('Or', className='upload-or-text'),
-                            html.Button(
-                                'Click to Automatically Upload Exemple Data',
-                                id='see-example-data',
-                                n_clicks=0,
-                                className='process-sample-button-style'
-                            )
-                        ]
-                    ),
-                    html.Div(
-                        id='alert-container',
-                        className='alert-container'
-                    ),
-                    html.Div(
-                        html.Hr(className="my-2"),
-                    ),
-                    html.Div(
-                        className='button-progress-container',
-                        children=[
-                            html.Button(
-                                'Submit',
-                                id='process-data',
-                                n_clicks=0,
-                                className='process-button-style'
-                            ),
-                            html.Button(
-                                'View Results',
-                                id='view-results',
-                                n_clicks=0,
-                                className='view-results-style',
-                                style={'display': 'none'}
-                            ),
-                            html.Div(
-                                id="progress-container",
-                                children=[
-                                    dcc.Interval(
-                                        id="progress-interval",
-                                        n_intervals=0,
-                                        interval=1000,
-                                        disabled=True
-                                    ),
-                                    dbc.Progress(
-                                        id="progress-bar",
-                                        value=0,
-                                        striped=True,
-                                        animated=True,
-                                    )
-                                ],
-                                style={"display": "none"}
-                            ),
-                        ]
-                    ),
-                ]
-            ),
+                html.Hr(className="my-2"),     
+
+                # Step 2
+                dbc.Row([
+                    dbc.Col([
+                        html.P('Step 2', className='text-success fw-bold text-center fs-4'),
+                        html.H3('Upload Your Data', className='text-success text-center fs-3'),
+                        html.P(
+                            [
+                                "A dataset can be submitted by either selecting or dragging and dropping a file in the prescribed format (as in this ",
+                                input_format_tooltip(),
+                                "), or alternatively, by downloading the complete dataset below or loading a predefined sample using the demonstration button."
+                            ],
+                            className='help-message text-center small mt-2'
+                        )
+
+
+                    ])
+                ]),
+
+                # Download Example Data
+                dbc.Row([
+                    dbc.Col([
+                        html.Div(
+                            get_sample_data_button(),
+                            className="text-center my-3"
+                        )
+                    ])
+                ]),
+
+                # Upload Area
+                dbc.Row([
+                    dbc.Col([
+                        html.Div(
+                            id='upload-process-card',
+                            className='upload-process-card-style p-4 rounded shadow-sm',
+                            style={'backgroundColor': '#f8fdf8'},
+                            children=[
+                                html.H5("Upload Area", className='text-center text-success fw-bold fs-2'),
+                                html.P("Choose one of the options below to provide your data.",
+                                       className='help-message text-center small mt-2'),
+
+                                html.Div(
+                                    className='upload-buttons-container d-flex justify-content-center align-items-center',
+                                    style={'gap': '20px', 'flexWrap': 'wrap'},
+                                    children=[
+                                        dcc.Upload(
+                                            id='upload-data',
+                                            children=html.Div([
+                                                "📁 ", html.Span("Drag and Drop", style={'color': '#28a745'}), " or ",
+                                                html.A("Select a File", style={'color': '#28a745'})
+                                            ]),
+                                            className='upload-button-style p-3 border border-success rounded',
+                                            style={
+                                                'cursor': 'pointer',
+                                                'textAlign': 'center',
+                                                'backgroundColor': '#fff',
+                                                'borderStyle': 'dashed',
+                                                'minWidth': '280px'
+                                            }
+                                        ),
+                                        html.Span('Or', className='upload-or-text fw-bold text-muted'),
+                                        html.Button(
+                                            'Click to Automatically Upload Exemple Data',
+                                            id='see-example-data',
+                                            n_clicks=0,
+                                            className='process-sample-button-style btn btn-success'
+                                        )
+                                    ]
+                                ),
+
+                                
+                                html.Div(id='alert-container', className='alert-container my-3'),
+    
+                                html.Div(
+                                    className='button-progress-container text-center mt-4',
+                                    children=[
+                                        html.H3("Process and Analyze", className='text-center text-success fw-bold fs-2'),
+                                        html.P(
+                                            "Once your data is ready, click 'Submit' to begin analysis. After processing, the 'View Results' button will become available.",
+                                            className='help-message text-center small mt-2'
+                                        ),
+                                        html.Button(
+                                            'Submit',
+                                            id='process-data',
+                                            n_clicks=0,
+                                            className='process-button-style btn btn-success me-2'
+                                        ),
+                                        html.Button(
+                                            'View Results',
+                                            id='view-results',
+                                            n_clicks=0,
+                                            className='view-results-style btn btn-outline-info',
+                                            style={'display': 'none'}
+                                        ),
+                                    ]
+                                ),
+                            ]
+                        )
+                    ])
+                ])
+            ])
         ]),
 
-        # Resultados
         html.Div(id='results-content', style={'display': 'none'}, children=[
             get_results_layout()
         ])

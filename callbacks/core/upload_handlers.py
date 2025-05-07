@@ -124,9 +124,7 @@ def handle_upload_or_example(contents, n_clicks_example, filename):
                     [
                         "Example dataset loaded successfully",
                         html.Br(),
-                        'Click "Submit" to process the data',
-                        html.Br(),
-                        "Please wait until the progress is complete to view the results"
+                        'Click "Submit" to process the data'
                     ],
                     color='success',
                     is_open=True,
@@ -160,9 +158,7 @@ def handle_upload_or_example(contents, n_clicks_example, filename):
                 [
                     "File uploaded and validated successfully",
                     html.Br(),
-                    'Click "Submit" to process the data',
-                    html.Br(),
-                    "Please wait until the progress is complete to view the results"
+                    'Click "Submit" to process the data'
                 ],
                 color='success',
                 is_open=True,

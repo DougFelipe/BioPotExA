@@ -4,30 +4,23 @@
 
 from dash import html  # Dash HTML components
 import dash_bootstrap_components as dbc  # Dash Bootstrap components for styling and alerts
-
-def input_format_tooltip(custom_text):
+def input_format_tooltip():
     """
-    Creates a tooltip component that displays a custom explanatory text.
-
-    Parameters:
-    - custom_text (str): The text to display in the tooltip.
-
-    Returns:
-    - dash.html.Div: A Dash HTML Div component containing the formatted tooltip.
+    Tooltip component to show the expected input format for sample data.
     """
     return html.Div(
         className="tooltip-container",
         children=[
-            html.Span(
-                "i",  # Pode ser um ícone ou ponto de interrogação
-                className="tooltip-icon"  # Estilize com CSS para parecer um botão ou símbolo
-            ),
+            html.Span("short exemple", className="tooltip-text"),
             html.Div(
                 className="tooltip-content",
                 children=[
-                    html.P(
-                        custom_text,
-                        className="tooltip-description"
+                    html.P("Input data must be formatted as below", className="tooltip-header"),
+                    html.Pre(
+                        ">Sample1\nK00031\nK00032\nK00090\nK00042\nK00052\n"
+                        ">Sample2\nK00031\nK00032\nK00090\nK00042\nK00052\n"
+                        ">Sample3\nK00031\nK00032\nK00090\nK00042\nK00052",
+                        className="tooltip-example"
                     )
                 ]
             )
