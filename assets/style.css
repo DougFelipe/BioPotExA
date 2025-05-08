@@ -38,7 +38,7 @@ body, html {
     display: flex;
     justify-content: space-between; /* Aligns items to opposite ends */
     align-items: center; /* Centers items vertically */
-    background-color: #b6e9be; /* Light green background for the header */
+    background-color: #ffffff; /* Light green background for the header */
     padding: 2px 10px; /* Adds padding inside the header */
     width: 100%; /* Ensures the header spans the full width */
     border-top-left-radius: 8px; /* Rounds the top-left corner */
@@ -695,6 +695,11 @@ body, html {
     width: 100%; /* Full-width navbar */
     z-index: 1000; /* Ensures it stays above other elements */
 }
+
+.navbar-nav .nav-link:hover {
+    color: #90ee90 !important; /* verde-limão suave ao passar o mouse */
+}
+
 
 /* Container for title, subtitle, and links */
 .navbar-menu-container {

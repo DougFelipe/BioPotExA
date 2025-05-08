@@ -36,7 +36,7 @@ def get_about_layout():
                             # Coluna com logo (substituir o src pela logo real depois)
                             dbc.Col(
                                 dbc.CardImg(
-                                    src="assets/images/HAZARD_LOGO.png",
+                                    src="assets/images/BIOREMPP_LOGO.png",
                                     className="img-fluid rounded-start",
                                 ),
                                 className="col-md-3",
