@@ -36,10 +36,10 @@ def get_about_layout():
                             # Coluna com logo (substituir o src pela logo real depois)
                             dbc.Col(
                                 dbc.CardImg(
-                                    src="assets/images/CHEBI_LOGO.png",
+                                    src="assets/images/HAZARD_LOGO.png",
                                     className="img-fluid rounded-start",
                                 ),
-                                className="col-md-4",
+                                className="col-md-3",
                             ),
 
                             # Coluna com conteúdo textual
@@ -57,7 +57,7 @@ def get_about_layout():
                                             style={"fontFamily": "Arial, sans-serif"}
                                         ),
                                         html.P(
-                                            "BioRemPP enables functional analysis of annotated genomes through curated integration with multiple bioremediation-related databases and provides insights into degradation pathways, enzymes, and compounds associated with environmental contaminants",
+                                            "BioRemPP enables functional analysis of annotated genomes through integration with multiple curated bioremediation-related databases and supports the understanding of degradation mechanisms, metabolic pathways, enzymatic functions, and relationships between samples, genes, compounds, toxic compound associations, and othersignificant biological results ",
                                             className="card-text text-dark fs-5",
                                             style={"fontFamily": "Arial, sans-serif"}
                                         ),
