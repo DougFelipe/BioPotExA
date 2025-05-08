@@ -6,6 +6,7 @@ records execution time, and controls interface state update.
 
 import time
 import pandas as pd
+import dash_bootstrap_components as dbc
 from dash import callback_context, html
 from dash.exceptions import PreventUpdate
 from dash.dependencies import Input, Output, State
@@ -15,6 +16,9 @@ from utils.data_processing import (
     merge_input_with_database_hadegDB,
     merge_with_toxcsm
 )
+
+
+
 from callbacks.core.feedback_alerts import create_alert
 
 
@@ -80,12 +84,20 @@ def handle_merge_and_feedback(n_clicks, stored_data):
         return {'status': 'failed', 'merge_times': merge_times}, 'initial', alert
 
     alert_msg = html.Div([
-    html.P("✅ All merges completed successfully.", style={'marginBottom': '5px'}),
-    html.Ul([
-        html.Li(f"BioRemPP: {merge_times.get('BioRemPP', '-')}s"),
-        html.Li(f"HADEG: {merge_times.get('HADEG', '-')}s"),
-        html.Li(f"ToxCSM: {merge_times.get('ToxCSM', '-')}s")
-    ], style={'paddingLeft': '20px', 'margin': 0})
+        html.P("✅ All merges completed successfully.", style={'marginBottom': '5px'}),
+        html.Ul([
+            html.Li(f"BioRemPP: {merge_times.get('BioRemPP', '-')}s"),
+            html.Li(f"HADEG: {merge_times.get('HADEG', '-')}s"),
+            html.Li([
+                f"ToxCSM: {merge_times.get('ToxCSM', '-')}s",
+                html.Br(),
+                html.Hr(className="my-2"),
+                dbc.Spinner(size="sm", color="success", type="border", fullscreen=False, spinner_style={"marginRight": "6px"}),
+                html.Span("Generating output — the "),
+                html.Strong('"View Results"'),
+                html.Span(" button will become available soon.")
+            ])
+        ], style={'paddingLeft': '20px', 'margin': 0})
     ])
     alert = create_alert(alert_msg, color='success')
 

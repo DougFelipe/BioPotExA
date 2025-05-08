@@ -122,9 +122,11 @@ def handle_upload_or_example(contents, n_clicks_example, filename):
                 False,
                 dbc.Alert(
                     [
-                        "Example dataset loaded successfully",
+                        "Example dataset loaded successfully!",
                         html.Br(),
-                        'Click "Submit" to process the data'
+                        'Click ',
+                        html.Strong('"Submit"'),
+                        ' below to process the data'
                     ],
                     color='success',
                     is_open=True,
