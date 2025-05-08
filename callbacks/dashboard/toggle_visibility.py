@@ -36,22 +36,7 @@ def toggle_graph_visibility(tab):
     """
     if tab == 'tab-data-analysis':
         return {'display': 'block'}  # Show the graphs
-    
-def display_results(n_clicks, current_state):
-    """
-    Controls the visibility of the results section based on the "View Results" button click.
-
-    Parameters:
-    - n_clicks (int): Number of clicks on the "view-results" button.
-    - current_state (str): Current state of the page (e.g., 'processed').
-
-    Returns:
-    - Tuple: CSS styles to toggle the visibility of the initial and results sections.
-    """
-    if n_clicks > 0 and current_state == 'processed':
-        return {'display': 'none'}, {'display': 'block'}  # Show results and hide initial content
-    return {'display': 'block'}, {'display': 'none'}  # Default state
-
+   
 
 def display_results(n_clicks, current_state):
     """

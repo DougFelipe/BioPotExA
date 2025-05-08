@@ -26,7 +26,7 @@ navbar = html.Div(
     [
         # Application Title
         html.A(
-            "BioRemPP",  # Main application title
+            "Homepage",  # Main application title
             href="/",  # Link to the homepage
             className="navbar-title"  # CSS class for styling the title
         ),

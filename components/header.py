@@ -13,48 +13,36 @@ The header uses HTML components from Dash to structure the left-aligned title an
 # ----------------------------------------
 
 from dash import html  # Dash HTML components for creating UI structure
+import dash_bootstrap_components as dbc
 
 # ----------------------------------------
 # Function: Header
 # ----------------------------------------
-
 def Header():
-    """
-    Creates the header component for the web application.
-
-    The header contains:
-    - A left-aligned main title ("BioRemPP") linking to the "About" page.
-    - Right-aligned navigation links to various sections such as Help, Expected Results, Regulatory Agencies, and more.
-
-    Returns:
-    - dash.html.Header: A Dash HTML Header component containing the title and navigation links.
-    """
-    return html.Header(
-        className='main-header',  # CSS class for styling the main header container
+    return dbc.NavbarSimple(
+        brand=html.Div([
+            html.Span("BioRemPP", style={"color": "#14532d", "fontWeight": "bold", "fontSize": "26px"}),
+            html.Div("Bioremediation Potential Profile", style={
+                "fontSize": "14px",
+                "color": "#e0e0e0",  # tom suave para contraste sobre fundo verde
+                "marginTop": "-2px",
+                "fontStyle": "italic"
+            })
+        ]),
+        brand_href="/about",
+        color="success",
+        dark=True,
         children=[
-            # Left-aligned section: Application title
-            html.Div(
-                className='header-left',  # CSS class for styling the left section
-                children=[
-                    html.A(
-                        'BioRemPP',  # Application name/title
-                        href='/about',  # Link to the "About" page
-                        className='main-title'  # CSS class for styling the title
-                    )
-                ]
-            ),
-            # Right-aligned section: Navigation links
-            html.Div(
-                className='header-right',  # CSS class for styling the right section
-                children=[
-                    html.A('Documentation', href='/documentation', className='header-link'),  # Link to Expected Results page
-                    html.A("Help", href="/help", className="header-link"),  # Link to Help page
-                    html.A('Regulatory Agencies', href='/regulatory', className='header-link'),  # Link to Regulatory Agencies page
-                    html.A('Bioremediation', href='/bioremediation', className='header-link'),  # Link to Bioremediation page
-                    html.A("Publications", href="/publications", className="header-link"),
-                    # html.A('Changelog', href='/changelog', className='header-link'),  # (Commented out) Link to Changelog page
-                    html.A('Contact', href='/contact', className='header-link'),  # Link to Contact page
-                ]
-            )
-        ]
+            dbc.NavItem(dbc.NavLink("Documentation", href="/documentation", style={"color": "#fff"})),
+            dbc.NavItem(dbc.NavLink("Help", href="/help", style={"color": "#fff"})),
+            dbc.NavItem(dbc.NavLink("Regulatory Agencies", href="/regulatory", style={"color": "#fff"})),
+            dbc.NavItem(dbc.NavLink("Publications", href="/publications", style={"color": "#fff"})),
+            dbc.NavItem(dbc.NavLink("Contact", href="/contact", style={"color": "#fff"})),
+        ],
+        style={
+            "borderTopLeftRadius": "1rem",
+            "borderTopRightRadius": "1rem",
+            "marginBottom": "20px",
+            "boxShadow": "0 4px 12px rgba(0, 0, 0, 0.3)"
+        }
     )

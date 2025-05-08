@@ -40,13 +40,23 @@ def get_dataAnalysis_page():
     return html.Div([
         dcc.Store(id='page-state', data='initial'),
 
-         html.Div([
-                        html.H2('Upload and Analyze Your Data', className='how-to-use'),
-                        html.Hr(className="my-2")
-                    ], className='title-container'),
+
 
         html.Div(id='initial-content', children=[
             dbc.Container([
+                        html.Div([
+                        html.H2('Upload and Analyze Your Data', className='how-to-use'),
+                                                        # Call to Action
+                        dbc.Row([
+                            dbc.Col([
+                                html.H5("Try It Yourself", className="text-success fw-bold text-center"),
+                                html.P("Follow the steps below to start your own bioremediation data analysis",
+                                    className="text-center small text-muted")
+                            ])
+                        ], className="mb-4"),
+                        html.Hr(className="my-2")
+                    ], className='title-container'),
+
 
                 # Step 1
                 dbc.Row([
@@ -68,7 +78,7 @@ def get_dataAnalysis_page():
                                 html.A("Help page", href="/help", className="help-link", target="_self"),
                                 " and ",
                                 html.A("Documentation", href="/documentation", className="help-link", target="_self"),
-                                " for guidance."
+                                " for guidance"
                             ],
                             className="help-message text-center small mt-2"
                         ),
@@ -87,7 +97,7 @@ def get_dataAnalysis_page():
                             [
                                 "A dataset can be submitted by either selecting or dragging and dropping a file in the prescribed format (as in this ",
                                 input_format_tooltip(),
-                                "), or alternatively, by downloading the complete dataset below or loading a predefined sample using the demonstration button."
+                                "), or alternatively, by downloading the complete dataset below or loading a predefined sample using the demonstration button"
                             ],
                             className='help-message text-center small mt-2'
                         )
@@ -115,7 +125,7 @@ def get_dataAnalysis_page():
                             style={'backgroundColor': '#f8fdf8'},
                             children=[
                                 html.H5("Upload Area", className='text-center text-success fw-bold fs-2'),
-                                html.P("Choose one of the options below to provide your data.",
+                                html.P("Choose one of the options below to provide your data",
                                        className='help-message text-center small mt-2'),
 
                                 html.Div(
@@ -155,7 +165,7 @@ def get_dataAnalysis_page():
                                     children=[
                                         html.H3("Process and Analyze", className='text-center text-success fw-bold fs-2'),
                                         html.P(
-                                            "Once your data is ready, click 'Submit' to begin analysis. After processing, the 'View Results' button will become available.",
+                                            "Once your data is ready, click 'Submit' to begin analysis. After processing, the 'View Results' button will become available",
                                             className='help-message text-center small mt-2'
                                         ),
                                         html.Button(

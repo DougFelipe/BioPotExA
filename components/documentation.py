@@ -179,43 +179,7 @@ def get_features_layout():
                         "Upload your data file in the specified format (.txt) by dragging and dropping the file, or selecting it directly. ",
                         "Make sure the file follows the expected format to avoid processing issues.",
 
-                        # Imagem que mostra o passo a passo de upload
-                        html.Img(
-                            src="./assets/images/documentation/upload.png",
-                            alt="Upload Steps",
-                            className="doc-image"
-                        ),
 
-                        # Legenda explicando os elementos numerados na imagem
-                        html.Div(
-                            className="doc-legend",
-                            children=[
-                                html.P([
-                                    html.Strong("1 - Drag & Drop or Select a File: "),
-                                    "Allows you to quickly upload the file from your local machine by dragging and dropping."
-                                ]),
-                                html.P([
-                                    html.Strong("2 - Load Example Data: "),
-                                    "Lets you automatically load a pre-formatted example dataset for testing or demonstration."
-                                ]),
-                                html.P([
-                                    html.Strong("3 - Submit: "),
-                                    "Triggers the data processing and integration with the BioRemPP database."
-                                ]),
-                                html.P([
-                                    html.Strong("4 - Feedback Message: "),
-                                    "Indicates the example dataset was successfully loaded. You can now proceed."
-                                ]),
-                                html.P([
-                                    html.Strong("5 - Progress Feedback: "),
-                                    "Indicates that the example dataset was successfully loaded. You can now proceed to the next step."
-                                ]),
-                                html.P([
-                                    html.Strong("6 - View Results: "),
-                                    "After processing, click here to explore and analyze the resulting data."
-                                ]),
-                            ]
-                        ),
 
                         html.Br(),
 

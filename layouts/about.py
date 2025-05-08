@@ -6,77 +6,83 @@ The "About" page provides an introduction to the Bioremediation Potential Profil
 including its purpose, features, and integration with external databases.
 
 The page includes:
-- A title and subtitle describing BioRemPP.
+- A stylized card with a logo and system description.
 - An explanation of the tool's biotechnological potential in bioremediation.
-- Visual representation of integrated databases.
+- A call-to-action section to initiate analysis.
+- Integration of the data analysis layout.
 """
 
 # ----------------------------------------
 # Imports
 # ----------------------------------------
 
-from dash import html  # Dash HTML components for UI structure
-from layouts.data_analysis import get_dataAnalysis_layout  # Import the Data Analysis page layout
+from dash import html
+import dash_bootstrap_components as dbc
+from layouts.data_analysis import get_dataAnalysis_layout
 
 # ----------------------------------------
 # Function: get_about_layout
 # ----------------------------------------
 
 def get_about_layout():
-    """
-    Defines and returns the layout for the "About" tab.
-
-    The layout includes:
-    - A description of BioRemPP's purpose and functionality.
-    - Content imported from the Data Analysis layout.
-    - A section highlighting the integration of various databases.
-    - Logos of the integrated databases.
-
-    Additionally, it now displays an image (graphical_abstract.png) above the "How to Cite" section.
-
-    Returns:
-    - dash.html.Div: The "About" page layout as a Dash HTML Div component.
-    """
     return html.Div(
-        [
-            # BioRemPP Description Section
-            html.Div(
+        dbc.Container([
+
+            # Card de Apresentação
+            dbc.Card(
                 [
-                    html.Div(
+                    dbc.Row(
                         [
-                            # Main Title
-                            #html.H3('BioRemPP', className='about-BioRemPP-title'),
-                            # Subtitle
-                            html.H3('Bioremediation Potential Profile', className='about-BioRemPP-subtitle'),
-                            # Horizontal line for separation
-                            html.Hr(className="my-2"),
-                            # Description of BioRemPP
-                            html.P(
-                                [
-                                    (
-                                        "Aimed at identifying the biotechnological potential for bioremediation, the Bioremediation Potential Profile (BioRemPP) was developed to enable the analysis of functional genome annotation data of bacteria, fungi, and plants, allowing the characterization of organisms with potential for pollutant degradation and providing a user interface and interactive data analysis"
-                                    ),
-                                    html.Br(), html.Br(),
-                                    (
-                                        "BioRemPP emerges as an innovative data analysis tool in the field of bioremediation by automating the genomic analysis process used in identifying genes, enzymes, metabolic pathways, and biological processes with biotechnological potential to mitigate the environmental impacts associated with these pollutants"
-                                    )
-                                ],
-                                className='about-content'
+                            # Coluna com logo (substituir o src pela logo real depois)
+                            dbc.Col(
+                                dbc.CardImg(
+                                    src="assets/images/CHEBI_LOGO.png",
+                                    className="img-fluid rounded-start",
+                                ),
+                                className="col-md-4",
                             ),
 
-
-
-                            # Include content from Data Analysis layout
-                            html.Div(
-                                get_dataAnalysis_layout(),  # Content dynamically imported from Data Analysis
-                                className='data-analysis-content'
+                            # Coluna com conteúdo textual
+                            dbc.Col(
+                                dbc.CardBody(
+                                    [
+                                        html.H1(
+                                            "Bioremediation Potential Profile",
+                                            className="text-success fw-bold mb-2",
+                                            style={"fontFamily": "'Times New Roman', serif"}
+                                        ),
+                                        html.P(
+                                            "Bioremediation Potential Profile (BioRemPP) is a scientific web application designed to explore the biotechnological potential of microbial, fungal, and plant genomes for bioremediation purposes",
+                                            className="card-text text-dark fs-5",
+                                            style={"fontFamily": "Arial, sans-serif"}
+                                        ),
+                                        html.P(
+                                            "BioRemPP enables functional analysis of annotated genomes through curated integration with multiple bioremediation-related databases and provides insights into degradation pathways, enzymes, and compounds associated with environmental contaminants",
+                                            className="card-text text-dark fs-5",
+                                            style={"fontFamily": "Arial, sans-serif"}
+                                        ),
+                                    ]
+                                ),
+                                className="col-md-8",
                             ),
                         ],
-                        className='about-text-container'  # CSS class for the main text container
-                    ),
+                        className="g-0 d-flex align-items-center",
+                    )
                 ],
-                className='about-content-container'  # CSS class for the content container
-            )
-        ],
-        className='about-container'  # CSS class for the overall "About" page container
+                className="mb-5 shadow-sm",
+                style={"maxWidth": "100%", "borderRadius": "1rem"}
+            ),
+
+            # Importação do Layout da Análise de Dados
+            dbc.Row([
+                dbc.Col([
+                    html.Div(
+                        get_dataAnalysis_layout(),
+                        className='data-analysis-content'
+                    )
+                ])
+            ])
+
+        ]),
+        className='about-container py-4'
     )
