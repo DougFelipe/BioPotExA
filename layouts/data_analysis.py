@@ -178,8 +178,10 @@ def get_dataAnalysis_page():
                                             'View Results',
                                             id='view-results',
                                             n_clicks=0,
-                                            className='view-results-style btn btn-outline-info',
-                                            style={'display': 'none'}
+                                            className='view-results-style btn btn-outline-warning btn-lg',
+                                            style={
+                                                'display': 'none'
+                                            }
                                         ),
                                     ]
                                 ),

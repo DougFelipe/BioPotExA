@@ -585,7 +585,7 @@ body, html {
 
 /* Main styling for "View Results" button */
 .view-results-style {
-    background-color: #28a745; /* Green background */
+    background-color: #ed3329; /* Green background */
     color: white; /* White text */
     border-radius: 5px; /* Rounded corners */
     border: none; /* No border */

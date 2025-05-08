@@ -91,14 +91,18 @@ def handle_merge_and_feedback(n_clicks, stored_data):
             html.Li([
                 f"ToxCSM: {merge_times.get('ToxCSM', '-')}s",
                 html.Br(),
-                html.Hr(className="my-2"),
-                dbc.Spinner(size="sm", color="success", type="border", fullscreen=False, spinner_style={"marginRight": "6px"}),
-                html.Span("Generating output — the "),
-                html.Strong('"View Results"'),
-                html.Span(" button will become available soon.")
+                dbc.Spinner(size="sm", color="success", type="border", spinner_style={"marginRight": "6px"}),
+                html.Span("Generating output"),
+                html.Br(),
+                html.Span("Click the "),
+                html.Strong("View Results", style={"color": "red", "fontWeight": "bold"}),
+                html.Span(" button when it becomes available.")
             ])
         ], style={'paddingLeft': '20px', 'margin': 0})
     ])
+
+
+
     alert = create_alert(alert_msg, color='success')
 
     return {'status': 'done', 'merge_times': merge_times}, 'processed', alert
