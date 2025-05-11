@@ -2,6 +2,7 @@ from components.alerts import hadeg_alert, toxcsm_alert
 
 from components.navbar import navbar  # Importe o navbar definido acima
 from components.analytical_highlight import analytical_highlight
+from components.analysis_suggestions_modal import analysis_suggestions_modal
 
 from dash import html, dcc
 import dash_bootstrap_components as dbc
@@ -46,6 +47,10 @@ def get_results_layout():
             dbc.Col([
                 html.H1("Data Analysis Results", className="text-success fw-bold text-center"),
                 html.H5("Results from your submitted data", className="text-muted text-center"),
+                html.Div([
+                dbc.Button("Explore Suggestions", id="open-suggestions-modal", color="info", className="mb-3"),
+                analysis_suggestions_modal()
+            ]),
                 html.Hr(className="my-4")
             ])
         ]),
