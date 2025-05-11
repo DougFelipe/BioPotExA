@@ -2,8 +2,7 @@ from components.alerts import hadeg_alert, toxcsm_alert
 
 from components.navbar import navbar  # Importe o navbar definido acima
 from components.analytical_highlight import analytical_highlight
-from components.analysis_suggestions_modal import analysis_suggestions_modal
-
+from components.analysis_suggestions_offcanvas import analysis_suggestions_offcanvas
 from dash import html, dcc
 import dash_bootstrap_components as dbc
 
@@ -42,18 +41,30 @@ def get_results_layout():
         html.Div(style={"height": "50px"}),
 
 # Título da página
-        html.Div(id="results-top"),
-        dbc.Row([
-            dbc.Col([
-                html.H1("Data Analysis Results", className="text-success fw-bold text-center"),
-                html.H5("Results from your submitted data", className="text-muted text-center"),
-                html.Div([
-                dbc.Button("Explore Suggestions", id="open-suggestions-modal", color="info", className="mb-3"),
-                analysis_suggestions_modal()
-            ]),
-                html.Hr(className="my-4")
-            ])
+# Dentro do layout:
+html.Div(id="results-top"),
+dbc.Row([
+    dbc.Col([
+        html.H1("Data Analysis Results", className="text-success fw-bold text-center"),
+        html.H5("Results from your submitted data", className="text-muted text-center"),
+        html.Div([
+            html.Button(
+                "Suggestions",
+                title="Explore analysis suggestions",
+                id="open-suggestions-offcanvas",
+                className="btn btn-outline-success btn-sm",
+                tabIndex="-1"
+            ),
+            html.Button(
+                "×",
+                id="close-suggestions-offcanvas",
+                className="d-none"  # Apenas placeholder para fechar via callback
+            ),
+            analysis_suggestions_offcanvas()
         ]),
+        html.Hr(className="my-4")
+    ])
+]),
 
 
 # Seção BioRemPP
@@ -678,7 +689,7 @@ html.Div([
 ], className="analysis-header"),
 dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs"),
  
-
+html.Div(id="dummy-scroll", style={"display": "none"}),
 
 
     ])    

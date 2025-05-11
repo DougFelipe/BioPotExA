@@ -1,13 +1,17 @@
-from dash import Input, Output, State, ctx
+from dash import Output, Input, State, dcc, ctx  
+
+from dash.exceptions import PreventUpdate
 
 def register_analysis_suggestions_callbacks(app):
     @app.callback(
-        Output("modal-analysis-suggestions", "is_open"),
-        [Input("open-suggestions-modal", "n_clicks"),
-         Input("close-suggestions-modal", "n_clicks")],
-        [State("modal-analysis-suggestions", "is_open")]
+        Output("offcanvas-analysis-suggestions", "is_open"),
+        [Input("open-suggestions-offcanvas", "n_clicks"),
+         Input("close-suggestions-offcanvas", "n_clicks")],
+        prevent_initial_call=True
     )
-    def toggle_modal(open_click, close_click, is_open):
-        if ctx.triggered_id in ["open-suggestions-modal", "close-suggestions-modal"]:
-            return not is_open
-        return is_open
+    def toggle_offcanvas(open_click, close_click):
+        if ctx.triggered_id == "open-suggestions-offcanvas":
+            return True
+        elif ctx.triggered_id == "close-suggestions-offcanvas":
+            return False
+        return False
