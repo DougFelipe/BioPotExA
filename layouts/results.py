@@ -38,179 +38,94 @@ def get_results_layout():
         # Espaçamento para compensar o menu fixo
         html.Div(style={"height": "50px"}),
 
-        # Título principal
-        html.H2('Data Analysis Results', className='results-title'),
-        html.H4('Results from your submitted data', className='results-subtitle'),
-        html.Hr(className="my-2"),
+# Título da página
+        html.Div(id="results-top"),
+        dbc.Row([
+            dbc.Col([
+                html.H1("Data Analysis Results", className="text-success fw-bold text-center"),
+                html.H5("Results from your submitted data", className="text-muted text-center"),
+                html.Hr(className="my-4")
+            ])
+        ]),
 
+        # Seção BioRemPP
+        html.Div(id="main-results-table"),
+        dbc.Row([
+            dbc.Col([
+                html.H4("1 - Data Tables and Database Integration", className="text-primary fw-semibold text-center"),
+                html.P("Provide an overview of the data integrated into the databases.", className="text-dark text-center"),
+                html.Hr(),
 
+                dbc.Row([
+                    dbc.Col(html.H5("BioRemPP Results Table", className="fw-bold text-center"), width=12),
+                    dbc.Col(dbc.Button("Download CSV", id="download-csv-btn", n_clicks=0, color="primary"), width="auto", className="d-flex justify-content-center")
+                ], justify="center", align="center", className="mb-2"),
 
-        html.Div([
-                html.H3("1 - Data Tables and Database Integration", className="section-title"),
-                html.P(
-                    "Provide an overview of the data integrated into the databases",
-                    className="section-objective"
-                ),
-            ], className="section-header"),
+                html.P("This table presents the processed data merged with the BioRemPP database, offering a comprehensive overview of the input data and its matched records.", className="text-muted text-center"),
+                html.P("The merged table reveals how well the input data aligns with the main database, providing insights into the completeness and relevance of the data.", className="text-muted text-center"),
 
-
-        # Seção 1: Main Results Table
- html.Div(id="main-results-table", className="section"),
-
-    html.Div(
-        className="analysis-header",
-        children=[
-            dbc.Row(
-                [
-                    dbc.Col(
-                        html.H5("BioRemPP Results Table", className="analysis-title"),
-                        width="auto"
-                    ),
-                    dbc.Col(
-                        html.Button(
-                            "Download CSV",
-                            id="download-csv-btn",
-                            n_clicks=0,
-                            className="btn btn-primary"
-                        ),
-                        width="auto"
-                    ),
-                ],
-                align="center",
-                justify="between"
-            ),
-            html.P(
-                "This table presents the processed data merged with the BioRemPP database, "
-                "offering a comprehensive overview of the input data and its matched records",
-                className="analysis-description"
-            ),
-            html.P(
-                "The merged table reveals how well the input data aligns with the main database, "
-                "providing insights into the completeness and relevance of the data",
-                className="analysis-insights"
-            ),
-            dbc.Accordion(
-                [
+                dbc.Accordion([
                     dbc.AccordionItem(
-                        html.Div(
-                            get_biorempp_results_table_layout(),
-                            className="chart-container"
-                        ),
+                        html.Div(get_biorempp_results_table_layout(), className="chart-container"),
                         title="Results Table"
                     )
-                ],
-                start_collapsed=True,
-                always_open=False
-            ),
+                ], start_collapsed=True),
 
-            # The dcc.Download component for returning CSV to user
-            dcc.Download(id="download-merged-csv"),
-        ]
-    ),
+                dcc.Download(id="download-merged-csv"),
+                dbc.Placeholder(color="success", className="me-1 mt-3 w-100", size="xs")
+            ])
+        ]),
 
-    html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
+        # Seção HADEG
+        html.Div(id="hadeg-results-table"),
+        dbc.Row([
+            dbc.Col([
+                html.H5("HADEG Results Table", className="fw-bold mt-5 text-center"),
+                dbc.Row([
+                    dbc.Col(dbc.Button("Download CSV", id="download-hadeg-csv-btn", n_clicks=0, color="primary"), width="auto", className="d-flex justify-content-center")
+                ], justify="center", className="mb-2"),
 
+                html.P("This table contains data merged with the HADEG database, enabling the exploration of additional annotations and insights.", className="text-muted text-center"),
+                html.P("The table helps identify significant matches with HADEG, enhancing the understanding of potential functional and structural associations.", className="text-muted text-center"),
 
-
- # Section 2: HADEG Results Table
-    html.Div(id="hadeg-results-table", className="section"),
-    html.Div(
-        [
-            dbc.Row(
-                [
-                    dbc.Col(
-                        html.H5("HADEG Results Table", className="analysis-title"),
-                        width="auto"
-                    ),
-                    dbc.Col(
-                        html.Button(
-                            "Download CSV",
-                            id="download-hadeg-csv-btn",
-                            n_clicks=0,
-                            className="btn btn-primary"
-                        ),
-                        width="auto"
-                    ),
-                ],
-                align="center",
-                justify="between"
-            ),
-            html.P(
-                "This table contains data merged with the HADEG database, enabling the exploration of additional annotations and insights",
-                className="analysis-description"
-            ),
-            html.P(
-                "The table helps identify significant matches with HADEG, enhancing the understanding of potential functional and structural associations",
-                className="analysis-insights"
-            ),
-            hadeg_alert(),
-            dbc.Accordion(
-                [
+                hadeg_alert(),
+                dbc.Accordion([
                     dbc.AccordionItem(
                         html.Div(get_hadeg_results_table_layout(), className="chart-container"),
                         title="Results Table"
                     )
-                ],
-                start_collapsed=True,
-                always_open=False
-            ),
+                ], start_collapsed=True),
 
-            # The dcc.Download component for returning the HADEG CSV
-            dcc.Download(id="download-hadeg-csv"),
-        ],
-        className="analysis-header"
-    ),
-    html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
+                dcc.Download(id="download-hadeg-csv"),
+                dbc.Placeholder(color="success", className="me-1 mt-3 w-100", size="xs")
+            ])
+        ]),
 
-    # Section 3: TOXCSM Results Table
-    html.Div(id="toxcsm-results-table", className="section"),
-    html.Div(
-        [
-            dbc.Row(
-                [
-                    dbc.Col(
-                        html.H5("ToxCSM Results Table", className="analysis-title"),
-                        width="auto"
-                    ),
-                    dbc.Col(
-                        html.Button(
-                            "Download CSV",
-                            id="download-toxcsm-csv-btn",
-                            n_clicks=0,
-                            className="btn btn-primary"
-                        ),
-                        width="auto"
-                    ),
-                ],
-                align="center",
-                justify="between"
-            ),
-            html.P(
-                "This table shows data merged with the TOXCSM database, providing toxicity predictions and compound interactions",
-                className="analysis-description"
-            ),
-            html.P(
-                "By analyzing this table, you can assess the toxicity potential and prioritize compounds for further investigation",
-                className="analysis-insights"
-            ),
-            toxcsm_alert(),
-            dbc.Accordion(
-                [
+        # Seção TOXCSM
+        html.Div(id="toxcsm-results-table"),
+        dbc.Row([
+            dbc.Col([
+                html.H5("ToxCSM Results Table", className="fw-bold mt-5 text-center"),
+                dbc.Row([
+                    dbc.Col(dbc.Button("Download CSV", id="download-toxcsm-csv-btn", n_clicks=0, color="primary"), width="auto", className="d-flex justify-content-center")
+                ], justify="center", className="mb-2"),
+
+                html.P("This table shows data merged with the TOXCSM database, providing toxicity predictions and compound interactions.", className="text-muted text-center"),
+                html.P("By analyzing this table, you can assess the toxicity potential and prioritize compounds for further investigation.", className="text-muted text-center"),
+
+                toxcsm_alert(),
+                dbc.Accordion([
                     dbc.AccordionItem(
                         html.Div(get_toxcsm_results_table_layout(), className="chart-container"),
                         title="Results Table"
                     )
-                ],
-                start_collapsed=True,
-                always_open=False
-            ),
+                ], start_collapsed=True),
 
-            # The dcc.Download component for returning the TOXCSM CSV
-            dcc.Download(id="download-toxcsm-csv"),
-        ],
-        className="analysis-header"
-    ),
-    html.Div([dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs")]),
+                dcc.Download(id="download-toxcsm-csv"),
+                dbc.Placeholder(color="success", className="me-1 mt-3 w-100", size="xs")
+            ])
+        ]),
+
 
 
       
