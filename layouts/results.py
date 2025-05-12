@@ -47,21 +47,32 @@ dbc.Row([
     dbc.Col([
         html.H1("Data Analysis Results", className="text-success fw-bold text-center"),
         html.H5("Results from your submitted data", className="text-muted text-center"),
+        # Botão flutuante fixo + componente offcanvas
         html.Div([
-            html.Button(
-                "Suggestions",
-                title="Explore analysis suggestions",
+            dbc.Button(
+                [html.Span("Analytical", style={"display": "block"}), html.Span("Suggestions", style={"display": "block"})],
                 id="open-suggestions-offcanvas",
+                n_clicks=0,
                 className="btn btn-outline-success btn-sm",
-                tabIndex="-1"
+                title="Explore analysis suggestions",
+                style={
+                    "backgroundColor": "white",
+                    "borderColor": "#198754",
+                    "color": "#198754",
+                    "fontWeight": "500",
+                    "lineHeight": "1.2",
+                    "whiteSpace": "normal",
+                    "textAlign": "center"
+                }
             ),
-            html.Button(
-                "×",
-                id="close-suggestions-offcanvas",
-                className="d-none"  # Apenas placeholder para fechar via callback
-            ),
+            dbc.Button("×", id="close-suggestions-offcanvas", className="d-none"),
             analysis_suggestions_offcanvas()
-        ]),
+        ], style={
+            "position": "fixed",
+            "bottom": "25px",
+            "right": "25px",
+            "zIndex": "1051"
+        }),
         html.Hr(className="my-4")
     ])
 ]),

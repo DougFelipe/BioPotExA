@@ -1,5 +1,4 @@
-from dash import Output, Input, State, dcc, ctx  
-
+from dash import Output, Input, State, ctx
 from dash.exceptions import PreventUpdate
 
 def register_analysis_suggestions_callbacks(app):
@@ -7,11 +6,10 @@ def register_analysis_suggestions_callbacks(app):
         Output("offcanvas-analysis-suggestions", "is_open"),
         [Input("open-suggestions-offcanvas", "n_clicks"),
          Input("close-suggestions-offcanvas", "n_clicks")],
+        [State("offcanvas-analysis-suggestions", "is_open")],
         prevent_initial_call=True
     )
-    def toggle_offcanvas(open_click, close_click):
-        if ctx.triggered_id == "open-suggestions-offcanvas":
-            return True
-        elif ctx.triggered_id == "close-suggestions-offcanvas":
-            return False
-        return False
+    def toggle_offcanvas(open_click, close_click, is_open):
+        if ctx.triggered_id in ["open-suggestions-offcanvas", "close-suggestions-offcanvas"]:
+            return not is_open
+        raise PreventUpdate

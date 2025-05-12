@@ -19,6 +19,7 @@ The page includes:
 from dash import html
 import dash_bootstrap_components as dbc
 from layouts.data_analysis import get_dataAnalysis_layout
+from components.analysis_suggestions_offcanvas import analysis_suggestions_offcanvas
 
 # ----------------------------------------
 # Function: get_about_layout
@@ -33,7 +34,6 @@ def get_about_layout():
                 [
                     dbc.Row(
                         [
-                            # Coluna com logo (substituir o src pela logo real depois)
                             dbc.Col(
                                 dbc.CardImg(
                                     src="assets/images/BIOREMPP_LOGO.png",
@@ -41,8 +41,6 @@ def get_about_layout():
                                 ),
                                 className="col-md-3",
                             ),
-
-                            # Coluna com conteúdo textual
                             dbc.Col(
                                 dbc.CardBody(
                                     [
@@ -57,7 +55,7 @@ def get_about_layout():
                                             style={"fontFamily": "Arial, sans-serif"}
                                         ),
                                         html.P(
-                                            "BioRemPP enables functional analysis of annotated genomes through integration with multiple curated bioremediation-related databases and supports the understanding of degradation mechanisms, metabolic pathways, enzymatic functions, and relationships between samples, genes, compounds, toxic compound associations, and othersignificant biological results ",
+                                            "BioRemPP enables functional analysis of annotated genomes through integration with multiple curated bioremediation-related databases and supports the understanding of degradation mechanisms, metabolic pathways, enzymatic functions, and relationships between samples, genes, compounds, toxic compound associations, and other significant biological results.",
                                             className="card-text text-dark fs-5",
                                             style={"fontFamily": "Arial, sans-serif"}
                                         ),
@@ -81,7 +79,33 @@ def get_about_layout():
                         className='data-analysis-content'
                     )
                 ])
-            ])
+            ]),
+
+            # Botão flutuante fixo
+            # Botão flutuante fixo com estilo corrigido
+            html.Div([
+                dbc.Button(
+                    [html.Span("Analytical", style={"display": "block"}), html.Span("Suggestions", style={"display": "block"})],
+                    id="open-suggestions-offcanvas",
+                    n_clicks=0,
+                    className="btn btn-outline-success btn-sm",
+                    style={
+                        "backgroundColor": "white",
+                        "borderColor": "#198754",
+                        "color": "#198754",
+                        "fontWeight": "500",
+                        "lineHeight": "1.2",
+                        "whiteSpace": "normal",
+                        "textAlign": "center"
+                    }
+                )
+            ], style={
+                "position": "fixed",
+                "bottom": "25px",
+                "right": "25px",
+                "zIndex": "1051"
+            }),
+
 
         ]),
         className='about-container py-4'
