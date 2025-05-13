@@ -3,6 +3,7 @@ from components.alerts import hadeg_alert, toxcsm_alert
 from components.navbar import navbar  # Importe o navbar definido acima
 from components.analytical_highlight import analytical_highlight
 from components.analysis_suggestions_offcanvas import analysis_suggestions_offcanvas
+from components.divider import NeonDivider  
 from dash import html, dcc
 import dash_bootstrap_components as dbc
 
@@ -50,7 +51,7 @@ dbc.Row([
             "📊 Download Exploratory Data Analysis Report",
             id="download-eda-btn",
             n_clicks=0,
-            className="btn btn-outline-secondary my-2"
+            className="btn btn-outline-secondary"
         ),
         dcc.Download(id="download-eda-report"),
 
@@ -98,6 +99,7 @@ html.Div([
 
 html.Hr(className="my-2"),
 
+
 # Subsection: BioRemPP Results
 html.Div(id="main-results-table", className="section"),
 html.Div([
@@ -125,7 +127,7 @@ html.Div([
         )
     ], start_collapsed=True),
     dcc.Download(id="download-merged-csv"),
-    dbc.Placeholder(color="success", className="me-1 mt-3 w-100", size="xs")
+    NeonDivider(className="my-2"),
 ], className="analysis-header"),
 
 # Seção HADEG
@@ -156,7 +158,7 @@ html.Div([
         )
     ], start_collapsed=True),
     dcc.Download(id="download-hadeg-csv"),
-    dbc.Placeholder(color="success", className="me-1 mt-3 w-100", size="xs")
+    NeonDivider(className="my-2"),
 ], className="analysis-header"),
 
 # Seção TOXCSM
@@ -187,7 +189,7 @@ html.Div([
         )
     ], start_collapsed=True),
     dcc.Download(id="download-toxcsm-csv"),
-    dbc.Placeholder(color="success", className="me-1 mt-3 w-100", size="xs")
+    NeonDivider(className="my-2"),
 ], className="analysis-header"),
 
 
@@ -225,7 +227,7 @@ html.Div([
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
-dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs"),
+NeonDivider(className="my-2"),
 
 # Seção 5: Violin Boxplot
 html.Div(id="violin-boxplot", className="section"),
@@ -247,7 +249,7 @@ html.Div([
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
-dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs"),
+NeonDivider(className="my-2"),
 
 # Seção 6: Pathway KO Bar Chart
 html.Div(id="pathway-ko-bar-chart", className="section"),
@@ -269,7 +271,7 @@ html.Div([
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
-dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs"),
+NeonDivider(className="my-2"),
 
 # Seção 7: Sample KO Pathway Chart
 html.Div(id="sample-ko-pathway-chart", className="section"),
@@ -291,7 +293,7 @@ html.Div([
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
-dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs"),
+NeonDivider(className="my-2"),
 
 # Seção 8: Scatter Plot of KOs by Sample
 html.Div(id="sample-ko-scatter", className="section"),
@@ -313,7 +315,7 @@ html.Div([
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
-dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs"),
+NeonDivider(className="my-2"),
 
 
 # Seção: Interactions Between Entities
@@ -347,7 +349,7 @@ html.Div([
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
-dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs"),
+NeonDivider(className="my-2"),
 
 # Gene-Compound Scatter
 html.Div(id="gene-compound-scatter-chart", className="section"),
@@ -369,7 +371,7 @@ html.Div([
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
-dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs"),
+NeonDivider(className="my-2"),
 
 # Sample-Gene Scatter
 html.Div(id="sample-gene-scatter-chart", className="section"),
@@ -391,7 +393,7 @@ html.Div([
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
-dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs"),
+NeonDivider(className="my-2"),
 
 # Enzyme Activity
 html.Div(id="sample-enzyme-activity", className="section"),
@@ -413,7 +415,7 @@ html.Div([
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
-dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs"),
+NeonDivider(className="my-2"),
 
 # Gene-Compound Network
 html.Div(id="gene-compound-network", className="section"),
@@ -435,7 +437,7 @@ html.Div([
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
-dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs"),
+NeonDivider(className="my-2"),
 
 
 
@@ -470,7 +472,7 @@ html.Div([
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
-dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs"),
+NeonDivider(className="my-2"),
 
 # Seção 10: Ranking of Compounds by Sample Interaction
 html.Div(id="compound-rank-chart", className="section"),
@@ -492,7 +494,7 @@ html.Div([
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
-dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs"),
+NeonDivider(className="my-2"),
 
 # Seção 11: Ranking of Compounds by Gene Interaction
 html.Div(id="compound-rank-gene-chart", className="section"),
@@ -514,7 +516,7 @@ html.Div([
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
-dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs"),
+NeonDivider(className="my-2"),
 
 
 # Seção: Patterns and Interactions with Heatmaps
@@ -548,7 +550,7 @@ html.Div([
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
-dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs"),
+NeonDivider(className="my-2"),
 
 # Seção 16: Gene vs Sample Heatmap
 html.Div(id="gene-sample-heatmap", className="section"),
@@ -571,7 +573,7 @@ html.Div([
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
-dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs"),
+NeonDivider(className="my-2"),
 
 # Seção 17: Pathway vs Compound Pathway Heatmap
 html.Div(id="pathway-heatmap", className="section"),
@@ -594,7 +596,7 @@ html.Div([
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
-dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs"),
+NeonDivider(className="my-2"),
 
 
 
@@ -629,7 +631,7 @@ html.Div([
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
-dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs"),
+NeonDivider(className="my-2"),
 
 # Seção 21: Sample UpSet Plot
 html.Div(id="sample-upset-plot", className="section"),
@@ -651,7 +653,7 @@ html.Div([
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
-dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs"),
+NeonDivider(className="my-2"),
 
 # Seção 20: Sample Clustering Dendrogram
 html.Div(id="sample-clustering-dendrogram", className="section"),
@@ -673,7 +675,7 @@ html.Div([
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
-dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs"),
+NeonDivider(className="my-2"),
 
 # Seção: Toxicity Predictions
 html.Div([
@@ -707,7 +709,7 @@ html.Div([
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
-dbc.Placeholder(color="success", className="me-1 mt-1 w-100", size="xs"),
+NeonDivider(className="my-2"),
  
 html.Div(id="dummy-scroll", style={"display": "none"}),
 
