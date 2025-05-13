@@ -46,6 +46,16 @@ dbc.Row([
     dbc.Col([
         html.H1("Data Analysis Results", className="text-success fw-bold text-center"),
         html.H5("Results from your submitted data", className="text-muted text-center"),
+        html.Button(
+            "📊 Download Exploratory Data Analysis Report",
+            id="download-eda-btn",
+            n_clicks=0,
+            className="btn btn-outline-secondary my-2"
+        ),
+        dcc.Download(id="download-eda-report"),
+
+
+
         # Botão flutuante fixo + componente offcanvas
         html.Div([
             dbc.Button(
@@ -111,7 +121,7 @@ html.Div([
     dbc.Accordion([
         dbc.AccordionItem(
             html.Div(get_biorempp_results_table_layout(), className="chart-container"),
-            title=html.Strong("Results Table")
+            title=("Results Table")
         )
     ], start_collapsed=True),
     dcc.Download(id="download-merged-csv"),
@@ -142,7 +152,7 @@ html.Div([
     dbc.Accordion([
         dbc.AccordionItem(
             html.Div(get_hadeg_results_table_layout(), className="chart-container"),
-            title=html.Strong("Results Table")
+            title=("Results Table")
         )
     ], start_collapsed=True),
     dcc.Download(id="download-hadeg-csv"),
@@ -173,7 +183,7 @@ html.Div([
     dbc.Accordion([
         dbc.AccordionItem(
             html.Div(get_toxcsm_results_table_layout(), className="chart-container"),
-            title=html.Strong("Results Table")
+            title=("Results Table")
         )
     ], start_collapsed=True),
     dcc.Download(id="download-toxcsm-csv"),
@@ -211,7 +221,7 @@ html.Div([
     dbc.Accordion([
         dbc.AccordionItem(
             html.Div(get_ko_count_bar_chart_layout(), className="chart-container"),
-            title=html.Strong("Gene Counts Across Samples")
+            title=("Gene Counts Across Samples")
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
@@ -233,7 +243,7 @@ html.Div([
     dbc.Accordion([
         dbc.AccordionItem(
             html.Div(get_ko_violin_boxplot_layout(), className="chart-container"),
-            title=html.Strong("Gene Distribution Among Samples")
+            title=("Gene Distribution Among Samples")
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
@@ -255,7 +265,7 @@ html.Div([
     dbc.Accordion([
         dbc.AccordionItem(
             html.Div(get_pathway_ko_bar_chart_layout(), className="chart-container"),
-            title=html.Strong("Distribution of KO in Pathways")
+            title=("Distribution of KO in Pathways")
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
@@ -277,7 +287,7 @@ html.Div([
     dbc.Accordion([
         dbc.AccordionItem(
             html.Div(get_sample_ko_pathway_bar_chart_layout(), className="chart-container"),
-            title=html.Strong("Pathway Activity per Sample")
+            title=("Pathway Activity per Sample")
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
@@ -299,7 +309,7 @@ html.Div([
     dbc.Accordion([
         dbc.AccordionItem(
             html.Div(get_sample_ko_scatter_layout(), className="chart-container"),
-            title=html.Strong("Scatter Plot of KOs by Sample")
+            title=("Scatter Plot of KOs by Sample")
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
@@ -333,7 +343,7 @@ html.Div([
     dbc.Accordion([
         dbc.AccordionItem(
             html.Div(get_compound_scatter_layout(), className="chart-container"),
-            title=html.Strong("Sample-Compound Interaction Plot")
+            title=("Sample-Compound Interaction Plot")
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
@@ -355,7 +365,7 @@ html.Div([
     dbc.Accordion([
         dbc.AccordionItem(
             html.Div(get_gene_compound_scatter_layout(), className="chart-container"),
-            title=html.Strong("Gene-Compound Interaction Plot")
+            title=("Gene-Compound Interaction Plot")
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
@@ -377,7 +387,7 @@ html.Div([
     dbc.Accordion([
         dbc.AccordionItem(
             html.Div(get_sample_gene_scatter_layout(), className="chart-container"),
-            title=html.Strong("Sample-Gene Associations Plot")
+            title=("Sample-Gene Associations Plot")
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
@@ -399,7 +409,7 @@ html.Div([
     dbc.Accordion([
         dbc.AccordionItem(
             html.Div(get_sample_enzyme_activity_layout(), className="chart-container"),
-            title=html.Strong("Enzyme Activity by Sample")
+            title=("Enzyme Activity by Sample")
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
@@ -421,7 +431,7 @@ html.Div([
     dbc.Accordion([
         dbc.AccordionItem(
             html.Div(get_gene_compound_network_layout(), className="chart-container"),
-            title=html.Strong("Gene-Compound Interaction")
+            title=("Gene-Compound Interaction")
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
@@ -456,7 +466,7 @@ html.Div([
     dbc.Accordion([
         dbc.AccordionItem(
             html.Div(get_sample_rank_compounds_layout(), className="chart-container"),
-            title=html.Strong("Ranking of Samples by Compound Interaction")
+            title=("Ranking of Samples by Compound Interaction")
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
@@ -478,7 +488,7 @@ html.Div([
     dbc.Accordion([
         dbc.AccordionItem(
             html.Div(get_compound_rank_layout(), className="chart-container"),
-            title=html.Strong("Ranking of Compounds by Sample Interaction")
+            title=("Ranking of Compounds by Sample Interaction")
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
@@ -500,7 +510,7 @@ html.Div([
     dbc.Accordion([
         dbc.AccordionItem(
             html.Div(get_rank_compounds_gene_layout(), className="chart-container"),
-            title=html.Strong("Ranking of Compounds by Gene Interaction")
+            title=("Ranking of Compounds by Gene Interaction")
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
@@ -534,7 +544,7 @@ html.Div([
     dbc.Accordion([
         dbc.AccordionItem(
             html.Div(get_sample_reference_heatmap_layout(), className="chart-container"),
-            title=html.Strong("Sample-Reference Agency Heatmap")
+            title=("Sample-Reference Agency Heatmap")
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
@@ -557,7 +567,7 @@ html.Div([
     dbc.Accordion([
         dbc.AccordionItem(
             html.Div(get_gene_sample_heatmap_layout(), className="chart-container"),
-            title=html.Strong("Gene-Sample Heatmap")
+            title=("Gene-Sample Heatmap")
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
@@ -580,7 +590,7 @@ html.Div([
     dbc.Accordion([
         dbc.AccordionItem(
             html.Div(get_pathway_heatmap_layout(), className="chart-container"),
-            title=html.Strong("Pathway-Compound Interaction Map")
+            title=("Pathway-Compound Interaction Map")
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
@@ -615,7 +625,7 @@ html.Div([
     dbc.Accordion([
         dbc.AccordionItem(
             html.Div(get_sample_groups_layout(), className="chart-container"),
-            title=html.Strong("Sample Grouping by Compound Class Pattern")
+            title=("Sample Grouping by Compound Class Pattern")
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
@@ -637,7 +647,7 @@ html.Div([
     dbc.Accordion([
         dbc.AccordionItem(
             html.Div(get_sample_upset_layout(), className="chart-container"),
-            title=html.Strong("Intersection Analysis")
+            title=("Intersection Analysis")
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
@@ -659,7 +669,7 @@ html.Div([
     dbc.Accordion([
         dbc.AccordionItem(
             html.Div(get_sample_clustering_layout(), className="chart-container"),
-            title=html.Strong("Clustering Dendrogram")
+            title=("Clustering Dendrogram")
         )
     ], start_collapsed=True)
 ], className="analysis-header"),
@@ -693,7 +703,7 @@ html.Div([
     dbc.Accordion([
         dbc.AccordionItem(
             html.Div(get_toxicity_heatmap_layout(), className="chart-container"),
-            title=html.Strong("Toxicity Prediction Heatmap")
+            title=("Toxicity Prediction Heatmap")
         )
     ], start_collapsed=True)
 ], className="analysis-header"),

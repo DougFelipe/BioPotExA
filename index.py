@@ -56,6 +56,8 @@ import callbacks.P17_gene_compound_network_callbacks
 import callbacks.p18_heatmap_faceted_callbacks
 from callbacks.download_tables import download_merged_csv  # Callback for downloading merged data
 from callbacks.analysis_suggestions_callbacks import register_analysis_suggestions_callbacks
+from callbacks.dashboard.eda_report_callbacks import generate_eda_report
+
 
 from callbacks.callbacks import handle_progress  # Callback for progress handling
 
