@@ -62,7 +62,7 @@ dbc.Row([
             html.Div(id="eda-alert", style={"display": "none"}),
 
             # Intervalo de tempo para esconder alerta
-            dcc.Interval(id="eda-alert-interval", interval=5000, n_intervals=0, disabled=True)
+            dcc.Interval(id="eda-alert-interval", interval=15000, n_intervals=0, disabled=True)
         ]),
 
 

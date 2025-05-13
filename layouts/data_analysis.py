@@ -165,9 +165,19 @@ def get_dataAnalysis_page():
                                     children=[
                                         html.H3("Process and Analyze", className='text-center text-success fw-bold fs-2'),
                                         html.P(
-                                            "Once your data is ready, click 'Submit' to begin analysis. After processing, the 'View Results' button will become available",
+                                            [
+                                                "Once your data is ready, click ",
+                                                html.Span("Submit", className="fw-bold text-success"),
+                                                " to begin analysis",
+                                                html.Br(),
+                                                "After processing, the ",
+                                                html.Span("View Results", className="fw-bold text-danger"),
+                                                " button will become available"
+                                            ],
                                             className='help-message text-center small mt-2'
                                         ),
+
+
                                         html.Button(
                                             'Submit',
                                             id='process-data',

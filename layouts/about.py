@@ -50,7 +50,7 @@ def get_about_layout():
                                             style={"fontFamily": "'Times New Roman', serif"}
                                         ),
                                         html.P(
-                                            "Bioremediation Potential Profile (BioRemPP) is a scientific web application designed to explore the biotechnological potential of microbial, fungal, and plant genomes for bioremediation purposes",
+                                            "The Bioremediation Potential Profile (BioRemPP) is a scientific web application designed to explore the biotechnological potential of microbial, fungal, and plant genomes for bioremediation purposes",
                                             className="card-text text-dark fs-5",
                                             style={"fontFamily": "Arial, sans-serif"}
                                         ),
