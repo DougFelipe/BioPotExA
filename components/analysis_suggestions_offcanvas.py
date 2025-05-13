@@ -315,5 +315,5 @@ def analysis_suggestions_offcanvas(offcanvas_id="offcanvas-analysis-suggestions"
     scrollable=True,
     backdrop=True,
     class_name="p-3",
-    style={"maxWidth": "100%", "zIndex": 1051}
+    style={"height": "50%","maxWidth": "100%", "zIndex": 1051}
 )
