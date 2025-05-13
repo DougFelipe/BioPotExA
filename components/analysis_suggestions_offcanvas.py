@@ -5,6 +5,112 @@ def analysis_suggestions_offcanvas(offcanvas_id="offcanvas-analysis-suggestions"
     return dbc.Offcanvas([
         dbc.Tabs([
 
+                                    # Aba 1 - Por Perguntas Orientadoras
+            dbc.Tab(label="Guiding Questions", children=[
+
+                html.Div([
+                    html.H6("1. Which samples have more genes associated with bioremediation?", className="fw-bold text-muted"),
+                    html.Div(html.A("View: Gene Counts Across Samples", href="#gene-count-chart", className="text-primary mb-3"))
+                ]),
+
+                html.Div([
+                    html.H6("2. Are gene distributions balanced across samples or are there outliers?", className="fw-bold text-muted"),
+                    html.Div(html.A("View: Gene Distribution Among Samples", href="#violin-boxplot", className="text-primary mb-3"))
+                ]),
+
+                html.Div([
+                    html.H6("3. Which pathways are most active across samples?", className="fw-bold text-muted"),
+                    html.Div(html.A("View: Distribution of KO in Pathways", href="#pathway-ko-bar-chart", className="text-primary mb-3"))
+                ]),
+
+                html.Div([
+                    html.H6("4. How do samples differ in pathway activity?", className="fw-bold text-muted"),
+                    html.Div(html.A("View: Pathway Activity per Sample", href="#sample-ko-pathway-chart", className="text-primary mb-3"))
+                ]),
+
+                html.Div([
+                    html.H6("5. Are there any outlier samples in terms of compound profile?", className="fw-bold text-muted"),
+                    html.Div(html.A("View: Sample Clustering", href="#sample-clustering-dendrogram", className="text-primary mb-3"))
+                ]),
+
+                html.Div([
+                    html.H6("6. Which genes are shared or unique across samples?", className="fw-bold text-muted"),
+                    html.Div(html.A("View: Intersection Analysis", href="#sample-upset-plot", className="text-primary mb-3"))
+                ]),
+
+                html.Div([
+                    html.H6("7. Which compounds are predicted to be most toxic?", className="fw-bold text-muted"),
+                    html.Div(html.A("View: Toxicity Prediction Heatmap", href="#toxicity-heatmap-faceted", className="text-primary mb-3"))
+                ]),
+
+                html.Div([
+                    html.H6("8. What are the strongest gene-compound associations?", className="fw-bold text-muted"),
+                    html.Div(html.A("View: Gene-Compound Interaction Plot", href="#gene-compound-scatter-chart", className="text-primary mb-3"))
+                ]),
+
+                html.Div([
+                    html.H6("9. Which samples interact with more compounds?", className="fw-bold text-muted"),
+                    html.Div(html.A("View: Sample-Compound Interaction Plot", href="#compound-scatter-chart", className="text-primary mb-3"))
+                ]),
+
+                html.Div([
+                    html.H6("10. What are the key gene-compound interaction networks?", className="fw-bold text-muted"),
+                    html.Div(html.A("View: Gene-Compound Interaction", href="#gene-compound-network", className="text-primary mb-3"))
+                ]),
+
+                    html.Div([
+                    html.H6("11. Which genes are most associated with each specific sample?", className="fw-bold text-muted"),
+                    html.Div(html.A("View: Gene-Sample Heatmap", href="#gene-sample-heatmap", className="text-primary mb-3"))
+                ]),
+
+                html.Div([
+                    html.H6("12. How do genes and samples interact for a specific pathway?", className="fw-bold text-muted"),
+                    html.Div(html.A("View: Scatter Plot of KOs by Sample", href="#sample-ko-scatter", className="text-primary mb-3"))
+                ]),
+
+                html.Div([
+                    html.H6("13. What are the key patterns in compound-pathway relationships?", className="fw-bold text-muted"),
+                    html.Div(html.A("View: Pathway-Compound Interaction Map", href="#pathway-heatmap", className="text-primary mb-3"))
+                ]),
+
+                html.Div([
+                    html.H6("14. What are the main compound groupings across samples?", className="fw-bold text-muted"),
+                    html.Div(html.A("View: Sample Grouping by Compound Class Pattern", href="#sample-groups-chart", className="text-primary mb-3"))
+                ]),
+
+                html.Div([
+                    html.H6("15. Which samples rank highest in compound interaction?", className="fw-bold text-muted"),
+                    html.Div(html.A("View: Ranking of Samples by Compound Interaction", href="#sample-rank-compounds-chart", className="text-primary mb-3"))
+                ]),
+
+                html.Div([
+                    html.H6("16. Which compounds are most connected to multiple samples?", className="fw-bold text-muted"),
+                    html.Div(html.A("View: Ranking of Compounds by Sample Interaction", href="#compound-rank-chart", className="text-primary mb-3"))
+                ]),
+
+                html.Div([
+                    html.H6("17. Which compounds are most linked to genetic activity?", className="fw-bold text-muted"),
+                    html.Div(html.A("View: Ranking of Compounds by Gene Interaction", href="#compound-rank-gene-chart", className="text-primary mb-3"))
+                ]),
+
+                html.Div([
+                    html.H6("18. Which enzymes or enzymatic activity are most frequently detected across the samples?", className="fw-bold text-muted"),
+                    html.Div(html.A("View: Enzyme Activity by Sample", href="#sample-enzyme-activity", className="text-primary mb-3"))
+                ]),
+
+                html.Div([
+                    html.H6("19. Which compounds are addressed according to the priority lists?", className="fw-bold text-muted"),
+                    html.Div(html.A("View: Sample-Reference Agency Heatmap", href="#sample-reference-heatmap", className="text-primary mb-3"))
+                ]),
+
+                html.Div([
+                    html.H6("20. What are the direct relationships between samples and individual genes?", className="fw-bold text-muted"),
+                    html.Div(html.A("View: Sample-Gene Associations Plot", href="#sample-gene-scatter-chart", className="text-primary mb-3"))
+                ])
+
+
+            ]),
+
             # Aba 1 - Exploração Básica
             dbc.Tab(label="Basic Exploration", children=[
                 html.H6("Sections:", className="text-success fw-semibold"),
@@ -124,6 +230,9 @@ def analysis_suggestions_offcanvas(offcanvas_id="offcanvas-analysis-suggestions"
                     )
                 ], className="g-3 mt-2")
             ]),
+
+
+
 
         ])
     ],
