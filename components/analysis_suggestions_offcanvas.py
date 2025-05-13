@@ -5,24 +5,50 @@ def analysis_suggestions_offcanvas(offcanvas_id="offcanvas-analysis-suggestions"
     return dbc.Offcanvas([
         dbc.Tabs([
             dbc.Tab(label="Basic Exploration", children=[
-                html.H6("Recommended Sections:", className="text-success fw-semibold"),
+                html.H6("Sections:", className="text-success fw-semibold"),
                 html.Ul([
-                    html.Li(html.A("Gene Count Chart", href="#gene-count-chart", className="text-primary")),
-                    html.Li(html.A("BioRemPP Table", href="#main-results-table", className="text-primary")),
-                    html.Li(html.A("Toxicity Heatmap", href="#toxicity-heatmap-faceted", className="text-primary"))
+                    html.Li(html.A("BioRemPP Results Table", href="#main-results-table", className="text-primary")),
+                    html.Li(html.A("HADEG Results Table", href="#hadeg-results-table", className="text-primary")),
+                    html.Li(html.A("ToxCSM Results Table", href="#toxcsm-results-table", className="text-primary")),
+                    html.Li(html.A("Gene Counts Across Samples", href="#gene-count-chart", className="text-primary")),
+                    html.Li(html.A("Toxicity Prediction Heatmap", href="#toxicity-heatmap-faceted", className="text-primary"))
                 ]),
-                html.H6("Guiding Questions:", className="mt-4 text-muted"),
-                html.Ul([
-                    html.Li("Which samples have more associated genes?"),
-                    html.Li("Are any compounds flagged as toxic?"),
-                    html.Li("Do most genes fall within expected metabolic pathways?")
-                ]),
-                html.H6("Suggested Interpretation:", className="mt-4 text-muted"),
-                html.Ul([
-                    html.Li("Higher gene counts may suggest greater metabolic potential or contaminant diversity."),
-                    html.Li("Toxic compounds flagged by ToxCSM can guide sample prioritization."),
-                    html.Li("Initial observations can help filter samples for deeper pathway analysis.")
-                ])
+
+                html.Hr(className="my-3"),
+
+                dbc.Row([
+                    dbc.Col(
+                        dbc.Card([
+                            dbc.CardHeader("🧭 Guiding Questions", className="fw-bold text-muted"),
+                            dbc.CardBody([
+                                html.Ul([
+                                    html.Li("Which samples show more genes associated with biodegradation?"),
+                                    html.Li("Are there any compounds predicted as toxic?"),
+                                    html.Li("How many entries were matched in the BioRemPP and HADEG databases?"),
+                                    html.Li("Do compounds with more gene associations also show higher toxicity?"),
+                                    html.Li("Are there samples with little or no database matches?")
+                                ], className="mb-0")
+                            ])
+                        ], className="h-100 shadow-sm"),
+                        width=6
+                    ),
+                    dbc.Col(
+                        dbc.Card([
+                            dbc.CardHeader("🔍 Suggested Interpretation", className="fw-bold text-muted"),
+                            dbc.CardBody([
+                                html.Ul([
+                                    html.Li("Higher gene counts may indicate richer metabolic potential in specific samples."),
+                                    html.Li("Toxicity predictions can help prioritize compounds for closer inspection."),
+                                    html.Li("Initial table matches provide a general sense of sample relevance in bioremediation contexts."),
+                                    html.Li("Co-occurrence of gene richness and toxicity may indicate complex biodegradation scenarios."),
+                                    html.Li("Samples with low matches may require improved annotation or could represent novel profiles.")
+                                ], className="mb-0")
+                            ])
+                        ], className="h-100 shadow-sm"),
+                        width=6
+                    )
+                ], className="g-3 mt-2")
+
             ])
         ])
     ],

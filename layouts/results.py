@@ -41,7 +41,6 @@ def get_results_layout():
         html.Div(style={"height": "50px"}),
 
 # Título da página
-# Dentro do layout:
 html.Div(id="results-top"),
 dbc.Row([
     dbc.Col([
