@@ -3,6 +3,7 @@ import dash_bootstrap_components as dbc
 
 def analysis_suggestions_offcanvas(offcanvas_id="offcanvas-analysis-suggestions", is_open=False):
     return dbc.Offcanvas([
+        html.H5("Suggestions to Explore Your Results", className="text-center fw-bold mb-3"),
         dbc.Tabs([
 
                                     # Aba 1 - Por Perguntas Orientadoras
@@ -231,13 +232,84 @@ def analysis_suggestions_offcanvas(offcanvas_id="offcanvas-analysis-suggestions"
                 ], className="g-3 mt-2")
             ]),
 
+            # Aba 4 – Por Nível de Escopo Biológico
+            dbc.Tab(label="Biological Scope Level", children=[
 
+                html.H6("Molecular", className="text-success fw-semibold"),
+                html.Ul([
+                    html.Li(html.A("Gene Counts Across Samples", href="#gene-count-chart", className="text-primary")),
+                    html.Li(html.A("Gene Distribution Among Samples", href="#violin-boxplot", className="text-primary")),
+                    html.Li(html.A("Gene-Compound Interaction", href="#gene-compound-network", className="text-primary")),
+                    html.Li(html.A("Gene-Sample Heatmap", href="#gene-sample-heatmap", className="text-primary"))
+                ]),
 
+                html.H6("Metabolic", className="text-success fw-semibold mt-3"),
+                html.Ul([
+                    html.Li(html.A("Distribution of KO in Pathways", href="#pathway-ko-bar-chart", className="text-primary")),
+                    html.Li(html.A("Pathway Activity per Sample", href="#sample-ko-pathway-chart", className="text-primary")),
+                    html.Li(html.A("Pathway-Compound Interaction Map", href="#pathway-heatmap", className="text-primary")),
+                    html.Li(html.A("Enzyme Activity by Sample", href="#sample-enzyme-activity", className="text-primary"))
+                ]),
 
-        ])
-    ],
+                html.H6("Cellular / Sample-Level", className="text-success fw-semibold mt-3"),
+                html.Ul([
+                    html.Li(html.A("BioRemPP Results Table", href="#main-results-table", className="text-primary")),
+                    html.Li(html.A("Sample-Pathway Specific  Activity", href="#sample-ko-pathway-chart", className="text-primary")),
+                    html.Li(html.A("Sample Grouping by Compound Class Pattern", href="#sample-groups-chart", className="text-primary")),
+                    html.Li(html.A("Clustering Dendrogram", href="#sample-clustering-dendrogram", className="text-primary"))
+                ]),
+
+                html.H6("Ecological", className="text-success fw-semibold mt-3"),
+                html.Ul([
+                    html.Li(html.A("Intersection Analysis", href="#sample-upset-plot", className="text-primary")),
+                    html.Li(html.A("Sample-Compound Interaction Plot", href="#compound-scatter-chart", className="text-primary")),
+                    html.Li(html.A("Sample-Reference Agency Heatmap", href="#sample-reference-heatmap", className="text-primary")),
+                    html.Li(html.A("Toxicity Prediction Heatmap", href="#toxicity-heatmap-faceted", className="text-primary"))
+                ])
+            ]),
+
+                        # Aba 5 – Practical Applications
+            dbc.Tab(label="Practical Applications", children=[
+                html.H6("Select Samples for Experiments", className="text-success fw-semibold"),
+                html.P("Use gene count charts and clustering to identify samples with higher metabolic potential or distinct profiles."),
+                html.Ul([
+                    html.Li(html.A("Gene Counts Across Samples", href="#gene-count-chart", className="text-primary")),
+                    html.Li(html.A("Clustering Dendrogram", href="#sample-clustering-dendrogram", className="text-primary"))
+                ]),
+
+                html.H6("Prioritize Candidate Genes", className="text-success fw-semibold mt-4"),
+                html.P("Identify key genes involved in pathways or repeated across relevant samples using bar charts and upset plots."),
+                html.Ul([
+                    html.Li(html.A("Gene Distribution Among Samples", href="#violin-boxplot", className="text-primary")),
+                    html.Li(html.A("Intersection Analysis", href="#sample-upset-plot", className="text-primary"))
+                ]),
+
+                html.H6("Explore Dominant Biodegradation Pathways", className="text-success fw-semibold mt-4"),
+                html.P("Analyze pathway-based charts to determine which metabolic routes are more active or represented."),
+                html.Ul([
+                    html.Li(html.A("Distribution of KO in Pathways", href="#pathway-ko-bar-chart", className="text-primary")),
+                    html.Li(html.A("Pathway Activity per Sample", href="#sample-ko-pathway-chart", className="text-primary")),
+                    html.Li(html.A("Pathway-Compound Interaction Map", href="#pathway-heatmap", className="text-primary"))
+                ]),
+
+                html.H6("Evaluate Toxicological Risk", className="text-success fw-semibold mt-4"),
+                html.P("Use toxicity heatmaps and compound interaction charts to assess sample or compound-associated risks."),
+                html.Ul([
+                    html.Li(html.A("Toxicity Prediction Heatmap", href="#toxicity-heatmap-faceted", className="text-primary")),
+                    html.Li(html.A("Sample-Compound Interaction Plot", href="#compound-scatter-chart", className="text-primary"))
+                ]),
+
+                html.H6("Identify Functional Redundancy", className="text-success fw-semibold mt-4"),
+                html.P("Overlapping KOs across samples may suggest redundancy; explore using upset plots and clustering."),
+                html.Ul([
+                    html.Li(html.A("Intersection Analysis", href="#sample-upset-plot", className="text-primary")),
+                    html.Li(html.A("Clustering Dendrogram", href="#sample-clustering-dendrogram", className="text-primary"))
+                ]),
+            ]),
+
+        ]), 
+    ], 
     id=offcanvas_id,
-    title="Suggestions to Explore Your Results",
     is_open=is_open,
     placement="bottom",
     scrollable=True,
