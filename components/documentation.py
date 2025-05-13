@@ -25,9 +25,6 @@ The sidebar has been configured as a sticky menu that follows the user's scrolli
 from dash import html, dcc  # Dash components for creating the UI
 import dash_bootstrap_components as dbc  # Bootstrap components for styling
 from components.alerts import hadeg_alert, toxcsm_alert  # Alerts for HADEG and ToxCSM integrations
-from components.divider import NeonDivider  
-
-
 # ----------------------------------------
 # Function: get_features_layout
 # ----------------------------------------

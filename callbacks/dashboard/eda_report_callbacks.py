@@ -1,11 +1,11 @@
-# callbacks/dashboard/eda_report_callbacks.py
-
 import pandas as pd
-from dash import callback, Output, Input, State, dcc
+import io
+from dash import callback, Output, Input, State, dcc, html
 from dash.exceptions import PreventUpdate
 from ydata_profiling import ProfileReport
+from utils.data_processing import merge_input_with_database
+import dash
 
-from utils.data_processing import merge_input_with_database  # <- IMPORTANTE
 
 @callback(
     Output("download-eda-report", "data"),
@@ -18,18 +18,40 @@ def generate_eda_report(n_clicks, stored_data):
         raise PreventUpdate
 
     try:
-        # Converte o input para DataFrame
         df_input = pd.DataFrame(stored_data)
-
-        # Realiza o merge com o database.csv
         df_merged = merge_input_with_database(df_input)
-
-        # Gera o relatório do profiling com base no merged
-        profile = ProfileReport(df_merged, minimal=False, explorative=True)
+        profile = ProfileReport(df_merged, minimal=True, explorative=True)
         html_str = profile.to_html()
-
-        return dcc.send_string(html_str, filename="EDA_Report_BioRemPP_.html")
-
+        return dcc.send_string(html_str, filename="EDA_Report_BioRemPP.html")
     except Exception as e:
-        print(f"[ERROR] Failed to generate merged EDA report: {str(e)}")
+        print(f"[ERROR] Failed to generate EDA report: {str(e)}")
         raise PreventUpdate
+
+
+# ✅ NOVO: alerta controlado por um único callback
+@callback(
+    Output("eda-alert", "children"),
+    Output("eda-alert", "style"),
+    Output("eda-alert-interval", "disabled"),
+    Input("download-eda-btn", "n_clicks"),
+    Input("eda-alert-interval", "n_intervals"),
+    prevent_initial_call=True
+)
+def toggle_eda_alert(n_clicks, n_intervals):
+    ctx = dash.callback_context
+
+    if not ctx.triggered:
+        raise PreventUpdate
+
+    trigger_id = ctx.triggered_id
+
+    if trigger_id == "download-eda-btn":
+        # Mostrar alerta ao clicar no botão
+        alert = html.Div("✅ EDA report is being generated and will download shortly...", className="alert alert-success text-center")
+        return alert, {"display": "block"}, False
+
+    elif trigger_id == "eda-alert-interval":
+        # Esconder alerta após timeout
+        return dash.no_update, {"display": "none"}, True
+
+    raise PreventUpdate

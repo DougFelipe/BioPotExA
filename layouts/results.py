@@ -4,6 +4,8 @@ from components.navbar import navbar  # Importe o navbar definido acima
 from components.analytical_highlight import analytical_highlight
 from components.analysis_suggestions_offcanvas import analysis_suggestions_offcanvas
 from components.divider import NeonDivider  
+
+
 from dash import html, dcc
 import dash_bootstrap_components as dbc
 
@@ -47,13 +49,23 @@ dbc.Row([
     dbc.Col([
         html.H1("Data Analysis Results", className="text-success fw-bold text-center"),
         html.H5("Results from your submitted data", className="text-muted text-center"),
-        html.Button(
-            "📊 Download Exploratory Data Analysis Report",
-            id="download-eda-btn",
-            n_clicks=0,
-            className="btn btn-outline-secondary"
-        ),
-        dcc.Download(id="download-eda-report"),
+        html.Div([
+            html.Button(
+                "📊 Download EDA Report (BioRemPP)",
+                id="download-eda-btn",
+                n_clicks=0,
+                className="btn btn-success btn-lg mb-3"
+            ),
+            dcc.Download(id="download-eda-report"),
+
+            # Alerta
+            html.Div(id="eda-alert", style={"display": "none"}),
+
+            # Intervalo de tempo para esconder alerta
+            dcc.Interval(id="eda-alert-interval", interval=5000, n_intervals=0, disabled=True)
+        ]),
+
+
 
 
 
