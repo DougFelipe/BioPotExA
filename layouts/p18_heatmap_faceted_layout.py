@@ -13,30 +13,26 @@ The layout includes:
 # ----------------------------------------
 
 from dash import html, dcc  # Dash components for creating the layout and graphs
+import dash_bootstrap_components as dbc
 
 # ----------------------------------------
 # Function: get_toxicity_heatmap_layout
 # ----------------------------------------
-import dash_bootstrap_components as dbc
 def get_toxicity_heatmap_layout():
     """
-    Constructs the layout for the Toxicity Heatmap with facets.
-
-    This layout contains:
-    - A `dcc.Graph` component to render the heatmap.
-    - Styling for scrollable content if the heatmap overflows the container.
+    Constructs a Bootstrap-styled layout for the Toxicity Heatmap with scrollable support.
 
     Returns:
-        html.Div: A Dash HTML Div containing the graph for the Toxicity Heatmap.
+        dbc.Card: A Bootstrap card layout with the toxicity heatmap graph.
     """
-    return html.Div([
-        # Heatmap Graph Container
-        html.Div(
+    return dbc.Card([
+        dbc.CardHeader("Toxicity Prediction Faceted Heatmap", class_name="fw-semibold text-muted"),
+        dbc.CardBody([
             dcc.Graph(
-                id="toxicity-heatmap-faceted",  # Unique ID for the heatmap graph
-                className="chart-container",  # CSS class for styling the chart container
-                style={"overflow": "auto"}  # Adds scrolling to the graph container
-            ),
-            className="graph-card"  # CSS class for the card containing the graph
-        )
-    ])
+                id="toxicity-heatmap-faceted",
+                className="chart-container",
+                style={"overflowX": "auto"}
+            )
+        ])
+    ],
+    class_name="shadow-sm border-0 my-3")

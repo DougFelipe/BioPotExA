@@ -15,47 +15,50 @@ Each layout includes:
 # ----------------------------------------
 
 from dash import html, dcc  # Dash components for building UI layouts
-
+import dash_bootstrap_components as dbc
 # ----------------------------------------
 # Function: get_pathway_ko_bar_chart_layout
 # ----------------------------------------
 
 def get_pathway_ko_bar_chart_layout():
     """
-    Constructs the layout for the KO pathway analysis bar chart, including a sample filter.
-
-    The layout contains:
-    - A dropdown menu for filtering the chart by sample.
-    - A container to display the bar chart or a placeholder message if no sample is selected.
+    Constructs a Bootstrap-styled layout for the KO pathway bar chart, with sample filtering.
 
     Returns:
-    - dash.html.Div: A Dash HTML Div component containing the dropdown and chart container.
+        dbc.Card: A Dash Bootstrap Card containing the dropdown filter and the chart container.
     """
-    return html.Div([
-        # Filter Section: Dropdown to select a sample
-        html.Div([
-            html.Div('Filter by Sample', className='menu-text'),  # Label for the dropdown
-            dcc.Dropdown(
-                id='pathway-sample-dropdown',  # Dropdown ID for interactivity
-                placeholder="Select a sample",  # Placeholder text for the dropdown
-                style={"margin-bottom": "20px"}  # Adds spacing below the dropdown
-            ),
-        ], className='navigation-menu'),  # CSS class for styling the navigation menu
+    return dbc.Card([
+        dbc.CardHeader("Filter by Sample", class_name="fw-semibold text-muted"),
 
-        # Chart Container: Displays the bar chart or a message
-        html.Div(
-            id='pathway-ko-chart-container',  # ID for the chart container
-            children=[
-                # Placeholder message when no chart is available
-                html.P(
-                    "No chart available. Please select a sample",  # Message displayed when no sample is selected
-                    id="no-pathway-ko-chart-message",  # ID for the message
-                    style={"textAlign": "center", "color": "gray"}  # Center-align the text and use gray color
+        dbc.CardBody([
+            dbc.Row([
+                dbc.Col(
+                    dcc.Dropdown(
+                        id='pathway-sample-dropdown',
+                        placeholder="Select a sample",
+                        className="mb-3"
+                    ),
+                    width=12
                 )
-            ],
-            className='graph-card'  # CSS class for styling the chart container
-        )
-    ])
+            ]),
+            dbc.Row([
+                dbc.Col(
+                    html.Div(
+                        id='pathway-ko-chart-container',
+                        children=[
+                            html.P(
+                                "No chart available. Please select a sample",
+                                id="no-pathway-ko-chart-message",
+                                className="text-center text-muted"
+                            )
+                        ]
+                    ),
+                    width=12
+                )
+            ])
+        ])
+    ],
+    class_name="shadow-sm border-0 my-3")
 
 # ----------------------------------------
 # Function: get_sample_ko_pathway_bar_chart_layout
@@ -63,37 +66,41 @@ def get_pathway_ko_bar_chart_layout():
 
 def get_sample_ko_pathway_bar_chart_layout():
     """
-    Constructs the layout for the bar chart analyzing KOs in samples for a selected pathway.
-
-    The layout contains:
-    - A dropdown menu for filtering the chart by pathway.
-    - A container to display the bar chart or a placeholder message if no pathway is selected.
+    Constructs a Bootstrap-styled layout for the KO bar chart per sample based on selected pathway.
 
     Returns:
-    - dash.html.Div: A Dash HTML Div component containing the dropdown and chart container.
+        dbc.Card: A Dash Bootstrap Card containing dropdown filter and chart container.
     """
-    return html.Div([
-        # Filter Section: Dropdown to select a pathway
-        html.Div([
-            html.Div('Filter by Pathway', className='menu-text'),  # Label for the dropdown
-            dcc.Dropdown(
-                id='via-dropdown',  # Dropdown ID for interactivity
-                placeholder="Select a pathway",  # Placeholder text for the dropdown
-                style={"margin-bottom": "20px"}  # Adds spacing below the dropdown
-            ),
-        ], className='navigation-menu'),  # CSS class for styling the navigation menu
+    return dbc.Card([
+        dbc.CardHeader("Filter by Pathway", class_name="fw-semibold text-muted"),
 
-        # Chart Container: Displays the bar chart or a message
-        html.Div(
-            id='via-ko-chart-container',  # ID for the chart container
-            children=[
-                # Placeholder message when no chart is available
-                html.P(
-                    "No chart available. Please select a pathway",  # Message displayed when no pathway is selected
-                    id="no-via-ko-chart-message",  # ID for the message
-                    style={"textAlign": "center", "color": "gray"}  # Center-align the text and use gray color
+        dbc.CardBody([
+            dbc.Row([
+                dbc.Col(
+                    dcc.Dropdown(
+                        id='via-dropdown',
+                        placeholder="Select a pathway",
+                        className="mb-3"
+                    ),
+                    width=12
                 )
-            ],
-            className='graph-card'  # CSS class for styling the chart container
-        )
-    ])
+            ]),
+
+            dbc.Row([
+                dbc.Col(
+                    html.Div(
+                        id='via-ko-chart-container',
+                        children=[
+                            html.P(
+                                "No chart available. Please select a pathway",
+                                id="no-via-ko-chart-message",
+                                className="text-center text-muted"
+                            )
+                        ]
+                    ),
+                    width=12
+                )
+            ])
+        ])
+    ],
+    class_name="shadow-sm border-0 my-3")
