@@ -14,12 +14,60 @@ Functions:
 # ----------------------------------------
 
 from dash import html, dcc  # Dash HTML and Core Components
+import dash_bootstrap_components as dbc
 
 # ----------------------------------------
 # Function: get_compound_scatter_layout
 # ----------------------------------------
 
 def get_compound_scatter_layout():
+    """
+    Constructs a Bootstrap-styled layout for the compound scatter plot
+    with dropdown filter for compound class and a dynamic graph container.
+
+    Returns:
+        dbc.Card: A stylized Dash Bootstrap card component.
+    """
+
+    return dbc.Card([
+        dbc.CardHeader("Filter by Compound Class", class_name="fw-bold text-muted"),
+
+        dbc.CardBody([
+            dbc.Row([
+                dbc.Col(
+                    dcc.Dropdown(
+                        id='compound-class-dropdown',
+                        multi=False,
+                        placeholder='Select a Compound Class',
+                        className="mb-3"
+                    ),
+                    width=12
+                )
+            ]),
+            dbc.Row([
+                dbc.Col(
+                    html.Div(
+                        id='compound-scatter-container',
+                        children=[
+                            html.P(
+                                "No graph available. Please select a compound class.",
+                                style={
+                                    "textAlign": "center",
+                                    "color": "gray",
+                                    "fontSize": "16px",
+                                    "marginTop": "20px"
+                                }
+                            )
+                        ],
+                        className='graph-container',
+                        style={"height": "auto", "overflowY": "auto"}
+                    ),
+                    width=12
+                )
+            ])
+        ])
+    ],
+    class_name="shadow-sm border-0 my-3")
     """
     Constructs the layout for the compound scatter plot, including a filter for compound class.
 

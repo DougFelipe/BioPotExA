@@ -14,46 +14,33 @@ The layout includes:
 
 from dash import html, dcc  # Dash components for creating UI
 from utils.filters import create_range_slider  # Utility function to create a range slider
+import dash_bootstrap_components as dbc
 
 # ----------------------------------------
 # Function: get_rank_compounds_layout
 # ----------------------------------------
-
 def get_rank_compounds_layout():
     """
-    Constructs the layout for the ranking chart of samples based on their interaction with compounds.
-
-    Layout includes:
-    - A navigation menu containing a range slider for filtering by compound count range.
-    - A scatter plot to display the ranking of compounds.
-
-    Returns:
-    - dash.html.Div: A container (`Div`) with the ranking chart and the filter.
+    Returns a standardized Bootstrap layout for the ranking chart
+    of compounds based on interaction with samples.
     """
-    # Create a range slider for filtering by compound count range
+
     range_slider = create_range_slider(slider_id='compound-count-range-slider')
 
-    # Define the layout structure
-    return html.Div(
-        [
-            # Navigation menu with the range slider
-            html.Div(
-                [
-                    # Text label for the range slider
-                    html.Div('Filter by Compound Count Range', className='menu-text'),
-                    range_slider  # Range slider component
-                ],
-                className='navigation-menu'  # CSS class for styling the navigation menu
-            ),
-            # Container for the scatter plot
-            html.Div(
-                dcc.Graph(id='rank-compounds-scatter-plot'),  # Graph component for displaying the ranking scatter plot
-                className='graph-container',  # CSS class for styling the graph container
-                style={
-                    'height': 'auto',  # Automatically adjusts the height of the graph container
-                    'overflowY': 'auto'  # Enables vertical scrolling if the content overflows
-                }
-            )
-        ],
-        className='graph-card'  # CSS class for styling the entire layout card
-    )
+    return dbc.Card([
+        dbc.CardHeader("Filter by Compound Count Range", class_name="fw-semibold text-muted"),
+
+        dbc.CardBody([
+            dbc.Row([
+                dbc.Col(range_slider, width=12)
+            ], class_name="mb-4"),
+
+            dbc.Row([
+                dbc.Col(
+                    dcc.Graph(id='rank-compounds-scatter-plot'),
+                    width=12
+                )
+            ])
+        ])
+    ],
+    class_name="shadow-sm border-0 my-3")
