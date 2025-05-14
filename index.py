@@ -123,5 +123,5 @@ def display_page(pathname):
 
 if __name__ == '__main__':
     print("Starting BioRemPP App...")  # <-- Debug print
-    app.run(debug=False, host="0.0.0.0", port=8050)
+    app.run(debug=False, host="0.0.0.0", port=8050) # Production
     #app.run_server(debug=True)  # Development
