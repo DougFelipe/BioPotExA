@@ -14,7 +14,7 @@ The layout includes:
 # ----------------------------------------
 
 from dash import html, dcc  # Dash components for building the UI
-
+import dash_bootstrap_components as dbc
 # ----------------------------------------
 # Function: get_sample_ko_scatter_layout
 # ----------------------------------------

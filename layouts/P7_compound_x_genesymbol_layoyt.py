@@ -13,58 +13,66 @@ The layout is designed to dynamically update based on user selections.
 # ----------------------------------------
 
 from dash import html, dcc  # Dash HTML and core components for layout creation
-
+import dash_bootstrap_components as dbc
 # ----------------------------------------
 # Function: get_gene_compound_scatter_layout
 # ----------------------------------------
-
 def get_gene_compound_scatter_layout():
     """
-    Constructs the layout for the scatter plot showing the relationship between genes and compounds.
+    Constructs a Bootstrap-based layout for the scatter plot showing gene-compound relationships.
 
-    The layout includes:
-    - Dropdown filters for selecting compound names and gene symbols.
-    - A container for the scatter plot or an initial message if no filters are applied.
+    Includes:
+    - Two dropdown filters: one for compound names and another for gene symbols.
+    - A display container for the scatter plot or a message.
 
     Returns:
-    - dash.html.Div: A Dash HTML Div containing the filters and the graph display area.
+        dbc.Card: A styled layout with filtering controls and graph container.
     """
-    return html.Div(
-        [
-            # Filters Section
-            html.Div(
-                [
-                    # Dropdown for filtering by compound name
-                    html.Div('Filter by Compound Name', className='menu-text'),
+
+    return dbc.Card([
+
+        dbc.CardHeader("Filter by Compound and Gene", class_name="fw-semibold text-muted"),
+
+        dbc.CardBody([
+
+            dbc.Row([
+                dbc.Col([
+                    html.Label("Compound Name", className="form-label text-muted"),
                     dcc.Dropdown(
                         id='p7-compound-dropdown',
-                        multi=True,  # Allows multiple selections
-                        placeholder='Select Compound(s)'  # Placeholder text for the dropdown
-                    ),
-                    # Dropdown for filtering by gene symbol
-                    html.Div('Filter by Gene Symbol', className='menu-text'),
+                        multi=True,
+                        placeholder='Select Compound(s)',
+                        className='mb-3'
+                    )
+                ], md=6),
+
+                dbc.Col([
+                    html.Label("Gene Symbol", className="form-label text-muted"),
                     dcc.Dropdown(
                         id='p7-gene-dropdown',
-                        multi=True,  # Allows multiple selections
-                        placeholder='Select Gene(s)'  # Placeholder text for the dropdown
-                    ),
-                ],
-                className='navigation-menu'  # CSS class for styling the filters section
-            ),
-            # Graph Container
-            html.Div(
-                id='p7-gene-compound-scatter-container',  # Container for the scatter plot or initial message
-                className='graph-container',  # CSS class for styling the graph container
-                style={'height': 'auto', 'overflowY': 'auto'},  # Dynamic height and vertical overflow handling
-                children=html.P(  # Initial message displayed before any filters are applied
-                    "Select compound or gene to view results",
-                    style={
-                        'textAlign': 'center',  # Centers the text
-                        'color': 'gray',  # Gray color for the text
-                        'fontSize': '16px'  # Font size for the message
-                    }
+                        multi=True,
+                        placeholder='Select Gene(s)',
+                        className='mb-3'
+                    )
+                ], md=6),
+            ], class_name="mb-4"),
+
+            dbc.Row([
+                dbc.Col(
+                    html.Div(
+                        id='p7-gene-compound-scatter-container',
+                        style={'height': 'auto', 'overflowY': 'auto'},
+                        children=html.P(
+                            "Select compound or gene to view results",
+                            style={
+                                'textAlign': 'center',
+                                'color': 'gray',
+                                'fontSize': '16px'
+                            }
+                        )
+                    )
                 )
-            )
-        ],
-        className='graph-card'  # CSS class for the overall card layout
-    )
+            ])
+        ])
+    ],
+    class_name="shadow-sm border-0 my-3")

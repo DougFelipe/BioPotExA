@@ -12,7 +12,7 @@ The layout is designed to allow users to filter and view enzyme activity data ba
 # ----------------------------------------
 
 from dash import html, dcc  # Dash HTML and core components for building UI
-
+import dash_bootstrap_components as dbc
 # ----------------------------------------
 # Function: get_sample_enzyme_activity_layout
 # ----------------------------------------

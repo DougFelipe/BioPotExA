@@ -14,7 +14,7 @@ Functionality:
 # ----------------------------------------
 
 from dash import html, dcc  # Dash components for layout and interactivity
-
+import dash_bootstrap_components as dbc
 # ----------------------------------------
 # Function: get_pathway_heatmap_layout
 # ----------------------------------------

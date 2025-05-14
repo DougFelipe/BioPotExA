@@ -14,7 +14,7 @@ The layout features:
 # ----------------------------------------
 
 from dash import html, dcc  # Dash components for building layouts and interactivity
-
+import dash_bootstrap_components as dbc
 # ----------------------------------------
 # Function: get_gene_sample_heatmap_layout
 # ----------------------------------------

@@ -12,54 +12,53 @@ The layout includes:
 # ----------------------------------------
 
 from dash import html, dcc  # Dash components for HTML and interactive elements
+import dash_bootstrap_components as dbc  # Bootstrap components for styling
 
 # ----------------------------------------
 # Function: get_rank_compounds_layout
 # ----------------------------------------
+from dash import dcc, html
+import dash_bootstrap_components as dbc
 
 def get_rank_compounds_layout():
     """
-    Constructs the layout for the compound ranking graph based on the number of samples interacting with them. 
-    Includes a dropdown filter for selecting a compound class.
+    Constructs a Bootstrap-styled layout for the compound ranking graph with dropdown filtering.
 
     Returns:
-        dash.html.Div: A Div containing the ranking graph and the compound class filter.
+        dbc.Card: A styled layout with compound class filter and ranking graph area.
     """
-    return html.Div(
-        [
-            # Filter Section
-            html.Div(
-                [
-                    # Filter label
-                    html.Div('Filter by Compound Class', className='menu-text'),
+    return dbc.Card([
+        dbc.CardHeader("Filter by Compound Class", class_name="fw-semibold text-muted"),
 
-                    # Dropdown for compound class selection
+        dbc.CardBody([
+            dbc.Row([
+                dbc.Col(
                     dcc.Dropdown(
-                        id='p5-compound-class-dropdown',  # Unique ID for the dropdown
-                        multi=False,  # Allows single selection
-                        placeholder='Select a Compound Class'  # Placeholder text for the dropdown
-                    )
-                ],
-                className='navigation-menu'  # CSS class for styling the filter section
-            ),
+                        id='p5-compound-class-dropdown',
+                        multi=False,
+                        placeholder='Select a Compound Class',
+                        className="mb-4"
+                    ),
+                    width=12
+                )
+            ]),
 
-            # Graph or Placeholder Container
-            html.Div(
-                id='p5-compound-ranking-container',  # ID for dynamic updates to the container
-                children=[
-                    # Placeholder message when no data is available
-                    html.P(
-                        "No data available. Please select a compound class.",  # Placeholder text
-                        id="p5-placeholder-message",  # Unique ID for the placeholder message
-                        style={"textAlign": "center", "color": "gray"}  # Center-aligned gray text
-                    )
-                ],
-                className='graph-container',  # CSS class for styling the graph container
-                style={
-                    'height': 'auto',  # Automatic height adjustment
-                    'overflowY': 'auto'  # Enables vertical scrolling if content overflows
-                }
-            )
-        ],
-        className='graph-card'  # CSS class for styling the overall layout
-    )
+            dbc.Row([
+                dbc.Col(
+                    html.Div(
+                        id='p5-compound-ranking-container',
+                        children=[
+                            html.P(
+                                "No data available. Please select a compound class.",
+                                id="p5-placeholder-message",
+                                style={"textAlign": "center", "color": "gray"}
+                            )
+                        ],
+                        style={'height': 'auto', 'overflowY': 'auto'}
+                    ),
+                    width=12
+                )
+            ])
+        ])
+    ],
+    class_name="shadow-sm border-0 my-3")

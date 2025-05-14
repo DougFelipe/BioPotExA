@@ -17,7 +17,7 @@ Functions:
 # ----------------------------------------
 
 from dash import html, dcc  # Dash components for HTML structure and interactivity
-
+import dash_bootstrap_components as dbc
 # ----------------------------------------
 # Function: get_sample_upset_layout
 # ----------------------------------------

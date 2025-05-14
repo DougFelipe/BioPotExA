@@ -14,32 +14,28 @@ The layout includes:
 # ----------------------------------------
 
 from dash import html, dcc  # Dash components for HTML and interactive content
-
+import dash_bootstrap_components as dbc
 # ----------------------------------------
 # Function: get_sample_reference_heatmap_layout
 # ----------------------------------------
 
 def get_sample_reference_heatmap_layout():
     """
-    Constructs the layout for the heatmap displaying the relationship between samples and referenceAG.
-
-    The layout:
-    - Contains a `dcc.Graph` component for rendering the heatmap.
-    - Includes styling to handle overflow and ensure responsiveness.
+    Constructs a Bootstrap-based layout for the heatmap between samples and reference agencies.
 
     Returns:
-    - dash.html.Div: A container (`html.Div`) wrapping the heatmap graph.
+        dbc.Card: A styled layout containing the heatmap graph with responsive overflow handling.
     """
-    return html.Div(
-        [
-            html.Div(
-                dcc.Graph(id='sample-reference-heatmap'),  # Heatmap graph component with a unique ID
-                className='graph-container',  # CSS class for styling the graph container
-                style={  # Inline styles for responsiveness
-                    'height': 'auto',  # Automatically adjusts height
-                    'overflowY': 'auto'  # Enables vertical scrolling if content exceeds height
-                }
-            )
-        ],
-        className='graph-card'  # CSS class for styling the overall container
-    )
+    return dbc.Card([
+        dbc.CardBody([
+            dbc.Row([
+                dbc.Col(
+                    dcc.Graph(id='sample-reference-heatmap'),
+                    width=12
+                )
+            ])
+        ], style={
+            "height": "auto",
+            "overflowY": "auto"
+        })
+    ], class_name="shadow-sm border-0 my-3")

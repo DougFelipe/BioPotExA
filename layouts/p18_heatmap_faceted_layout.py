@@ -17,7 +17,7 @@ from dash import html, dcc  # Dash components for creating the layout and graphs
 # ----------------------------------------
 # Function: get_toxicity_heatmap_layout
 # ----------------------------------------
-
+import dash_bootstrap_components as dbc
 def get_toxicity_heatmap_layout():
     """
     Constructs the layout for the Toxicity Heatmap with facets.

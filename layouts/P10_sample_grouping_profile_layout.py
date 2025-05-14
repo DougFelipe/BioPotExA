@@ -15,7 +15,7 @@ Functions:
 # ----------------------------------------
 
 from dash import html, dcc  # Dash components for building UI
-
+import dash_bootstrap_components as dbc
 # ----------------------------------------
 # Function: get_sample_groups_layout
 # ----------------------------------------

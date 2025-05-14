@@ -17,7 +17,7 @@ from dash import dcc, html  # Dash components for graphs and HTML structure
 # ----------------------------------------
 # Function: get_gene_compound_network_layout
 # ----------------------------------------
-
+import dash_bootstrap_components as dbc
 def get_gene_compound_network_layout():
     """
     Constructs the layout for the Gene-Compound Interaction Network graph.

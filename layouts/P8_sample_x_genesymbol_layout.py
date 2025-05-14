@@ -15,48 +15,64 @@ The layout consists of:
 # ----------------------------------------
 
 from dash import html, dcc  # Dash HTML and DCC components for UI construction
-
+import dash_bootstrap_components as dbc
 # ----------------------------------------
 # Function: get_sample_gene_scatter_layout
 # ----------------------------------------
-
 def get_sample_gene_scatter_layout():
     """
-    Constructs the layout for the scatter plot visualizing the relationship 
-    between samples and genes, including filters for both.
+    Constructs a Bootstrap-based layout for the scatter plot visualizing 
+    the relationship between samples and genes, with filters for both.
 
     Returns:
-    - html.Div: A Dash HTML Div containing dropdown menus for filtering and 
-      a container for the scatter plot or placeholder text.
+        dbc.Card: Layout container with filters and scatter plot section.
     """
-    return html.Div([
-        # Section for dropdown menus
-        html.Div([
-            # Sample filter dropdown
-            html.Div('Filter by Sample', className='menu-text'),  # Label for sample dropdown
-            dcc.Dropdown(
-                id='p8-sample-dropdown',  # ID for the sample dropdown
-                multi=True,  # Allows multiple selections
-                placeholder='Select samples'  # Placeholder text
-            ),
 
-            # Gene filter dropdown
-            html.Div('Filter by Gene', className='menu-text', style={'margin-top': '20px'}),  # Label for gene dropdown
-            dcc.Dropdown(
-                id='p8-gene-dropdown',  # ID for the gene dropdown
-                multi=True,  # Allows multiple selections
-                placeholder='Select genes'  # Placeholder text
-            )
-        ], className='navigation-menu'),  # CSS class for styling the filter section
+    return dbc.Card([
 
-        # Container for the scatter plot or placeholder message
-        html.Div(
-            id='p8-sample-gene-scatter-container',  # ID for the scatter plot container
-            children=html.P(
-                "Select sample or gene to view results",  # Placeholder message
-                style={'textAlign': 'center', 'color': 'gray', 'fontSize': '16px'}  # Styling for the placeholder text
-            ),
-            className='graph-container',  # CSS class for styling the container
-            style={'height': 'auto', 'overflowY': 'auto'}  # Ensures auto height and scrollable content
-        )
-    ], className='graph-card')  # CSS class for styling the main card container
+        dbc.CardHeader("Filter by Sample and Gene", class_name="fw-semibold text-muted"),
+
+        dbc.CardBody([
+
+            # Dropdowns agrupados
+            dbc.Row([
+
+                dbc.Col([
+                    html.Label("Sample", className="text-muted mb-1"),
+                    dcc.Dropdown(
+                        id='p8-sample-dropdown',
+                        multi=True,
+                        placeholder='Select samples',
+                        className="mb-3"
+                    )
+                ], md=6),
+
+                dbc.Col([
+                    html.Label("Gene", className="text-muted mb-1"),
+                    dcc.Dropdown(
+                        id='p8-gene-dropdown',
+                        multi=True,
+                        placeholder='Select genes',
+                        className="mb-3"
+                    )
+                ], md=6),
+
+            ], class_name="gx-3"),
+
+            dbc.Row([
+                dbc.Col(
+                    html.Div(
+                        id='p8-sample-gene-scatter-container',
+                        children=html.P(
+                            "Select sample or gene to view results",
+                            className="text-center text-muted fs-6"
+                        ),
+                        className='graph-container',
+                        style={'height': 'auto', 'overflowY': 'auto'}
+                    ),
+                    width=12
+                )
+            ])
+        ])
+
+    ], class_name="shadow-sm border-0 my-3")

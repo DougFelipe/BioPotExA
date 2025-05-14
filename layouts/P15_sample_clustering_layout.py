@@ -14,7 +14,7 @@ Functions:
 # ----------------------------------------
 
 from dash import html, dcc  # Dash components for building HTML and interactive elements
-
+import dash_bootstrap_components as dbc
 # ----------------------------------------
 # Function: get_sample_clustering_layout
 # ----------------------------------------
