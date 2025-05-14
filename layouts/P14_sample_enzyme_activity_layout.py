@@ -16,48 +16,41 @@ import dash_bootstrap_components as dbc
 # ----------------------------------------
 # Function: get_sample_enzyme_activity_layout
 # ----------------------------------------
-
 def get_sample_enzyme_activity_layout():
     """
-    Constructs the layout for the bar chart of enzyme activity counts per sample.
-
-    The layout includes:
-    - A dropdown menu for filtering by sample.
-    - A container for the bar chart with a placeholder message when no data is available.
-
-    Returns:
-    - dash.html.Div: A Dash HTML Div component containing the dropdown and the bar chart container.
+    Returns a Bootstrap-styled layout for the enzyme activity bar chart per sample,
+    including a dropdown filter and a placeholder for empty data.
     """
-    return html.Div(
-        [
-            # Dropdown menu for sample filtering
-            html.Div(
-                [
-                    html.Div(
-                        'Filter by Sample',  # Title for the dropdown menu
-                        className='menu-text'  # CSS class for styling the title
-                    ),
+
+    return dbc.Card([
+        dbc.CardHeader("Filter by Sample", class_name="fw-semibold text-muted"),
+
+        dbc.CardBody([
+            dbc.Row([
+                dbc.Col(
                     dcc.Dropdown(
-                        id='sample-enzyme-dropdown',  # ID for the dropdown menu
-                        placeholder="Select a Sample",  # Placeholder text for user instruction
+                        id='sample-enzyme-dropdown',
+                        placeholder="Select a Sample",
+                        className="mb-3"
                     ),
-                ],
-                className='navigation-menu'  # CSS class for styling the navigation menu
-            ),
-            
-            # Container for the enzyme activity bar chart
-            html.Div(
-                id='enzyme-bar-chart-container',  # ID for the bar chart container
-                children=[
-                    # Placeholder message when no data is available
-                    html.P(
-                        "No data available. Please select a sample",  # Informational message
-                        id="no-enzyme-bar-chart-message",  # ID for the message element
-                        style={"textAlign": "center", "color": "gray"}  # Centered, gray text style
-                    )
-                ],
-                className='graph-container'  # CSS class for styling the graph container
-            )
-        ],
-        className='graph-card'  # CSS class for styling the overall card container
-    )
+                    width=12
+                )
+            ]),
+            dbc.Row([
+                dbc.Col(
+                    html.Div(
+                        id='enzyme-bar-chart-container',
+                        children=[
+                            html.P(
+                                "No data available. Please select a sample",
+                                id="no-enzyme-bar-chart-message",
+                                className="text-center text-muted"
+                            )
+                        ]
+                    ),
+                    width=12
+                )
+            ])
+        ])
+    ],
+    class_name="shadow-sm border-0 my-3")

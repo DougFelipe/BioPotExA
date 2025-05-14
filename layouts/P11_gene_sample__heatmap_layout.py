@@ -18,56 +18,59 @@ import dash_bootstrap_components as dbc
 # ----------------------------------------
 # Function: get_gene_sample_heatmap_layout
 # ----------------------------------------
-
 def get_gene_sample_heatmap_layout():
     """
-    Builds the layout for the gene-sample heatmap with dynamic messages and conditional rendering.
-
-    The layout includes:
-    - Dropdown filters for selecting a compound pathway and a pathway.
-    - A container for displaying the heatmap or a placeholder message if no data is available.
+    Builds the layout for the gene-sample heatmap with Bootstrap styling,
+    including filters and placeholder with proper muted formatting.
 
     Returns:
-        dash.html.Div: A Div containing the heatmap and its associated filters.
+        dbc.Card: Layout with filters and a heatmap container.
     """
-    return html.Div(
-        [
-            # Filter Section
-            html.Div(
-                [
-                    # Dropdown for selecting a compound pathway
-                    html.Div('Filter by Compound Pathway', className='menu-text'),
+    return dbc.Card([
+
+        dbc.CardHeader("Filter by Compound Pathway and Pathway", class_name="fw-semibold text-muted"),
+
+        dbc.CardBody([
+
+            dbc.Row([
+
+                dbc.Col([
+                    html.Label("Compound Pathway", className="text-muted mb-1"),
                     dcc.Dropdown(
                         id='compound-pathway-dropdown-p11',
-                        multi=False,  # Allows single selection
-                        placeholder='Select a Compound Pathway'  # Placeholder text
-                    ),
+                        multi=False,
+                        placeholder='Select a Compound Pathway',
+                        className="mb-3"
+                    )
+                ], md=6),
 
-                    # Dropdown for selecting a pathway
-                    html.Div('Filter by Pathway', className='menu-text'),
+                dbc.Col([
+                    html.Label("Pathway", className="text-muted mb-1"),
                     dcc.Dropdown(
                         id='pathway-dropdown-p11',
-                        multi=False,  # Allows single selection
-                        placeholder='Select a Pathway'  # Placeholder text
+                        multi=False,
+                        placeholder='Select a Pathway',
+                        className="mb-3"
                     )
-                ],
-                className='navigation-menu'  # CSS class for styling the filter section
-            ),
+                ], md=6)
 
-            # Heatmap Container
-            html.Div(
-                id='gene-sample-heatmap-container',  # Unique ID for the heatmap container
-                children=[
-                    # Placeholder message displayed when no data is available
-                    html.P(
-                        "No data available. Please select a compound pathway and pathway",  # Informative message
-                        id="no-gene-sample-heatmap-message",  # Unique ID for styling or interactivity
-                        style={"textAlign": "center", "color": "gray"}  # Center alignment and gray color for the text
-                    )
-                ],
-                className='graph-container',  # CSS class for the heatmap container
-                style={'height': 'auto', 'overflowY': 'auto'}  # Adjust height and enable vertical scrolling if needed
-            )
-        ],
-        className='graph-card'  # CSS class for the overall graph card container
-    )
+            ], class_name="gx-3"),
+
+            dbc.Row([
+                dbc.Col(
+                    html.Div(
+                        id='gene-sample-heatmap-container',
+                        children=html.P(
+                            "No data available. Please select a compound pathway and pathway.",
+                            className="text-center text-muted fs-6"
+                        ),
+                        className='graph-container',
+                        style={'height': 'auto', 'overflowY': 'auto'}
+                    ),
+                    width=12
+                )
+            ])
+
+        ])
+
+    ], class_name="shadow-sm border-0 my-3")

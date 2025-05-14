@@ -21,54 +21,45 @@ import dash_bootstrap_components as dbc
 
 def get_sample_ko_scatter_layout():
     """
-    Constructs the layout for the scatter plot of KOs in samples for the selected pathway.
-
-    The layout contains:
-    - A navigation menu with a dropdown filter for selecting a pathway.
-    - A container to display the scatter plot or a placeholder message if no data is available.
+    Constructs a Bootstrap-based layout for the scatter plot of KOs in samples by pathway.
 
     Returns:
-        html.Div: A Dash HTML Div component containing the scatter plot and the filter.
+        dbc.Card: A styled layout containing the pathway filter and the scatter plot container.
     """
-    return html.Div(
-        [
-            # Navigation menu with dropdown filter
-            html.Div(
-                [
-                    # Title for the navigation menu
-                    html.Div('Filter by Pathway', className='menu-text'),
+    return dbc.Card([
 
-                    # Dropdown menu for pathway selection
+        dbc.CardHeader("Filter by Pathway", class_name="fw-semibold text-muted"),
+
+        dbc.CardBody([
+
+            dbc.Row([
+                dbc.Col(
                     dcc.Dropdown(
-                        id='pathway-dropdown-p13',  # ID for the dropdown filter
-                        multi=False,  # Single selection allowed
-                        placeholder='Select a Pathway',  # Placeholder text for the dropdown
-                        style={'margin-bottom': '20px'}  # Bottom margin for spacing
-                    )
-                ],
-                className='navigation-menu'  # CSS class for styling the menu
-            ),
+                        id='pathway-dropdown-p13',
+                        multi=False,
+                        placeholder='Select a Pathway',
+                        className='mb-3'
+                    ),
+                    width=12
+                )
+            ]),
 
-            # Container for the scatter plot or default message
-            html.Div(
-                id='scatter-plot-container',  # ID for the scatter plot container
-                children=[
-                    # Default message displayed when no data is available
-                    html.P(
-                        "No data available. Please select a pathway",  # Default message text
-                        id="no-data-message-p13",  # ID for the message
-                        style={
-                            "textAlign": "center",  # Center align the text
-                            "color": "gray"  # Gray color for the message text
-                        }
-                    )
-                ],
-                className='graph-container',  # CSS class for styling the container
-                style={
-                    'height': 'auto',  # Automatically adjusts height
-                    'overflowY': 'auto'  # Enables vertical scrolling if needed
-                }
-            )
-        ],
-        className='graph-card'  # CSS class for styling the overall layout card
-    )
+            dbc.Row([
+                dbc.Col(
+                    html.Div(
+                        id='scatter-plot-container',
+                        children=[
+                            html.P(
+                                "No data available. Please select a pathway.",
+                                id="no-data-message-p13",
+                                className="text-center text-muted"
+                            )
+                        ],
+                        style={'height': 'auto', 'overflowY': 'auto'}
+                    ),
+                    width=12
+                )
+            ])
+        ])
+    ],
+    class_name="shadow-sm border-0 my-3")

@@ -18,56 +18,46 @@ import dash_bootstrap_components as dbc
 # ----------------------------------------
 # Function: get_pathway_heatmap_layout
 # ----------------------------------------
-
 def get_pathway_heatmap_layout():
     """
-    Constructs the layout for the Pathway and Compound Pathway heatmap.
-
-    The layout contains:
-    - A dropdown for filtering by sample.
-    - A placeholder message displayed when no data is available.
+    Constructs a Bootstrap-based layout for the Pathway-Compound heatmap with sample filtering.
 
     Returns:
-        dash.html.Div: A container with the heatmap and filter components.
+        dbc.Card: A styled layout containing the dropdown filter and heatmap container.
     """
-    return html.Div(
-        [
-            # Dropdown filter section
-            html.Div(
-                [
-                    # Filter label
-                    html.Div('Filter by Sample', className='menu-text'),
-                    
-                    # Dropdown for sample selection
-                    dcc.Dropdown(
-                        id='sample-dropdown-p12',  # Unique ID for callback identification
-                        multi=False,  # Allows single selection only
-                        placeholder='Select a Sample'  # Placeholder to guide the user
-                    )
-                ],
-                className='navigation-menu'  # CSS class for styling the menu
-            ),
 
-            # Heatmap container
-            html.Div(
-                id='pathway-heatmap-container',  # Container for the heatmap
-                children=[
-                    # Placeholder message for when no data is available
-                    html.P(
-                        "No data available. Please select a sample",  # Message text
-                        id="placeholder-pathway-heatmap",  # ID for dynamic updates
-                        style={
-                            "textAlign": "center",  # Center-align the text
-                            "color": "gray"  # Gray color for the placeholder text
-                        }
-                    )
-                ],
-                className='graph-container',  # CSS class for the graph container
-                style={
-                    'height': 'auto',  # Automatically adjust height based on content
-                    'overflowY': 'auto'  # Enable vertical scrolling if needed
-                }
-            )
-        ],
-        className='graph-card'  # CSS class for the overall card container
-    )
+    return dbc.Card([
+        dbc.CardHeader("Filter by Sample", class_name="fw-semibold text-muted"),
+
+        dbc.CardBody([
+            dbc.Row([
+                dbc.Col(
+                    dcc.Dropdown(
+                        id='sample-dropdown-p12',
+                        multi=False,
+                        placeholder='Select a Sample',
+                        className='mb-3'
+                    ),
+                    width=12
+                )
+            ]),
+
+            dbc.Row([
+                dbc.Col(
+                    html.Div(
+                        id='pathway-heatmap-container',
+                        children=[
+                            html.P(
+                                "No data available. Please select a sample",
+                                id="placeholder-pathway-heatmap",
+                                className="text-center text-muted",
+                            )
+                        ],
+                        style={'height': 'auto', 'overflowY': 'auto'}
+                    ),
+                    width=12
+                )
+            ])
+        ])
+    ],
+    class_name="shadow-sm border-0 my-3")
