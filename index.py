@@ -33,9 +33,9 @@ from components.pages.help import get_help_layout
 # Import callbacks for application interactivity
 import callbacks.callbacks
 import callbacks.core.merge_feedback_callbacks
-import callbacks.T1_biorempp_callbacks
-import callbacks.T2_hadeg_callbacks
-import callbacks.T3_toxcsm_callbacks
+import callbacks.results_overview.T1_biorempp_callbacks
+import callbacks.results_overview.T2_hadeg_callbacks
+import callbacks.results_overview.T3_toxcsm_callbacks
 import callbacks.P1_COUNT_KO_callbacks
 import callbacks.P2_KO_20PATHWAY_callbacks
 import callbacks.P3_compounds_callbacks
