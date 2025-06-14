@@ -4,6 +4,9 @@
 #Documentação
 /docs
 
+# SH
+*.sh
+
 #Executáveis
 *.bat
 

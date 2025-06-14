@@ -9,9 +9,9 @@ from components.divider import NeonDivider
 from dash import html, dcc
 import dash_bootstrap_components as dbc
 
-from layouts.T1_biorempp import get_biorempp_results_table_layout
-from layouts.T2_hadeg import get_hadeg_results_table_layout
-from layouts.T3_toxcsm import get_toxcsm_results_table_layout
+from layouts.results_overview.T1_biorempp import get_biorempp_results_table_layout
+from layouts.results_overview.T2_hadeg import get_hadeg_results_table_layout
+from layouts.results_overview.T3_toxcsm import get_toxcsm_results_table_layout
 from layouts.P1_KO_COUNT import get_ko_count_bar_chart_layout, get_ko_violin_boxplot_layout
 from layouts.P2_KO_20PATHWAY import get_pathway_ko_bar_chart_layout, get_sample_ko_pathway_bar_chart_layout
 from layouts.P3_compounds_layout import get_compound_scatter_layout
