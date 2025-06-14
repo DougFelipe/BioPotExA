@@ -31,7 +31,7 @@ from components.pages.help import get_help_layout
 
 
 # Import callbacks for application interactivity
-import callbacks.callbacks
+import callbacks.core.callbacks
 import callbacks.core.merge_feedback_callbacks
 import callbacks.results_overview.T1_biorempp_callbacks
 import callbacks.results_overview.T2_hadeg_callbacks
@@ -54,12 +54,12 @@ import callbacks.intersections_and_groups.P15_sample_clustering_callbacks
 import callbacks.intersections_and_groups.P16_sample_upset_callbacks
 import callbacks.entity_interactions.P17_gene_compound_network_callbacks
 import callbacks.toxicity.p18_heatmap_faceted_callbacks
-from callbacks.download_tables import download_merged_csv  # Callback for downloading merged data
-from callbacks.analysis_suggestions_callbacks import register_analysis_suggestions_callbacks
+from callbacks.core.download_tables import download_merged_csv  # Callback for downloading merged data
+from callbacks.dashboard.analysis_suggestions_callbacks import register_analysis_suggestions_callbacks
 from callbacks.dashboard.eda_report_callbacks import generate_eda_report, toggle_eda_alert
 
 
-from callbacks.callbacks import handle_progress  # Callback for progress handling
+from callbacks.core.callbacks import handle_progress  # Callback for progress handling
 
 
 
