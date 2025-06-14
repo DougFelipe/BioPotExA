@@ -4,6 +4,9 @@
 #Documentação
 /docs
 
+# VsCode
+.vscode/
+
 # SH
 *.sh
 
