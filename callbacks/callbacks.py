@@ -26,9 +26,9 @@ import pandas as pd
 from app import app
 
 # Layouts
-from layouts.about import get_about_layout
-from layouts.data_analysis import get_dataAnalysis_layout
-from layouts.results import get_results_layout
+from components.pages.about import get_about_layout
+from components.pages.data_analysis import get_dataAnalysis_layout
+from components.pages.results import get_results_layout
 
 # ✅ Novos Módulos
 from callbacks.core.upload_handlers import handle_upload_or_example as handle_upload_or_example_logic

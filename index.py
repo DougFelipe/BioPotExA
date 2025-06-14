@@ -16,18 +16,18 @@ from dash import Dash, dcc, html, Input, Output
 
 # Import custom header component
 from components.header import Header
-from components.documentation import get_features_layout  
-from components.bioremediation import get_bioremediation_layout  
-from components.regulatory_agencies import get_regulatory_agencies_layout  
-from components.contact import get_contact_page
-from components.publications import get_publications_layout
+from components.pages.documentation import get_features_layout  
+from components.pages.bioremediation import get_bioremediation_layout  
+from components.pages.regulatory_agencies import get_regulatory_agencies_layout  
+from components.pages.contact import get_contact_page
+from components.pages.publications import get_publications_layout
 
 
 # Import layout functions for different pages
-from layouts.about import get_about_layout  
-from layouts.data_analysis import get_dataAnalysis_page  
-from layouts.results import get_results_layout  
-from layouts.help import get_help_layout  
+from components.pages.about import get_about_layout  
+from components.pages.data_analysis import get_dataAnalysis_page  
+from components.pages.results import get_results_layout  
+from components.pages.help import get_help_layout  
 
 
 # Import callbacks for application interactivity
