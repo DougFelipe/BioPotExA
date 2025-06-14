@@ -36,8 +36,8 @@ import callbacks.core.merge_feedback_callbacks
 import callbacks.results_overview.T1_biorempp_callbacks
 import callbacks.results_overview.T2_hadeg_callbacks
 import callbacks.results_overview.T3_toxcsm_callbacks
-import callbacks.P1_COUNT_KO_callbacks
-import callbacks.P2_KO_20PATHWAY_callbacks
+import callbacks.gene_pathway_analysis.P1_COUNT_KO_callbacks
+import callbacks.gene_pathway_analysis.P2_KO_20PATHWAY_callbacks
 import callbacks.P3_compounds_callbacks
 import callbacks.P4_rank_compounds_callbacks
 import callbacks.P5_rank_compounds_callbacks
@@ -48,7 +48,7 @@ import callbacks.P9_sample_x_referenceAG_callbacks
 import callbacks.P10_sample_grouping_profile_callbacks
 import callbacks.P11_gene_sample__heatmap_callbacks
 import callbacks.P12_compaund_pathway_callbacks
-import callbacks.P13_gene_sample_scatter_callbacks
+import callbacks.gene_pathway_analysis.P13_gene_sample_scatter_callbacks
 import callbacks.P14_sample_enzyme_activity_callbacks
 import callbacks.P15_sample_clustering_callbacks
 import callbacks.P16_sample_upset_callbacks
