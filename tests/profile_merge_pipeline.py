@@ -1,6 +1,8 @@
 import sys
 import os
 
+from utils.intersections_and_groups.clustering_dendrogram_processing import calculate_sample_clustering
+
 # Adiciona o diretório raiz ao sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
@@ -28,7 +30,6 @@ from utils.data_processing import (
     process_pathway_data,
     get_ko_per_sample_for_pathway,
     count_unique_enzyme_activities,
-    calculate_sample_clustering,
     prepare_upsetplot_data
 )
 

@@ -20,8 +20,8 @@ from dash.dependencies import Input, Output, State  # Dash callback dependencies
 from dash.exceptions import PreventUpdate  # Exception to halt updates if inputs are invalid
 import pandas as pd  # Data manipulation library
 from app import app  # Main Dash app instance
-from utils.data_processing import calculate_sample_clustering  # Utility for clustering calculation
-from utils.plot_processing import plot_dendrogram  # Utility for generating dendrogram plots
+from utils.intersections_and_groups.clustering_dendrogram_processing import calculate_sample_clustering  # Utility for clustering calculation
+from utils.intersections_and_groups.clustering_dendrogram_plot import plot_dendrogram  # Utility for generating dendrogram plots
 
 # ----------------------------------------
 # Callback: Update Sample Clustering Graph

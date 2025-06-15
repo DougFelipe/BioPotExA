@@ -54,8 +54,6 @@ Notes:
 # -------------------------------
 # Imports
 # -------------------------------
-import scipy.spatial.distance as ssd
-import scipy.cluster.hierarchy as sch
 
 # Data manipulation and handling DataFrame structures.
 import pandas as pd
@@ -66,8 +64,6 @@ import plotly.express as px
 from plotly.subplots import make_subplots
 
 # Scipy modules for distance calculations and hierarchical clustering.
-import scipy.spatial.distance as ssd
-import scipy.cluster.hierarchy as sch
 # -------------------------------
 # Functions for Data Merging
 # -------------------------------
@@ -725,35 +721,6 @@ def count_unique_enzyme_activities(merged_df, sample):
     return enzyme_count.sort_values('unique_ko_count', ascending=False)
 
 
-
-# -------------------------------
-# P15: Function: calculate_sample_clustering
-# -------------------------------
-
-
-def calculate_sample_clustering(input_df, distance_metric, method):
-    """
-    Calculates a clustering matrix based on user input.
-
-    Parameters:
-    - input_df (pd.DataFrame): The input data containing 'sample' and 'ko' columns.
-    - distance_metric (str): The selected distance metric (e.g., 'euclidean', 'cityblock').
-    - method (str): The selected clustering method (e.g., 'single', 'ward').
-
-    Returns:
-    - np.ndarray: The clustering matrix calculated using the given metric and method.
-    """
-    # Pivot the input data to create a sample-by-KO matrix.
-    pivot_df = input_df.pivot_table(index='sample', columns='ko', aggfunc='size', fill_value=0)
-
-    # Calculate the distance matrix using the specified metric.
-    distance_matrix = ssd.pdist(pivot_df, metric=distance_metric)
-
-    # Perform hierarchical clustering using the specified method.
-    clustering_matrix = sch.linkage(distance_matrix, method=method)
-
-    # Return the clustering matrix.
-    return clustering_matrix
 
 
 
