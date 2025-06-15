@@ -621,69 +621,7 @@ def plot_sample_reference_heatmap(df):
 
     return fig
 
-# -------------------------------
-# Function: plot_sample_groups (P10_group_by_class)
-# -------------------------------
 
-def plot_sample_groups(df):
-    """
-    Creates a scatter plot with subplots to visualize sample groups based on compound interactions.
-
-    Parameters:
-    - df (pd.DataFrame): A DataFrame containing sample groups. Expected columns include 'sample', 
-                         'compoundname', and 'grupo' (group identifier).
-
-    Returns:
-    - plotly.graph_objects.Figure: A Plotly figure with subplots for each group.
-    """
-    # Extract unique groups from the DataFrame
-    unique_groups = df['grupo'].unique()
-
-    # Create subplots for each group
-    fig = make_subplots(
-        rows=1,
-        cols=len(unique_groups),
-        shared_yaxes=True,  # Share the y-axis across subplots
-        subplot_titles=unique_groups,
-        horizontal_spacing=0.1
-    )
-
-    # Add scatter plots for each group
-    for i, group in enumerate(unique_groups):
-        group_df = df[df['grupo'] == group]
-        group_df = group_df.dropna(subset=['sample', 'compoundname'])  # Drop rows with missing values
-
-        fig.add_trace(
-            go.Scatter(
-                x=group_df['sample'],
-                y=group_df['compoundname'],
-                mode='markers',
-                name=group,
-                showlegend=False
-            ),
-            row=1,
-            col=i+1
-        )
-
-    # Update the layout for the entire figure
-    fig.update_layout(
-        title_text='Sample Groups by Compound Interaction',
-        template='simple_white',
-        showlegend=False,
-        height=600,
-        width=300 * len(unique_groups),  # Dynamically adjust width based on group count
-    )
-
-    # Configure axes
-    fig.update_yaxes(
-        tickangle=0,
-        tickfont=dict(size=10)
-    )
-
-    for i in range(1, len(unique_groups) + 1):
-        fig.update_xaxes(row=1, col=i, tickangle=45, title_text=None)
-
-    return fig
 
 
 # ----------------------------------------

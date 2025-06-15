@@ -95,26 +95,37 @@ app.layout = html.Div(
 def display_page(pathname):
     logging.info(f"[INFO] Rota acessada: {pathname}")
 
-    if pathname == '/data-analysis':
-        layout = get_dataAnalysis_page()
-    elif pathname == '/results':
-        layout = get_results_layout()
-    elif pathname == '/help':
-        layout = get_help_layout()
-    elif pathname == '/documentation':
-        layout = get_features_layout()
-    elif pathname == '/bioremediation':
-        layout = get_bioremediation_layout()
-    elif pathname == '/regulatory':
-        layout = get_regulatory_agencies_layout()
-    elif pathname == '/contact':
-        layout = get_contact_page()
-    elif pathname == '/publications':  # Nova rota
-        layout = get_publications_layout()
-    else:
-        layout = get_about_layout()
+    try:
+        if pathname == '/data-analysis':
+            layout = get_dataAnalysis_page()
+        elif pathname == '/results':
+            layout = get_results_layout()
+        elif pathname == '/help':
+            layout = get_help_layout()
+        elif pathname == '/documentation':
+            layout = get_features_layout()
+        elif pathname == '/bioremediation':
+            layout = get_bioremediation_layout()
+        elif pathname == '/regulatory':
+            layout = get_regulatory_agencies_layout()
+        elif pathname == '/contact':
+            layout = get_contact_page()
+        elif pathname == '/publications':
+            layout = get_publications_layout()
+        else:
+            layout = get_about_layout()
 
-    logging.info(f"[INFO] Layout retornado: {layout.__class__.__name__}")
+        logging.info(f"[INFO] Layout carregado: {layout.__class__.__name__}")
+        return layout
+
+    except Exception as e:
+        logging.exception("Erro ao renderizar a página:")
+        return html.Div([
+            html.H3("Erro ao carregar a página"),
+            html.P("Ocorreu um problema ao tentar exibir o conteúdo solicitado."),
+            html.Pre(str(e))
+        ])
+
     return layout
 
 # ----------------------------------------

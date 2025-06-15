@@ -16,6 +16,17 @@ from dash import Dash  # Core Dash class for creating the application
 import dash_bootstrap_components as dbc  # Bootstrap components for enhanced UI styling
 
 # ----------------------------------------
+# Logging Configuration (Global)
+# ----------------------------------------
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="[%(asctime)s] [%(levelname)s] %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S"
+)
+
+# ----------------------------------------
 # Dash Application Instance
 # ----------------------------------------
 

@@ -23,15 +23,16 @@ from utils.data_processing import (
     process_compound_gene_ranking,
     process_gene_compound_association,
     process_gene_sample_association,
-    process_sample_reference_heatmap,
-    group_by_class,
-    minimize_groups,
+    process_sample_reference_heatmap,   
     process_gene_sample_data,
     process_pathway_data,
     get_ko_per_sample_for_pathway,
     count_unique_enzyme_activities,
     prepare_upsetplot_data
 )
+
+
+from utils.intersections_and_groups.sample_grouping_by_compound_class_processing import group_by_class, minimize_groups
 
 from utils.data_validator import validate_and_process_input
 
