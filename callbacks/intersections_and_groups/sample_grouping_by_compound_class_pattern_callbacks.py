@@ -29,7 +29,7 @@ import pandas as pd
 from app import app
 
 # Utility functions for data processing and visualization
-from utils.data_processing import merge_input_with_database, group_by_class, minimize_groups
+from utils.data_processing import merge_input_with_database
 from utils.intersections_and_groups.sample_grouping_by_compound_class_plot import plot_sample_groups
 from utils.intersections_and_groups.sample_grouping_by_compound_class_processing import group_by_class, minimize_groups
 

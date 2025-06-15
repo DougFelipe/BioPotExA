@@ -428,32 +428,6 @@ def process_compound_ranking(merged_df):
     return compound_ranking
 
 # -------------------------------
-# Function: process_compound_gene_ranking (P6_rank_genes)
-# -------------------------------
-
-def process_compound_gene_ranking(merged_df):
-    """
-    Processes the data to calculate the number of unique genes associated with each compound.
-
-    Parameters:
-    - merged_df (pd.DataFrame): The DataFrame resulting from merging with the database.
-
-    Returns:
-    - pd.DataFrame: A DataFrame containing the compounds and the count of unique genes, 
-                    sorted in descending order of gene count.
-    """
-    # Group by 'compoundname' and calculate the number of unique 'genesymbol' entries for each compound.
-    compound_gene_ranking = merged_df.groupby('compoundname')['genesymbol'].nunique().reset_index(name='num_genes')
-    
-    # Sort the results by the number of unique genes in descending order.
-    compound_gene_ranking = compound_gene_ranking.sort_values(by='num_genes', ascending=False)
-    
-    # Return the resulting ranked DataFrame.
-    return compound_gene_ranking
-
-
-
-# -------------------------------
 # P7: Function: process_gene_compound_association
 # -------------------------------
 
