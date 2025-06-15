@@ -21,7 +21,6 @@ from app import app
 
 import os
 from utils.data_validator import validate_and_process_input
-from utils.data_loader import load_database
 
 MAX_UPLOAD_SIZE_MB = 5  # 5 MB limit
 
