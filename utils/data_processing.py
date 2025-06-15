@@ -328,30 +328,6 @@ def process_gene_sample_association(merged_df):
 
 
 
-# -------------------------------
-# Function: count_unique_enzyme_activities
-# -------------------------------
-
-def count_unique_enzyme_activities(merged_df, sample):
-    """
-    Counts the unique enzyme activities associated with a selected sample.
-
-    Parameters:
-    - merged_df (pd.DataFrame): The DataFrame resulting from merging input data with the database.
-    - sample (str): The name of the selected sample.
-
-    Returns:
-    - pd.DataFrame: A DataFrame containing the enzyme activities and the count of unique KOs 
-                    associated with each activity, sorted in descending order.
-    """
-    # Filter the DataFrame for the selected sample.
-    filtered_df = merged_df[merged_df['sample'] == sample]
-    
-    # Group by 'enzyme_activity' and count unique 'ko' values.
-    enzyme_count = filtered_df.groupby('enzyme_activity')['ko'].nunique().reset_index(name='unique_ko_count')
-    
-    # Sort the results by the count of unique KOs in descending order.
-    return enzyme_count.sort_values('unique_ko_count', ascending=False)
 
 
 
