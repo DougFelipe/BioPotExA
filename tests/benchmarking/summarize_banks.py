@@ -10,7 +10,7 @@ BANK_PATHS = {
     "BioRemPP": os.path.abspath("data/database.csv"),
     "HADEG": os.path.abspath("data/database_hadegDB.csv"),
     "ToxCSM": os.path.abspath("data/database_toxcsm.csv"),
-    "KEGG": os.path.abspath("data/kegg_20degradation_pathways.csv"),
+    "KEGG": os.path.abspath("data/kegg_degradation_pathways.csv"),
 }
 
 # Pasta de saída com o mesmo nome do script

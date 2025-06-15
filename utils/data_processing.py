@@ -123,7 +123,7 @@ def merge_with_kegg(input_df: pd.DataFrame, kegg_filepath: str = None) -> pd.Dat
 
     Parameters:
         input_df (pd.DataFrame): The input DataFrame to be merged.
-        kegg_filepath (str, optional): Path to the KEGG data file. Defaults to 'data/kegg_20degradation_pathways.csv'.
+        kegg_filepath (str, optional): Path to the KEGG data file. Defaults to 'data/kegg_degradation_pathways.csv'.
 
     Returns:
         pd.DataFrame: The resulting merged DataFrame.
@@ -141,7 +141,7 @@ def merge_with_kegg(input_df: pd.DataFrame, kegg_filepath: str = None) -> pd.Dat
         The 'ko' column must be present in both the input and KEGG pathway DataFrames.
     """
     if kegg_filepath is None:
-        kegg_filepath = os.path.join("data", "kegg_20degradation_pathways.csv")
+        kegg_filepath = os.path.join("data", "kegg_degradation_pathways.csv")
 
     if not os.path.exists(kegg_filepath):
         raise FileNotFoundError(f"KEGG file not found: {kegg_filepath}")

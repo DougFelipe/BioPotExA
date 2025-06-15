@@ -8,7 +8,7 @@ BASE_DIR = os.path.abspath(os.path.join(os.getcwd(), "../../"))
 DATA_FILE = os.path.join(BASE_DIR, "data", "genomasBD.txt")
 DATABASE_PATHS = {
     "BioRemPP": os.path.join(BASE_DIR, "data", "database.csv"),
-    "KEGG": os.path.join(BASE_DIR, "data", "kegg_20degradation_pathways.csv"),
+    "KEGG": os.path.join(BASE_DIR, "data", "kegg_degradation_pathways.csv"),
     "HADEG": os.path.join(BASE_DIR, "data", "database_hadegDB.csv"),
     "ToxCSM": os.path.join(BASE_DIR, "data", "database_toxcsm.csv"),
 }
