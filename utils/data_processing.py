@@ -248,63 +248,7 @@ def merge_with_toxcsm(merged_df: pd.DataFrame, toxcsm_filepath: str = None) -> p
     return final_merged_df
 
 
-"""
-P1_COUNT_KO
------------
-This script contains utility functions to process KO (KEGG Orthology) data, 
-including counting unique KOs per sample, pathway, or other groupings. 
-It also includes basic preprocessing functions for compound data visualization.
-"""
 
-# -------------------------------
-# Function: process_ko_data
-# -------------------------------
-
-def process_ko_data(merged_df):
-    """
-    Processes KO data to count unique KOs for each sample.
-
-    Parameters:
-    - merged_df: DataFrame with merged data or a list of dictionaries convertible to a DataFrame.
-
-    Returns:
-    - pd.DataFrame: A DataFrame containing the count of unique KOs per sample, sorted in descending order.
-    """
-    if isinstance(merged_df, list):
-        # Convert the list of dictionaries to a pandas DataFrame if needed.
-        merged_df = pd.DataFrame(merged_df)
-    elif not isinstance(merged_df, pd.DataFrame):
-        # Raise an error if the input is not a DataFrame or a list of dictionaries.
-        raise ValueError("The merged_df argument must be a pandas DataFrame or a list of dictionaries.")
-    
-    # Count unique 'ko' values for each 'sample'.
-    ko_count = merged_df.groupby('sample')['ko'].nunique().reset_index(name='ko_count')
-    
-    # Sort the results by the count of KOs in descending order.
-    ko_count_sorted = ko_count.sort_values('ko_count', ascending=False)
-    
-    # Return the sorted DataFrame with KO counts.
-    return ko_count_sorted
-
-# -------------------------------
-# Function: process_ko_data_violin
-# -------------------------------
-
-def process_ko_data_violin(df):
-    """
-    Processes KO data for generating violin plots by counting unique KOs per sample.
-
-    Parameters:
-    - df: DataFrame containing input data.
-
-    Returns:
-    - pd.DataFrame: A DataFrame with the count of unique KOs per sample.
-    """
-    # Count unique 'ko' values for each 'sample'.
-    ko_count_per_sample = df.groupby('sample')['ko'].nunique().reset_index(name='ko_count')
-    
-    # Return the DataFrame with KO counts.
-    return ko_count_per_sample
 
 # -------------------------------
 # Function: count_ko_per_pathway

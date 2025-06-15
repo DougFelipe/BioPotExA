@@ -28,8 +28,9 @@ import pandas as pd  # Data manipulation
 
 # Local imports
 from app import app  # Dash application instance
-from utils.data_processing import merge_input_with_database, process_ko_data, process_ko_data_violin
-from utils.plot_processing import plot_ko_count, create_violin_plot
+from utils.data_processing import merge_input_with_database
+from utils.gene_pathway_analysis.gene_counts_across_samples_processing import process_ko_data, process_ko_data_violin
+from utils.gene_pathway_analysis.gene_counts_across_samples_plot import plot_ko_count, create_violin_plot
 
 # ----------------------------------------
 # Callback: Update KO Count Bar Chart
