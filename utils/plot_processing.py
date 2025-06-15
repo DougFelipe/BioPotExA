@@ -32,8 +32,7 @@ from dash import html, dcc, Input, Output, State
 # UpSetPlot for specialized visualizations
 from upsetplot import from_memberships, plot
 
-# Project-Specific Utilities
-from utils.data_processing import prepare_upsetplot_data, merge_input_with_database
+
 
 # Matplotlib Backend Configuration
 set_matplotlib_backend('Agg')  # Set the backend to 'Agg' for non-interactive rendering
@@ -998,72 +997,3 @@ def plot_dendrogram(clustering_matrix, sample_labels, distance_metric, method):
 
     # Return the image as an HTML component for Dash
     return html.Img(src=f'data:image/png;base64,{encoded_image}', style={"width": "100%"})
-
-
-#P16
-# my_dash_app/utils/plot_processing.py
-from upsetplot import from_memberships, plot
-import matplotlib.pyplot as plt
-import pandas as pd
-import base64
-import io
-from sklearn.preprocessing import LabelEncoder
-
-
-# ----------------------------------------
-# Function: render_upsetplot (P16)
-# ----------------------------------------
-
-def render_upsetplot(stored_data, selected_samples):
-    """
-    Renders an UpSet Plot based on selected samples and their associated KOs after merging with the database.
-
-    Parameters:
-    - stored_data (dict): Stored data in dictionary format, typically from Dash callbacks.
-    - selected_samples (list): List of selected samples to include in the plot.
-
-    Returns:
-    - str: Base64-encoded PNG image of the UpSet Plot.
-    """
-    # Ensure at least two samples are selected
-    if len(selected_samples) < 2:
-        raise ValueError("At least two samples must be selected to render the UpSet Plot.")
-
-    # Convert stored data to a DataFrame
-    input_df = pd.DataFrame(stored_data)
-
-    # Merge input data with the database
-    merged_data = merge_input_with_database(input_df)
-
-    # Filter data by selected samples
-    filtered_df = merged_data[merged_data['sample'].isin(selected_samples)]
-
-    # Ensure unique KOs for each sample
-    filtered_df = filtered_df[['sample', 'ko']].drop_duplicates()
-
-    # Prepare memberships for the UpSet Plot
-    memberships = filtered_df.groupby('ko')['sample'].apply(list).apply(lambda x: list(set(x)))
-
-    # Convert memberships to UpSet Plot data format
-    upset_data = from_memberships(memberships).groupby(from_memberships(memberships).index).sum()
-
-    # Validate and adjust index dynamically for proper labeling
-    try:
-        num_levels = len(upset_data.index[0]) if isinstance(upset_data.index[0], tuple) else 1
-        index_names = selected_samples[:num_levels]
-        new_index = pd.MultiIndex.from_tuples(upset_data.index, names=index_names)
-        upset_data.index = new_index
-    except Exception as e:
-        raise ValueError("Failed to create MultiIndex. Data may be malformed or inconsistent.")
-
-    # Generate the plot
-    plt.figure(figsize=(10, 6))
-    plot(upset_data, orientation='horizontal')
-    buffer = io.BytesIO()
-    plt.savefig(buffer, format='png', bbox_inches='tight')
-    plt.close()
-    buffer.seek(0)
-
-    # Encode the plot as a Base64 string
-    image_data = base64.b64encode(buffer.read()).decode('utf-8')
-    return f"data:image/png;base64,{image_data}"

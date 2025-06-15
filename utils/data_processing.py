@@ -755,29 +755,6 @@ def calculate_sample_clustering(input_df, distance_metric, method):
     # Return the clustering matrix.
     return clustering_matrix
 
-# -------------------------------
-# P16: Function: prepare_upsetplot_data
-# -------------------------------
-
-def prepare_upsetplot_data(merged_data, selected_samples):
-    """
-    Prepares data for generating an UpSet plot based on merged input and database.
-
-    Parameters:
-    - merged_data (pd.DataFrame): The merged data containing 'sample' and 'ko' columns.
-    - selected_samples (list): A list of selected samples.
-
-    Returns:
-    - pd.DataFrame: A DataFrame containing the selected samples and their unique KOs.
-    """
-    # Filter the data to include only the selected samples.
-    filtered_df = merged_data[merged_data['sample'].isin(selected_samples)]
-
-    # Drop duplicate entries for 'sample' and 'ko' pairs.
-    unique_ko_df = filtered_df.drop_duplicates(subset=['sample', 'ko'])
-
-    # Return the filtered DataFrame.
-    return unique_ko_df
 
 
 def get_merged_toxcsm_data(input_data):
