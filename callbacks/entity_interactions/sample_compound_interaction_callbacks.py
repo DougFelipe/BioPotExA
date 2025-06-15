@@ -21,7 +21,7 @@ from dash.dependencies import Input, Output, State  # Input, Output, and State f
 from dash.exceptions import PreventUpdate  # Prevent unnecessary updates
 import pandas as pd  # Data manipulation
 from app import app  # Dash app instance
-from utils.data_processing import merge_input_with_database  # Data processing utility
+from utils.core.data_processing import merge_input_with_database  # Data processing utility
 from utils.entity_interactions.sample_compound_interaction_plot import plot_compound_scatter  # Function to create scatter plots
 
 # ----------------------------------------

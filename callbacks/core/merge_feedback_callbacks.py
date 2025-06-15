@@ -13,7 +13,7 @@ from dash.exceptions import PreventUpdate
 from dash.dependencies import Input, Output, State
 
 from app import app
-from utils.data_processing import (
+from utils.core.data_processing import (
     merge_input_with_database,
     merge_input_with_database_hadegDB,
     merge_with_toxcsm

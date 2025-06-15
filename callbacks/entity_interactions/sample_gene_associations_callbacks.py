@@ -20,7 +20,7 @@ from dash.exceptions import PreventUpdate  # Prevents unnecessary updates when c
 import pandas as pd  # For data manipulation
 
 from app import app  # Dash application instance
-from utils.data_processing import merge_input_with_database  # Utility for merging input data with a database
+from utils.core.data_processing import merge_input_with_database  # Utility for merging input data with a database
 from utils.entity_interactions.sample_gene_associations_plot import plot_sample_gene_scatter  # Function to create scatter plots
 
 # ----------------------------------------

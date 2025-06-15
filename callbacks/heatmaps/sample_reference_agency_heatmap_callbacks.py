@@ -20,7 +20,7 @@ from dash.exceptions import PreventUpdate  # Exception to prevent unnecessary up
 import pandas as pd  # Pandas for data manipulation
 
 from app import app  # Application instance
-from utils.data_processing import merge_input_with_database
+from utils.core.data_processing import merge_input_with_database
 from utils.heatmaps.sample_reference_agency_heatmap_processing import process_sample_reference_heatmap  # Heatmap processing utility
 from utils.heatmaps.sample_reference_agency_heatmap_plot import plot_sample_reference_heatmap  
 # Callback: Update Sample x ReferenceAG Heatmap

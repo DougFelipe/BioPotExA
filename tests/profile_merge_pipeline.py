@@ -11,7 +11,7 @@ import pstats
 import pandas as pd
 import plotly.express as px
 
-from utils.data_processing import (
+from utils.core.data_processing import (
     merge_input_with_database,
     merge_with_kegg,
     merge_with_toxcsm,
@@ -34,7 +34,7 @@ from utils.data_processing import (
 
 from utils.intersections_and_groups.sample_grouping_by_compound_class_processing import group_by_class, minimize_groups
 
-from utils.data_validator import validate_and_process_input
+from utils.core.data_validator import validate_and_process_input
 
 output_img = "output_plot.png"
 

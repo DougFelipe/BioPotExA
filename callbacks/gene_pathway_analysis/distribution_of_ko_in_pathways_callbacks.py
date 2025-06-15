@@ -34,7 +34,7 @@ import pandas as pd
 
 # Application and utilities
 from app import app  # Dash application instance
-from utils.data_processing import (
+from utils.core.data_processing import (
     merge_with_kegg  # Merges input data with KEGG databas
 )
 from utils.gene_pathway_analysis.distribution_of_ko_in_pathways_plot import (

@@ -23,7 +23,7 @@ from dash.exceptions import PreventUpdate  # Prevent callback execution under sp
 import pandas as pd  # Data manipulation
 
 from app import app  # Main Dash application instance
-from utils.data_processing import merge_input_with_database  # Utility function to merge input data with the database
+from utils.core.data_processing import merge_input_with_database  # Utility function to merge input data with the database
 from utils.rankings.ranking_samples_by_compound_interaction_processing import process_sample_ranking  # Function to process sample ranking
 from utils.rankings.ranking_samples_by_compound_interaction_plot import plot_sample_ranking  # Function to plot sample ranking
 

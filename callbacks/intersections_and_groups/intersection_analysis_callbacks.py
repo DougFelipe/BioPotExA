@@ -22,7 +22,7 @@ from dash import callback, html  # Dash core components and HTML components
 from dash.dependencies import Input, Output, State  # Input, Output, and State for callback functionality
 from dash.exceptions import PreventUpdate  # Exception to prevent unnecessary updates
 from app import app  # Application instance
-from utils.data_processing import merge_input_with_database  # Utility for merging input data with the database
+from utils.core.data_processing import merge_input_with_database  # Utility for merging input data with the database
 from utils.intersections_and_groups.intersection_analysis_plot import render_upsetplot  # Utility for rendering the UpSet plot
 import pandas as pd  # Pandas for data manipulation
 

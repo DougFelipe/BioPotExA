@@ -21,7 +21,7 @@ from dash.exceptions import PreventUpdate  # Exception to prevent unnecessary up
 import pandas as pd  # Data manipulation
 from app import app  # Dash application instance
 from utils.toxicity.toxicity_prediction_heatmap_processing import process_heatmap_data
-from utils.data_processing import get_merged_toxcsm_data  # Utility functions for data processing
+from utils.core.data_processing import get_merged_toxcsm_data  # Utility functions for data processing
 from utils.toxicity.toxicity_prediction_heatmap_plot import plot_heatmap_faceted  # Utility function for generating the heatmap plot
 
 # ----------------------------------------

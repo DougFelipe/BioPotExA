@@ -4,7 +4,7 @@ import pandas as pd
 from utils.intersections_and_groups.intersection_analysis_processing import (
     prepare_upsetplot_data,
 )
-from utils.data_validator import validate_and_process_input
+from utils.core.data_validator import validate_and_process_input
 
 
 # --------- Helpers para simular conteúdo base64 ----------

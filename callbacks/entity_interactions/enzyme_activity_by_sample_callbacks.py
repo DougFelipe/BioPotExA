@@ -21,7 +21,7 @@ from dash.dependencies import Input, Output, State  # Input/Output/State for cal
 from dash.exceptions import PreventUpdate  # Exception to stop unnecessary updates
 import pandas as pd  # Data manipulation
 from app import app  # Dash app instance
-from utils.data_processing import merge_input_with_database
+from utils.core.data_processing import merge_input_with_database
 from utils.entity_interactions.enzyme_activity_by_sample_plot import plot_enzyme_activity_counts  # Importing the plotting function
 from utils.entity_interactions.enzyme_activity_by_sample_processing import count_unique_enzyme_activities  # Importing the processing function
 

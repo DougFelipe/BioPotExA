@@ -3,7 +3,7 @@ import dash_bootstrap_components as dbc  # For UI components like alerts
 from dash import html, dcc, callback, callback_context, dash_table  # Core Dash components
 from dash.dependencies import Input, Output, State  # Input, Output, and State dependencies for callbacks
 from dash.exceptions import PreventUpdate  # To prevent unnecessary updates
-from utils.table_utils import create_table_from_dataframe  # Utility function for table creation
+from utils.core.table_utils import create_table_from_dataframe  # Utility function for table creation
 
 def update_table(stored_data):
     """

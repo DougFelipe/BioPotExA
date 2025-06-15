@@ -8,7 +8,7 @@ from upsetplot import from_memberships, plot
 from utils.intersections_and_groups.intersection_analysis_processing import (
     prepare_upsetplot_data,
 )
-from utils.data_processing import merge_input_with_database
+from utils.core.data_processing import merge_input_with_database
 
 # Configure logger
 logger = logging.getLogger(__name__)

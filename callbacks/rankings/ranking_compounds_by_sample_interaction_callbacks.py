@@ -21,7 +21,7 @@ import pandas as pd  # Data manipulation
 
 # Importing the main app instance and utility functions
 from app import app
-from utils.data_processing import merge_input_with_database
+from utils.core.data_processing import merge_input_with_database
 from utils.rankings.ranking_compounds_by_sample_interaction_processing import process_compound_ranking
 from utils.rankings.ranking_compounds_by_sample_interaction_plot import plot_compound_ranking
 

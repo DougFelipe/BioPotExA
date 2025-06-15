@@ -1,6 +1,6 @@
 import logging
 import pandas as pd
-from utils.data_processing import merge_input_with_database
+from utils.core.data_processing import merge_input_with_database
 
 # Configuração básica de logging
 logging.basicConfig(level=logging.INFO)

@@ -3,7 +3,7 @@ import io
 from dash import callback, Output, Input, State, dcc, html
 from dash.exceptions import PreventUpdate
 from ydata_profiling import ProfileReport
-from utils.data_processing import merge_input_with_database
+from utils.core.data_processing import merge_input_with_database
 import dash
 
 

@@ -21,7 +21,7 @@ import pandas as pd  # Pandas for data manipulation
 
 # Application instance and utilities
 from app import app  # Dash application instance
-from utils.data_processing import merge_with_kegg  # Function to merge user data with KEGG pathways
+from utils.core.data_processing import merge_with_kegg  # Function to merge user data with KEGG pathways
 from utils.gene_pathway_analysis.gene_distribution_among_samples_plot import plot_sample_ko_scatter  # Function to create scatter plot
 from utils.gene_pathway_analysis.gene_distribution_among_samples_processing import get_ko_per_sample_for_pathway
 

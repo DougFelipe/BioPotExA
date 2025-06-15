@@ -34,7 +34,7 @@ from dash.exceptions import PreventUpdate
 import pandas as pd
 import dash_bootstrap_components as dbc
 
-from utils.data_processing import merge_input_with_database, merge_input_with_database_hadegDB, merge_with_toxcsm
+from utils.core.data_processing import merge_input_with_database, merge_input_with_database_hadegDB, merge_with_toxcsm
 
 
 @callback(

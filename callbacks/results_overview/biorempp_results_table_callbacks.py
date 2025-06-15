@@ -16,8 +16,8 @@ The callback:
 
 from dash import Input, Output, State, callback, html  # Dash components for callbacks and HTML rendering
 import pandas as pd  # Pandas for data manipulation
-from utils.table_utils import create_table_from_dataframe  # Utility function to create tables
-from utils.data_processing import merge_input_with_database  # Utility function to process and merge data
+from utils.core.table_utils import create_table_from_dataframe  # Utility function to create tables
+from utils.core.data_processing import merge_input_with_database  # Utility function to process and merge data
 
 # ----------------------------------------
 # Callback: Render BioRemPP Results Table

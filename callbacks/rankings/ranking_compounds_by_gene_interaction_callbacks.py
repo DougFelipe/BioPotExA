@@ -20,7 +20,7 @@ from dash.exceptions import PreventUpdate  # Exception to prevent unnecessary up
 import pandas as pd  # Data manipulation with pandas
 
 from app import app  # Application instance
-from utils.data_processing import merge_input_with_database  # Function to merge input data with the database
+from utils.core.data_processing import merge_input_with_database  # Function to merge input data with the database
 from utils.rankings.ranking_compounds_by_gene_interaction_processing import process_compound_gene_ranking  # Function to process compound gene ranking
 from utils.rankings.ranking_compounds_by_gene_interaction_plot import plot_compound_gene_ranking  # Function to plot compound gene ranking
 
