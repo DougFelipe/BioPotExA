@@ -498,31 +498,7 @@ def process_pathway_data(merged_df):
     # Return the grouped DataFrame with KO counts.
     return grouped_df
 
-# -------------------------------
-# Function: get_ko_per_sample_for_pathway
-# -------------------------------
 
-def get_ko_per_sample_for_pathway(merged_df, selected_pathway):
-    """
-    Filters the data to return the unique KOs associated with each sample for a selected pathway.
-
-    Parameters:
-    - merged_df (pd.DataFrame): The DataFrame resulting from merging with KEGG data.
-    - selected_pathway (str): The selected metabolic pathway to filter data.
-
-    Returns:
-    - pd.DataFrame: A DataFrame containing 'sample' and 'genesymbol' for the selected pathway.
-                    Returns an empty DataFrame if no data is found.
-    """
-    # Filter the DataFrame for the selected pathway.
-    filtered_df = merged_df[merged_df['pathname'] == selected_pathway]
-    
-    # If the filtered DataFrame is empty, return a DataFrame with specified columns but no data.
-    if filtered_df.empty:
-        return pd.DataFrame(columns=['sample', 'genesymbol'])
-    
-    # Drop duplicates and return a DataFrame with 'sample' and 'genesymbol' columns.
-    return filtered_df[['sample', 'genesymbol']].drop_duplicates()
 
 # -------------------------------
 # Function: count_unique_enzyme_activities
