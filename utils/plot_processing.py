@@ -329,51 +329,6 @@ def plot_sample_ranking(sample_ranking_df):
 
 
 
-# -------------------------------
-# Function: plot_compound_ranking (P5_rank_compounds)
-# -------------------------------
-
-def plot_compound_ranking(compound_ranking_df):
-    """
-    Creates a bar chart to visualize the ranking of compounds based on the number of unique samples associated.
-
-    Parameters:
-    - compound_ranking_df (pd.DataFrame): A DataFrame containing compounds and the count of unique samples.
-                                          Expected columns: 'compoundname', 'num_samples'.
-
-    Returns:
-    - plotly.graph_objects.Figure: A Plotly bar chart object showing the compound rankings.
-    """
-    # Sort the DataFrame by the number of samples in descending order
-    compound_ranking_df = compound_ranking_df.sort_values(by='num_samples', ascending=False)
-
-    # Create the bar chart with text labels displaying the sample counts
-    fig = px.bar(
-        compound_ranking_df,
-        x='compoundname',
-        y='num_samples',
-        text='num_samples',  # Display sample counts on the bars
-        title='Ranking of Compounds by Sample Interaction',
-        template='simple_white'
-    )
-
-    # Update trace and layout for better visualization
-    fig.update_traces(
-        textposition='auto',  # Automatically position the text labels
-        marker=dict(color='steelblue')  # Set the bar color
-    )
-    fig.update_layout(
-        xaxis_title='Compound',
-        yaxis_title='Number of Samples',
-        xaxis=dict(
-            categoryorder='total descending',  # Order compounds by descending sample count
-            tickangle=45  # Rotate x-axis labels for readability
-        ),
-        uniformtext_minsize=10,  # Ensure a minimum text size
-        uniformtext_mode='hide'  # Hide text labels that do not fit
-    )
-
-    return fig
 
 
 # -------------------------------

@@ -403,29 +403,6 @@ def process_sample_ranking(merged_df):
     # Return the resulting ranked DataFrame.
     return sample_ranking
 
-# -------------------------------
-# Function: process_compound_ranking (P5_rank_compounds)
-# -------------------------------
-
-def process_compound_ranking(merged_df):
-    """
-    Processes the data to calculate the number of unique samples associated with each compound.
-
-    Parameters:
-    - merged_df (pd.DataFrame): The DataFrame resulting from merging with the database.
-
-    Returns:
-    - pd.DataFrame: A DataFrame containing the compounds and the count of unique samples, 
-                    sorted in descending order of sample count.
-    """
-    # Group by 'compoundname' and calculate the number of unique 'sample' entries for each compound.
-    compound_ranking = merged_df.groupby('compoundname')['sample'].nunique().reset_index(name='num_samples')
-    
-    # Sort the results by the number of unique samples in descending order.
-    compound_ranking = compound_ranking.sort_values(by='num_samples', ascending=False)
-    
-    # Return the resulting ranked DataFrame.
-    return compound_ranking
 
 # -------------------------------
 # P7: Function: process_gene_compound_association
