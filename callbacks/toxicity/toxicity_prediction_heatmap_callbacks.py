@@ -20,8 +20,9 @@ from dash import callback, Input, Output, State  # Dash callback and component i
 from dash.exceptions import PreventUpdate  # Exception to prevent unnecessary updates
 import pandas as pd  # Data manipulation
 from app import app  # Dash application instance
-from utils.data_processing import process_heatmap_data, get_merged_toxcsm_data  # Utility functions for data processing
-from utils.plot_processing import plot_heatmap_faceted  # Utility function for generating the heatmap plot
+from utils.toxicity_prediction_heatmap_processing import process_heatmap_data
+from utils.data_processing import get_merged_toxcsm_data  # Utility functions for data processing
+from utils.toxicity_prediction_heatmap_plot import plot_heatmap_faceted  # Utility function for generating the heatmap plot
 
 # ----------------------------------------
 # Callback for Faceted Heatmap Update

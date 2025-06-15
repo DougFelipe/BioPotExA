@@ -56,13 +56,13 @@ def teste_local():
     print("[INFO] Dados carregados com sucesso!")
 
     db_path = os.path.join("..", "data", "database.csv")
-    kegg_path = os.path.join("..", "data", "kegg_20degradation_pathways.xlsx")
+    kegg_path = os.path.join("..", "data", "kegg_degradation_pathways.xlsx")
     tox_path = os.path.join("..", "data", "database_toxcsm.xlsx")
 
     print("[INFO] Mesclando com database.csv...")
     merged_1 = merge_input_with_database(input_data, database_filepath=db_path)
 
-    print("[INFO] Mesclando com kegg_20degradation_pathways.xlsx...")
+    print("[INFO] Mesclando com kegg_degradation_pathways.xlsx...")
     merged_2 = merge_with_kegg(merged_1, kegg_path=kegg_path)
 
     print("[INFO] Mesclando com database_toxcsm.xlsx...")
@@ -78,7 +78,7 @@ def teste_local():
     print("[INFO] Executando análises complementares de agrupamento...")
 
     count_ko_per_pathway(merged_2)
-    count_ko_per_sample_for_pathway(merged_2, "Hydrocarbon degradation")
+    count_ko_per_sample_for_pathway(merged_2, "Hydrocarbon degradation")d
     process_sample_ranking(merged_3)
     process_compound_ranking(merged_3)
 
