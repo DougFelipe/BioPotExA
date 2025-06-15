@@ -14,8 +14,8 @@ If no data is available, it returns an empty graph with an appropriate message.
 
 from dash import callback, Output, Input, State  # Dash callback components for interactivity
 from app import app  # Dash application instance
-from utils.data_processing import prepare_gene_compound_network_data  # Utility to process network data
-from utils.plot_processing import generate_gene_compound_network  # Utility to generate the network graph
+from utils.entity_interactions.gene_compound_interaction_network_processing import prepare_gene_compound_network_data  # Utility to process network data
+from utils.entity_interactions.gene_compound_interaction_network_plot import generate_gene_compound_network  # Utility to generate the network graph
 import plotly.graph_objects as go  # Plotly for creating graph components
 
 # ----------------------------------------
