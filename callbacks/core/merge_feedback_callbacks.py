@@ -1,8 +1,4 @@
 # callbacks/core/merge_feedback_callbacks.py
-"""
-Handles real-time merge operations with BioRemPP, HADEG, and ToxCSM databases,
-records execution time, and controls interface state update.
-"""
 
 import time
 import logging
@@ -16,7 +12,8 @@ from app import app
 from utils.core.data_processing import (
     merge_input_with_database,
     merge_input_with_database_hadegDB,
-    merge_with_toxcsm
+    merge_with_toxcsm,
+    merge_with_kegg
 )
 from callbacks.core.feedback_alerts import create_alert
 
@@ -74,7 +71,24 @@ def handle_merge_and_feedback(n_clicks, stored_data):
         errors.append(error_msg)
         merged_biorempp = None
 
-    # MERGE 2: HADEG
+    # MERGE 2: KEGG (requires BioRemPP merge)
+    if merged_biorempp is not None:
+        try:
+            logger.info("Starting merge with KEGG...")
+            start = time.time()
+            _ = merge_with_kegg(merged_biorempp.copy())
+            merge_times['KEGG'] = round(time.time() - start, 2)
+            logger.info("KEGG merge completed in %.2fs", merge_times['KEGG'])
+        except Exception as e:
+            error_msg = f"KEGG merge failed: {str(e)}"
+            logger.error(error_msg)
+            errors.append(error_msg)
+    else:
+        msg = "KEGG merge skipped due to BioRemPP merge failure."
+        logger.warning(msg)
+        errors.append(msg)
+
+    # MERGE 3: HADEG
     try:
         logger.info("Starting merge with HADEG...")
         start = time.time()
@@ -86,7 +100,7 @@ def handle_merge_and_feedback(n_clicks, stored_data):
         logger.error(error_msg)
         errors.append(error_msg)
 
-    # MERGE 3: ToxCSM (depends on BioRemPP)
+    # MERGE 4: ToxCSM (requires BioRemPP merge)
     if merged_biorempp is not None:
         try:
             logger.info("Starting merge with ToxCSM...")
@@ -115,6 +129,7 @@ def handle_merge_and_feedback(n_clicks, stored_data):
         html.P("✅ All merges completed successfully.", style={'marginBottom': '5px'}),
         html.Ul([
             html.Li(f"BioRemPP: {merge_times.get('BioRemPP', '-'):.2f}s"),
+            html.Li(f"KEGG: {merge_times.get('KEGG', '-'):.2f}s"),
             html.Li(f"HADEG: {merge_times.get('HADEG', '-'):.2f}s"),
             html.Li([
                 f"ToxCSM: {merge_times.get('ToxCSM', '-'):.2f}s",
