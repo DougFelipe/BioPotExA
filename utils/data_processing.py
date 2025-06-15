@@ -250,57 +250,6 @@ def merge_with_toxcsm(merged_df: pd.DataFrame, toxcsm_filepath: str = None) -> p
 
 
 
-# -------------------------------
-# Function: count_ko_per_pathway
-# -------------------------------
-
-def count_ko_per_pathway(merged_df):
-    """
-    Counts unique KOs for each pathway in each sample.
-
-    Parameters:
-    - merged_df: DataFrame resulting from merging with KEGG data.
-
-    Returns:
-    - pd.DataFrame: A DataFrame containing the count of unique KOs per pathway for each sample.
-
-    Raises:
-    - KeyError: If the 'pathname' column is not present in the input DataFrame.
-    """
-    # Check if the 'pathname' column exists in the DataFrame.
-    if 'pathname' not in merged_df.columns:
-        print("The available columns in the DataFrame are:", merged_df.columns)
-        raise KeyError("'pathname' column not found in the DataFrame.")
-    
-    # Group by 'sample' and 'pathname', counting unique 'ko' values.
-    pathway_count = merged_df.groupby(['sample', 'pathname'])['ko'].nunique().reset_index(name='unique_ko_count')
-    
-    # Return the DataFrame with KO counts per pathway.
-    return pathway_count
-
-# -------------------------------
-# Function: count_ko_per_sample_for_pathway
-# -------------------------------
-
-def count_ko_per_sample_for_pathway(merged_df, selected_pathway):
-    """
-    Counts unique KOs for a specific pathway in each sample.
-
-    Parameters:
-    - merged_df: DataFrame resulting from merging with KEGG data.
-    - selected_pathway: The selected pathway to filter data.
-
-    Returns:
-    - pd.DataFrame: A DataFrame containing the count of unique KOs per sample for the selected pathway.
-    """
-    # Filter the DataFrame to include only the selected pathway.
-    filtered_df = merged_df[merged_df['pathname'] == selected_pathway]
-    
-    # Group by 'sample', counting unique 'ko' values.
-    sample_count = filtered_df.groupby('sample')['ko'].nunique().reset_index(name='unique_ko_count')
-    
-    # Sort the results by KO count in descending order.
-    return sample_count.sort_values('unique_ko_count', ascending=False)
 
 # -------------------------------
 # Function: process_compound_data

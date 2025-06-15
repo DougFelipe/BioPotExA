@@ -1,13 +1,15 @@
 """
 P2_KO_20PATHWAY_callbacks.py
 ----------------------------
-This script defines callbacks for a Dash web application to handle interactions related to 
-KO (KEGG Orthology) analysis and visualization across pathways and samples. The functionalities include:
+This script defines callbacks for a Dash web application to handle
+interactions related to KO (KEGG Orthology) analysis and visualization
+across pathways and samples.
+The functionalities include:
 - Initializing dropdown options for pathways and samples.
 - Updating charts displaying KO counts for selected samples and pathways.
-
 Functions:
-1. `initialize_pathway_sample_dropdown`: Initializes the sample dropdown menu.
+1. `initialize_pathway_sample_dropdown`: Initializes the sample dropdown
+   menu.
 2. `update_pathway_ko_chart`: Updates the KO chart for a selected sample.
 3. `initialize_via_dropdown`: Initializes the pathway dropdown menu.
 4. `update_via_ko_chart`: Updates the KO chart for a selected pathway.
@@ -23,7 +25,7 @@ Dependencies:
 # ----------------------------------------
 
 # Dash modules for callbacks and components
-from dash import callback, html, dcc
+from dash import html, dcc
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate  # Prevent updates when no valid input is provided
 
@@ -33,15 +35,16 @@ import pandas as pd
 # Application and utilities
 from app import app  # Dash application instance
 from utils.data_processing import (
-    merge_with_kegg,  # Merges input data with KEGG database
-    count_ko_per_pathway,  # Counts KOs per pathway
-    count_ko_per_sample_for_pathway  # Counts KOs per sample for a specific pathway
+    merge_with_kegg  # Merges input data with KEGG databas
 )
-from utils.plot_processing import (
-    plot_pathway_ko_counts,  # Generates a bar chart for KOs per pathway
-    plot_sample_ko_counts  # Generates a bar chart for KOs per sample
+from utils.gene_pathway_analysis.distribution_of_ko_in_pathways_plot import (
+    plot_pathway_ko_counts,  # Plots KO counts per pathway for a sample
+    plot_sample_ko_counts  # Plots KO counts per sample for a specific pathway
 )
-
+from utils.gene_pathway_analysis.distribution_of_ko_in_pathways_processing import (
+    count_ko_per_pathway,  # Counts unique KOs for each pathway
+    count_ko_per_sample_for_pathway  # Counts unique KOs for a specific pathway in each sample
+)
 # ----------------------------------------
 # Callback: Initialize the sample dropdown
 # ----------------------------------------
