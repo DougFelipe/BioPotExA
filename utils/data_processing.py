@@ -348,27 +348,7 @@ def process_sample_reference_heatmap(merged_df):
 
 
 
-# -------------------------------
-# P12: Function: process_pathway_data
-# -------------------------------
 
-def process_pathway_data(merged_df):
-    """
-    Processes the data to generate a DataFrame grouped by pathway, compound pathway, and sample, 
-    counting the number of unique KOs.
-
-    Parameters:
-    - merged_df (pd.DataFrame): The DataFrame resulting from merging input data with the database.
-
-    Returns:
-    - pd.DataFrame: A DataFrame grouped by 'Pathway', 'compound_pathway', and 'sample' 
-                    with the count of unique KOs.
-    """
-    # Group by 'Pathway', 'compound_pathway', and 'sample' and count unique 'ko' values.
-    grouped_df = merged_df.groupby(['Pathway', 'compound_pathway', 'sample'])['ko'].nunique().reset_index(name='ko_count')
-    
-    # Return the grouped DataFrame with KO counts.
-    return grouped_df
 
 
 
