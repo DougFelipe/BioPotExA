@@ -22,7 +22,7 @@ import pandas as pd  # Pandas for data manipulation
 # App instance and utility imports
 from app import app  # Main Dash app instance
 from utils.data_processing import merge_input_with_database  # Utility for data merging
-from utils.plot_processing import plot_gene_compound_scatter  # Utility for creating scatter plots
+from utils.entity_interactions.gene_compound_interaction_plot import plot_gene_compound_scatter  # Function to create scatter plots
 
 # ----------------------------------------
 # Callback: Initialize Dropdown Options
