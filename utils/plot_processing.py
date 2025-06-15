@@ -253,66 +253,6 @@ def plot_sample_gene_scatter(df):
 
     return fig
 
-# -------------------------------
-# Function: plot_sample_reference_heatmap (P9_sample_reference_heatmap)
-# -------------------------------
-
-def plot_sample_reference_heatmap(df):
-    """
-    Creates a heatmap to visualize the count of 'compoundname' for each combination of samples and reference AG.
-
-    Parameters:
-    - df (pd.DataFrame): A pivoted DataFrame containing counts of compounds for combinations 
-                         of 'sample' and 'referenceAG'. The index should represent 'referenceAG' 
-                         and columns should represent 'sample'.
-
-    Returns:
-    - plotly.graph_objects.Figure: A Plotly heatmap object.
-    """
-    # Base dimensions for the heatmap
-    base_height = 400
-    base_width = 400
-    extra_height_per_label = 20  # Additional height per label on the y-axis
-    extra_width_per_label = 20   # Additional width per label on the x-axis
-
-    # Calculate dynamic chart dimensions based on the number of labels
-    num_labels_x = len(df.columns)  # Number of labels on the x-axis
-    num_labels_y = len(df.index)    # Number of labels on the y-axis
-    height = base_height + (num_labels_y * extra_height_per_label)
-    width = base_width + (num_labels_x * extra_width_per_label)
-
-    # Create the heatmap
-    fig = px.imshow(
-        df,
-        labels=dict(x="Sample", y="Reference AG", color="Compound Count"),
-        x=df.columns,
-        y=df.index,
-        color_continuous_scale="Viridis",
-        title="Heatmap of Samples vs Reference AG"
-    )
-
-    # Update chart layout to ensure visibility of all labels
-    fig.update_layout(
-        xaxis=dict(
-            title=dict(text="Sample", standoff=50),  # Add spacing for x-axis title
-            tickangle=45,
-            tickfont=dict(size=10),
-            automargin=True
-        ),
-        yaxis=dict(
-            title=dict(text="Reference AG", standoff=50),  # Add spacing for y-axis title
-            tickfont=dict(size=10),
-            automargin=True
-        ),
-        margin=dict(l=200, b=200)  # Adjust margins for long labels
-    )
-
-    return fig
-
-
-
-
-
 
 
 

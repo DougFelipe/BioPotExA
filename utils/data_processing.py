@@ -321,30 +321,6 @@ def process_gene_sample_association(merged_df):
     # Return the resulting ranked DataFrame.
     return gene_sample_association
 
-# -------------------------------
-# P9: Function: process_sample_reference_heatmap
-# -------------------------------
-
-def process_sample_reference_heatmap(merged_df):
-    """
-    Processes the data to calculate the count of 'compoundname' for each combination of 'sample' and 'referenceAG'.
-
-    Parameters:
-    - merged_df (pd.DataFrame): The DataFrame resulting from merging with the database.
-
-    Returns:
-    - pd.DataFrame: A pivoted DataFrame suitable for creating a heatmap.
-    """
-    # Group by 'sample' and 'referenceAG', counting unique 'compoundname' entries.
-    heatmap_df = merged_df.groupby(['sample', 'referenceAG'])['compoundname'].nunique().reset_index()
-    
-    # Pivot the grouped DataFrame to create a matrix with 'referenceAG' as rows and 'sample' as columns.
-    heatmap_pivot = heatmap_df.pivot(index='referenceAG', columns='sample', values='compoundname').fillna(0)
-    
-    # Return the pivoted DataFrame.
-    return heatmap_pivot
-
-
 
 
 
