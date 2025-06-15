@@ -23,8 +23,9 @@ import pandas as pd  # Data manipulation
 
 # Application-specific imports
 from app import app  # Main Dash application instance
-from utils.data_processing import merge_input_with_database_hadegDB, process_gene_sample_data  # Data processing utilities
-from utils.plot_processing import plot_sample_gene_heatmap  # Plot generation utility
+from utils.data_processing import merge_input_with_database_hadegDB
+from utils.heatmaps.gene_sample_heatmap_plot import plot_sample_gene_heatmap  # Heatmap plotting utility
+from utils.heatmaps.gene_sample_heatmap_processing import process_gene_sample_data  # Data processing for heatmaps
 
 # ----------------------------------------
 # Callback: Initialize Compound Pathway Dropdown

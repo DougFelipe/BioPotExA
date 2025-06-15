@@ -312,63 +312,6 @@ def plot_sample_reference_heatmap(df):
 
 
 
-# ----------------------------------------
-# Function: plot_sample_gene_heatmap (P11)
-# ----------------------------------------
-
-def plot_sample_gene_heatmap(grouped_df):
-    """
-    Creates a heatmap to visualize the relationship between genes and samples with KO counts.
-    Handles empty cells by replacing them with a default value to ensure consistent visuals.
-
-    Parameters:
-    - grouped_df (pd.DataFrame): A DataFrame grouped by 'Gene' and 'sample', containing the KO count. 
-                                 Expected columns: 'Gene', 'sample', 'ko_count'.
-
-    Returns:
-    - plotly.graph_objects.Figure: A Plotly heatmap object.
-    """
-    # Pivot the DataFrame to create a matrix with 'Gene' as rows and 'sample' as columns
-    pivot_df = grouped_df.pivot(index='Gene', columns='sample', values='ko_count')
-
-    # Replace NaN values with 0 to handle empty cells
-    pivot_df = pivot_df.fillna(0)
-
-    # Create the heatmap
-    fig = px.imshow(
-        pivot_df,
-        color_continuous_scale='Oranges',  # Use an orange color scale
-        labels=dict(x="Sample", y="Gene", color="KO Count"),
-        title="Heatmap of Ortholog Counts by Sample",
-        zmin=0,  # Set minimum value for the color scale
-        zmax=pivot_df.max().max()  # Set maximum value for the color scale
-    )
-
-    # Update layout for better visualization
-    fig.update_layout(
-        xaxis=dict(
-            title='Sample',
-            tickangle=45,  # Rotate x-axis labels
-            automargin=True
-        ),
-        yaxis=dict(
-            title='Gene',
-            automargin=True
-        ),
-        coloraxis_colorbar=dict(
-            title="KO Count",
-            tickvals=list(range(int(grouped_df['ko_count'].min()), int(grouped_df['ko_count'].max()) + 1)),
-            ticktext=list(range(int(grouped_df['ko_count'].min()), int(grouped_df['ko_count'].max()) + 1))
-        ),
-        plot_bgcolor='white',  # Set background color to white
-        paper_bgcolor='white'  # Set layout background color to white
-    )
-
-    # Remove grid lines for a cleaner look
-    fig.update_xaxes(showgrid=False)
-    fig.update_yaxes(showgrid=False)
-
-    return fig
 
 # ----------------------------------------
 # Function: plot_pathway_heatmap (P12)
