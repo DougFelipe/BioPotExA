@@ -1,5 +1,8 @@
 import base64
 import io
+# Força backend não-GUI para evitar erro de thread
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from scipy.cluster.hierarchy import dendrogram
 from dash import html

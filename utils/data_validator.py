@@ -1,30 +1,25 @@
 """
 data_validator.py
 -----------------
-This script provides utilities for validating and processing file inputs, specifically for text files. 
+This script provides utilities for validating and processing `.txt` file inputs.
 It includes functionality to:
+
 - Validate the file type.
 - Decode base64-encoded content.
-- Process the content into structured data.
-- Convert the structured data into a pandas DataFrame.
+- Parse the content using regular expressions.
+- Convert the structured content into a pandas DataFrame.
+- Provide internal logging for debugging and validation feedback.
 """
 
-# -------------------------------
-# Imports
-# -------------------------------
-
-# Import pandas for data manipulation and DataFrame creation.
+import re
+import base64
+import logging
 import pandas as pd
 
-# Import regular expressions for pattern matching in text processing.
-import re
+# Configure logger
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-# Import base64 for decoding base64-encoded content.
-import base64
-
-# -------------------------------
-# Function: validate_and_process_input
-# -------------------------------
 
 def validate_and_process_input(contents: str, filename: str) -> tuple:
     """
@@ -33,101 +28,139 @@ def validate_and_process_input(contents: str, filename: str) -> tuple:
     Steps:
     1. Verify the file format is valid (must be a `.txt` file).
     2. Decode the content if it is base64-encoded.
-    3. Split the content into lines and process them using regular expressions.
-    4. Create a pandas DataFrame from the extracted data.
+    3. Split the content into lines and extract structured data.
+    4. Return the data as a pandas DataFrame or an error message.
 
-    Parameters:
-    - contents (str): The file content, base64-encoded if uploaded via Dash.
-    - filename (str): The name of the file, used to check its extension.
+    Parameters
+    ----------
+    contents : str
+        The file content, base64-encoded if uploaded via Dash.
+    filename : str
+        The name of the file, used to validate its extension.
 
-    Returns:
-    - tuple: A pandas DataFrame containing the extracted data and an error message (if applicable).
+    Returns
+    -------
+    tuple
+        A tuple containing:
+        - pd.DataFrame: Structured data extracted from the file, or None if invalid.
+        - str: An error message if applicable, otherwise None.
     """
-    # 1. Verify that the file is a `.txt` file.
-    if not filename.endswith('.txt'):
-        return None, "The file is not a .txt file."
-    
-    # 2. Decode the content if it is base64-encoded.
-    content = decode_content_if_base64(contents)
-        
-    # 3. Process the lines in the content.
-    df, error = process_content_lines(content)
-    
-    return df, error
+    logger.info("Starting validation and processing of file: %s", filename)
 
-# -------------------------------
-# Helper Function: decode_content_if_base64
-# -------------------------------
+    # 1. Validate file extension
+    if not filename.lower().endswith('.txt'):
+        error_msg = "Invalid file type. Only .txt files are supported."
+        logger.error(error_msg)
+        return None, error_msg
+
+    # 2. Attempt to decode content
+    try:
+        decoded_content = decode_content_if_base64(contents)
+        logger.info("File content decoded successfully.")
+    except Exception as e:
+        error_msg = f"Failed to decode file content: {e}"
+        logger.exception(error_msg)
+        return None, error_msg
+
+    # 3. Parse content into structured format
+    try:
+        df, error = process_content_lines(decoded_content)
+        if error:
+            logger.warning("Content processing returned a validation error: %s", error)
+            return None, error
+        logger.info("Content parsed and DataFrame created successfully.")
+        return df, None
+    except Exception as e:
+        error_msg = f"Error processing content: {e}"
+        logger.exception(error_msg)
+        return None, error_msg
+
 
 def decode_content_if_base64(contents: str) -> str:
     """
-    Decodes content from base64 encoding if necessary.
+    Decodes content from base64 encoding if it has a data URI scheme.
 
-    Parameters:
-    - contents (str): The file content, potentially base64-encoded.
+    Parameters
+    ----------
+    contents : str
+        The file content, potentially base64-encoded.
 
-    Returns:
-    - str: The decoded content as a plain string.
+    Returns
+    -------
+    str
+        The decoded content as a plain UTF-8 string.
+
+    Raises
+    ------
+    ValueError
+        If decoding fails or the content is malformed.
     """
-    # Check if the content starts with the prefix `data`, indicating base64 encoding.
     if contents.startswith('data'):
-        content_type, content_string = contents.split(',')
-        decoded = base64.b64decode(content_string)  # Decode the base64 content.
-        return decoded.decode('utf-8')  # Convert the decoded bytes to a string.
+        try:
+            _, content_string = contents.split(',', 1)
+            decoded_bytes = base64.b64decode(content_string)
+            return decoded_bytes.decode('utf-8')
+        except Exception as e:
+            logger.exception("Failed to decode base64 content.")
+            raise ValueError("Could not decode base64 content.") from e
     else:
-        # Return the content as is if it is not base64-encoded.
+        logger.info("Content is not base64-encoded. Using as-is.")
         return contents
 
-# -------------------------------
-# Helper Function: process_content_lines
-# -------------------------------
 
 def process_content_lines(content: str) -> tuple:
     """
-    Splits the content into lines and extracts data using regular expressions.
+    Parses lines from the file content to extract sample identifiers and KO entries.
 
     Expected format:
-    - Lines starting with `>` indicate a sample identifier.
-    - Lines matching the pattern `K\d+` contain associated data.
+    - Lines beginning with `>` denote sample identifiers.
+    - Lines matching `K\d+` are associated KO entries.
 
-    Parameters:
-    - content (str): The decoded file content.
+    Parameters
+    ----------
+    content : str
+        Decoded plain text content from the input file.
 
-    Returns:
-    - tuple: A pandas DataFrame with the extracted data and an error message (if applicable).
+    Returns
+    -------
+    tuple
+        A tuple containing:
+        - pd.DataFrame: Extracted data with 'sample' and 'ko' columns.
+        - str: An error message if applicable, otherwise None.
     """
-    # Split the content into individual lines.
-    lines = content.split('\n')
-    
-    # Define regular expressions for identifiers and data.
-    identifier_pattern = re.compile(r'^>([^\n]+)')  # Matches lines starting with `>` for sample identifiers.
-    data_pattern = re.compile(r'^(K\d+)')  # Matches lines with data entries like `K12345`.
-    
-    data = []  # List to hold the extracted data.
-    current_identifier = None  # Tracks the current sample identifier.
+    lines = content.strip().split('\n')
 
-    # Process each line in the content.
-    for line in lines:
-        identifier_match = identifier_pattern.match(line)  # Check if the line matches the identifier pattern.
-        data_match = data_pattern.match(line)  # Check if the line matches the data pattern.
-        
-        if identifier_match:
-            # Update the current identifier if an identifier is found.
-            current_identifier = identifier_match.group(1).strip()
-        elif data_match and current_identifier:
-            # Add the data entry to the list if a data line is found and an identifier is set.
-            ko_value = data_match.group(1).strip()
-            data.append({'sample': current_identifier, 'ko': ko_value})
-        elif line.strip() == '':
-            # Skip empty lines.
-            continue
+    identifier_pattern = re.compile(r'^>([^\n]+)')
+    ko_pattern = re.compile(r'^(K\d+)$')
+
+    data = []
+    current_sample = None
+
+    for line_num, line in enumerate(lines, start=1):
+        line = line.strip()
+
+        if not line:
+            continue  # skip empty lines
+
+        id_match = identifier_pattern.match(line)
+        ko_match = ko_pattern.match(line)
+
+        if id_match:
+            current_sample = id_match.group(1).strip()
+            logger.debug("Sample identified at line %d: %s", line_num, current_sample)
+        elif ko_match and current_sample:
+            ko_value = ko_match.group(1).strip()
+            data.append({'sample': current_sample, 'ko': ko_value})
+            logger.debug("KO entry added: sample=%s, ko=%s", current_sample, ko_value)
         else:
-            # Return an error if an invalid line is found.
-            return None, f"File must be in a valid format, such as sample data! Invalid characters identified: {line}"
-    
-    # Return an error if no valid data was extracted.
+            logger.warning("Invalid line at %d: '%s'", line_num, line)
+            return None, (
+                f"Invalid format at line {line_num}: '{line}'. "
+                "Expected '>' for sample ID or 'Kxxxxx' for KO entries."
+            )
+
     if not data:
-        return None, "The file does not contain valid data."
-    
-    # Convert the extracted data into a pandas DataFrame and return it.
-    return pd.DataFrame(data), None
+        return None, "No valid sample or KO entries found in the file."
+
+    df = pd.DataFrame(data)
+    return df, None
