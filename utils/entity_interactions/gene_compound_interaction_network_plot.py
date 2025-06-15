@@ -1,60 +1,60 @@
-# ----------------------------------------
-# Imports
-# ----------------------------------------
-
-# Standard Library Imports
+import logging
 import base64
 import io
-import math
-
-# Third-Party Libraries
-import pandas as pd  # Data manipulation
-import matplotlib.pyplot as plt  # Visualization with Matplotlib
-from matplotlib import use as set_matplotlib_backend  # Backend configuration for Matplotlib
-from scipy.cluster.hierarchy import dendrogram  # For hierarchical clustering
-import networkx as nx  # For creating and visualizing networks
-
-# Plotly for Interactive Visualizations
-import plotly.express as px
+import networkx as nx
 import plotly.graph_objects as go
-from plotly.subplots import make_subplots
 
-# Dash for Web Components and Interactivity
-from dash import html, dcc, Input, Output, State
+# Configuração de logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-# ----------------------------------------
-# Function: generate_gene_compound_network (P17)
-# ----------------------------------------
 
-def generate_gene_compound_network(network_data):
+def generate_gene_compound_network(network_data) -> go.Figure:
     """
-    Generates a Gene-Compound network graph using Plotly and NetworkX.
+    Generates an interactive Gene-Compound network using Plotly and NetworkX.
 
-    Parameters:
-    - network_data (pd.DataFrame): A DataFrame containing 'genesymbol' and 'compoundname' columns.
+    Parameters
+    ----------
+    network_data : pd.DataFrame
+        DataFrame containing columns 'genesymbol' and 'compoundname'.
 
-    Returns:
-    - plotly.graph_objects.Figure: A Plotly figure object representing the network.
+    Returns
+    -------
+    plotly.graph_objects.Figure
+        Plotly figure object representing the network.
+
+    Raises
+    ------
+    ValueError
+        If the input DataFrame is empty or lacks required columns.
     """
+    logger.info("Generating Gene-Compound network graph.")
 
+    if network_data.empty:
+        logger.warning("Received empty network data.")
+        raise ValueError("The network data is empty.")
 
-    # Create a NetworkX graph
+    if not {'genesymbol', 'compoundname'}.issubset(network_data.columns):
+        logger.error("Missing required columns in network_data.")
+        raise ValueError("DataFrame must contain 'genesymbol' and 'compoundname' columns.")
+
     G = nx.Graph()
 
-    # Add nodes and edges
+    logger.info("Adding nodes and edges to the network.")
     for _, row in network_data.iterrows():
-        G.add_node(row['genesymbol'], type='gene')
-        G.add_node(row['compoundname'], type='compound')
-        G.add_edge(row['genesymbol'], row['compoundname'])
+        gene = row['genesymbol']
+        compound = row['compoundname']
+        G.add_node(gene, type='gene')
+        G.add_node(compound, type='compound')
+        G.add_edge(gene, compound)
 
-    # Calculate positions using spring layout
+    logger.info("Calculating node positions.")
     pos = nx.spring_layout(G, seed=42)
 
-    # Extract node and edge positions
     node_x, node_y, node_text, node_color = [], [], [], []
-    for node, position in pos.items():
-        node_x.append(position[0])
-        node_y.append(position[1])
+    for node, (x, y) in pos.items():
+        node_x.append(x)
+        node_y.append(y)
         node_text.append(node)
         node_color.append('blue' if G.nodes[node]['type'] == 'gene' else 'green')
 
@@ -65,15 +65,14 @@ def generate_gene_compound_network(network_data):
         edge_x.extend([x0, x1, None])
         edge_y.extend([y0, y1, None])
 
-    # Create edge traces
+    logger.info("Creating Plotly traces.")
     edge_trace = go.Scatter(
         x=edge_x, y=edge_y,
+        mode='lines',
         line=dict(width=1, color='#888'),
-        hoverinfo='none',
-        mode='lines'
+        hoverinfo='none'
     )
 
-    # Create node traces
     node_trace = go.Scatter(
         x=node_x, y=node_y,
         mode='markers',
@@ -82,18 +81,16 @@ def generate_gene_compound_network(network_data):
         text=node_text
     )
 
-    # Build the Plotly figure
+    logger.info("Assembling final Plotly figure.")
     fig = go.Figure(
         data=[edge_trace, node_trace],
-        layout = go.Layout(
-            title={
-                'text': "Gene-Compound Network",
-                'font': {
-                    'size': 16  # Aqui ajusta o tamanho da fonte do título
-                }
-            },
+        layout=go.Layout(
+            title=dict(
+                text="Gene-Compound Network",
+                font=dict(size=16)
+            ),
             showlegend=False,
-            margin=dict(b=0, l=0, r=0, t=40),
+            margin=dict(t=40, b=0, l=0, r=0),
             xaxis=dict(showgrid=False, zeroline=False),
             yaxis=dict(showgrid=False, zeroline=False)
         )

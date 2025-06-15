@@ -1,31 +1,46 @@
 import pandas as pd
+import logging
 
-# -------------------------------
-# Function: process_heatmap_data
-# -------------------------------
+# Configure o logger
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
-def process_heatmap_data(df):
+
+def process_heatmap_data(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Processes data for generating a faceted toxicity heatmap.
+    Processes input data to prepare a long-format DataFrame suitable for generating faceted heatmaps.
 
-    Parameters:
-    - df (pd.DataFrame): The input data containing 'value_' and 'label_' columns.
+    Parameters
+    ----------
+    df : pd.DataFrame
+        The input DataFrame containing 'compoundname', and multiple 'value_' and 'label_' prefixed columns.
 
-    Returns:
-    - pd.DataFrame: A transformed DataFrame with categorized data for heatmap generation.
+    Returns
+    -------
+    pd.DataFrame
+        A long-format DataFrame with standardized columns: 'compoundname', 'value', 'label', 'category', 'subcategoria'.
 
-    Raises:
-    - ValueError: If no valid columns are processed for the heatmap.
+    Raises
+    ------
+    ValueError
+        If no valid value/label pairs are found or the expected columns are missing.
     """
-    # Drop unnecessary columns if they exist.
-    columns_to_drop = ['SMILES', 'cpd', 'ChEBI']
-    df = df.drop(columns=columns_to_drop, errors='ignore')
+    logger.info("Starting processing of heatmap data.")
 
-    # Select columns for values and labels.
+    # Drop unnecessary columns
+    drop_cols = ['SMILES', 'cpd', 'ChEBI']
+    df = df.drop(columns=drop_cols, errors='ignore')
+    logger.debug(f"Dropped columns if present: {drop_cols}")
+
+    # Identify value and label columns
     value_columns = [col for col in df.columns if col.startswith('value_')]
     label_columns = [col for col in df.columns if col.startswith('label_')]
 
-    # Map main categories to subcategories.
+    if not value_columns or not label_columns:
+        logger.error("No 'value_' or 'label_' columns found in DataFrame.")
+        raise ValueError("Input DataFrame must contain 'value_' and 'label_' columns.")
+
+    # Category mapping
     category_mapping = {
         'NR': 'Nuclear Response',
         'SR': 'Stress Response',
@@ -34,29 +49,28 @@ def process_heatmap_data(df):
         'Org': 'Organic',
     }
 
-    # Transform the data for heatmap generation.
     heatmap_data = []
+
+    # Process each pair of value and label columns
     for value_col, label_col in zip(value_columns, label_columns):
-        # Extract the subcategory and map it to a main category.
         subcategoria = value_col.split('_', 1)[1]
         category_prefix = subcategoria.split('_')[0]
-        mapped_category = category_mapping.get(category_prefix, None)
+        mapped_category = category_mapping.get(category_prefix)
 
         if mapped_category:
-            # Create a subset of data for the current category.
-            df_subset = df[['compoundname', value_col, label_col]].rename(
+            logger.debug(f"Processing: {value_col}, Category: {mapped_category}")
+            subset = df[['compoundname', value_col, label_col]].rename(
                 columns={value_col: 'value', label_col: 'label'}
             )
-            df_subset['category'] = mapped_category
-            df_subset['subcategoria'] = subcategoria
-            heatmap_data.append(df_subset)
+            subset['category'] = mapped_category
+            subset['subcategoria'] = subcategoria
+            heatmap_data.append(subset)
 
-    # Ensure at least one valid column was processed.
     if not heatmap_data:
+        logger.error("No valid data was processed for heatmap generation.")
         raise ValueError("No valid columns were processed for the heatmap.")
 
-    # Combine the transformed data into a single DataFrame.
     result_df = pd.concat(heatmap_data, ignore_index=True)
+    logger.info("Heatmap data processing complete.")
 
-    # Return the combined DataFrame.
     return result_df

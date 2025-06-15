@@ -1,45 +1,60 @@
-
-
-# -------------------------------
-# P17: Function: prepare_gene_compound_network_data
-# -------------------------------
-
+import logging
 import pandas as pd
 from utils.data_processing import merge_input_with_database
 
-def prepare_gene_compound_network_data(stored_data):
+# Configuração básica de logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+
+def prepare_gene_compound_network_data(stored_data: dict) -> pd.DataFrame:
     """
     Prepares data for creating a Gene-Compound network graph.
 
-    Parameters:
-    - stored_data (dict): The stored data in dictionary format.
+    Parameters
+    ----------
+    stored_data : dict
+        The stored data in dictionary format, typically from a Dash callback.
 
-    Returns:
-    - pd.DataFrame: A DataFrame containing gene-compound relationships.
+    Returns
+    -------
+    pd.DataFrame
+        A DataFrame containing non-null and unique gene-compound relationships.
 
-    Raises:
-    - ValueError: If the stored data is empty.
-    - KeyError: If required columns ('genesymbol', 'cpd') are missing.
+    Raises
+    ------
+    ValueError
+        If the stored data is empty or conversion to DataFrame fails.
+    KeyError
+        If required columns ('genesymbol', 'compoundname') are missing in the merged data.
     """
-    input_df = pd.DataFrame(stored_data)
+    logger.info("Starting data preparation for gene-compound network.")
 
-    # Ensure the data is not empty.
+    try:
+        input_df = pd.DataFrame(stored_data)
+    except Exception as e:
+        logger.exception("Failed to convert stored_data to DataFrame.")
+        raise ValueError("Invalid input format for stored_data.") from e
+
     if input_df.empty:
-        raise ValueError("The stored-data is empty.")
+        logger.warning("Input DataFrame is empty.")
+        raise ValueError("The input data is empty.")
 
-    # Merge the input data with the database.
+    logger.info("Merging input data with the reference database.")
     merged_data = merge_input_with_database(input_df)
 
-    # Check for required columns.
-    if 'genesymbol' not in merged_data.columns or 'cpd' not in merged_data.columns:
-        raise KeyError("Columns 'genesymbol' and 'cpd' are required to create the network graph.")
+    required_cols = {'genesymbol', 'compoundname'}
+    if not required_cols.issubset(merged_data.columns):
+        missing = required_cols - set(merged_data.columns)
+        logger.error(f"Missing required columns: {missing}")
+        raise KeyError(f"Missing required columns: {', '.join(missing)}")
 
-    # Filter relevant columns and remove duplicates.
-    network_df = merged_data[['genesymbol', 'compoundname']].dropna().drop_duplicates()
+    logger.info("Filtering and cleaning network data.")
+    network_df = (
+        merged_data[['genesymbol', 'compoundname']]
+        .dropna()
+        .drop_duplicates()
+    )
 
-    # Return the processed DataFrame.
+    logger.info(f"Prepared network data with {len(network_df)} unique interactions.")
     return network_df
-
-# -------------------------------
-# P18: Function: get_merged_toxcsm_data
-# -------------------------------
