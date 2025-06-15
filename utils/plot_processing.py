@@ -280,53 +280,6 @@ def plot_compound_scatter(df):
     
     return fig
 
-# -------------------------------
-# Function: plot_sample_ranking
-# -------------------------------
-
-def plot_sample_ranking(sample_ranking_df):
-    """
-    Creates a bar chart to visualize the ranking of samples based on the number of unique compounds.
-
-    Parameters:
-    - sample_ranking_df (pd.DataFrame): A DataFrame containing sample rankings by unique compounds.
-                                        Expected columns: 'sample', 'num_compounds'.
-
-    Returns:
-    - plotly.graph_objects.Figure: A Plotly bar chart object visualizing sample rankings.
-    """
-    # Sort the DataFrame by the number of compounds in descending order
-    sample_ranking_df = sample_ranking_df.sort_values(by='num_compounds', ascending=False)
-
-    # Create the bar chart
-    fig = px.bar(
-        sample_ranking_df,
-        x='sample',
-        y='num_compounds',
-        text='num_compounds',  # Display the number of compounds on the bars
-        template='simple_white'
-    )
-    
-    # Update chart layout
-    fig.update_traces(
-        textposition='auto',
-        marker=dict(color='steelblue')  # Set bar color
-    )
-    fig.update_layout(
-        title='Ranking of Samples by Compound Interaction',
-        xaxis_title='Sample',
-        yaxis_title='Number of Compounds',
-        xaxis=dict(
-            categoryorder='total descending',
-            tickangle=45  # Rotate x-axis labels
-        ),
-        uniformtext_minsize=10,
-        uniformtext_mode='hide'
-    )
-    
-    return fig
-
-
 
 
 
