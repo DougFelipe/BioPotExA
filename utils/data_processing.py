@@ -251,26 +251,6 @@ def merge_with_toxcsm(merged_df: pd.DataFrame, toxcsm_filepath: str = None) -> p
 
 
 
-# -------------------------------
-# Function: process_compound_data
-# -------------------------------
-
-def process_compound_data(merged_df):
-    """
-    Processes data for compound scatter plot visualization.
-
-    Parameters:
-    - merged_df: DataFrame containing merged data.
-
-    Returns:
-    - pd.DataFrame: The input DataFrame, potentially modified for visualization.
-    """
-    # Currently, the function returns the input DataFrame as is.
-    # Additional processing logic can be implemented if needed.
-    return merged_df
-
-# Função para processar ranking de amostras
-# utils/data_processing.py
 
 
 # -------------------------------

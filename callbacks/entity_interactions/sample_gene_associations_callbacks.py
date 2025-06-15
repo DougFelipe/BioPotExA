@@ -21,7 +21,7 @@ import pandas as pd  # For data manipulation
 
 from app import app  # Dash application instance
 from utils.data_processing import merge_input_with_database  # Utility for merging input data with a database
-from utils.plot_processing import plot_sample_gene_scatter  # Utility for creating scatter plots
+from utils.entity_interactions.sample_gene_associations_plot import plot_sample_gene_scatter  # Function to create scatter plots
 
 # ----------------------------------------
 # Callback: Initialize Dropdown Options
