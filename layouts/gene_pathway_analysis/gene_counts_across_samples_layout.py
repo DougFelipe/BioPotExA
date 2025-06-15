@@ -18,7 +18,6 @@ Functions:
 
 from dash import html, dcc  # Dash HTML and Core Components for layout
 import dash_bootstrap_components as dbc  # Bootstrap components for styling
-from utils.components import create_card  # Utility for creating reusable card components
 from utils.filters import create_range_slider  # Utility for creating range slider filters
 
 # ----------------------------------------
