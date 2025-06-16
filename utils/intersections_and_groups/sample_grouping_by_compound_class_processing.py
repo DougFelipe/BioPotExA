@@ -8,70 +8,58 @@ logging.basicConfig(level=logging.INFO)
 
 
 def group_by_class(compoundclass_choice: str, tabela: pd.DataFrame) -> pd.DataFrame:
-    """
-    Groups samples by their compound profiles for a specific class of compounds.
-
-    Parameters
-    ----------
-    compoundclass_choice : str
-        The selected compound class to filter and group the data.
-    tabela : pd.DataFrame
-        DataFrame containing 'compoundclass', 'sample' and 'compoundname' columns.
-
-    Returns
-    -------
-    pd.DataFrame
-        DataFrame filtered by compound class with an added 'grupo' column indicating group membership.
-
-    Raises
-    ------
-    ValueError
-        If required columns are missing or filtering results in an empty DataFrame.
-    """
-    required_cols = {'compoundclass', 'sample', 'compoundname'}
-    if not required_cols.issubset(tabela.columns):
-        missing = required_cols - set(tabela.columns)
-        raise ValueError(f"Missing required columns in input DataFrame: {missing}")
-
-    logger.info("Filtering data by compound class: '%s'", compoundclass_choice)
-    dados_selecionados = tabela[tabela['compoundclass'] == compoundclass_choice]
-
-    if dados_selecionados.empty:
-        raise ValueError(f"No data found for compound class: {compoundclass_choice}")
-
-    grupos = []
-    for sample in dados_selecionados['sample'].unique():
-        compostos = dados_selecionados.loc[
-            dados_selecionados['sample'] == sample, 'compoundname'
-        ].unique().tolist()
-
-        if compostos:
-            grupo_existente = False
-            for grupo in grupos:
-                if set(compostos) == set(grupo['compostos']):
-                    grupo_existente = True
-                    grupo['samples'].append(sample)
-                    break
-            if not grupo_existente:
-                grupos.append({'compostos': compostos, 'samples': [sample]})
-
-    logger.info("Identified %d distinct groups for class '%s'", len(grupos), compoundclass_choice)
-
-    tabela_grupos = tabela.copy()
-    tabela_grupos['grupo'] = None
-
-    for i, grupo in enumerate(grupos):
-        label = f"{compoundclass_choice} - Group {i + 1}"
-        tabela_grupos.loc[
-            (tabela_grupos['sample'].isin(grupo['samples'])) &
-            (tabela_grupos['compoundname'].isin(grupo['compostos'])),
-            'grupo'
-        ] = label
-        logger.debug("Assigned label '%s' to samples %s", label, grupo['samples'])
-
-    resultado = tabela_grupos[tabela_grupos['compoundclass'] == compoundclass_choice]
-
-    logger.info("Returning grouped DataFrame with shape: %s", resultado.shape)
+    """  
+    Groups samples by their compound profiles using hash-based set comparison for O(n) complexity.  
+    """  
+    required_cols = {'compoundclass', 'sample', 'compoundname'}  
+    if not required_cols.issubset(tabela.columns):  
+        missing = required_cols - set(tabela.columns)  
+        raise ValueError(f"Missing required columns in input DataFrame: {missing}")  
+  
+    logger.info("Filtering data by compound class: '%s'", compoundclass_choice)  
+    dados_selecionados = tabela[tabela['compoundclass'] == compoundclass_choice]  
+  
+    if dados_selecionados.empty:  
+        raise ValueError(f"No data found for compound class: {compoundclass_choice}")  
+  
+    # Usar hash de conjuntos para agrupamento O(n)  
+    compound_profile_to_group = {}  # hash do perfil -> índice do grupo  
+    grupos = []  
+      
+    for sample in dados_selecionados['sample'].unique():  
+        compostos = frozenset(dados_selecionados.loc[  
+            dados_selecionados['sample'] == sample, 'compoundname'  
+        ].unique())  
+          
+        if compostos:  
+            # Usar hash do frozenset como chave  
+            profile_hash = hash(compostos)  
+              
+            if profile_hash in compound_profile_to_group:  
+                # Grupo já existe, adicionar amostra  
+                group_idx = compound_profile_to_group[profile_hash]  
+                grupos[group_idx]['samples'].append(sample)  
+            else:  
+                # Criar novo grupo  
+                new_group = {'compostos': list(compostos), 'samples': [sample]}  
+                grupos.append(new_group)  
+                compound_profile_to_group[profile_hash] = len(grupos) - 1  
+  
+    logger.info("Identified %d distinct groups for class '%s'", len(grupos), compoundclass_choice)  
+  
+    # Resto da função permanece igual  
+    tabela_grupos = tabela.copy()  
+    tabela_grupos['grupo'] = None  
+  
+    for i, grupo in enumerate(grupos):  
+        label = f"{compoundclass_choice} - Group {i + 1}"  
+        tabela_grupos.loc[  
+            (tabela_grupos['sample'].isin(grupo['samples'])) &  
+            (tabela_grupos['compoundname'].isin(grupo['compostos'])),  
+            'grupo'  
+        ] = label  
+  
+    resultado = tabela_grupos[tabela_grupos['compoundclass'] == compoundclass_choice]  
     return resultado
 
 
