@@ -1,35 +1,80 @@
-from components.alerts import hadeg_alert, toxcsm_alert
+# components\pages\results.py
 
-from components.navbar import navbar  # Importe o navbar definido acima
+"""
+Layout Composition for Result Analysis Dashboard.
+
+This module aggregates and imports all necessary Dash components and layout 
+functions used in the BioRemPP result analysis interface. It includes 
+navigation bars, alerts, suggestion panels, and all layout components 
+grouped by analysis category.
+
+Each imported layout corresponds to a section of the interface that presents 
+specific data visualizations, including tables, bar charts, scatter plots, 
+heatmaps, and interaction networks.
+
+Notes
+-----
+- Organized by component type: UI elements, Dash/Dash Bootstrap components, 
+  and functional layout modules.
+- Layout modules are grouped by semantic section: overview, analysis, 
+  interactions, rankings, clustering, heatmaps, and toxicity.
+
+"""
+
+# UI components
+from components.alerts import hadeg_alert, toxcsm_alert
 from components.analytical_highlight import analytical_highlight
 from components.analysis_suggestions_offcanvas import analysis_suggestions_offcanvas
-from components.divider import NeonDivider  
+from components.divider import NeonDivider
+from components.navbar import navbar
 
-
-from dash import html, dcc
+# Dash core and Bootstrap components
+from dash import dcc, html
 import dash_bootstrap_components as dbc
 
+# Layouts: Results Overview
 from layouts.results_overview.biorempp_results_table_layout import get_biorempp_results_table_layout
 from layouts.results_overview.hadeg_results_table_layout import get_hadeg_results_table_layout
 from layouts.results_overview.toxcsm_results_table_layout import get_toxcsm_results_table_layout
-from layouts.gene_pathway_analysis.gene_counts_across_samples_layout import get_ko_count_bar_chart_layout, get_ko_violin_boxplot_layout
-from layouts.gene_pathway_analysis.distribution_of_ko_in_pathways_layout import get_pathway_ko_bar_chart_layout, get_sample_ko_pathway_bar_chart_layout
-from layouts.entity_interactions.sample_compound_interaction_layout import get_compound_scatter_layout
-from layouts.rankings.ranking_samples_by_compound_interaction_layout import get_rank_compounds_layout as get_sample_rank_compounds_layout
-from layouts.rankings.ranking_compounds_by_sample_interaction_layout import get_rank_compounds_layout as get_compound_rank_layout
-from layouts.rankings.ranking_compounds_by_gene_interaction_layout import get_rank_compounds_gene_layout
-from layouts.entity_interactions.gene_compound_interaction_layout import get_gene_compound_scatter_layout
-from layouts.entity_interactions.sample_gene_associations_layout import get_sample_gene_scatter_layout
-from layouts.heatmaps.sample_reference_agency_heatmap_layout import get_sample_reference_heatmap_layout
-from layouts.intersections_and_groups.sample_grouping_by_compound_class_pattern_layout import get_sample_groups_layout
-from layouts.heatmaps.gene_sample_heatmap_layout import get_gene_sample_heatmap_layout
-from layouts.heatmaps.pathway_compound_interaction_layout import get_pathway_heatmap_layout
-from layouts.gene_pathway_analysis.gene_distribution_among_samples_layout import get_sample_ko_scatter_layout
+
+# Layouts: Gene and Pathway Analysis
+from layouts.gene_pathway_analysis.distribution_of_ko_in_pathways_layout import (
+    get_pathway_ko_bar_chart_layout,
+    get_sample_ko_pathway_bar_chart_layout
+)
+from layouts.gene_pathway_analysis.gene_counts_across_samples_layout import (
+    get_ko_count_bar_chart_layout,
+    get_ko_violin_boxplot_layout
+)
+from layouts.gene_pathway_analysis.gene_distribution_among_samples_layout import (
+    get_sample_ko_scatter_layout
+)
+
+# Layouts: Entity Interactions
 from layouts.entity_interactions.enzyme_activity_by_sample_layout import get_sample_enzyme_activity_layout
+from layouts.entity_interactions.gene_compound_interaction_layout import get_gene_compound_scatter_layout
+from layouts.entity_interactions.gene_compound_interaction_network_layout import get_gene_compound_network_layout
+from layouts.entity_interactions.sample_compound_interaction_layout import get_compound_scatter_layout
+from layouts.entity_interactions.sample_gene_associations_layout import get_sample_gene_scatter_layout
+
+# Layouts: Rankings
+from layouts.rankings.ranking_compounds_by_gene_interaction_layout import get_rank_compounds_gene_layout
+from layouts.rankings.ranking_compounds_by_sample_interaction_layout import get_rank_compounds_layout as get_compound_rank_layout
+from layouts.rankings.ranking_samples_by_compound_interaction_layout import get_rank_compounds_layout as get_sample_rank_compounds_layout
+
+# Layouts: Intersections and Group Analysis
 from layouts.intersections_and_groups.clustering_dendrogram_layout import get_sample_clustering_layout
 from layouts.intersections_and_groups.intersection_analysis_layout import get_sample_upset_layout
-from layouts.entity_interactions.gene_compound_interaction_network_layout import get_gene_compound_network_layout
+from layouts.intersections_and_groups.sample_grouping_by_compound_class_pattern_layout import get_sample_groups_layout
+
+# Layouts: Heatmaps
+from layouts.heatmaps.gene_sample_heatmap_layout import get_gene_sample_heatmap_layout
+from layouts.heatmaps.pathway_compound_interaction_layout import get_pathway_heatmap_layout
+from layouts.heatmaps.sample_reference_agency_heatmap_layout import get_sample_reference_heatmap_layout
+
+# Layouts: Toxicity
 from layouts.toxicity.toxicity_prediction_heatmap_layout import get_toxicity_heatmap_layout
+
 
 
 
