@@ -15,7 +15,7 @@ from utils.core.data_processing import (
     merge_with_toxcsm,
     merge_with_kegg
 )
-from callbacks.core.feedback_alerts import create_alert
+from utils.core.feedback_alerts import create_alert
 
 # Setup logging
 logger = logging.getLogger(__name__)

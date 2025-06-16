@@ -31,7 +31,7 @@ from components.pages.data_analysis import get_dataAnalysis_layout
 from components.pages.results import get_results_layout
 
 # ✅ Novos Módulos
-from callbacks.core.upload_handlers import handle_upload_or_example as handle_upload_or_example_logic
+from utils.core.upload_handlers import handle_upload_or_example as handle_upload_or_example_logic
 from callbacks.dashboard.display_tables import update_table as update_table_logic, update_database_table as update_database_table_logic, update_ko_count_table as update_ko_count_table_logic
 from callbacks.dashboard.toggle_visibility import toggle_additional_analysis_visibility as toggle_additional_analysis_visibility_logic, toggle_graph_visibility as toggle_graph_visibility_logic, display_results as display_results_logic, process_and_toggle_elements as process_and_toggle_elements_logic
 from callbacks.dashboard.progress_callbacks import handle_progress as handle_progress_logic
