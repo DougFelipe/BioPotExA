@@ -72,20 +72,24 @@ register_analysis_suggestions_callbacks(app)
 # ----------------------------------------
 
 # Define the main application layout with support for page navigation
-app.layout = html.Div(
-    className='main-content',  # CSS class for the main content container
-    children=[
-        dcc.Location(id='url', refresh=False),
-        Header(),
-        html.Div(id='page-content'),
-        dcc.Store(id='stored-data'),
-        dcc.Store(id='merge-status'),
-        html.Div(id='output-graphs', style={'display': 'none'}),
-        html.Script("""
-    console.log("BioRemPP loaded at: " + window.location.pathname);
-""")
-
-    ]
+app.layout = html.Div(  
+    className='main-content',  
+    children=[  
+        dcc.Location(id='url', refresh=False),  
+        Header(),  
+        html.Div(id='page-content'),  
+        dcc.Store(id='stored-data'),  
+        dcc.Store(id='merge-status'),  
+        # NOVOS STORES ESPECÍFICOS POR BANCO  
+        dcc.Store(id='biorempp-merged-data', data=None),  
+        dcc.Store(id='kegg-merged-data', data=None),   
+        dcc.Store(id='hadeg-merged-data', data=None),  
+        dcc.Store(id='toxcsm-merged-data', data=None),  
+        html.Div(id='output-graphs', style={'display': 'none'}),  
+        html.Script("""  
+    console.log("BioRemPP loaded at: " + window.location.pathname);  
+""")  
+    ]  
 )
 
 @app.callback(
