@@ -28,41 +28,40 @@ from utils.toxicity.toxicity_prediction_heatmap_plot import plot_heatmap_faceted
 # Callback for Faceted Heatmap Update
 # ----------------------------------------
 
-@app.callback(
-    Output('toxicity-heatmap-faceted', 'figure'),  # Output: Figure for the heatmap component
-    Input('stored-data', 'data')  # Input: Triggered when the stored data is updated
-)
-def update_heatmap_faceted(data):
-    """
-    Updates the faceted heatmap based on the stored data.
-
-    Steps:
-    1. Checks if the input data exists; prevents unnecessary updates if not.
-    2. Merges the input data with ToxCSM data to prepare for visualization.
-    3. Processes the merged data to create a suitable format for the heatmap.
-    4. Generates the faceted heatmap figure using the processed data.
-
-    Parameters:
-    - data (dict): The data stored in the `stored-data` component.
-
-    Returns:
-    - dict: A Plotly figure object representing the faceted heatmap. 
-      Returns an empty dictionary if the data is invalid or empty.
-    """
-    # Step 1: Prevent update if no data is provided
-    if not data:
-        raise PreventUpdate
-
-    # Step 2: Merge the input data with ToxCSM-related information
-    merged_data = get_merged_toxcsm_data(data)
-    if merged_data.empty:  # Check if the merged data is empty
-        return {}
-
-    # Step 3: Process the merged data to format it for the heatmap
-    heatmap_data = process_heatmap_data(merged_data)
-    if heatmap_data.empty:  # Check if the processed data is empty
-        return {}
-
-    # Step 4: Generate the faceted heatmap using the processed data
-    fig = plot_heatmap_faceted(heatmap_data)
+@app.callback(  
+    Output('toxicity-heatmap-faceted', 'figure'),  # Output: Figure for the heatmap component  
+    Input('toxcsm-merged-data', 'data')  # MUDANÇA: usar store específico do ToxCSM  
+)  
+def update_heatmap_faceted(toxcsm_data):  
+    """  
+    Updates the faceted heatmap based on pre-processed ToxCSM data.  
+  
+    Steps:  
+    1. Checks if the ToxCSM processed data exists; prevents unnecessary updates if not.  
+    2. Processes the merged data to create a suitable format for the heatmap.  
+    3. Generates the faceted heatmap figure using the processed data.  
+  
+    Parameters:  
+    - toxcsm_data (list of dict): Pre-processed data from ToxCSM store.  
+  
+    Returns:  
+    - dict: A Plotly figure object representing the faceted heatmap.   
+      Returns an empty dictionary if the data is invalid or empty.  
+    """  
+    # Step 1: Prevent update if no processed data is provided  
+    if not toxcsm_data:  
+        raise PreventUpdate  
+  
+    # Step 2: Convert stored processed data into a DataFrame (dados já processados)  
+    merged_data = pd.DataFrame(toxcsm_data)  
+    if merged_data.empty:  # Check if the merged data is empty  
+        return {}  
+  
+    # Step 3: Process the merged data to format it for the heatmap  
+    heatmap_data = process_heatmap_data(merged_data)  
+    if heatmap_data.empty:  # Check if the processed data is empty  
+        return {}  
+  
+    # Step 4: Generate the faceted heatmap using the processed data  
+    fig = plot_heatmap_faceted(heatmap_data)  
     return fig  # Return the generated figure
