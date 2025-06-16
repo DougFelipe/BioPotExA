@@ -36,75 +36,73 @@ from utils.gene_pathway_analysis.gene_counts_across_samples_plot import plot_ko_
 # Callback: Update KO Count Bar Chart
 # ----------------------------------------
 
-@app.callback(
-    Output('ko-count-bar-chart', 'figure'),
-    [Input('ko-count-range-slider', 'value')],
-    [State('stored-data', 'data')]
-)
-def update_ko_count_chart(range_slider_values, stored_data):
-    """
-    Updates the KO count bar chart based on the selected RangeSlider values.
-
-    Parameters:
-    - range_slider_values (list): The minimum and maximum values from the RangeSlider.
-    - stored_data (list): Data stored in the Dash Store component.
-
-    Returns:
-    - plotly.graph_objects.Figure: The updated bar chart.
-    """
-    if not stored_data:
-        raise PreventUpdate
-
-    input_df = pd.DataFrame(stored_data)  # Convert stored data to DataFrame
-    merged_df = merge_input_with_database(input_df)  # Merge input data with the database
-    ko_count_df = process_ko_data(merged_df)  # Process KO data
-
-    # Filter KO counts based on RangeSlider values
-    min_value, max_value = range_slider_values
-    filtered_ko_count_df = ko_count_df[(ko_count_df['ko_count'] >= min_value) & (ko_count_df['ko_count'] <= max_value)]
-
-    fig = plot_ko_count(filtered_ko_count_df)  # Generate bar chart
+@app.callback(  
+    Output('ko-count-bar-chart', 'figure'),  
+    [Input('ko-count-range-slider', 'value')],  
+    [State('biorempp-merged-data', 'data')]  # MUDANÇA: usar store específico  
+)  
+def update_ko_count_chart(range_slider_values, biorempp_data):  
+    """  
+    Updates the KO count bar chart based on the selected RangeSlider values using pre-processed data.  
+  
+    Parameters:  
+    - range_slider_values (list): The minimum and maximum values from the RangeSlider.  
+    - biorempp_data (list of dict): Pre-processed data from BioRemPP store.  
+  
+    Returns:  
+    - plotly.graph_objects.Figure: The updated bar chart.  
+    """  
+    if not biorempp_data:  
+        raise PreventUpdate  
+  
+    # Convert stored processed data into a DataFrame (dados já processados)  
+    merged_df = pd.DataFrame(biorempp_data)  
+    ko_count_df = process_ko_data(merged_df)  # Process KO data  
+  
+    # Filter KO counts based on RangeSlider values  
+    min_value, max_value = range_slider_values  
+    filtered_ko_count_df = ko_count_df[(ko_count_df['ko_count'] >= min_value) & (ko_count_df['ko_count'] <= max_value)]  
+  
+    fig = plot_ko_count(filtered_ko_count_df)  # Generate bar chart  
     return fig
 
 # ----------------------------------------
 # Callback: Update RangeSlider Values
 # ----------------------------------------
-
-@app.callback(
-    [Output('ko-count-range-slider', 'max'),
-     Output('ko-count-range-slider', 'value'),
-     Output('ko-count-range-slider', 'marks')],
-    [Input('process-data', 'n_clicks')],
-    [State('stored-data', 'data')]
-)
-def update_range_slider_values(n_clicks, stored_data):
-    """
-    Dynamically updates the RangeSlider's maximum value, default range, and tick marks.
-
-    Parameters:
-    - n_clicks (int): Number of times the "process data" button is clicked.
-    - stored_data (list): Data stored in the Dash Store component.
-
-    Returns:
-    - int: Maximum KO count.
-    - list: Default RangeSlider values ([min, max]).
-    - dict: Marks for the RangeSlider.
-    """
-    if n_clicks < 1 or not stored_data:
-        raise PreventUpdate
-
-    input_df = pd.DataFrame(stored_data)  # Convert stored data to DataFrame
-    merged_df = merge_input_with_database(input_df)  # Merge input data with the database
-    ko_count_df = process_ko_data(merged_df)  # Process KO data
-
-    max_ko_count = ko_count_df['ko_count'].max()  # Determine max KO count
-    marks = {i: str(i) for i in range(0, max_ko_count + 1, max(1, max_ko_count // 10))}  # Generate tick marks
-
+@app.callback(  
+    [Output('ko-count-range-slider', 'max'),  
+     Output('ko-count-range-slider', 'value'),  
+     Output('ko-count-range-slider', 'marks')],  
+    [Input('biorempp-merged-data', 'data')]  # MUDANÇA: usar store específico  
+)  
+def update_range_slider_values(biorempp_data):  
+    """  
+    Dynamically updates the RangeSlider's maximum value, default range, and tick marks using pre-processed data.  
+  
+    Parameters:  
+    - biorempp_data (list of dict): Pre-processed data from BioRemPP store.  
+  
+    Returns:  
+    - int: Maximum KO count.  
+    - list: Default RangeSlider values ([min, max]).  
+    - dict: Marks for the RangeSlider.  
+    """  
+    if not biorempp_data:  
+        raise PreventUpdate  
+  
+    # Convert stored processed data into a DataFrame (dados já processados)  
+    merged_df = pd.DataFrame(biorempp_data)  
+    ko_count_df = process_ko_data(merged_df)  # Process KO data  
+  
+    max_ko_count = ko_count_df['ko_count'].max()  # Determine max KO count  
+    marks = {i: str(i) for i in range(0, max_ko_count + 1, max(1, max_ko_count // 10))}  # Generate tick marks  
+  
     return max_ko_count, [0, max_ko_count], marks
 
 # ----------------------------------------
 # Callback: Update Violin Plot
 # ----------------------------------------
+
 
 @app.callback(
     Output('ko-violin-boxplot-chart', 'figure'),
@@ -142,6 +140,7 @@ def update_ko_violin_boxplot_chart(n_clicks, selected_samples, stored_data):
 # ----------------------------------------
 # Callback: Update Dropdown Options
 # ----------------------------------------
+
 
 @app.callback(
     Output('sample-dropdown', 'options'),
