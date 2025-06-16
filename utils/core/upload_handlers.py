@@ -57,24 +57,26 @@ def load_example_data():
     except Exception as e:
         return None, str(e)
 
-def process_uploaded_file(contents, filename):
-    """
-    Processes a user-uploaded file.
-
-    Parameters:
-    - contents (str): File contents.
-    - filename (str): Name of the uploaded file.
-
-    Returns:
-    - (pd.DataFrame, str): Tuple of (dataframe, error_message)
-    """
-    is_valid_size, size_error = validate_upload_size(contents)
-    if not is_valid_size:
-        return None, size_error
-
-    df, error = validate_and_process_input(contents, filename)
-    if error:
-        return None, error
+def process_uploaded_file(contents, filename):  
+    """  
+    Processes a user-uploaded file with comprehensive validation.  
+    """  
+    # Comprehensive validation  
+    is_valid, error_msg, warnings = validate_upload_comprehensive(contents, filename)  
+    if not is_valid:  
+        return None, error_msg  
+      
+    # Process with existing validator  
+    df, processing_error = validate_and_process_input(contents, filename)  
+    if processing_error:  
+        return None, processing_error  
+      
+    # Add warnings to success message if any  
+    success_msg = "File uploaded and validated successfully"  
+    if warnings:  
+        warning_text = "; ".join(warnings)  
+        success_msg += f" (Avisos: {warning_text})"  
+      
     return df, None
 
 
@@ -143,7 +145,7 @@ def handle_upload_or_example(contents, n_clicks_example, filename):
 
     # Handle file upload
     if triggered_id == 'upload-data' and contents:
-        df, error = validate_and_process_input(contents, filename)
+        df, error = process_uploaded_file(contents, filename)  
         if error:
             return None, True, dbc.Alert(
                 error,
@@ -169,3 +171,119 @@ def handle_upload_or_example(contents, n_clicks_example, filename):
         )
 
     raise PreventUpdate
+
+
+
+
+
+
+
+
+def validate_upload_comprehensive(contents, filename):  
+    """  
+    Performs comprehensive validation of uploaded file including size, format, and structure.  
+      
+    Parameters  
+    ----------  
+    contents : str  
+        File contents (base64 encoded if from upload)  
+    filename : str  
+        Name of the uploaded file  
+          
+    Returns  
+    -------  
+    tuple  
+        (is_valid: bool, error_message: str, warnings: list)  
+    """  
+    warnings = []  
+      
+    # 1. Size validation (existing)  
+    is_valid_size, size_error = validate_upload_size(contents)  
+    if not is_valid_size:  
+        return False, size_error, []  
+      
+    # 2. File extension validation  
+    if not filename.endswith('.txt'):  
+        return False, "Apenas arquivos .txt são suportados.", []  
+      
+    # 3. Content encoding validation  
+    try:  
+        if contents.startswith('data'):  
+            content_type, content_string = contents.split(',', 1)  
+            if 'text' not in content_type:  
+                return False, "Tipo de conteúdo inválido. Esperado arquivo de texto.", []  
+            decoded_content = base64.b64decode(content_string).decode('utf-8')  
+        else:  
+            decoded_content = contents  
+    except Exception as e:  
+        return False, f"Erro ao decodificar arquivo: {str(e)}", []  
+      
+    # 4. Structure validation  
+    lines = decoded_content.split('\n')  
+    sample_count = 0  
+    ko_count = 0  
+    current_sample = None  
+      
+    identifier_pattern = re.compile(r'^>([^\n]+)')  
+    ko_pattern = re.compile(r'^(K\d+)')  
+      
+    for i, line in enumerate(lines, 1):  
+        line = line.strip()  
+        if not line:  
+            continue  
+              
+        if identifier_pattern.match(line):  
+            sample_count += 1  
+            current_sample = line  
+        elif ko_pattern.match(line):  
+            if current_sample is None:  
+                return False, f"Linha {i}: Identificador KO encontrado sem amostra definida.", []  
+            ko_count += 1  
+        else:  
+            return False, f"Linha {i}: Formato inválido. Esperado identificador de amostra (>) ou KO (K...).", []  
+      
+    # 5. Content quality checks  
+    if sample_count == 0:  
+        return False, "Nenhuma amostra encontrada no arquivo.", []  
+      
+    if ko_count == 0:  
+        return False, "Nenhum identificador KO encontrado no arquivo.", []  
+      
+    if sample_count > 1000:  
+        warnings.append(f"Arquivo contém {sample_count} amostras. Processamento pode ser lento.")  
+      
+    if ko_count > 10000:  
+        warnings.append(f"Arquivo contém {ko_count} identificadores KO. Considere dividir em arquivos menores.")  
+      
+    # 6. Data distribution validation  
+    avg_ko_per_sample = ko_count / sample_count  
+    if avg_ko_per_sample < 5:  
+        warnings.append("Poucas entradas KO por amostra. Verifique se o arquivo está completo.")  
+      
+    return True, None, warnings
+
+
+
+
+
+
+def validate_biopotex_format(df):  
+    """  
+    Validates DataFrame structure for BioPotExA compatibility.  
+    """  
+    required_columns = {'sample', 'ko'}  
+    if not required_columns.issubset(df.columns):  
+        missing = required_columns - set(df.columns)  
+        return False, f"Colunas obrigatórias ausentes: {missing}"  
+      
+    # Check for valid KO format  
+    invalid_ko = df[~df['ko'].str.match(r'^K\d+$', na=False)]  
+    if not invalid_ko.empty:  
+        return False, f"Identificadores KO inválidos encontrados: {invalid_ko['ko'].head().tolist()}"  
+      
+    # Check for empty samples  
+    empty_samples = df[df['sample'].isna() | (df['sample'] == '')]  
+    if not empty_samples.empty:  
+        return False, "Amostras vazias encontradas no arquivo."  
+      
+    return True, None

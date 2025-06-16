@@ -59,30 +59,29 @@ def get_ko_count_bar_chart_layout():
 
 def get_ko_violin_boxplot_layout():
     """
-    Constructs a Bootstrap-based layout for the KO violin + boxplot chart with sample filtering.
+    Constructs a Bootstrap-based layout for the KO violin + boxplot chart 
+    without sample filtering controls.
 
-    Returns:
-        dbc.Card: A styled layout containing the dropdown filter and the violin-boxplot chart.
+    Returns
+    -------
+    dbc.Card
+        A styled layout containing only the KO violin + boxplot chart.
     """
-
-    ko_violin_filter = dcc.Dropdown(
-        id='sample-dropdown',
-        multi=True,
-        placeholder='Select Sample(s)',
-        className='mb-3'  # margem inferior para espaçamento interno
+    return dbc.Card(
+        [
+            dbc.CardHeader("KO Violin and Boxplot", class_name="fw-bold"),
+            dbc.CardBody(
+                [
+                    dbc.Row(
+                        [
+                            dbc.Col(
+                                dcc.Graph(id='ko-violin-boxplot-chart'),
+                                width=12
+                            )
+                        ]
+                    )
+                ]
+            )
+        ],
+        class_name="shadow-sm border-0 my-3"
     )
-
-    return dbc.Card([
-        dbc.CardHeader("Filter by Sample", class_name="fw-bold"),
-        
-        dbc.CardBody([
-            dbc.Row([
-                dbc.Col(ko_violin_filter, width=12)
-            ], class_name="mb-4"),
-
-            dbc.Row([
-                dbc.Col(dcc.Graph(id='ko-violin-boxplot-chart'), width=12)
-            ])
-        ])
-    ],
-    class_name="shadow-sm border-0 my-3")

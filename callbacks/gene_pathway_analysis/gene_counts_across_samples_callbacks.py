@@ -104,63 +104,43 @@ def update_range_slider_values(biorempp_data):
 # ----------------------------------------
 
 
-@app.callback(
+@callback(
     Output('ko-violin-boxplot-chart', 'figure'),
-    [Input('process-data', 'n_clicks'), Input('sample-dropdown', 'value')],
-    [State('stored-data', 'data')]
+    Input('process-data', 'n_clicks'),
+    State('stored-data', 'data')
 )
-def update_ko_violin_boxplot_chart(n_clicks, selected_samples, stored_data):
+def update_ko_violin_boxplot_chart(n_clicks, stored_data):
     """
-    Updates the violin and boxplot chart based on the selected samples from the dropdown.
+    Updates the KO violin and boxplot chart using all available samples.
 
-    Parameters:
-    - n_clicks (int): Number of times the "process data" button is clicked.
-    - selected_samples (list): List of selected samples from the dropdown.
-    - stored_data (list): Data stored in the Dash Store component.
+    Parameters
+    ----------
+    n_clicks : int
+        Number of clicks on the "process data" button.
+    stored_data : list
+        List of dictionaries representing input data stored in Dash Store.
 
-    Returns:
-    - plotly.graph_objects.Figure: The updated violin plot.
+    Returns
+    -------
+    plotly.graph_objects.Figure
+        The violin and boxplot figure of KO distributions.
+    
+    Raises
+    ------
+    PreventUpdate
+        If data has not been processed or is missing.
     """
     if n_clicks < 1 or not stored_data:
         raise PreventUpdate
 
-    input_df = pd.DataFrame(stored_data)  # Convert stored data to DataFrame
-    merged_df = merge_input_with_database(input_df)  # Merge input data with the database
+    # Load and merge data
+    input_df = pd.DataFrame(stored_data)
+    merged_df = merge_input_with_database(input_df)
 
-    # Use all samples if none are selected
-    if not selected_samples:
-        selected_samples = input_df['sample'].unique()
+    # Use all available samples
+    filtered_df = merged_df.copy()
+    ko_count_per_sample = process_ko_data_violin(filtered_df)
 
-    # Filter data based on selected samples
-    filtered_df = merged_df[merged_df['sample'].isin(selected_samples)]
-    ko_count_per_sample = process_ko_data_violin(filtered_df)  # Process KO data for violin plot
-    fig = create_violin_plot(ko_count_per_sample)  # Generate violin plot
+    # Generate and return plot
+    fig = create_violin_plot(ko_count_per_sample)
     return fig
-
-# ----------------------------------------
-# Callback: Update Dropdown Options
-# ----------------------------------------
-
-
-@app.callback(
-    Output('sample-dropdown', 'options'),
-    [Input('process-data', 'n_clicks')],
-    [State('stored-data', 'data')]
-)
-def update_dropdown_options(n_clicks, stored_data):
-    """
-    Updates the sample dropdown menu options based on the loaded data.
-
-    Parameters:
-    - n_clicks (int): Number of times the "process data" button is clicked.
-    - stored_data (list): Data stored in the Dash Store component.
-
-    Returns:
-    - list: List of options for the dropdown menu, each as a dictionary with `label` and `value`.
-    """
-    if n_clicks < 1 or not stored_data:
-        raise PreventUpdate
-
-    input_df = pd.DataFrame(stored_data)  # Convert stored data to DataFrame
-    sample_options = [{'label': sample, 'value': sample} for sample in input_df['sample'].unique()]  # Generate dropdown options
-    return sample_options
