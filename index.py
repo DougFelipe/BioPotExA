@@ -12,23 +12,32 @@ import logging
 logging.basicConfig(level=logging.INFO)
 
 # Import Dash core components for building the interface
+# Dash imports
 from dash import Dash, dcc, html, Input, Output
 
-# Import custom header component
-from components.header import Header
-from components.pages.documentation import get_features_layout  
-from components.pages.bioremediation import get_bioremediation_layout  
-from components.pages.regulatory_agencies import get_regulatory_agencies_layout  
+# Components (importados diretamente do pacote)
+from components import (
+    Header,
+    navbar,
+    hadeg_alert,
+    toxcsm_alert,
+    analysis_suggestions_offcanvas,
+    analytical_highlight,
+    NeonDivider,
+    get_sample_data_button,
+    create_range_slider
+)
+
+# Páginas específicas
+from components.pages.documentation import get_features_layout
+from components.pages.bioremediation import get_bioremediation_layout
+from components.pages.regulatory_agencies import get_regulatory_agencies_layout
 from components.pages.contact import get_contact_page
 from components.pages.publications import get_publications_layout
-
-
-# Import layout functions for different pages
-from components.pages.about import get_about_layout  
-from components.pages.data_analysis import get_dataAnalysis_page  
-from components.pages.results import get_results_layout  
-from components.pages.help import get_help_layout  
-
+from components.pages.about import get_about_layout
+from components.pages.data_analysis import get_dataAnalysis_page
+from components.pages.results import get_results_layout
+from components.pages.help import get_help_layout
 
 # Import all callbacks (automatic registration by side effect)
 import callbacks
@@ -82,8 +91,8 @@ def display_page(pathname):
             layout = get_help_layout()
         elif pathname == '/documentation':
             layout = get_features_layout()
-        elif pathname == '/bioremediation':
-            layout = get_bioremediation_layout()
+       # elif pathname == '/bioremediation':
+        #    layout = get_bioremediation_layout()
         elif pathname == '/regulatory':
             layout = get_regulatory_agencies_layout()
         elif pathname == '/contact':
