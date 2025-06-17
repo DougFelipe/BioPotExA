@@ -14,10 +14,15 @@ If no data is available, it returns an empty graph with an appropriate message.
 
 from dash import callback, Output, Input, State  # Dash callback components for interactivity
 from app import app  # Dash application instance
-from utils.entity_interactions.gene_compound_interaction_network_processing import prepare_gene_compound_network_data  # Utility to process network data
-from utils.entity_interactions.gene_compound_interaction_network_plot import generate_gene_compound_network  # Utility to generate the network graph
+
+# Funções expostas diretamente via __init__.py do subpacote `entity_interactions`
+from utils.entity_interactions import (
+        generate_gene_compound_network
+)
+
 import plotly.graph_objects as go  # Plotly for creating graph components
 import pandas as pd  # Pandas for data manipulation
+
 
 # ----------------------------------------
 # Callback: update_gene_compound_network

@@ -1,7 +1,8 @@
 """
 P3_compounds_callbacks.py
 --------------------------
-This script defines the callbacks for handling user interactions related to compound classes in a Dash web application. 
+This script defines the callbacks for handling user interactions related to compound classes 
+in a Dash web application.
 
 The script includes:
 - Initializing a dropdown menu with compound class options based on user data.
@@ -9,20 +10,24 @@ The script includes:
 
 Functions:
 1. `initialize_compound_class_dropdown`: Populates the dropdown menu with available compound classes.
-2. `update_compound_scatter_plot`: Updates the scatter plot based on the selected compound class or displays a default message.
+2. `update_compound_scatter_plot`: Updates the scatter plot based on the selected compound class 
+   or displays a default message.
 """
 
 # ----------------------------------------
 # Imports
 # ----------------------------------------
 
-from dash import callback, html, dcc  # Dash components and callback utilities
-from dash.dependencies import Input, Output, State  # Input, Output, and State for callbacks
-from dash.exceptions import PreventUpdate  # Prevent unnecessary updates
-import pandas as pd  # Data manipulation
-from app import app  # Dash app instance
-from utils.core.data_processing import merge_input_with_database  # Data processing utility
-from utils.entity_interactions.sample_compound_interaction_plot import plot_compound_scatter  # Function to create scatter plots
+from dash import callback, html, dcc
+from dash.dependencies import Input, Output, State
+from dash.exceptions import PreventUpdate
+import pandas as pd
+
+from app import app
+
+# Utilities for data handling and plotting
+from utils.entity_interactions.sample_compound_interaction_plot import plot_compound_scatter
+
 
 # ----------------------------------------
 # Callback: Initialize Dropdown
