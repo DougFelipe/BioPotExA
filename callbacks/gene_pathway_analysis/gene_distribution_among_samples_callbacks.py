@@ -15,15 +15,23 @@ The callbacks use Dash's callback mechanism to handle user interactions and upda
 # Imports
 # ----------------------------------------
 
-from dash import callback, Output, Input, State, html, dcc  # Dash components and callback utilities
-from dash.exceptions import PreventUpdate  # Exception to stop callback execution when no updates are required
-import pandas as pd  # Pandas for data manipulation
+# Dash components and callback utilities
+from dash import callback, Output, Input, State, html, dcc
+from dash.exceptions import PreventUpdate
 
-# Application instance and utilities
-from app import app  # Dash application instance
-from utils.core.data_processing import merge_with_kegg  # Function to merge user data with KEGG pathways
-from utils.gene_pathway_analysis.gene_distribution_among_samples_plot import plot_sample_ko_scatter  # Function to create scatter plot
-from utils.gene_pathway_analysis.gene_distribution_among_samples_processing import get_ko_per_sample_for_pathway
+# Core libraries
+import pandas as pd
+
+# App instance
+from app import app
+
+# Utils – modular imports via __init__.py
+from utils.core import merge_with_kegg
+from utils.gene_pathway_analysis import (
+    plot_sample_ko_scatter,
+    get_ko_per_sample_for_pathway
+)
+
 
 # ----------------------------------------
 # Callback: Initialize Pathway Dropdown

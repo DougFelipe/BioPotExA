@@ -20,17 +20,32 @@ Functions:
 # Imports
 # ----------------------------------------
 
-# Necessary imports
-from dash import callback, dash_table, html  # Dash core components
-from dash.dependencies import Input, Output, State  # Dependencies for callbacks
-from dash.exceptions import PreventUpdate  # Prevents unnecessary updates
-import pandas as pd  # Data manipulation
+# Dash core components
+from dash import callback, dash_table, html
+from dash.dependencies import Input, Output, State
+from dash.exceptions import PreventUpdate
 
-# Local imports
-from app import app  # Dash application instance
+# Base libraries
+import pandas as pd
+
+# App instance
+from app import app
+
+# Core processing
 from utils.core.data_processing import merge_input_with_database
-from utils.gene_pathway_analysis.gene_counts_across_samples_processing import process_ko_data, process_ko_data_violin
-from utils.gene_pathway_analysis.gene_counts_across_samples_plot import plot_ko_count, create_violin_plot
+
+# Gene Pathway Analysis – Data processing
+from utils.gene_pathway_analysis.gene_counts_across_samples_processing import (
+    process_ko_data,
+    process_ko_data_violin,
+)
+
+# Gene Pathway Analysis – Plotting
+from utils.gene_pathway_analysis.gene_counts_across_samples_plot import (
+    plot_ko_count,
+    create_violin_plot,
+)
+
 
 # ----------------------------------------
 # Callback: Update KO Count Bar Chart
