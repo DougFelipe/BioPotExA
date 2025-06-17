@@ -48,7 +48,7 @@ from callbacks.dashboard.analysis_suggestions_callbacks import register_analysis
 
 
 # Import the application instance
-from app import app
+from app import app, server
 register_analysis_suggestions_callbacks(app)
 # ----------------------------------------
 # Main Layout Configuration
@@ -121,5 +121,4 @@ def display_page(pathname):
 
 if __name__ == '__main__':
     print("Starting BioRemPP App...")  # <-- Debug print
-    #app.run(debug=False, host="0.0.0.0", port=8050) # Production
     app.run_server(debug=True)  # Development
