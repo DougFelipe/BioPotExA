@@ -14,15 +14,16 @@ The callbacks handle user interactions, such as processing data after a button c
 # Imports
 # ----------------------------------------
 
-from dash import callback, html, dcc  # Dash components for callbacks and layout
-from dash.dependencies import Input, Output, State  # Input, Output, and State for callback interactivity
-from dash.exceptions import PreventUpdate  # Exception to prevent unnecessary updates
-import pandas as pd  # Data manipulation with pandas
+from dash import callback, html, dcc
+from dash.dependencies import Input, Output, State
+from dash.exceptions import PreventUpdate
+import pandas as pd
 
-from app import app  # Application instance
-from utils.core.data_processing import merge_input_with_database  # Function to merge input data with the database
-from utils.rankings.ranking_compounds_by_gene_interaction_processing import process_compound_gene_ranking  # Function to process compound gene ranking
-from utils.rankings.ranking_compounds_by_gene_interaction_plot import plot_compound_gene_ranking  # Function to plot compound gene ranking
+from app import app
+from utils.rankings import (
+    process_compound_gene_ranking,
+    plot_compound_gene_ranking
+)
 
 # ----------------------------------------
 # Callback: Initialize Dropdown for Compound Classes

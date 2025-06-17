@@ -14,16 +14,16 @@ The script uses Dash callbacks to manage interactivity and relies on utility fun
 # Imports
 # ----------------------------------------
 
-from dash import callback, html, dcc  # Dash components for layout and interactivity
-from dash.dependencies import Input, Output, State  # Dash dependencies for callbacks
-from dash.exceptions import PreventUpdate  # Prevents unnecessary callback execution
-import pandas as pd  # Data manipulation
+from dash import callback, html, dcc
+from dash.dependencies import Input, Output, State
+from dash.exceptions import PreventUpdate
+import pandas as pd
 
-# Importing the main app instance and utility functions
 from app import app
-from utils.core.data_processing import merge_input_with_database
-from utils.rankings.ranking_compounds_by_sample_interaction_processing import process_compound_ranking
-from utils.rankings.ranking_compounds_by_sample_interaction_plot import plot_compound_ranking
+from utils.rankings import (
+    process_compound_ranking,
+    plot_compound_ranking
+)
 
 # ----------------------------------------
 # Callback: Initialize Dropdown for Compound Classes

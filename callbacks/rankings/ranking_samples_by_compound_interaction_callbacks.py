@@ -9,23 +9,24 @@ It dynamically updates:
 The script integrates data processing and plotting utilities to process user inputs and update the UI accordingly.
 
 Functions:
-- `update_sample_ranking_plot`: Updates the ranking plot based on range slider values.
-- `update_range_slider_values`: Dynamically updates the range slider's maximum value, initial range, and tick marks.
+- update_sample_ranking_plot: Updates the ranking plot based on range slider values.
+- update_range_slider_values: Dynamically updates the range slider's maximum value, initial range, and tick marks.
 """
 
 # ----------------------------------------
 # Imports
 # ----------------------------------------
 
-from dash import callback  # Dash callback decorator
-from dash.dependencies import Input, Output, State  # Dash callback dependencies
-from dash.exceptions import PreventUpdate  # Prevent callback execution under specific conditions
-import pandas as pd  # Data manipulation
+from dash import callback
+from dash.dependencies import Input, Output, State
+from dash.exceptions import PreventUpdate
+import pandas as pd
 
-from app import app  # Main Dash application instance
-from utils.core.data_processing import merge_input_with_database  # Utility function to merge input data with the database
-from utils.rankings.ranking_samples_by_compound_interaction_processing import process_sample_ranking  # Function to process sample ranking
-from utils.rankings.ranking_samples_by_compound_interaction_plot import plot_sample_ranking  # Function to plot sample ranking
+from app import app
+from utils.rankings import (
+    process_sample_ranking,
+    plot_sample_ranking
+)
 
 # ----------------------------------------
 # Callback: Update Sample Ranking Plot
