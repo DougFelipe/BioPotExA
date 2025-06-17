@@ -16,8 +16,11 @@ The script uses utility functions to process input data and generate the results
 
 from dash import Input, Output, State, callback, html  # Dash components and callback utilities
 import pandas as pd  # For data manipulation with DataFrame
-from utils.core.table_utils import create_table_from_dataframe  # Function to create a Dash table
-from utils.core.data_processing import merge_input_with_database_hadegDB  # Function to merge input data with the HADEG database
+
+# Funções expostas via utils.core.__init__.py
+from utils.core.table_utils import create_table_from_dataframe
+from utils.core.data_processing import merge_input_with_database_hadegDB
+
 
 # ----------------------------------------
 # Callback: render_hadeg_table

@@ -15,10 +15,14 @@ Key Features:
 # Imports
 # ----------------------------------------
 
-from dash import Input, Output, State, callback, html  # Dash components for interactivity and UI updates
-import pandas as pd  # For data manipulation
-from utils.core.table_utils import create_table_from_dataframe  # Utility function for creating tables
-from utils.core.data_processing import merge_input_with_database, merge_with_toxcsm  # Data processing utilities
+from dash import Input, Output, State, callback, html  # Componentes do Dash para interatividade e UI
+import pandas as pd  # Manipulação de dados
+
+# Funções utilitárias da camada core
+from utils.core.table_utils import create_table_from_dataframe
+from utils.core.data_processing import merge_input_with_database, merge_with_toxcsm
+
+
 
 # ----------------------------------------
 # Callback: Render TOXCSM Results Table

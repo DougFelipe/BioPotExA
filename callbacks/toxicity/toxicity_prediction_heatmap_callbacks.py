@@ -16,12 +16,19 @@ Functions:
 # Imports
 # ----------------------------------------
 
-from dash import callback, Input, Output, State  # Dash callback and component interaction utilities
-from dash.exceptions import PreventUpdate  # Exception to prevent unnecessary updates
-import pandas as pd  # Data manipulation
-from app import app  # Dash application instance
-from utils.toxicity.toxicity_prediction_heatmap_processing import process_heatmap_data
-from utils.toxicity.toxicity_prediction_heatmap_plot import plot_heatmap_faceted  # Utility function for generating the heatmap plot
+# Dash callback and component interaction utilities
+from dash import callback, Input, Output, State
+from dash.exceptions import PreventUpdate
+
+# Data manipulation
+import pandas as pd
+
+# Dash app instance
+from app import app
+
+# Toxicity utilities (from utils.toxicity subpackage __init__.py)
+from utils.toxicity import process_heatmap_data, plot_heatmap_faceted
+
 
 # ----------------------------------------
 # Callback for Faceted Heatmap Update
