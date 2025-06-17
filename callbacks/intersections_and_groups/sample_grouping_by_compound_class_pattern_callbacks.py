@@ -1,7 +1,7 @@
 """
 P10_sample_grouping_profile_callbacks.py
 ----------------------------------------
-This script defines callbacks for the "Sample Grouping by Compound Class Pattern" feature in a Dash web application. 
+This script defines callbacks for the \"Sample Grouping by Compound Class Pattern\" feature in a Dash web application.
 
 Key functionalities:
 - Populates a dropdown with unique compound classes derived from the processed data.
@@ -17,21 +17,18 @@ Callbacks:
 # Imports
 # ----------------------------------------
 
-# Dash components and dependencies for interactivity
 from dash import callback, html, dcc
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 
-# Data manipulation
 import pandas as pd
 
-# Application instance
 from app import app
 
-# Utility functions for data processing and visualization
+# Utils: Merge + Grouping by compound class
 from utils.core.data_processing import merge_input_with_database
-from utils.intersections_and_groups.sample_grouping_by_compound_class_plot import plot_sample_groups
 from utils.intersections_and_groups.sample_grouping_by_compound_class_processing import group_by_class, minimize_groups
+from utils.intersections_and_groups.sample_grouping_by_compound_class_plot import plot_sample_groups
 
 # ----------------------------------------
 # Callback 1: Initialize Dropdown Options

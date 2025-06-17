@@ -1,9 +1,9 @@
 """
 P15_sample_clustering_callbacks.py
------------------------------------
+----------------------------------
 This script defines a Dash callback for updating a dendrogram visualization based on sample clustering. 
 The dendrogram is dynamically updated when the user selects a distance metric and clustering method 
-from dropdown menus. 
+from dropdown menus.
 
 Key functionalities:
 - Takes stored data and user-selected parameters as input.
@@ -15,13 +15,17 @@ Key functionalities:
 # Imports
 # ----------------------------------------
 
-from dash import callback, html  # Dash core and HTML components
-from dash.dependencies import Input, Output, State  # Dash callback dependencies
-from dash.exceptions import PreventUpdate  # Exception to halt updates if inputs are invalid
-import pandas as pd  # Data manipulation library
-from app import app  # Main Dash app instance
-from utils.intersections_and_groups.clustering_dendrogram_processing import calculate_sample_clustering  # Utility for clustering calculation
-from utils.intersections_and_groups.clustering_dendrogram_plot import plot_dendrogram  # Utility for generating dendrogram plots
+from dash import callback, html
+from dash.dependencies import Input, Output, State
+from dash.exceptions import PreventUpdate
+
+import pandas as pd
+
+from app import app
+
+# Utils: Clustering processing and plotting
+from utils.intersections_and_groups.clustering_dendrogram_processing import calculate_sample_clustering
+from utils.intersections_and_groups.clustering_dendrogram_plot import plot_dendrogram
 
 # ----------------------------------------
 # Callback: Update Sample Clustering Graph
