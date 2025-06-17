@@ -30,37 +30,11 @@ from components.pages.results import get_results_layout
 from components.pages.help import get_help_layout  
 
 
-# Import callbacks for application interactivity
-import callbacks.core.callbacks
-import callbacks.core.merge_feedback_callbacks
-import callbacks.results_overview.biorempp_results_table_callbacks
-import callbacks.results_overview.hadeg_results_table_callbacks
-import callbacks.results_overview.toxcsm_results_table_callbacks
-import callbacks.gene_pathway_analysis.gene_counts_across_samples_callbacks
-import callbacks.gene_pathway_analysis.distribution_of_ko_in_pathways_callbacks
-import callbacks.entity_interactions.sample_compound_interaction_callbacks
-import callbacks.rankings.ranking_samples_by_compound_interaction_callbacks
-import callbacks.rankings.ranking_compounds_by_sample_interaction_callbacks
-import callbacks.rankings.ranking_compounds_by_gene_interaction_callbacks
-import callbacks.entity_interactions.gene_compound_interaction_callbacks
-import callbacks.entity_interactions.sample_gene_associations_callbacks
-import callbacks.heatmaps.sample_reference_agency_heatmap_callbacks
-import callbacks.intersections_and_groups.sample_grouping_by_compound_class_pattern_callbacks
-import callbacks.heatmaps.gene_sample_heatmap_callbacks
-import callbacks.heatmaps.pathway_compound_interaction_callbacks
-import callbacks.gene_pathway_analysis.gene_distribution_among_samples_callbacks
-import callbacks.entity_interactions.enzyme_activity_by_sample_callbacks
-import callbacks.intersections_and_groups.clustering_dendrogram_callbacks
-import callbacks.intersections_and_groups.intersection_analysis_callbacks
-import callbacks.entity_interactions.gene_compound_interaction_network_callbacks
-import callbacks.toxicity.toxicity_prediction_heatmap_callbacks
-from callbacks.core.download_tables import download_merged_csv  # Callback for downloading merged data
+# Import all callbacks (automatic registration by side effect)
+import callbacks
+
+# Explicit registration for suggestion system
 from callbacks.dashboard.analysis_suggestions_callbacks import register_analysis_suggestions_callbacks
-from callbacks.dashboard.eda_report_callbacks import generate_eda_report, toggle_eda_alert
-
-
-from callbacks.core.callbacks import handle_progress  # Callback for progress handling
-
 
 
 
