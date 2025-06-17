@@ -16,16 +16,19 @@ Dependencies:
 # Imports
 # ----------------------------------------
 
-from dash import callback, html, dcc  # Dash components and callback utilities
-from dash.dependencies import Input, Output, State  # Dash callback dependency definitions
-from dash.exceptions import PreventUpdate  # Exception to prevent unnecessary updates
-import pandas as pd  # Data manipulation
+from dash import callback, html, dcc
+from dash.dependencies import Input, Output, State
+from dash.exceptions import PreventUpdate
+import pandas as pd
 
 # Application-specific imports
-from app import app  # Main Dash application instance
-from utils.core.data_processing import merge_input_with_database_hadegDB
-from utils.heatmaps.gene_sample_heatmap_plot import plot_sample_gene_heatmap  # Heatmap plotting utility
-from utils.heatmaps.gene_sample_heatmap_processing import process_gene_sample_data  # Data processing for heatmaps
+from app import app
+from utils import setup_logger
+from utils.heatmaps import (
+    plot_sample_gene_heatmap,
+    process_gene_sample_data,
+)
+
 
 # ----------------------------------------
 # Callback: Initialize Compound Pathway Dropdown

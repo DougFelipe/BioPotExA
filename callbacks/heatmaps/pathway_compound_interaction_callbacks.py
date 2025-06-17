@@ -23,9 +23,11 @@ from dash.exceptions import PreventUpdate  # Exception to stop callback updates
 import pandas as pd  # Data manipulation
 
 from app import app  # Dash app instance
-from utils.core.data_processing import merge_input_with_database_hadegDB
-from utils.heatmaps.pathway_compound_interaction_processing import process_pathway_data  # Import pathway data processing function
-from utils.heatmaps.pathway_compound_interaction_plot import plot_pathway_heatmap  # Import heatmap plotting function
+
+# Utilitários da aplicação (ajustados para a nova estrutura)
+from utils import setup_logger
+from utils.heatmaps import process_pathway_data, plot_pathway_heatmap
+
 
 # ----------------------------------------
 # Callback 1: Initialize Dropdown

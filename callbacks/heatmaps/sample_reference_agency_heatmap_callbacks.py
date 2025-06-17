@@ -14,15 +14,20 @@ The main components include:
 # Imports
 # ----------------------------------------
 
-from dash import callback  # Dash decorator for defining callbacks
-from dash.dependencies import Input, Output, State  # Dash components for interactivity
-from dash.exceptions import PreventUpdate  # Exception to prevent unnecessary updates
-import pandas as pd  # Pandas for data manipulation
+from dash import callback
+from dash.dependencies import Input, Output, State
+from dash.exceptions import PreventUpdate
+import pandas as pd
 
-from app import app  # Application instance
-from utils.core.data_processing import merge_input_with_database
-from utils.heatmaps.sample_reference_agency_heatmap_processing import process_sample_reference_heatmap  # Heatmap processing utility
-from utils.heatmaps.sample_reference_agency_heatmap_plot import plot_sample_reference_heatmap  
+from app import app
+
+
+# Heatmap: Sample x Reference Agency
+from utils.heatmaps.sample_reference_agency_heatmap_processing import process_sample_reference_heatmap
+from utils.heatmaps.sample_reference_agency_heatmap_plot import plot_sample_reference_heatmap
+
+
+# ----------------------------------------
 # Callback: Update Sample x ReferenceAG Heatmap
 # ----------------------------------------
 
