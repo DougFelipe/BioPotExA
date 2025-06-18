@@ -3,8 +3,9 @@ import re
 import time
 import pandas as pd
 
-# Diretórios e arquivos
-BASE_DIR = os.path.abspath(os.path.join(os.getcwd(), "../../"))
+# Caminho absoluto do diretório do próprio script
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.abspath(os.path.join(SCRIPT_DIR, "../../"))
 DATA_FILE = os.path.join(BASE_DIR, "data", "genomasBD.txt")
 DATABASE_PATHS = {
     "BioRemPP": os.path.join(BASE_DIR, "data", "database.csv"),
@@ -13,14 +14,12 @@ DATABASE_PATHS = {
     "ToxCSM": os.path.join(BASE_DIR, "data", "database_toxcsm.csv"),
 }
 
-# Otimização de tipos com Categorical
 def optimize_dtypes(df):
     for col in ['ko', 'genesymbol', 'genename', 'cpd', 'compoundclass', 'referenceAG', 'compoundname', 'enzyme_activity']:
         if col in df.columns:
             df[col] = df[col].astype("category")
     return df
 
-# Função para leitura e merge com medição de tempo
 def timed_merge(input_df, db_path, db_name, on_col="ko", use_category=False):
     if not os.path.exists(db_path):
         raise FileNotFoundError(f"Arquivo não encontrado: {db_path}")
@@ -33,11 +32,10 @@ def timed_merge(input_df, db_path, db_name, on_col="ko", use_category=False):
     merged_df = pd.merge(input_df, df, on=on_col, how="inner")
     t1 = time.time()
     elapsed = t1 - t0
-    print(f"⏱️ Tempo {db_name}: {elapsed:.4f} segundos")
-    print(f"📏 Linhas após {db_name}: {len(merged_df)}")
+    print(f"Tempo {db_name}: {elapsed:.4f} segundos")
+    print(f"Linhas após {db_name}: {len(merged_df)}")
     return merged_df
 
-# Leitura do input a partir do .txt
 def process_content_lines(content: str):
     lines = content.split('\n')
     identifier_pattern = re.compile(r'^>([^\n]+)')
@@ -56,7 +54,6 @@ def process_content_lines(content: str):
         return None, "Nenhum dado válido encontrado."
     return pd.DataFrame(data), None
 
-# Função principal de benchmark completo
 def benchmark_full_merge(use_category=False):
     with open(DATA_FILE, "r", encoding="utf-8") as f:
         content = f.read()
@@ -65,7 +62,7 @@ def benchmark_full_merge(use_category=False):
         print(f"Erro: {error}")
         return
 
-    print(f"\n🔧 Benchmark {'com' if use_category else 'sem'} uso de category")
+    print(f"\nBenchmark {'com' if use_category else 'sem'} uso de category")
 
     # Merge com BioRemPP
     merged = timed_merge(df_input, DATABASE_PATHS["BioRemPP"], "BioRemPP", use_category=use_category)
@@ -85,12 +82,12 @@ def benchmark_full_merge(use_category=False):
         t0 = time.time()
         merged = pd.merge(subset, tox_df, on="cpd", how="inner")
         t1 = time.time()
-        print(f"⏱️ Tempo ToxCSM: {t1 - t0:.4f} segundos")
-        print(f"📏 Linhas após ToxCSM: {len(merged)}")
+        print(f"Tempo ToxCSM: {t1 - t0:.4f} segundos")
+        print(f"Linhas após ToxCSM: {len(merged)}")
     else:
-        print("⚠️ Colunas necessárias para merge com ToxCSM não encontradas.")
+        print("Colunas necessárias para merge com ToxCSM não encontradas.")
 
-    print(f"\n✅ Resultado final: {len(merged)} linhas.")
+    print(f"\nResultado final: {len(merged)} linhas.")
 
 # Executar benchmarks
 benchmark_full_merge(use_category=False)
