@@ -12,7 +12,7 @@ Douglas Felipe (github.com/DougFelipe)
 
 Date
 ----
-2024-06-09
+2025-06-18
 
 Version
 -------
@@ -73,15 +73,6 @@ def get_mock_HADEG():
 
 @pytest.fixture
 def get_mock_ToxCSM():
-    """
-    Provides a mock ToxCSM database DataFrame for testing.
-
-    Returns
-    -------
-    pd.DataFrame
-        DataFrame containing sample, compound, toxicity, LD50, and safety label columns,
-        simulating the structure of the ToxCSM database.
-    """
     data = {
         'sample': ['Sample1', 'Sample1', 'Sample2', 'Sample3', 'Sample3'],
         'cpd': ['C00001', 'C00002', 'C00003', 'C00004', 'C00005'],
@@ -94,9 +85,12 @@ def get_mock_ToxCSM():
             'Low Safety',
             'Medium Safety',
             'High Safety'
-        ]
+        ],
+        'SMILES': ['C1=CC=CC=C1', 'CC1=CC=CC=C1', 'CC1=CC=CC=C1C', 'C1=CC=CC=C1O', 'C1=CC=CC=C1N'],
+        'value_score': [0.1, 0.2, 0.3, 0.4, 0.5]
     }
     return pd.DataFrame(data)
+
 
 
 @pytest.fixture

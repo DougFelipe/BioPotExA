@@ -9,7 +9,7 @@ Douglas Felipe (github.com/DougFelipe)
 
 Date
 ----
-2024-06-09
+2025-06-18
 
 Version
 -------
@@ -103,7 +103,10 @@ def test_load_database_success_toxcsm(get_mock_ToxCSM, tmp_path):
     """
     file_path = _save_df_to_csv(tmp_path, get_mock_ToxCSM)
     df_loaded = load_database(file_path)
-    expected_columns = ['sample', 'cpd', 'compoundname', 'toxicity', 'LD50', 'label_NR_AhR']
+    expected_columns = [
+        'sample', 'cpd', 'compoundname', 'toxicity', 'LD50',
+        'label_NR_AhR', 'SMILES', 'value_score'
+    ]
     assert list(df_loaded.columns) == expected_columns
     assert df_loaded.shape == get_mock_ToxCSM.shape
     pd.testing.assert_frame_equal(df_loaded, get_mock_ToxCSM, check_dtype=False)
