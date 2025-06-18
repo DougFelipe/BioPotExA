@@ -1,32 +1,40 @@
-"""
-data_loader.py
---------------
-This script provides a utility function to load a database from an Excel file and return it as a pandas DataFrame.
-"""
-
-# -------------------------------
-# Imports
-# -------------------------------
-
-# Import pandas for data manipulation and DataFrame handling.
 import pandas as pd
-
-# -------------------------------
-# Function: load_database
-# -------------------------------
+import os
 
 def load_database(filepath: str) -> pd.DataFrame:
     """
-    Loads a database from an Excel file and returns its contents as a pandas DataFrame.
+    Loads a database file into a pandas DataFrame.
 
-    Parameters:
-    - filepath (str): Path to the Excel file to be loaded.
+    Supports both CSV and Excel (.xlsx) formats. If the file is empty,
+    returns an empty DataFrame instead of raising an exception.
 
-    Returns:
-    - pd.DataFrame: A pandas DataFrame containing the data from the Excel file.
+    Parameters
+    ----------
+    filepath : str
+        Path to the database file (.csv or .xlsx).
+
+    Returns
+    -------
+    pd.DataFrame
+        The loaded DataFrame. If the file is empty, returns an empty DataFrame.
+
+    Raises
+    ------
+    FileNotFoundError
+        If the file does not exist at the specified path.
+    ValueError
+        If the file extension is not .csv or .xlsx.
     """
-    # Read the Excel file into a pandas DataFrame.
-    df = pd.read_excel(filepath)
-    
-    # Return the DataFrame with the loaded data.
-    return df
+    if not os.path.exists(filepath):
+        raise FileNotFoundError(f"File not found: {filepath}")
+
+    try:
+        if filepath.endswith(".csv"):
+            return pd.read_csv(filepath, encoding="utf-8", sep=",")
+        elif filepath.endswith(".xlsx"):
+            return pd.read_excel(filepath, engine="openpyxl")
+        else:
+            raise ValueError("Unsupported file format. Use .csv or .xlsx")
+    except pd.errors.EmptyDataError:
+        # Handles empty file gracefully
+        return pd.DataFrame()
