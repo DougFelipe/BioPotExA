@@ -261,29 +261,3 @@ def validate_upload_comprehensive(contents, filename):
         warnings.append("Poucas entradas KO por amostra. Verifique se o arquivo está completo.")  
       
     return True, None, warnings
-
-
-
-
-
-
-def validate_biopotex_format(df):  
-    """  
-    Validates DataFrame structure for BioPotExA compatibility.  
-    """  
-    required_columns = {'sample', 'ko'}  
-    if not required_columns.issubset(df.columns):  
-        missing = required_columns - set(df.columns)  
-        return False, f"Colunas obrigatórias ausentes: {missing}"  
-      
-    # Check for valid KO format  
-    invalid_ko = df[~df['ko'].str.match(r'^K\d+$', na=False)]  
-    if not invalid_ko.empty:  
-        return False, f"Identificadores KO inválidos encontrados: {invalid_ko['ko'].head().tolist()}"  
-      
-    # Check for empty samples  
-    empty_samples = df[df['sample'].isna() | (df['sample'] == '')]  
-    if not empty_samples.empty:  
-        return False, "Amostras vazias encontradas no arquivo."  
-      
-    return True, None

@@ -52,7 +52,6 @@ for convenience and are accessible as ``utils.core.<function>``.
 - process_uploaded_file
 - handle_upload_or_example
 - validate_upload_comprehensive
-- validate_biopotex_format
 """
 
 
@@ -99,7 +98,6 @@ from .upload_handlers import (
     process_uploaded_file,
     handle_upload_or_example,
     validate_upload_comprehensive,
-    validate_biopotex_format
 )
 
 # -------------------------------
@@ -139,5 +137,4 @@ __all__ = [
     "process_uploaded_file",
     "handle_upload_or_example",
     "validate_upload_comprehensive",
-    "validate_biopotex_format"
 ]
