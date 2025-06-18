@@ -349,7 +349,7 @@ def merge_input_with_database_hadegDB(input_data: pd.DataFrame, database_filepat
 
 
 def merge_with_toxcsm(merged_df: pd.DataFrame, toxcsm_filepath: str = None,   
-                     optimize_types: bool = True) -> pd.DataFrame:  
+                     optimize_types: bool = False) -> pd.DataFrame:  
     """  
     Merges a previously merged DataFrame with the ToxCSM database, based on the 'cpd' column.  
   
