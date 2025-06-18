@@ -1,3 +1,36 @@
+"""
+test_data_processing.py: Unit tests for data processing and database merging utilities.
+
+This script validates the behavior of the data merging functions (`merge_input_with_database`, `merge_input_with_database_hadegDB`, `merge_with_kegg`, `merge_with_toxcsm`) from the `utils.core.data_processing` module. The tests ensure robust handling of various input scenarios, including correct merges, missing columns, and exception handling, to guarantee data integrity and comprehensive coverage of edge cases.
+
+Author
+------
+Douglas Felipe (github.com/DougFelipe)
+
+Date
+----
+2024-06-09
+
+Version
+1.0.0
+
+Dependencies
+------------
+- pytest >= 7.0
+- pandas >= 1.0
+
+Notes
+-----
+- This script assumes the tested functions are implemented in `utils.core.data_processing`.
+- Run this file using a test runner such as pytest.
+- Test fixtures are provided via `tests/conftest.py`.
+- Temporary files are created using pytest's `tmp_path` fixture.
+
+Examples
+--------
+$ pytest test_data_processing.py
+"""
+
 import os
 import pandas as pd
 import pytest
