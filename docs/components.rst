@@ -1,101 +1,31 @@
 components package
 ==================
 
-Subpackages
------------
+Pacote de componentes visuais reutilizáveis do BioPotExA.
+Este pacote expõe todos os componentes de interface gráfica (UI) necessários para a construção das páginas e funcionalidades do sistema.
 
-.. toctree::
-   :maxdepth: 4
+Componentes disponíveis incluem alertas, botões, barras de navegação, divisores visuais, filtros e outros widgets, todos implementados no subpacote ``components.ui`` e expostos diretamente pelo pacote ``components``.
 
-   components.pages
-
-Submodules
-----------
-
-components.alerts module
-------------------------
-
-.. automodule:: components.alerts
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
-components.analysis\_suggestions\_offcanvas module
---------------------------------------------------
-
-.. automodule:: components.analysis_suggestions_offcanvas
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
-components.analytical\_highlight module
----------------------------------------
-
-.. automodule:: components.analytical_highlight
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
-components.divider module
--------------------------
-
-.. automodule:: components.divider
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
-components.download\_button module
-----------------------------------
-
-.. automodule:: components.download_button
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
-components.filters module
--------------------------
-
-.. automodule:: components.filters
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
-components.header module
-------------------------
-
-.. automodule:: components.header
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
-components.navbar module
-------------------------
-
-.. automodule:: components.navbar
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
-components.step\_guide module
------------------------------
-
-.. automodule:: components.step_guide
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
-components.tooltip\_sample module
----------------------------------
-
-.. automodule:: components.tooltip_sample
-   :members:
-   :show-inheritance:
-   :undoc-members:
-
-Module contents
----------------
+Documentação dos componentes
+----------------------------
 
 .. automodule:: components
    :members:
    :show-inheritance:
    :undoc-members:
+
+Subpacotes
+----------
+
+.. toctree::
+   :maxdepth: 2
+
+   components.pages
+
+Notas
+-----
+
+Os componentes individuais não são módulos diretos de ``components``, mas sim do subpacote ``components.ui``.
+Eles são expostos explicitamente pelo ``__init__.py`` de ``components`` para uso facilitado em toda a aplicação.
+
+Para informações detalhadas sobre cada componente, consulte o código-fonte em ``components/ui``.

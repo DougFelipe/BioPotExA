@@ -226,7 +226,7 @@ def validate_upload_comprehensive(contents, filename):
     current_sample = None  
       
     identifier_pattern = re.compile(r'^>([^\n]+)')  
-    ko_pattern = re.compile(r'^(K\d+)')  
+    ko_pattern = re.compile(r"^(K\d+)")  
       
     for i, line in enumerate(lines, 1):  
         line = line.strip()  

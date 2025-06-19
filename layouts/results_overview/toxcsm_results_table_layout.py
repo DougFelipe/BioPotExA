@@ -16,7 +16,7 @@ The layout uses Dash HTML components and Bootstrap for styling.
 
 from dash import html  # Dash HTML components for building UI
 import dash_bootstrap_components as dbc  # Bootstrap components for styling
-from components.alerts import toxcsm_alert  # Modularized alert for ToxCSM integration
+from components.ui.alerts import toxcsm_alert  # Modularized alert for ToxCSM integration
 
 # ----------------------------------------
 # Function: get_toxcsm_results_table_layout

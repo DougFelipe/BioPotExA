@@ -26,9 +26,9 @@ import dash_bootstrap_components as dbc
 import pandas as pd
 
 # Import reusable components
-from components.tooltip_sample import input_format_tooltip  # Tooltip for input format
-from components.download_button import get_sample_data_button  # Button for downloading sample data
-from components.tooltip_sample import input_format_tooltip
+from components.ui.tooltip_sample import input_format_tooltip  # Tooltip for input format
+from components.ui.download_button import get_sample_data_button  # Button for downloading sample data
+from components.ui.tooltip_sample import input_format_tooltip
 
 # Import layouts for results display
 from components.pages.results import get_results_layout

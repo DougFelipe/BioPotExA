@@ -19,7 +19,7 @@ The page includes:
 from dash import html
 import dash_bootstrap_components as dbc
 from components.pages.data_analysis import get_dataAnalysis_layout
-from components.analysis_suggestions_offcanvas import analysis_suggestions_offcanvas
+from components.ui.analysis_suggestions import analysis_suggestions_offcanvas
 
 # ----------------------------------------
 # Function: get_about_layout

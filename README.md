@@ -151,6 +151,14 @@ The application’s modular and extensible architecture supports the continuous 
 [Interactive Dash Application]
 ```
 
+
+## Como gerar a documentação com Sphinx
+
+Para gerar a documentação em HTML utilizando o Sphinx, execute o comando abaixo no diretório onde está o seu arquivo `conf.py`:
+
+```bash
+sphinx-build -b html -D autodoc_mock_imports="ydata_profiling" . _build/html
+   ```
 ## Usage Instructions
 
 1. **Install Dependencies**:  

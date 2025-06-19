@@ -22,7 +22,7 @@ from components import (
     hadeg_alert,
     toxcsm_alert,
     analysis_suggestions_offcanvas,
-    analytical_highlight,
+    analytical_highlight_component,
     NeonDivider,
     get_sample_data_button,
     create_range_slider

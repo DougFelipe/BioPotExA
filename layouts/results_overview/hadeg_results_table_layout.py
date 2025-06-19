@@ -17,7 +17,7 @@ Components:
 
 from dash import html  # Dash HTML components for building UI
 import dash_bootstrap_components as dbc  # Bootstrap components for styling
-from components.alerts import hadeg_alert  # Importing the HADEG alert from a modularized component
+from components.ui.alerts import hadeg_alert  # Importing the HADEG alert from a modularized component
 
 # ----------------------------------------
 # Function: get_hadeg_results_table_layout

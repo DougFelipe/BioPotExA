@@ -3,7 +3,7 @@
 from dash import html
 import dash_bootstrap_components as dbc
 
-def analytical_highlight():
+def analytical_highlight_component():
     return dbc.Badge(
         "Analytical Highlight",
         color="success",

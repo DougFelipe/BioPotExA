@@ -114,7 +114,7 @@ def process_content_lines(content: str) -> tuple:
 
     Expected format:
     - Lines beginning with `>` denote sample identifiers.
-    - Lines matching `K\d+` are associated KO entries.
+    - Lines matching "K\d+" are associated KO entries.
 
     Parameters
     ----------

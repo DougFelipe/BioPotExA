@@ -39,7 +39,7 @@ def timed_merge(input_df, db_path, db_name, on_col="ko", use_category=False):
 def process_content_lines(content: str):
     lines = content.split('\n')
     identifier_pattern = re.compile(r'^>([^\n]+)')
-    data_pattern = re.compile(r'^(K\d+)')
+    data_pattern = re.compile(r"^(K\d+)")
     data = []
     current_identifier = None
     for line in lines:

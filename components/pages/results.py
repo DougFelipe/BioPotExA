@@ -22,11 +22,11 @@ Notes
 """
 
 # UI components
-from components.alerts import hadeg_alert, toxcsm_alert
-from components.analytical_highlight import analytical_highlight
-from components.analysis_suggestions_offcanvas import analysis_suggestions_offcanvas
-from components.divider import NeonDivider
-from components.navbar import navbar
+from components.ui.alerts import hadeg_alert, toxcsm_alert
+from components.ui.analytical_highlight import analytical_highlight_component
+from components.ui.analysis_suggestions import analysis_suggestions_offcanvas
+from components.ui.divider import NeonDivider
+from components.ui.navbar import navbar
 
 # Dash core and Bootstrap components
 from dash import dcc, html
@@ -190,7 +190,7 @@ html.Div([
         "This table presents the processed data merged with the BioRemPP database, offering a comprehensive overview of the input data and its matched records.",
         className="analysis-description text-center"
     ),
-    analytical_highlight(),
+    analytical_highlight_component(),
     html.P(
         "The merged table reveals how well the input data aligns with the main database, providing insights into the completeness and relevance of the data.",
         className="analysis-insights text-center"
@@ -220,7 +220,7 @@ html.Div([
         "This table contains data merged with the HADEG database, enabling the exploration of additional annotations and insights.",
         className="analysis-description text-center"
     ),
-    analytical_highlight(),
+    analytical_highlight_component(),
     html.P(
         "The table helps identify significant matches with HADEG, enhancing the understanding of potential functional and structural associations.",
         className="analysis-insights text-center"
@@ -251,7 +251,7 @@ html.Div([
         "This table shows data merged with the TOXCSM database, providing toxicity predictions and compound interactions.",
         className="analysis-description text-center"
     ),
-    analytical_highlight(),
+    analytical_highlight_component(),
     html.P(
         "By analyzing this table, you can assess the toxicity potential and prioritize compounds for further investigation.",
         className="analysis-insights text-center"
@@ -290,7 +290,7 @@ html.Div([
         "This bar chart displays the count of unique genes associated with priority compounds for each sample",
         className="analysis-description text-center"
     ),
-    analytical_highlight(),
+    analytical_highlight_component(),
     html.P(
         "By analyzing this chart, you can identify which samples have a higher number of unique gene associations, offering insights into potential hotspots of genetic activity",
         className="analysis-insights text-center"
@@ -312,7 +312,7 @@ html.Div([
         "This violin boxplot illustrates the distribution of unique genes associated with priority compounds across samples",
         className="analysis-description text-center"
     ),
-    analytical_highlight(),
+    analytical_highlight_component(),
     html.P(
         "Identifies trends and outliers in gene distribution, providing a comprehensive view of genetic activitys",
         className="analysis-insights text-center"
@@ -334,7 +334,7 @@ html.Div([
         "This bar chart highlights the distribution of KEGG Ortholog (KO) counts across 20 degradation pathways",
         className="analysis-description text-center"
     ),
-        analytical_highlight(),
+        analytical_highlight_component(),
     html.P(
         "By analyzing this chart, you can gain insights into the functional diversity of pathways and identify dominant or underrepresented pathways in the dataset",
         className="analysis-insights text-center"
@@ -356,7 +356,7 @@ html.Div([
         "This bar chart presents the KEGG Ortholog (KO) distribution across pathways, grouped by sample",
         className="analysis-description text-center"
     ),
-    analytical_highlight(),
+    analytical_highlight_component(),
     html.P(
         "This visualization allows you to understand how different pathways are represented within each sample, helping to identify pathway-specific trends",
         className="analysis-insights text-center"
@@ -378,7 +378,7 @@ html.Div([
         "This scatter plot shows the distribution of genes across different samples for a specific pathway",
         className="analysis-description text-center"
     ),
-        analytical_highlight(),
+        analytical_highlight_component(),
     html.P(
         "By analyzing this scatter plot, you can identify patterns of genes across samples, helping to pinpoint critical samples for specific pathways",
         className="analysis-insights text-center"
@@ -412,7 +412,7 @@ html.Div([
         "This scatter plot highlights the relationship between samples and compounds, illustrating their interactions and associations",
         className="analysis-description text-center"
     ),
-    analytical_highlight(),
+    analytical_highlight_component(),
     html.P(
         "Use this visualization to detect key sample-compound interactions and prioritize samples or compounds of interest",
         className="analysis-insights text-center"
@@ -434,7 +434,7 @@ html.Div([
         "This scatter plot highlights the relationships between genes and compounds, highlighting associations that may indicate important interactions",
         className="analysis-description text-center"
     ),
-    analytical_highlight(),
+    analytical_highlight_component(),
     html.P(
         "By analyzing this chart, you can identify gene-compound pairs with potential biological or chemical significance",
         className="analysis-insights text-center"
@@ -456,7 +456,7 @@ html.Div([
         "This scatter plot highlights the relationships between samples and genes, providing insights into genetic patterns across various samples",
         className="analysis-description text-center"
     ),
-    analytical_highlight(),
+    analytical_highlight_component(),
     html.P(
         "By analyzing this plot, you can identify significant gene associations across different samples, aiding in the discovery of genetic hotspots",
         className="analysis-insights text-center"
@@ -478,7 +478,7 @@ html.Div([
         "This bar chart shows the distribution of enzyme activity counts across different samples",
         className="analysis-description text-center"
     ),
-    analytical_highlight(),
+    analytical_highlight_component(),
     html.P(
         "Analyzing enzyme activity counts helps identify variations in enzymatic activity across samples, providing insights into metabolic activity",
         className="analysis-insights text-center"
@@ -500,7 +500,7 @@ html.Div([
         "This network graph visualizes the interactions between genes and compounds, providing insights into functional relationships",
         className="analysis-description text-center"
     ),
-    analytical_highlight(),
+    analytical_highlight_component(),
     html.P(
         "By analyzing this graph, you can explore the connectivity and association strength between genes and compounds, uncovering potential targets or key interactions",
         className="analysis-insights text-center"
@@ -535,7 +535,7 @@ html.Div([
         "This chart ranks samples based on the number and intensity of their interactions with compounds in the dataset",
         className="analysis-description text-center"
     ),
-    analytical_highlight(),
+    analytical_highlight_component(),
     html.P(
         "By examining this chart, you can identify samples with the most interactions, providing valuable insights into their significance in the analysis",
         className="analysis-insights text-center"
@@ -557,7 +557,7 @@ html.Div([
         "This chart ranks compounds based on their interactions with samples, showcasing which compounds are most significant",
         className="analysis-description text-center"
     ),
-    analytical_highlight(),
+    analytical_highlight_component(),
     html.P(
         "Use this chart to focus on compounds with the most interactions, which can help prioritize targets for further investigation",
         className="analysis-insights text-center"
@@ -579,7 +579,7 @@ html.Div([
         "This ranking chart identifies compounds with associations with genes, revealing key genetic activity",
         className="analysis-description text-center"
     ),
-    analytical_highlight(),
+    analytical_highlight_component(),
     html.P(
         "This visualization is useful to prioritize compounds with significant genetic interactions, aiding in targeted research and analysis",
         className="analysis-insights text-center"
@@ -613,7 +613,7 @@ html.Div([
         "This heatmap displays the association between samples and reference agencies, highlighting compound occurrences and interactions",
         className="analysis-description text-center"
     ),
-    analytical_highlight(),
+    analytical_highlight_component(),
     html.P(
         "Analyze this heatmap to discover hotspots of compound activity linked to reference agencies",
         className="analysis-insights text-center"
@@ -635,7 +635,7 @@ html.Div([
         "This heatmap illustrates the relationship between genes, pathways and samples, providing insights into unique relationships",
         className="analysis-description text-center"
     ),
-    analytical_highlight(),
+    analytical_highlight_component(),
     html.P(
         "By analyzing this heatmap, you can identify trends and hotspots in the gene-sample-pathways interactions, providing insights into their biological relevance",
         className="analysis-insights text-center"
@@ -658,7 +658,7 @@ html.Div([
         "This heatmap visualizes the interaction between metabolic pathways and compound pathways across samples, highlighting gene activity",
         className="analysis-description text-center"
     ),
-    analytical_highlight(),
+    analytical_highlight_component(),
     html.P(
         "Use this heatmap to explore how pathways and compound pathways are interconnected for each sample",
         className="analysis-insights text-center"
@@ -694,7 +694,7 @@ html.Div([
         "Displays how samples are grouped and classified according to their compound content, emphasizing patterns in their composition",
         className="analysis-description text-center"
     ),
-    analytical_highlight(),
+    analytical_highlight_component(),
     html.P(
         "Use this visualization to detect clusters of samples with similar compound profiles, supporting targeted compound or sample research",
         className="analysis-insights text-center"
@@ -716,7 +716,7 @@ html.Div([
         "This UpSet plot visualizes intersections of orthologous genes (KOs) across multiple samples, highlighting overlaps and unique associations",
         className="analysis-description text-center"
     ),
-    analytical_highlight(),
+    analytical_highlight_component(),
     html.P(
         "By analyzing this plot, you can identify shared and unique orthologs between samples, highlighting potential relationships and prioritize samples with shared or unique genes for further exploration",
         className="analysis-insights text-center"
@@ -738,7 +738,7 @@ html.Div([
         "Hierarchically clusters samples based on genes associated with priority compounds, providing a detailed view of their relationships",
         className="analysis-description text-center"
     ),
-    analytical_highlight(),
+    analytical_highlight_component(),
     html.P(
         "By analyzing this clustering, you can identify patterns of similarity or divergence between samples",
         className="analysis-insights text-center"
@@ -771,7 +771,7 @@ html.Div([
         "This heatmap provides a visual representation of toxicity predictions across the five main categories of analysis",
         className="analysis-description text-center"
     ),
-    analytical_highlight(),
+    analytical_highlight_component(),
     html.P(
         "Explore toxicity predictions to identify high-risk compounds or category, supporting risk assessment and decision-making",
         className="analysis-insights text-center"

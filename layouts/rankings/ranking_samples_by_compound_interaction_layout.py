@@ -13,7 +13,7 @@ The layout includes:
 # ----------------------------------------
 
 from dash import html, dcc  # Dash components for creating UI
-from components.filters import create_range_slider  # Utility function to create a range slider
+from components.ui.filters import create_range_slider  # Utility function to create a range slider
 import dash_bootstrap_components as dbc
 
 # ----------------------------------------
