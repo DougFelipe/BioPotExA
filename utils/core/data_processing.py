@@ -453,6 +453,4 @@ def merge_with_toxcsm(merged_df: pd.DataFrame, toxcsm_filepath: str = None,
         final_merged_df = optimize_toxcsm_dtypes(final_merged_df)  
   
     logging.info(f"Merge completed. Final DataFrame shape: {final_merged_df.shape}")  
-    return final_merged_df# -------------------------------
-#get_merged_toxcsm_data
-# -------------------------------
+    return final_merged_df

@@ -15,6 +15,7 @@ from dash import html, dcc, callback, callback_context, dash_table  # Core Dash 
 from dash.dependencies import Input, Output, State  # Input, Output, and State dependencies for callbacks
 from dash.exceptions import PreventUpdate  # To prevent unnecessary updates
 import pandas as pd  # For data manipulation
+import re
 
 # Application Instance
 from app import app
