@@ -2,7 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=python
 
 #Documentação
-/docs
+#/docs
 # VsCode
 .vscode
 
