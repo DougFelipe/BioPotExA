@@ -51,6 +51,10 @@ from .gene_compound_interaction_network_plot import generate_gene_compound_netwo
 from .gene_compound_interaction_plot import plot_gene_compound_scatter
 from .sample_compound_interaction_plot import plot_compound_scatter
 from .sample_gene_associations_plot import plot_sample_gene_scatter
+from .gene_compound_interaction_processing import (
+    filter_gene_compound_df,
+    extract_dropdown_options_from_data
+)
 
 __all__ = [
     "plot_enzyme_activity_counts",
@@ -58,5 +62,7 @@ __all__ = [
     "generate_gene_compound_network",
     "plot_gene_compound_scatter",
     "plot_compound_scatter",
-    "plot_sample_gene_scatter"
+    "plot_sample_gene_scatter",
+    "filter_gene_compound_df",
+    "extract_dropdown_options_from_data"
 ]
