@@ -36,7 +36,6 @@ These functions are re-exported for convenience and can be imported directly fro
 - plot_enzyme_activity_counts
 - count_unique_enzyme_activities
 - generate_gene_compound_network
-- prepare_gene_compound_network_data
 - plot_gene_compound_scatter
 - plot_compound_scatter
 - plot_sample_gene_scatter
@@ -49,7 +48,6 @@ These functions are re-exported for convenience and can be imported directly fro
 from .enzyme_activity_by_sample_plot import plot_enzyme_activity_counts
 from .enzyme_activity_by_sample_processing import count_unique_enzyme_activities
 from .gene_compound_interaction_network_plot import generate_gene_compound_network
-from .gene_compound_interaction_network_processing import prepare_gene_compound_network_data
 from .gene_compound_interaction_plot import plot_gene_compound_scatter
 from .sample_compound_interaction_plot import plot_compound_scatter
 from .sample_gene_associations_plot import plot_sample_gene_scatter
@@ -58,7 +56,6 @@ __all__ = [
     "plot_enzyme_activity_counts",
     "count_unique_enzyme_activities",
     "generate_gene_compound_network",
-    "prepare_gene_compound_network_data",
     "plot_gene_compound_scatter",
     "plot_compound_scatter",
     "plot_sample_gene_scatter"
