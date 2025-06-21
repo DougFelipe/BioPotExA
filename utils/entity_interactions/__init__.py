@@ -65,6 +65,13 @@ from .sample_compound_interaction_processing import (
     filter_by_compound_class
 )
 
+from .gene_compound_interaction_network_processing import (
+    build_gene_compound_graph,
+    compute_node_positions
+)
+
+
+
 __all__ = [
     "plot_enzyme_activity_counts",
     "count_unique_enzyme_activities",
@@ -77,5 +84,8 @@ __all__ = [
     "extract_dropdown_options",
     "filter_sample_gene_data",
     "extract_compound_classes",
-    "extract_compound_classes"
+    "extract_compound_classes",
+    "filter_by_compound_class",
+    "build_gene_compound_graph",
+    "compute_node_positions"
 ]
