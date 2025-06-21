@@ -60,6 +60,11 @@ from .sample_gene_associations_processing import (
     filter_sample_gene_data
 )
 
+from .sample_compound_interaction_processing import (
+    extract_compound_classes,
+    filter_by_compound_class
+)
+
 __all__ = [
     "plot_enzyme_activity_counts",
     "count_unique_enzyme_activities",
@@ -70,5 +75,7 @@ __all__ = [
     "filter_gene_compound_df",
     "extract_dropdown_options_from_data"
     "extract_dropdown_options",
-    "filter_sample_gene_data"
+    "filter_sample_gene_data",
+    "extract_compound_classes",
+    "extract_compound_classes"
 ]
