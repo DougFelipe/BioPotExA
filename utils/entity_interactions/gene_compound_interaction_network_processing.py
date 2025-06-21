@@ -26,11 +26,21 @@ def build_gene_compound_graph(network_data):
         G.add_edge(gene, compound)
     return G
 
+def get_node_partitions(G):
+    """
+    Retorna duas listas: [genes, compostos] baseado no atributo 'type'.
+    """
+    gene_nodes = [n for n, attr in G.nodes(data=True) if attr.get('type') == 'gene']
+    compound_nodes = [n for n, attr in G.nodes(data=True) if attr.get('type') == 'compound']
+    return gene_nodes, compound_nodes
+
 def compute_node_positions(G, seed=42):
     """
     Calcula as posições dos nós do grafo usando spring_layout.
     """
+    import networkx as nx
     return nx.spring_layout(G, seed=seed)
+
 
 def prepare_plotly_traces(G, pos):
     """
@@ -115,7 +125,7 @@ def generate_gene_compound_network(network_data) -> go.Figure:
     """
     logger.info("Gerando grafo Gene-Compound (modularizado)")
     G = build_gene_compound_graph(network_data)
-    pos = compute_node_positions(G)
+    pos = get_node_partitions (G)
     traces = prepare_plotly_traces(G, pos)
     fig = build_gene_compound_network_figure(traces)
     return fig

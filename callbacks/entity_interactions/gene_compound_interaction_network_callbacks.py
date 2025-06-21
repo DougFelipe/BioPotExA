@@ -1,78 +1,65 @@
 """
 P17_gene_compound_network_callbacks.py
 --------------------------------------
-This script defines a callback for updating the Gene-Compound Network visualization in a Dash web application. 
-The network shows the interactions between genes and compounds based on the provided data.
-
-The callback processes input data, validates it, and generates a network graph using Plotly. 
-If no data is available, it returns an empty graph with an appropriate message.
+Callback para atualização da visualização da Rede Gene-Compound na aplicação Dash.
 """
 
-# ----------------------------------------
-# Imports
-# ----------------------------------------
+from dash import callback, Output, Input
+from app import app
 
-from dash import callback, Output, Input, State  # Dash callback components for interactivity
-from app import app  # Dash application instance
+# Importa apenas a função de interface do módulo de plot
+from utils.entity_interactions.gene_compound_interaction_network_plot import generate_gene_compound_network
 
-# Funções expostas diretamente via __init__.py do subpacote `entity_interactions`
-from utils.entity_interactions import (
-        generate_gene_compound_network
+import plotly.graph_objects as go
+import pandas as pd
+
+@app.callback(
+    Output("gene-compound-network-graph", "figure"),
+    Input("biorempp-merged-data", "data")
 )
+def update_gene_compound_network(biorempp_data):
+    """
+    Atualiza o gráfico de rede Gene-Compound com base nos dados processados.
 
-import plotly.graph_objects as go  # Plotly for creating graph components
-import pandas as pd  # Pandas for data manipulation
+    Parâmetros
+    ----------
+    biorempp_data : list[dict]
+        Dados processados e armazenados no store do BioRemPP.
 
+    Retorna
+    -------
+    go.Figure
+        Figura Plotly com a rede, ou figura vazia com mensagem.
+    """
+    if not biorempp_data:
+        return go.Figure(
+            layout=go.Layout(
+                title="No data available to display the network",
+                xaxis=dict(visible=False),
+                yaxis=dict(visible=False)
+            )
+        )
 
-# ----------------------------------------
-# Callback: update_gene_compound_network
-# ----------------------------------------
+    # Monta DataFrame e garante colunas obrigatórias
+    merged_df = pd.DataFrame(biorempp_data)
+    if not {'genesymbol', 'compoundname'}.issubset(merged_df.columns):
+        return go.Figure(
+            layout=go.Layout(
+                title="Required columns ('genesymbol', 'compoundname') not found in the data",
+                xaxis=dict(visible=False),
+                yaxis=dict(visible=False)
+            )
+        )
 
-@app.callback(  
-    Output("gene-compound-network-graph", "figure"),  # Output the network graph as a Plotly figure  
-    Input("biorempp-merged-data", "data")  # MUDANÇA: usar store específico do BioRemPP  
-)  
-def update_gene_compound_network(biorempp_data):  
-    """  
-    Updates the Gene-Compound Network graph based on pre-processed data.  
-  
-    Behavior:  
-    - If no processed data is provided, returns an empty graph with a message.  
-    - Processes the pre-processed data to prepare network information.  
-    - If no interactions are found, returns an empty graph with a message.  
-    - Generates and returns a network graph showing the interactions between genes and compounds.  
-  
-    Parameters:  
-    - biorempp_data (list of dict): Pre-processed data from BioRemPP store.  
-  
-    Returns:  
-    - plotly.graph_objects.Figure: A Plotly figure representing the Gene-Compound Network.  
-    """  
-    if not biorempp_data:  
-        # Returns an empty figure with a message  
-        return go.Figure(  
-            layout=go.Layout(  
-                title="No data available to display the network",  # Message indicating no data  
-                xaxis=dict(visible=False),  # Hides the X-axis  
-                yaxis=dict(visible=False)   # Hides the Y-axis  
-            )  
-        )  
-  
-    # Convert stored processed data into a DataFrame (dados já processados)  
-    merged_df = pd.DataFrame(biorempp_data)  
-      
-    # Filter relevant columns and remove duplicates for network generation  
-    network_data = merged_df[['genesymbol', 'compoundname']].dropna().drop_duplicates()  
-      
-    if network_data.empty:  
-        # Returns an empty figure with a message if no interactions are found  
-        return go.Figure(  
-            layout=go.Layout(  
-                title="No interactions found between genes and compounds",  # Message indicating no interactions  
-                xaxis=dict(visible=False),  # Hides the X-axis  
-                yaxis=dict(visible=False)   # Hides the Y-axis  
-            )  
-        )  
-  
-    # Generate the network graph using the processed data  
+    network_data = merged_df[['genesymbol', 'compoundname']].dropna().drop_duplicates()
+    if network_data.empty:
+        return go.Figure(
+            layout=go.Layout(
+                title="No interactions found between genes and compounds",
+                xaxis=dict(visible=False),
+                yaxis=dict(visible=False)
+            )
+        )
+
+    # Chama função de interface do plot (modularizada)
     return generate_gene_compound_network(network_data)

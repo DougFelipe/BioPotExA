@@ -67,8 +67,13 @@ from .sample_compound_interaction_processing import (
 
 from .gene_compound_interaction_network_processing import (
     build_gene_compound_graph,
-    compute_node_positions
+    get_node_partitions,
+    compute_node_positions,
+    prepare_plotly_traces,
+    build_gene_compound_network_figure,
+    generate_gene_compound_network
 )
+
 
 
 
@@ -80,12 +85,14 @@ __all__ = [
     "plot_compound_scatter",
     "plot_sample_gene_scatter",
     "filter_gene_compound_df",
-    "extract_dropdown_options_from_data"
+    "extract_dropdown_options_from_data",
     "extract_dropdown_options",
     "filter_sample_gene_data",
     "extract_compound_classes",
-    "extract_compound_classes",
     "filter_by_compound_class",
     "build_gene_compound_graph",
-    "compute_node_positions"
+    "get_node_partitions",
+    "compute_node_positions",
+    "prepare_plotly_traces",
+    "build_gene_compound_network_figure"
 ]

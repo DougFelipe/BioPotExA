@@ -1,63 +1,38 @@
-import logging
-import networkx as nx
-import plotly.graph_objects as go
+# plots/gene_compound_network_plot.py
 
-# Configuração de logging
-logging.basicConfig(level=logging.INFO)
+import logging
+import plotly.graph_objects as go
+from utils.entity_interactions.gene_compound_interaction_network_processing import (
+    build_gene_compound_graph,
+    get_node_partitions,
+    compute_node_positions
+)
+
+
 logger = logging.getLogger(__name__)
 
-
-def generate_gene_compound_network(network_data) -> go.Figure:
+def generate_gene_compound_network(network_data):
     """
-    Generates an interactive Gene-Compound network using Plotly and NetworkX.
+    Gera a figura Plotly do grafo gene-composto.
 
-    Parameters
+    Parâmetros
     ----------
     network_data : pd.DataFrame
-        DataFrame containing columns 'genesymbol' and 'compoundname'.
 
-    Returns
+    Retorna
     -------
     plotly.graph_objects.Figure
-        Plotly figure object representing the network.
-
-    Raises
-    ------
-    ValueError
-        If the input DataFrame is empty or lacks required columns.
     """
-    logger.info("Generating Gene-Compound network graph.")
+    logger.info("Construindo o grafo a partir dos dados.")
+    G = build_gene_compound_graph(network_data)
+    gene_nodes, compound_nodes = get_node_partitions (G)
+    pos = compute_node_positions(G)
 
-    if network_data.empty:
-        logger.warning("Received empty network data.")
-        raise ValueError("The network data is empty.")
-
-    if not {'genesymbol', 'compoundname'}.issubset(network_data.columns):
-        logger.error("Missing required columns in network_data.")
-        raise ValueError("DataFrame must contain 'genesymbol' and 'compoundname' columns.")
-
-    G = nx.Graph()
-
-    logger.info("Adding nodes and edges to the network.")
-    for _, row in network_data.iterrows():
-        gene = row['genesymbol']
-        compound = row['compoundname']
-        G.add_node(gene, type='gene')
-        G.add_node(compound, type='compound')
-        G.add_edge(gene, compound)
-
-    logger.info("Calculating node positions.")
-    pos = nx.spring_layout(G, seed=42)
-
-    # Separar nós de gene e de composto
-    gene_nodes = [n for n, attr in G.nodes(data=True) if attr['type'] == 'gene']
-    compound_nodes = [n for n, attr in G.nodes(data=True) if attr['type'] == 'compound']
-
-    # Função utilitária para coordenadas
+    # Função utilitária para extrair coordenadas dos nós
     def get_node_coords(nodes):
         return [pos[n][0] for n in nodes], [pos[n][1] for n in nodes]
 
-    # Edge traces
+    # Arestas
     edge_x, edge_y = [], []
     for edge in G.edges():
         x0, y0 = pos[edge[0]]
@@ -73,7 +48,7 @@ def generate_gene_compound_network(network_data) -> go.Figure:
         showlegend=False
     )
 
-    # Gene nodes (azul)
+    # Genes
     gene_x, gene_y = get_node_coords(gene_nodes)
     gene_trace = go.Scatter(
         x=gene_x, y=gene_y,
@@ -86,7 +61,7 @@ def generate_gene_compound_network(network_data) -> go.Figure:
         legendgroup="gene"
     )
 
-    # Compound nodes (verde)
+    # Compostos
     compound_x, compound_y = get_node_coords(compound_nodes)
     compound_trace = go.Scatter(
         x=compound_x, y=compound_y,
@@ -99,7 +74,7 @@ def generate_gene_compound_network(network_data) -> go.Figure:
         legendgroup="compound"
     )
 
-    logger.info("Assembling final Plotly figure.")
+    logger.info("Montando figura Plotly final.")
     fig = go.Figure(
         data=[edge_trace, gene_trace, compound_trace],
         layout=go.Layout(
