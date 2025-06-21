@@ -6,6 +6,9 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 def process_compound_gene_ranking(merged_df: pd.DataFrame) -> pd.DataFrame:
+
+
+
     """
     Calculates the number of unique genes associated with each compound.
 
