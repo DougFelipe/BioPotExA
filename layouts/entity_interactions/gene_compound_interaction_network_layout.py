@@ -49,10 +49,7 @@ def get_gene_compound_network_layout():
                 children=[
                     html.Div(
                         className="placeholder-card",
-                        children=[
-                            html.P("No data to display", className="placeholder-text")
-                        ]
-                    )
+                   )
                 ]
             )
 

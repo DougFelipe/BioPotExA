@@ -1,6 +1,4 @@
 import logging
-import base64
-import io
 import networkx as nx
 import plotly.graph_objects as go
 
@@ -51,13 +49,15 @@ def generate_gene_compound_network(network_data) -> go.Figure:
     logger.info("Calculating node positions.")
     pos = nx.spring_layout(G, seed=42)
 
-    node_x, node_y, node_text, node_color = [], [], [], []
-    for node, (x, y) in pos.items():
-        node_x.append(x)
-        node_y.append(y)
-        node_text.append(node)
-        node_color.append('blue' if G.nodes[node]['type'] == 'gene' else 'green')
+    # Separar nós de gene e de composto
+    gene_nodes = [n for n, attr in G.nodes(data=True) if attr['type'] == 'gene']
+    compound_nodes = [n for n, attr in G.nodes(data=True) if attr['type'] == 'compound']
 
+    # Função utilitária para coordenadas
+    def get_node_coords(nodes):
+        return [pos[n][0] for n in nodes], [pos[n][1] for n in nodes]
+
+    # Edge traces
     edge_x, edge_y = [], []
     for edge in G.edges():
         x0, y0 = pos[edge[0]]
@@ -65,34 +65,60 @@ def generate_gene_compound_network(network_data) -> go.Figure:
         edge_x.extend([x0, x1, None])
         edge_y.extend([y0, y1, None])
 
-    logger.info("Creating Plotly traces.")
     edge_trace = go.Scatter(
         x=edge_x, y=edge_y,
         mode='lines',
         line=dict(width=1, color='#888'),
-        hoverinfo='none'
+        hoverinfo='none',
+        showlegend=False
     )
 
-    node_trace = go.Scatter(
-        x=node_x, y=node_y,
+    # Gene nodes (azul)
+    gene_x, gene_y = get_node_coords(gene_nodes)
+    gene_trace = go.Scatter(
+        x=gene_x, y=gene_y,
         mode='markers',
+        name='Gene',
+        marker=dict(size=10, color='blue', line=dict(width=2, color='black')),
         hoverinfo='text',
-        marker=dict(size=10, color=node_color, line=dict(width=2)),
-        text=node_text
+        text=gene_nodes,
+        showlegend=True,
+        legendgroup="gene"
+    )
+
+    # Compound nodes (verde)
+    compound_x, compound_y = get_node_coords(compound_nodes)
+    compound_trace = go.Scatter(
+        x=compound_x, y=compound_y,
+        mode='markers',
+        name='Compound',
+        marker=dict(size=10, color='green', line=dict(width=2, color='black')),
+        hoverinfo='text',
+        text=compound_nodes,
+        showlegend=True,
+        legendgroup="compound"
     )
 
     logger.info("Assembling final Plotly figure.")
     fig = go.Figure(
-        data=[edge_trace, node_trace],
+        data=[edge_trace, gene_trace, compound_trace],
         layout=go.Layout(
             title=dict(
                 text="Gene-Compound Network",
                 font=dict(size=16)
             ),
-            showlegend=False,
+            plot_bgcolor='white',
+            paper_bgcolor='white',
+            showlegend=True,
+            legend=dict(
+                x=0.01, y=0.99,
+                bordercolor="Black",
+                borderwidth=1,
+                bgcolor="white"
+            ),
             margin=dict(t=40, b=0, l=0, r=0),
-            xaxis=dict(showgrid=False, zeroline=False),
-            yaxis=dict(showgrid=False, zeroline=False)
+            xaxis=dict(showgrid=False, zeroline=False, visible=False),
+            yaxis=dict(showgrid=False, zeroline=False, visible=False)
         )
     )
 
